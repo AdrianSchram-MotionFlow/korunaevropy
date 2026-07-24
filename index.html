@@ -776,8 +776,11 @@
 
     /* ============================= PHOTO ============================= */
     async function handlePhoto(ev, id, kind){
-        let file = ev.target.files[0];
+        const fileInput = ev.target;
+        let file = fileInput.files[0];
         if(!file) return;
+
+        let isConverted = false;
 
         // Detekce a konverze HEIC/HEIF z iPhonů
         if (file.name.toLowerCase().endsWith('.heic') || file.name.toLowerCase().endsWith('.heif') || file.type === 'image/heic') {
@@ -790,14 +793,30 @@
                 // Převod zpět na File objekt, aby zbytek kódu fungoval beze změny
                 const convertedFile = Array.isArray(convertedBlob) ? convertedBlob[0] : convertedBlob;
                 file = new File([convertedFile], file.name.replace(/\.heic$/i, '.jpg').replace(/\.heif$/i, '.jpg'), { type: 'image/jpeg' });
+                isConverted = true;
 
                 showSaving(false);
             } catch (e) {
                 console.error("HEIC konverze selhala", e);
                 alert("Nepodařilo se zpracovat formát HEIC z iPhonu. Zkuste nahrát klasický JPEG.");
                 showSaving(false);
+                fileInput.value = ''; // Reset inputu
                 return;
             }
+        }
+
+        let finished = false;
+        const proceed = (exifDateStr) => {
+            if(finished) return;
+            finished = true;
+            finishPhotoProcessing(file, id, exifDateStr, kind);
+            fileInput.value = ''; // Reset inputu pro další pokus
+        };
+
+        if (isConverted) {
+            // heic2any většinou zahodí EXIF. Pokud bychom ho hledali v paměťovém souboru, může se prohlížeč seknout.
+            proceed("");
+            return;
         }
 
         try{
@@ -808,9 +827,13 @@
                     const iso = raw.replace(/^(\d{4}):(\d{2}):(\d{2})/, '$1-$2-$3').replace(' ', 'T').slice(0,16);
                     exifDateStr = iso;
                 }
-                finishPhotoProcessing(file, id, exifDateStr, kind);
+                proceed(exifDateStr);
             });
-        }catch(e){ finishPhotoProcessing(file, id, "", kind); }
+            // Záchranná brzda - pokud EXIF.js vytuhne a nezavolá callback
+            setTimeout(() => proceed(""), 1500);
+        }catch(e){
+            proceed("");
+        }
     }
 
     function finishPhotoProcessing(file, id, exifDateStr, kind){
