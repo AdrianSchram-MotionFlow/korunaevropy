@@ -11,13 +11,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.min.js"></script>
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- HEIC to JPEG converter -->
+    <script src="https://cdn.jsdelivr.net/npm/heic2any@0.0.4/dist/heic2any.min.js"></script>
     <style>
         :root{
             --bg:#0b1d14;
             --bg-soft:#102a1c;
             --card:#153524;
             --card-hover:#1b422c;
-            --card-caucasus:#112a1c; /* Tmavší pozadí pro Kavkaz */
+            --card-caucasus:#112a1c;
             --border:#28513a;
             --border-soft:#1e3d29;
             --text:#eef3ea;
@@ -26,7 +28,7 @@
             --accent:#dba641;
             --accent-strong:#f0bd5f;
             --peak:#7fb0a0;
-            --caucasus-fill:#173322; /* Tmavá zelená pro Kavkaz */
+            --caucasus-fill:#173322;
             --caucasus-stroke:#365c44;
             --bonus:#4a7c59;
             --bonus-strong:#64a377;
@@ -773,9 +775,31 @@
     }
 
     /* ============================= PHOTO ============================= */
-    function handlePhoto(ev, id, kind){
-        const file = ev.target.files[0];
+    async function handlePhoto(ev, id, kind){
+        let file = ev.target.files[0];
         if(!file) return;
+
+        // Detekce a konverze HEIC/HEIF z iPhonů
+        if (file.name.toLowerCase().endsWith('.heic') || file.name.toLowerCase().endsWith('.heif') || file.type === 'image/heic') {
+            try {
+                showSaving(true);
+                const ind = document.getElementById('saveIndicator');
+                if(ind) ind.textContent = 'Zpracovávám HEIC…';
+
+                const convertedBlob = await heic2any({ blob: file, toType: "image/jpeg", quality: 0.8 });
+                // Převod zpět na File objekt, aby zbytek kódu fungoval beze změny
+                const convertedFile = Array.isArray(convertedBlob) ? convertedBlob[0] : convertedBlob;
+                file = new File([convertedFile], file.name.replace(/\.heic$/i, '.jpg').replace(/\.heif$/i, '.jpg'), { type: 'image/jpeg' });
+
+                showSaving(false);
+            } catch (e) {
+                console.error("HEIC konverze selhala", e);
+                alert("Nepodařilo se zpracovat formát HEIC z iPhonu. Zkuste nahrát klasický JPEG.");
+                showSaving(false);
+                return;
+            }
+        }
+
         try{
             EXIF.getData(file, function(){
                 const raw = EXIF.getTag(this, "DateTimeOriginal") || EXIF.getTag(this, "DateTime");
@@ -788,6 +812,7 @@
             });
         }catch(e){ finishPhotoProcessing(file, id, "", kind); }
     }
+
     function finishPhotoProcessing(file, id, exifDateStr, kind){
         const reader = new FileReader();
         reader.onload = function(ev){
