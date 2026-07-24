@@ -17,6 +17,7 @@
             --bg-soft:#102a1c;
             --card:#153524;
             --card-hover:#1b422c;
+            --card-caucasus:#112a1c; /* Tmavší pozadí pro Kavkaz */
             --border:#28513a;
             --border-soft:#1e3d29;
             --text:#eef3ea;
@@ -25,7 +26,8 @@
             --accent:#dba641;
             --accent-strong:#f0bd5f;
             --peak:#7fb0a0;
-            /* Změněné barvy pro bonusové (neevropské) vrcholy */
+            --caucasus-fill:#173322; /* Tmavá zelená pro Kavkaz */
+            --caucasus-stroke:#365c44;
             --bonus:#4a7c59;
             --bonus-strong:#64a377;
             --danger:#c96f5f;
@@ -82,6 +84,7 @@
         .count-pill{font-size:12px;color:var(--text-muted);white-space:nowrap;}
 
         .country-card{background:var(--card);border:1px solid var(--border-soft);border-left:3px solid var(--border);border-radius:var(--radius-sm);margin-bottom:10px;overflow:hidden;transition:border-color .2s ease, background .2s ease;}
+        .country-card.caucasus-card{background:var(--card-caucasus);border-color:#173322;border-left-color:var(--caucasus-stroke);}
         .country-card[data-status="full"]{border-left-color:var(--accent);}
         .country-card[data-status="partial"]{border-left-color:var(--peak);}
         .bonus-card[data-status="full"]{border-left-color:var(--bonus);}
@@ -92,8 +95,10 @@
         .chevron{color:var(--text-faint);font-size:13px;transition:transform .2s ease;flex-shrink:0;}
         details[open] .chevron{transform:rotate(90deg);}
         .card-titles{flex:1;min-width:0;}
-        .card-titles .cname{font-family:var(--font-display);font-weight:700;font-size:16px;color:var(--text);}
+        .card-titles .cname{display:flex;align-items:center;gap:8px;font-family:var(--font-display);font-weight:700;font-size:16px;color:var(--text);}
         .card-titles .cmeta{font-size:12.5px;color:var(--text-muted);margin-top:2px;}
+        .caucasus-badge{font-size:9.5px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.05em;background:rgba(0,0,0,0.25);padding:3px 7px;border-radius:5px;border:1px solid rgba(255,255,255,0.05);font-family:var(--font-body);font-weight:500;}
+
         .mini-dots{display:flex;gap:5px;flex-shrink:0;}
         .mini-dot{width:9px;height:9px;border-radius:3px;background:rgba(255,255,255,0.09);border:1px solid rgba(255,255,255,0.08);}
         .mini-dot.on{background:var(--accent);border-color:var(--accent);}
@@ -103,6 +108,7 @@
         @media (max-width:640px){.card-body{grid-template-columns:1fr;padding-left:16px;}}
 
         .item{background:var(--bg-soft);border:1px solid var(--border-soft);border-radius:var(--radius-sm);padding:13px 14px;}
+        .caucasus-card .item{background:rgba(11,29,20,0.6);}
         .item-top{display:flex;align-items:center;gap:10px;}
         .check{width:20px;height:20px;border-radius:6px;border:1.5px solid var(--text-faint);flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s ease, border-color .15s ease;}
         .check.checked{background:var(--accent);border-color:var(--accent);}
@@ -160,8 +166,9 @@
         <div class="map-wrap">
             <div id="mapCanvas"></div>
             <div class="map-legend">
-                <span class="li"><svg width="16" height="16" viewBox="-8 -8 16 16"><path d="M-7 8 L0 -8 L4 0 L7 8 Z" fill="#dba641" stroke="#f0bd5f" stroke-width="1"/></svg> vrchol zdolán</span>
-                <span class="li"><svg width="12" height="12" viewBox="-8 -8 16 16"><circle r="4.3" fill="#dba641" stroke="#f0bd5f" stroke-width="1.3"/></svg> hl. město navštíveno</span>
+                <span class="li"><svg width="16" height="16" viewBox="-8 -8 16 16"><path d="M-7 8 L0 -8 L4 0 L7 8 Z" fill="#dba641" stroke="#f0bd5f" stroke-width="1"/></svg> zdoláno</span>
+                <span class="li"><svg width="16" height="16" viewBox="-8 -8 16 16"><path d="M-7 8 L0 -8 L4 0 L7 8 Z" fill="#28513a" stroke="#557a63" stroke-width="1"/></svg> evropa</span>
+                <span class="li"><svg width="16" height="16" viewBox="-8 -8 16 16"><path d="M-7 8 L0 -8 L4 0 L7 8 Z" fill="#173322" stroke="#365c44" stroke-width="1"/></svg> kavkaz</span>
                 <span class="li"><svg width="16" height="16" viewBox="-8 -8 16 16"><path d="M0 -8 L2 -2.5 L8 -2 L3.2 1.6 L5 8 L0 4.2 L-5 8 L-3.2 1.6 L-8 -2 L-2 -2.5 Z" fill="#4a7c59" stroke="#64a377" stroke-width="1"/></svg> neevropský vrchol</span>
             </div>
         </div>
@@ -354,9 +361,15 @@
 
         COUNTRIES.forEach(c => {
             const e = getEntry(c.id);
+            const isCaucasus = ['georgia', 'armenia', 'azerbaijan'].includes(c.id);
+
+            // Zelená pro Evropu vs Kavkaz (pokud není hotovo)
+            const defaultFill = isCaucasus ? '#173322' : '#28513a';
+            const defaultStroke = isCaucasus ? '#365c44' : '#557a63';
+
             // Vrchol
-            const peakColor = e.peak.done ? '#dba641' : '#28513a';
-            const peakStroke = e.peak.done ? '#f0bd5f' : '#557a63';
+            const peakColor = e.peak.done ? '#dba641' : defaultFill;
+            const peakStroke = e.peak.done ? '#f0bd5f' : defaultStroke;
             const peakHtml = `<svg width="16" height="16" viewBox="-8 -8 16 16" style="filter: drop-shadow(0 2px 3px rgba(0,0,0,0.5))"><path d="M-7 8 L0 -8 L4 0 L7 8 Z" fill="${peakColor}" stroke="${peakStroke}" stroke-width="1"/></svg>`;
             const peakIcon = L.divIcon({ html: peakHtml, className: '', iconSize: [16,16], iconAnchor: [8,8] });
             L.marker([c.peakLat, c.peakLng], {icon: peakIcon, zIndexOffset: e.peak.done ? 1000 : 0})
@@ -364,8 +377,8 @@
                 .on('click', () => focusCountry(c.id)).addTo(markersLayer);
 
             // Hlavní město
-            const capColor = e.capital.done ? '#dba641' : '#28513a';
-            const capStroke = e.capital.done ? '#f0bd5f' : '#557a63';
+            const capColor = e.capital.done ? '#dba641' : defaultFill;
+            const capStroke = e.capital.done ? '#f0bd5f' : defaultStroke;
             const capHtml = `<svg width="12" height="12" viewBox="-8 -8 16 16" style="filter: drop-shadow(0 2px 3px rgba(0,0,0,0.5))"><circle r="4.3" fill="${capColor}" stroke="${capStroke}" stroke-width="1.3"/></svg>`;
             const capIcon = L.divIcon({ html: capHtml, className: '', iconSize: [12,12], iconAnchor: [6,6] });
             L.marker([c.capLat, c.capLng], {icon: capIcon})
@@ -376,7 +389,6 @@
         Object.values(bonusState).forEach(b => {
             const lat=parseFloat(b.lat), lng=parseFloat(b.lng);
             if(isNaN(lat)||isNaN(lng)) return;
-            // Tmavě zelená barva pro bonusové markery
             const bColor = b.done ? '#4a7c59' : '#1c3625';
             const bStroke = b.done ? '#64a377' : '#2d543a';
             const bHtml = `<svg width="16" height="16" viewBox="-8 -8 16 16" style="filter: drop-shadow(0 2px 3px rgba(0,0,0,0.5))"><path d="M0 -8 L2 -2.5 L8 -2 L3.2 1.6 L5 8 L0 4.2 L-5 8 L-3.2 1.6 L-8 -2 L-2 -2.5 Z" fill="${bColor}" stroke="${bStroke}" stroke-width="1"/></svg>`;
@@ -474,13 +486,16 @@
         const e = getEntry(c.id);
         const status = isFull(e) ? 'full' : (anyDone(e) ? 'partial' : 'none');
         const diff = DIFF_LABELS[e.peak.diff] || DIFF_LABELS[3];
+        const isCaucasus = ['georgia', 'armenia', 'azerbaijan'].includes(c.id);
+        const cardClass = isCaucasus ? 'country-card caucasus-card' : 'country-card';
+
         return `
-  <details class="country-card" data-status="${status}" id="card-${c.id}">
+  <details class="${cardClass}" data-status="${status}" id="card-${c.id}">
     <summary>
       <div class="card-head">
         <span class="chevron">▶</span>
         <div class="card-titles">
-          <div class="cname">${c.name}</div>
+          <div class="cname">${c.name} ${isCaucasus ? '<span class="caucasus-badge">Kavkaz</span>' : ''}</div>
           <div class="cmeta">${c.capital} · ${c.peak} (${c.elev} m)</div>
         </div>
         ${miniDots(e)}
