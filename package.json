@@ -1,0 +1,9 @@
+{
+  "name": "koruna-evropy",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Osobni tracker vylezenych vrcholu a navstivenych zemi Evropy",
+  "dependencies": {
+    "@netlify/blobs": "^10.7.9"
+  }
+}
