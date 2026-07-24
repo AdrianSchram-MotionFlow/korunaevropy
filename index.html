@@ -123,6 +123,7 @@
         .item-fields{margin-top:10px;margin-left:30px;display:flex;flex-direction:column;gap:8px;}
         .item-fields input[type="datetime-local"], .item-fields input[type="date"], .item-fields input[type="text"], .item-fields input[type="number"], .item-fields select{
             background:var(--bg);border:1px solid var(--border-soft);color:var(--text);padding:7px 10px;border-radius:8px;font-family:var(--font-body);font-size:13px;width:100%;}
+        .item-fields input:disabled, .item-fields select:disabled { opacity:0.6; cursor:not-allowed; }
         .item-fields label.small{font-size:11px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.05em;}
         .diff-badge{display:inline-block;font-size:11px;padding:2px 8px;border-radius:20px;font-weight:600;margin-left:6px;}
 
@@ -150,7 +151,35 @@
         .add-form-body button{align-self:flex-start;background:var(--bonus);color:#ffffff;border:none;padding:9px 16px;border-radius:8px;font-weight:600;cursor:pointer;font-family:var(--font-body);font-size:13.5px;}
         .add-form-body button:hover{background:var(--bonus-strong);}
 
-        .footer-note{text-align:center;color:var(--text-faint);font-size:12px;margin-top:34px;line-height:1.6;}
+        /* Admin Panel */
+        .admin-panel {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            background: var(--card);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-soft);
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .admin-panel button, .admin-panel .file-label-btn {
+            background: var(--bg-soft);
+            color: var(--text);
+            border: 1px solid var(--border);
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            cursor: pointer;
+            font-family: var(--font-body);
+        }
+        .admin-panel button:hover, .admin-panel .file-label-btn:hover { background: var(--border); }
+        .admin-panel .primary-btn { background: var(--accent); color: #111; border: none; font-weight: 500; }
+        .admin-panel .primary-btn:hover { background: var(--accent-strong); }
+
+        .footer-note{text-align:center;color:var(--text-faint);font-size:12px;margin-top:24px;line-height:1.6;}
         .loading{text-align:center;color:var(--text-muted);padding:60px 0;font-size:14px;}
         .save-indicator{position:fixed;bottom:18px;right:18px;background:var(--card);border:1px solid var(--border-soft);color:var(--text-muted);padding:8px 14px;border-radius:20px;font-size:12px;opacity:0;transition:opacity .3s ease;pointer-events:none;z-index:9000;}
         .save-indicator.show{opacity:1;}
@@ -177,7 +206,10 @@
         <div id="toolbarWrap"></div>
         <div id="listWrap"></div>
         <div id="bonusSectionWrap"></div>
-        <div class="footer-note">Data se ukládají do tvého vlastního Netlify site (Netlify Blobs) a jsou dostupná odkudkoliv, bez závislosti na Claude. Fotky se ukládají zmenšené a zkomprimované.</div>
+
+        <div id="adminPanelWrap"></div>
+
+        <div class="footer-note">Data se ukládají do tvého vlastního Netlify site (Netlify Blobs) a jsou dostupná odkudkoliv. <br>Fotky se ukládají zmenšené a zkomprimované.</div>
     </div>
 </div>
 <div class="save-indicator" id="saveIndicator">Ukládám…</div>
@@ -285,12 +317,13 @@
         }
     }
 
-    /* ============================= STATE ============================= */
+    /* ============================= STATE & AUTH ============================= */
     let state = {};
     let bonusState = {};
     let filterText = "";
     let sortMode = "az";
     let map, markersLayer;
+    let isAdmin = localStorage.getItem('ke_admin') === 'true'; // Ověření na frontendu
 
     function emptyEntry(){
         return {
@@ -313,6 +346,77 @@
     function openLightbox(src){
         document.getElementById('lightbox-img').src = src;
         document.getElementById('lightbox').style.display = 'flex';
+    }
+
+    /* ============================= ADMIN ACTIONS ============================= */
+    function login() {
+        const pw = prompt("Zadej heslo pro odemčení úprav:");
+        if (pw === "As300407") {
+            localStorage.setItem('ke_admin', 'true');
+            isAdmin = true;
+            renderAll();
+            alert("Režim úprav odemčen.");
+        } else if (pw !== null) {
+            alert("Špatné heslo.");
+        }
+    }
+
+    function logout() {
+        localStorage.removeItem('ke_admin');
+        isAdmin = false;
+        renderAll();
+    }
+
+    function downloadBackup() {
+        const dataToBackup = { state, bonusState };
+        const blob = new Blob([JSON.stringify(dataToBackup, null, 2)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `koruna_evropy_zaloha_${new Date().toISOString().slice(0,10)}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+    }
+
+    function uploadBackup(ev) {
+        const file = ev.target.files[0];
+        if(!file) return;
+        if(!confirm("Opravdu chceš přepsat svá aktuální data touto zálohou? (Tato akce je nevratná)")) {
+            ev.target.value = '';
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = async (e) => {
+            try {
+                const data = JSON.parse(e.target.result);
+                showSaving(true);
+                document.getElementById('saveIndicator').textContent = 'Obnovuji ze zálohy...';
+
+                if(data.state) {
+                    for(const [id, entry] of Object.entries(data.state)) {
+                        state[id] = entry;
+                        await api.set("country_"+id, JSON.stringify(entry));
+                    }
+                }
+                if(data.bonusState) {
+                    for(const [id, entry] of Object.entries(data.bonusState)) {
+                        bonusState[id] = entry;
+                        await api.set("bonus_"+id, JSON.stringify(entry));
+                    }
+                }
+
+                showSaving(false);
+                alert('Záloha úspěšně nahrána a uložena!');
+                ev.target.value = ''; // reset input
+                renderAll();
+            } catch(err) {
+                alert('Chybný formát souboru zálohy.');
+                showSaving(false);
+                ev.target.value = '';
+            }
+        };
+        reader.readAsText(file);
     }
 
     /* ============================= LOAD / SAVE ============================= */
@@ -365,11 +469,9 @@
             const e = getEntry(c.id);
             const isCaucasus = ['georgia', 'armenia', 'azerbaijan'].includes(c.id);
 
-            // Zelená pro Evropu vs Kavkaz (pokud není hotovo)
             const defaultFill = isCaucasus ? '#173322' : '#28513a';
             const defaultStroke = isCaucasus ? '#365c44' : '#557a63';
 
-            // Vrchol
             const peakColor = e.peak.done ? '#dba641' : defaultFill;
             const peakStroke = e.peak.done ? '#f0bd5f' : defaultStroke;
             const peakHtml = `<svg width="16" height="16" viewBox="-8 -8 16 16" style="filter: drop-shadow(0 2px 3px rgba(0,0,0,0.5))"><path d="M-7 8 L0 -8 L4 0 L7 8 Z" fill="${peakColor}" stroke="${peakStroke}" stroke-width="1"/></svg>`;
@@ -378,7 +480,6 @@
                 .bindTooltip(`${c.peak} (${c.name})${e.peak.done?' - zdoláno':''}`)
                 .on('click', () => focusCountry(c.id)).addTo(markersLayer);
 
-            // Hlavní město
             const capColor = e.capital.done ? '#dba641' : defaultFill;
             const capStroke = e.capital.done ? '#f0bd5f' : defaultStroke;
             const capHtml = `<svg width="12" height="12" viewBox="-8 -8 16 16" style="filter: drop-shadow(0 2px 3px rgba(0,0,0,0.5))"><circle r="4.3" fill="${capColor}" stroke="${capStroke}" stroke-width="1.3"/></svg>`;
@@ -463,6 +564,26 @@
   </div>`;
     }
 
+    function renderAdminPanel() {
+        if (isAdmin) {
+            return `
+    <div class="admin-panel">
+      <div style="width:100%; font-weight:600; color:var(--accent); font-size:14px; margin-bottom:4px;">🔓 Režim úprav odemčen</div>
+      <button onclick="downloadBackup()">↓ Stáhnout zálohu (.json)</button>
+      <label class="file-label-btn">↑ Nahrát zálohu <input type="file" accept=".json" style="display:none" onchange="uploadBackup(event)"></label>
+      <button onclick="logout()">🔒 Uzamknout a odhlásit</button>
+    </div>
+    `;
+        } else {
+            return `
+    <div class="admin-panel">
+      <div style="width:100%; font-size:13px; color:var(--text-muted); margin-bottom:4px;">Zobrazení pouze pro čtení (Guest mode)</div>
+      <button class="primary-btn" onclick="login()">🔒 Přihlásit pro úpravy</button>
+    </div>
+    `;
+        }
+    }
+
     function sortedFilteredCountries(){
         let list = COUNTRIES.filter(c => c.name.toLowerCase().includes(filterText.toLowerCase()) || c.capital.toLowerCase().includes(filterText.toLowerCase()));
         if(sortMode==='az') list = list.slice().sort((a,b)=>a.name.localeCompare(b.name,'cs'));
@@ -490,6 +611,7 @@
         const diff = DIFF_LABELS[e.peak.diff] || DIFF_LABELS[3];
         const isCaucasus = ['georgia', 'armenia', 'azerbaijan'].includes(c.id);
         const cardClass = isCaucasus ? 'country-card caucasus-card' : 'country-card';
+        const disabledAttr = isAdmin ? '' : 'disabled';
 
         return `
   <details class="${cardClass}" data-status="${status}" id="card-${c.id}">
@@ -512,7 +634,7 @@
         <div class="item-sub">alespoň 2 dny a 1 noc</div>
         <div class="item-fields">
           <label class="small">Datum</label>
-          <input type="date" data-id="${c.id}" data-field="visited" data-key="date" value="${e.visited.date}">
+          <input type="date" data-id="${c.id}" data-field="visited" data-key="date" value="${e.visited.date}" ${disabledAttr}>
         </div>
       </div>
       <div class="item">
@@ -524,15 +646,14 @@
         <div class="item-sub">${c.peak} · ${c.elev} m n. m.</div>
         <div class="item-fields">
           <label class="small">Datum a čas výstupu</label>
-          <input type="datetime-local" data-id="${c.id}" data-field="peak" data-key="date" value="${e.peak.date}">
+          <input type="datetime-local" data-id="${c.id}" data-field="peak" data-key="date" value="${e.peak.date}" ${disabledAttr}>
           <label class="small">Obtížnost</label>
-          <select data-id="${c.id}" data-field="peak" data-key="diff">
+          <select data-id="${c.id}" data-field="peak" data-key="diff" ${disabledAttr}>
             ${Object.entries(DIFF_LABELS).map(([k,v])=>`<option value="${k}" ${String(e.peak.diff)===k?'selected':''}>${v.label}</option>`).join('')}
           </select>
           <label class="small">Fotka z vrcholu</label>
           <div class="photo-row">
-            <label class="photo-btn" for="photo-${c.id}">Nahrát fotku</label>
-            <input type="file" accept="image/*" id="photo-${c.id}" data-id="${c.id}" style="display:none">
+            ${isAdmin ? `<label class="photo-btn" for="photo-${c.id}">Nahrát fotku</label><input type="file" accept="image/*" id="photo-${c.id}" data-id="${c.id}" style="display:none">` : ''}
             ${e.peak.photo ? `<img class="photo-thumb" src="${e.peak.photo}" onclick="openLightbox(this.src); event.stopPropagation();">` : ''}
             <span class="exif-hint ${e.peak.photoDate?'':'none'}">${e.peak.photoDate ? ('EXIF: '+formatExif(e.peak.photoDate)) : (e.peak.photo ? 'Fotka bez EXIF data.' : '')}</span>
           </div>
@@ -546,7 +667,7 @@
         <div class="item-sub">${c.capital}</div>
         <div class="item-fields">
           <label class="small">Datum</label>
-          <input type="date" data-id="${c.id}" data-field="capital" data-key="date" value="${e.capital.date}">
+          <input type="date" data-id="${c.id}" data-field="capital" data-key="date" value="${e.capital.date}" ${disabledAttr}>
         </div>
       </div>
       <div class="item">
@@ -556,14 +677,12 @@
         </div>
         <div class="item-fields">
           <label class="small">Co jsi ochutnal(a)</label>
-          <input type="text" placeholder="např. gulyás…" data-id="${c.id}" data-field="food" data-key="note" value="${escapeHtml(e.food.note)}">
+          <input type="text" placeholder="např. gulyás…" data-id="${c.id}" data-field="food" data-key="note" value="${escapeHtml(e.food.note)}" ${disabledAttr}>
           <label class="small">Datum</label>
-          <input type="date" data-id="${c.id}" data-field="food" data-key="date" value="${e.food.date}">
+          <input type="date" data-id="${c.id}" data-field="food" data-key="date" value="${e.food.date}" ${disabledAttr}>
         </div>
       </div>
-      <div style="grid-column:1/-1;text-align:right;">
-        <button class="clear-link" data-action="clear" data-id="${c.id}">Smazat data o této zemi</button>
-      </div>
+      ${isAdmin ? `<div style="grid-column:1/-1;text-align:right;"><button class="clear-link" data-action="clear" data-id="${c.id}">Smazat data o této zemi</button></div>` : ''}
     </div>
   </details>`;
     }
@@ -575,6 +694,7 @@
       <h2>Vrcholy mimo výzvu</h2>
       <p>Kavkaz, sedmitisícovky a další cíle mimo evropskou výzvu — vlastní seznam, nepočítá se do progressu výše.</p>
     </div>
+    ${isAdmin ? `
     <details class="add-form" id="addBonusForm">
       <summary>+ Přidat vrchol mimo výzvu</summary>
       <div class="add-form-body">
@@ -587,7 +707,7 @@
         </div>
         <button id="bf-save" type="button">Uložit vrchol</button>
       </div>
-    </details>
+    </details>` : ''}
     <div id="bonusListWrap">${getBonusCardsHtml()}</div>
   </div>`;
     }
@@ -598,6 +718,7 @@
 
     function renderBonusCard(b){
         const diff = DIFF_LABELS[b.diff] || DIFF_LABELS[3];
+        const disabledAttr = isAdmin ? '' : 'disabled';
         return `
   <details class="country-card bonus-card" data-status="${b.done?'full':'none'}" id="bonus-${b.id}">
     <summary>
@@ -614,23 +735,22 @@
       <div class="item">
         <div class="item-fields" style="margin-left:0;margin-top:0;">
           <label class="small">Datum a čas výstupu</label>
-          <input type="datetime-local" data-bonus="${b.id}" data-key="date" value="${b.date}">
+          <input type="datetime-local" data-bonus="${b.id}" data-key="date" value="${b.date}" ${disabledAttr}>
           <label class="small">Obtížnost</label>
-          <select data-bonus="${b.id}" data-key="diff">
+          <select data-bonus="${b.id}" data-key="diff" ${disabledAttr}>
             ${Object.entries(DIFF_LABELS).map(([k,v])=>`<option value="${k}" ${String(b.diff)===k?'selected':''}>${v.label}</option>`).join('')}
           </select>
           <label class="small">Poznámka</label>
-          <input type="text" data-bonus="${b.id}" data-key="notes" value="${escapeHtml(b.notes)}" placeholder="poznámky…">
+          <input type="text" data-bonus="${b.id}" data-key="notes" value="${escapeHtml(b.notes)}" placeholder="poznámky…" ${disabledAttr}>
           <label class="small">Fotka</label>
           <div class="photo-row">
-            <label class="photo-btn" for="bphoto-${b.id}">Nahrát fotku</label>
-            <input type="file" accept="image/*" id="bphoto-${b.id}" data-bonusphoto="${b.id}" style="display:none">
+            ${isAdmin ? `<label class="photo-btn" for="bphoto-${b.id}">Nahrát fotku</label><input type="file" accept="image/*" id="bphoto-${b.id}" data-bonusphoto="${b.id}" style="display:none">` : ''}
             ${b.photo ? `<img class="photo-thumb" src="${b.photo}" onclick="openLightbox(this.src); event.stopPropagation();">` : ''}
             <span class="exif-hint ${b.photoDate?'':'none'}">${b.photoDate ? ('EXIF: '+formatExif(b.photoDate)) : (b.photo ? 'Fotka bez EXIF data.' : '')}</span>
           </div>
         </div>
       </div>
-      <div style="text-align:right;"><button class="clear-link" data-action="bonus-delete" data-id="${b.id}">Smazat vrchol</button></div>
+      ${isAdmin ? `<div style="text-align:right;"><button class="clear-link" data-action="bonus-delete" data-id="${b.id}">Smazat vrchol</button></div>` : ''}
     </div>
   </details>`;
     }
@@ -643,6 +763,7 @@
         document.getElementById('listWrap').innerHTML = list.map(renderCountryCard).join('');
         document.getElementById('bonusSectionWrap').innerHTML = renderBonusSection();
         document.getElementById('countPill').textContent = list.length + ' / ' + COUNTRIES.length + ' zemí';
+        document.getElementById('adminPanelWrap').innerHTML = renderAdminPanel();
 
         attachBaseEvents();
         attachListEvents();
@@ -665,6 +786,8 @@
             el.addEventListener('click', async (ev)=>{
                 ev.preventDefault();
                 ev.stopPropagation();
+                if(!isAdmin) { alert("Jsi v režimu prohlížení (Guest mode). Pro úpravy se musíš přihlásit dole na stránce."); return; }
+
                 const id = el.dataset.id, field = el.dataset.field;
                 const e = getEntry(id);
                 e[field].done = !e[field].done;
@@ -679,6 +802,7 @@
         document.querySelectorAll('.card-body input[type="date"], .card-body input[type="datetime-local"], .card-body input[type="text"], .card-body select').forEach(el=>{
             if(el.dataset.bonus) return;
             el.addEventListener('change', async ()=>{
+                if(!isAdmin) return;
                 const id = el.dataset.id, field = el.dataset.field, key = el.dataset.key;
                 if(!field) return;
                 const e = getEntry(id);
@@ -693,7 +817,10 @@
             el.addEventListener('change', (ev)=> handlePhoto(ev, el.dataset.id, 'country'));
         });
         document.querySelectorAll('[data-action="clear"]').forEach(el=>{
-            el.addEventListener('click', ()=> { if(confirm('Opravdu smazat všechna uložená data pro tuto zemi?')) clearEntry(el.dataset.id); });
+            el.addEventListener('click', ()=> {
+                if(!isAdmin) return;
+                if(confirm('Opravdu smazat všechna uložená data pro tuto zemi?')) clearEntry(el.dataset.id);
+            });
         });
     }
 
@@ -710,6 +837,7 @@
         const saveBtn = document.getElementById('bf-save');
         if(saveBtn){
             saveBtn.addEventListener('click', async ()=>{
+                if(!isAdmin) return;
                 const name = document.getElementById('bf-name').value.trim();
                 if(!name){ alert('Zadej název vrcholu.'); return; }
                 const b = emptyBonus();
@@ -738,6 +866,8 @@
             el.addEventListener('click', async (ev)=>{
                 ev.preventDefault();
                 ev.stopPropagation();
+                if(!isAdmin) { alert("Jsi v režimu prohlížení (Guest mode). Pro úpravy se musíš přihlásit dole na stránce."); return; }
+
                 const id = el.dataset.id;
                 const b = bonusState[id];
                 b.done = !b.done;
@@ -755,6 +885,7 @@
         });
         document.querySelectorAll('[data-bonus]').forEach(el=>{
             el.addEventListener('change', async ()=>{
+                if(!isAdmin) return;
                 const id = el.dataset.bonus, key = el.dataset.key;
                 bonusState[id][key] = el.value;
                 await saveBonus(id);
@@ -770,19 +901,22 @@
             el.addEventListener('change', (ev)=> handlePhoto(ev, el.dataset.bonusphoto, 'bonus'));
         });
         document.querySelectorAll('[data-action="bonus-delete"]').forEach(el=>{
-            el.addEventListener('click', ()=> { if(confirm('Opravdu smazat tento vrchol?')) deleteBonus(el.dataset.id); });
+            el.addEventListener('click', ()=> {
+                if(!isAdmin) return;
+                if(confirm('Opravdu smazat tento vrchol?')) deleteBonus(el.dataset.id);
+            });
         });
     }
 
     /* ============================= PHOTO ============================= */
     async function handlePhoto(ev, id, kind){
+        if(!isAdmin) return;
         const fileInput = ev.target;
         let file = fileInput.files[0];
         if(!file) return;
 
         let isConverted = false;
 
-        // Detekce a konverze HEIC/HEIF z iPhonů
         if (file.name.toLowerCase().endsWith('.heic') || file.name.toLowerCase().endsWith('.heif') || file.type === 'image/heic') {
             try {
                 showSaving(true);
@@ -790,7 +924,6 @@
                 if(ind) ind.textContent = 'Zpracovávám HEIC…';
 
                 const convertedBlob = await heic2any({ blob: file, toType: "image/jpeg", quality: 0.8 });
-                // Převod zpět na File objekt, aby zbytek kódu fungoval beze změny
                 const convertedFile = Array.isArray(convertedBlob) ? convertedBlob[0] : convertedBlob;
                 file = new File([convertedFile], file.name.replace(/\.heic$/i, '.jpg').replace(/\.heif$/i, '.jpg'), { type: 'image/jpeg' });
                 isConverted = true;
@@ -800,7 +933,7 @@
                 console.error("HEIC konverze selhala", e);
                 alert("Nepodařilo se zpracovat formát HEIC z iPhonu. Zkuste nahrát klasický JPEG.");
                 showSaving(false);
-                fileInput.value = ''; // Reset inputu
+                fileInput.value = '';
                 return;
             }
         }
@@ -810,11 +943,10 @@
             if(finished) return;
             finished = true;
             finishPhotoProcessing(file, id, exifDateStr, kind);
-            fileInput.value = ''; // Reset inputu pro další pokus
+            fileInput.value = '';
         };
 
         if (isConverted) {
-            // heic2any většinou zahodí EXIF. Pokud bychom ho hledali v paměťovém souboru, může se prohlížeč seknout.
             proceed("");
             return;
         }
@@ -829,7 +961,6 @@
                 }
                 proceed(exifDateStr);
             });
-            // Záchranná brzda - pokud EXIF.js vytuhne a nezavolá callback
             setTimeout(() => proceed(""), 1500);
         }catch(e){
             proceed("");
