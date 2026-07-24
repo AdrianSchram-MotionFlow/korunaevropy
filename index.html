@@ -25,8 +25,9 @@
             --accent:#dba641;
             --accent-strong:#f0bd5f;
             --peak:#7fb0a0;
-            --bonus:#c9a4e8;
-            --bonus-strong:#dcc4f2;
+            /* Změněné barvy pro bonusové (neevropské) vrcholy */
+            --bonus:#4a7c59;
+            --bonus-strong:#64a377;
             --danger:#c96f5f;
             --radius:16px;
             --radius-sm:10px;
@@ -138,7 +139,7 @@
         .add-form-body{display:flex;flex-direction:column;gap:10px;padding-bottom:18px;max-width:420px;}
         .add-form-body input{background:var(--bg-soft);border:1px solid var(--border-soft);color:var(--text);padding:9px 12px;border-radius:8px;font-family:var(--font-body);font-size:13.5px;}
         .add-form-body .row2{display:flex;gap:10px;}
-        .add-form-body button{align-self:flex-start;background:var(--bonus);color:#1a1225;border:none;padding:9px 16px;border-radius:8px;font-weight:600;cursor:pointer;font-family:var(--font-body);font-size:13.5px;}
+        .add-form-body button{align-self:flex-start;background:var(--bonus);color:#ffffff;border:none;padding:9px 16px;border-radius:8px;font-weight:600;cursor:pointer;font-family:var(--font-body);font-size:13.5px;}
         .add-form-body button:hover{background:var(--bonus-strong);}
 
         .footer-note{text-align:center;color:var(--text-faint);font-size:12px;margin-top:34px;line-height:1.6;}
@@ -161,7 +162,7 @@
             <div class="map-legend">
                 <span class="li"><svg width="16" height="16" viewBox="-8 -8 16 16"><path d="M-7 8 L0 -8 L4 0 L7 8 Z" fill="#dba641" stroke="#f0bd5f" stroke-width="1"/></svg> vrchol zdolán</span>
                 <span class="li"><svg width="12" height="12" viewBox="-8 -8 16 16"><circle r="4.3" fill="#dba641" stroke="#f0bd5f" stroke-width="1.3"/></svg> hl. město navštíveno</span>
-                <span class="li"><svg width="16" height="16" viewBox="-8 -8 16 16"><path d="M0 -8 L2 -2.5 L8 -2 L3.2 1.6 L5 8 L0 4.2 L-5 8 L-3.2 1.6 L-8 -2 L-2 -2.5 Z" fill="#c9a4e8" stroke="#dcc4f2" stroke-width="1"/></svg> bonus vrchol</span>
+                <span class="li"><svg width="16" height="16" viewBox="-8 -8 16 16"><path d="M0 -8 L2 -2.5 L8 -2 L3.2 1.6 L5 8 L0 4.2 L-5 8 L-3.2 1.6 L-8 -2 L-2 -2.5 Z" fill="#4a7c59" stroke="#64a377" stroke-width="1"/></svg> neevropský vrchol</span>
             </div>
         </div>
         <div id="toolbarWrap"></div>
@@ -375,8 +376,9 @@
         Object.values(bonusState).forEach(b => {
             const lat=parseFloat(b.lat), lng=parseFloat(b.lng);
             if(isNaN(lat)||isNaN(lng)) return;
-            const bColor = b.done ? '#c9a4e8' : '#3a2f4a';
-            const bStroke = b.done ? '#dcc4f2' : '#7a6a8a';
+            // Tmavě zelená barva pro bonusové markery
+            const bColor = b.done ? '#4a7c59' : '#1c3625';
+            const bStroke = b.done ? '#64a377' : '#2d543a';
             const bHtml = `<svg width="16" height="16" viewBox="-8 -8 16 16" style="filter: drop-shadow(0 2px 3px rgba(0,0,0,0.5))"><path d="M0 -8 L2 -2.5 L8 -2 L3.2 1.6 L5 8 L0 4.2 L-5 8 L-3.2 1.6 L-8 -2 L-2 -2.5 Z" fill="${bColor}" stroke="${bStroke}" stroke-width="1"/></svg>`;
             const bIcon = L.divIcon({ html: bHtml, className: '', iconSize: [16,16], iconAnchor: [8,8] });
             L.marker([lat, lng], {icon: bIcon, zIndexOffset: b.done ? 1000 : 0})
@@ -574,7 +576,7 @@
     }
     function getBonusCardsHtml(){
         const list = Object.values(bonusState).sort((a,b)=> (b.elev||0)-(a.elev||0));
-        return list.map(renderBonusCard).join('') || '<p style="color:var(--text-faint);font-size:13px;">Zatím žádné bonusové vrcholy.</p>';
+        return list.map(renderBonusCard).join('') || '<p style="color:var(--text-faint);font-size:13px;">Zatím žádné neevropské vrcholy.</p>';
     }
 
     function renderBonusCard(b){
@@ -642,7 +644,6 @@
     }
 
     function attachListEvents(){
-        // Zamezení probublání a nechtěnému zavření
         document.querySelectorAll('[data-action="toggle"]').forEach(el=>{
             el.addEventListener('click', async (ev)=>{
                 ev.preventDefault();
