@@ -179,7 +179,7 @@
         .admin-panel .primary-btn { background: var(--accent); color: #111; border: none; font-weight: 500; }
         .admin-panel .primary-btn:hover { background: var(--accent-strong); }
 
-        .footer-note{text-align:center;color:var(--text-faint);font-size:12px;margin-top:24px;line-height:1.6;}
+        .footer-note{text-align:center;color:var(--text-faint);font-size:13px;margin-top:24px;line-height:1.6;}
         .loading{text-align:center;color:var(--text-muted);padding:60px 0;font-size:14px;}
         .save-indicator{position:fixed;bottom:18px;right:18px;background:var(--card);border:1px solid var(--border-soft);color:var(--text-muted);padding:8px 14px;border-radius:20px;font-size:12px;opacity:0;transition:opacity .3s ease;pointer-events:none;z-index:9000;}
         .save-indicator.show{opacity:1;}
@@ -210,7 +210,7 @@
         <div class="bonus-section" style="margin-top: 50px;">
             <div class="bonus-header">
                 <h2>Země na pomezí Evropy</h2>
-                <p>Tyto státy leží geograficky či politicky mimo hlavní území Evropy. Jsou součástí tvé výzvy, ale nezapočítávají se do hlavního postupu 44 zemí.</p>
+                <p>Tyto státy leží geograficky či politicky mimo hlavní území Evropy. Jsou součástí mé výzvy, ale nezapočítávají se do hlavního postupu 44 zemí.</p>
             </div>
             <div id="extraListWrap"></div>
         </div>
@@ -219,7 +219,10 @@
 
         <div id="adminPanelWrap"></div>
 
-        <div class="footer-note">Data se ukládají do tvého vlastního Netlify site (Netlify Blobs) a jsou dostupná odkudkoliv. <br>Fotky se ukládají zmenšené a zkomprimované.</div>
+        <div class="footer-note">
+            Tento tracker sdílím veřejně. Sleduj moji cestu na Instagramu <a href="https://instagram.com/tvuj_instagram" target="_blank" style="color:var(--accent); text-decoration:none; font-weight:600;">@tvuj_instagram</a> 🚀<br>
+            <span style="opacity:0.6; font-size:11.5px; margin-top:6px; display:inline-block;">Data se pro vás živě synchronizují. Fotky jsou na pozadí automaticky komprimovány.</span>
+        </div>
     </div>
 </div>
 <div class="save-indicator" id="saveIndicator">Ukládám…</div>
@@ -338,7 +341,7 @@
     let filterText = "";
     let sortMode = "az";
     let map, markersLayer;
-    let isAdmin = localStorage.getItem('ke_admin') === 'true'; // Ověření na frontendu
+    let isAdmin = localStorage.getItem('ke_admin') === 'true';
 
     function emptyEntry(){
         return {
@@ -365,14 +368,15 @@
 
     /* ============================= ADMIN ACTIONS ============================= */
     function login() {
-        const pw = prompt("Zadej heslo pro odemčení úprav:");
-        if (pw === "As300407") {
+        const pwInput = document.getElementById('adminPw');
+        if (!pwInput) return;
+        if (pwInput.value === "As300407") {
             localStorage.setItem('ke_admin', 'true');
             isAdmin = true;
             renderAll();
-            alert("Režim úprav odemčen.");
-        } else if (pw !== null) {
+        } else {
             alert("Špatné heslo.");
+            pwInput.value = '';
         }
     }
 
@@ -423,7 +427,7 @@
 
                 showSaving(false);
                 alert('Záloha úspěšně nahrána a uložena!');
-                ev.target.value = ''; // reset input
+                ev.target.value = '';
                 renderAll();
             } catch(err) {
                 alert('Chybný formát souboru zálohy.');
@@ -544,12 +548,12 @@
   <div class="hero">
     ${contourSVG}
     <div class="hero-top">
-      <div class="hero-eyebrow">Osobní výzva</div>
+      <div class="hero-eyebrow">Moje cestovatelská výzva</div>
       <h1>Koruna Evropy</h1>
-      <p class="sub">Navštívit každou evropskou zemi, vylézt na její nejvyšší vrchol, projít hlavní město a ochutnat místní jídlo. ${total} zemí, ${total} vrcholů, jeden cíl.</p>
+      <p class="sub">Mým cílem je navštívit každou evropskou zemi, zdolat její nejvyšší vrchol, projít hlavní město a ochutnat místní specialitu. Sledujte můj postup! ${total} zemí, ${total} vrcholů, jeden cíl.</p>
       <div class="progress-row">
         <div class="progress-card">
-          <div class="plabel">Vylezené vrcholy</div>
+          <div class="plabel">Zdolané vrcholy</div>
           <div class="pnum">${peaksDone} <span>/ ${total}</span></div>
           <div class="bar-track"><div class="bar-fill peaks" style="width:${(peaksDone/total*100).toFixed(1)}%"></div></div>
         </div>
@@ -594,8 +598,11 @@
         } else {
             return `
     <div class="admin-panel">
-      <div style="width:100%; font-size:13px; color:var(--text-muted); margin-bottom:4px;">Zobrazení pouze pro čtení (Guest mode)</div>
-      <button class="primary-btn" onclick="login()">🔒 Přihlásit pro úpravy</button>
+      <div style="width:100%; font-size:13px; color:var(--text-muted); margin-bottom:8px;">Zobrazení pro sledující (pouze pro čtení). Autorský přístup:</div>
+      <div style="display:flex; gap:8px; justify-content:center; align-items:center;">
+        <input type="password" id="adminPw" placeholder="Zadej heslo..." style="padding:8px 12px; border-radius:8px; border:1px solid var(--border-soft); background:var(--bg-soft); color:var(--text); font-family:var(--font-body); font-size:13px; width:140px;" onkeydown="if(event.key === 'Enter') login()">
+        <button class="primary-btn" onclick="login()">Odemknout</button>
+      </div>
     </div>
     `;
         }
@@ -655,7 +662,7 @@
       <div class="item">
         <div class="item-top">
           <div class="check ${e.visited.done?'checked':''}" data-action="toggle" data-id="${c.id}" data-field="visited">${checkSVG()}</div>
-          <div class="item-label">Navštívil(a) zemi</div>
+          <div class="item-label">Země navštívena</div>
         </div>
         <div class="item-sub">alespoň 2 dny a 1 noc</div>
         <div class="item-fields">
@@ -666,7 +673,7 @@
       <div class="item">
         <div class="item-top">
           <div class="check peakcheck ${e.peak.done?'checked':''}" data-action="toggle" data-id="${c.id}" data-field="peak">${checkSVG()}</div>
-          <div class="item-label">Vylezl(a) na vrchol</div>
+          <div class="item-label">Vrchol zdolán</div>
           ${e.peak.done ? `<span class="diff-badge" style="background:${diff.color}22;color:${diff.color};border:1px solid ${diff.color}55">${diff.label}</span>` : ''}
         </div>
         <div class="item-sub">${c.peak} · ${c.elev} m n. m.</div>
@@ -688,7 +695,7 @@
       <div class="item">
         <div class="item-top">
           <div class="check ${e.capital.done?'checked':''}" data-action="toggle" data-id="${c.id}" data-field="capital">${checkSVG()}</div>
-          <div class="item-label">Navštívil(a) hl. město</div>
+          <div class="item-label">Hlavní město navštíveno</div>
         </div>
         <div class="item-sub">${c.capital}</div>
         <div class="item-fields">
@@ -699,10 +706,10 @@
       <div class="item">
         <div class="item-top">
           <div class="check ${e.food.done?'checked':''}" data-action="toggle" data-id="${c.id}" data-field="food">${checkSVG()}</div>
-          <div class="item-label">Ochutnal(a) místní jídlo</div>
+          <div class="item-label">Ochutnáno místní jídlo</div>
         </div>
         <div class="item-fields">
-          <label class="small">Co jsi ochutnal(a)</label>
+          <label class="small">Co bylo ochutnáno</label>
           <input type="text" placeholder="např. gulyás…" data-id="${c.id}" data-field="food" data-key="note" value="${escapeHtml(e.food.note)}" ${disabledAttr}>
           <label class="small">Datum</label>
           <input type="date" data-id="${c.id}" data-field="food" data-key="date" value="${e.food.date}" ${disabledAttr}>
