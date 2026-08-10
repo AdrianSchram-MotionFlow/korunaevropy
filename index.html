@@ -199,12 +199,22 @@
             <div class="map-legend">
                 <span class="li"><svg width="16" height="16" viewBox="-8 -8 16 16"><path d="M-7 8 L0 -8 L4 0 L7 8 Z" fill="#dba641" stroke="#f0bd5f" stroke-width="1"/></svg> zdoláno</span>
                 <span class="li"><svg width="16" height="16" viewBox="-8 -8 16 16"><path d="M-7 8 L0 -8 L4 0 L7 8 Z" fill="#28513a" stroke="#557a63" stroke-width="1"/></svg> evropa</span>
-                <span class="li"><svg width="16" height="16" viewBox="-8 -8 16 16"><path d="M-7 8 L0 -8 L4 0 L7 8 Z" fill="#173322" stroke="#365c44" stroke-width="1"/></svg> kavkaz</span>
+                <span class="li"><svg width="16" height="16" viewBox="-8 -8 16 16"><path d="M-7 8 L0 -8 L4 0 L7 8 Z" fill="#173322" stroke="#365c44" stroke-width="1"/></svg> pomezí Evropy</span>
                 <span class="li"><svg width="16" height="16" viewBox="-8 -8 16 16"><path d="M0 -8 L2 -2.5 L8 -2 L3.2 1.6 L5 8 L0 4.2 L-5 8 L-3.2 1.6 L-8 -2 L-2 -2.5 Z" fill="#4a7c59" stroke="#64a377" stroke-width="1"/></svg> neevropský vrchol</span>
             </div>
         </div>
         <div id="toolbarWrap"></div>
+
         <div id="listWrap"></div>
+
+        <div class="bonus-section" style="margin-top: 50px;">
+            <div class="bonus-header">
+                <h2>Země na pomezí Evropy</h2>
+                <p>Tyto státy leží geograficky či politicky mimo hlavní území Evropy. Jsou součástí tvé výzvy, ale nezapočítávají se do hlavního postupu 44 zemí.</p>
+            </div>
+            <div id="extraListWrap"></div>
+        </div>
+
         <div id="bonusSectionWrap"></div>
 
         <div id="adminPanelWrap"></div>
@@ -219,24 +229,21 @@
 
 <script>
     /* ============================= DATA ============================= */
+    // Hlavní evropské státy (44)
     const COUNTRIES = [
         {id:"albania",name:"Albánie",capital:"Tirana",capLat:41.3275,capLng:19.8187,peak:"Korab",elev:2764,peakLat:41.7842,peakLng:20.5486},
         {id:"andorra",name:"Andorra",capital:"Andorra la Vella",capLat:42.5063,capLng:1.5218,peak:"Coma Pedrosa",elev:2942,peakLat:42.5761,peakLng:1.4703},
-        {id:"armenia",name:"Arménie",capital:"Jerevan",capLat:40.1792,capLng:44.4991,peak:"Aragac",elev:4090,peakLat:40.5377,peakLng:44.1907},
         {id:"austria",name:"Rakousko",capital:"Vídeň",capLat:48.2082,capLng:16.3738,peak:"Grossglockner",elev:3798,peakLat:47.0742,peakLng:12.6944},
-        {id:"azerbaijan",name:"Ázerbájdžán",capital:"Baku",capLat:40.4093,capLng:49.8671,peak:"Bazardüzü",elev:4466,peakLat:41.2214,peakLng:47.8583},
         {id:"belarus",name:"Bělorusko",capital:"Minsk",capLat:53.9006,capLng:27.5590,peak:"Dzjaržynská hora",elev:345,peakLat:53.6572,peakLng:26.9614},
         {id:"belgium",name:"Belgie",capital:"Brusel",capLat:50.8503,capLng:4.3517,peak:"Signal de Botrange",elev:694,peakLat:50.5064,peakLng:6.0814},
         {id:"bosnia",name:"Bosna a Hercegovina",capital:"Sarajevo",capLat:43.8563,capLng:18.4131,peak:"Maglić",elev:2386,peakLat:43.2667,peakLng:18.7833},
         {id:"bulgaria",name:"Bulharsko",capital:"Sofie",capLat:42.6977,capLng:23.3219,peak:"Musala",elev:2925,peakLat:42.1804,peakLng:23.5867},
         {id:"croatia",name:"Chorvatsko",capital:"Záhřeb",capLat:45.8150,capLng:15.9819,peak:"Dinara",elev:1831,peakLat:43.9967,peakLng:16.3814},
-        {id:"cyprus",name:"Kypr",capital:"Nikósie",capLat:35.1856,capLng:33.3823,peak:"Olympos (Troodos)",elev:1952,peakLat:34.9358,peakLng:32.8656},
         {id:"czechia",name:"Česko",capital:"Praha",capLat:50.0755,capLng:14.4378,peak:"Sněžka",elev:1603,peakLat:50.7361,peakLng:15.7400},
         {id:"denmark",name:"Dánsko",capital:"Kodaň",capLat:55.6761,capLng:12.5683,peak:"Møllehøj",elev:171,peakLat:56.0997,peakLng:9.3500},
         {id:"estonia",name:"Estonsko",capital:"Tallinn",capLat:59.4370,capLng:24.7536,peak:"Suur Munamägi",elev:318,peakLat:57.7075,peakLng:27.0561},
         {id:"finland",name:"Finsko",capital:"Helsinki",capLat:60.1699,capLng:24.9384,peak:"Halti",elev:1324,peakLat:69.3222,peakLng:21.2842},
         {id:"france",name:"Francie",capital:"Paříž",capLat:48.8566,capLng:2.3522,peak:"Mont Blanc",elev:4808,peakLat:45.8326,peakLng:6.8652},
-        {id:"georgia",name:"Gruzie",capital:"Tbilisi",capLat:41.7151,capLng:44.8271,peak:"Kazbek",elev:5054,peakLat:42.6972,peakLng:44.5194},
         {id:"germany",name:"Německo",capital:"Berlín",capLat:52.5200,capLng:13.4050,peak:"Zugspitze",elev:2962,peakLat:47.4210,peakLng:10.9852},
         {id:"greece",name:"Řecko",capital:"Athény",capLat:37.9838,capLng:23.7275,peak:"Olymp",elev:2917,peakLat:40.0855,peakLng:22.3583},
         {id:"hungary",name:"Maďarsko",capital:"Budapešť",capLat:47.4979,capLng:19.0402,peak:"Kékes",elev:1014,peakLat:47.8703,peakLng:20.0117},
@@ -258,7 +265,6 @@
         {id:"poland",name:"Polsko",capital:"Varšava",capLat:52.2297,capLng:21.0122,peak:"Rysy",elev:2499,peakLat:49.1793,peakLng:20.0881},
         {id:"portugal",name:"Portugalsko",capital:"Lisabon",capLat:38.7223,capLng:-9.1393,peak:"Serra da Estrela",elev:1993,peakLat:40.3308,peakLng:-7.6141},
         {id:"romania",name:"Rumunsko",capital:"Bukurešť",capLat:44.4268,capLng:26.1025,peak:"Moldoveanu",elev:2544,peakLat:45.6069,peakLng:24.7358},
-        {id:"russia",name:"Rusko",capital:"Moskva",capLat:55.7558,capLng:37.6173,peak:"Elbrus",elev:5642,peakLat:43.3499,peakLng:42.4453},
         {id:"sanmarino",name:"San Marino",capital:"San Marino",capLat:43.9424,capLng:12.4578,peak:"Monte Titano",elev:749,peakLat:43.9360,peakLng:12.4530},
         {id:"serbia",name:"Srbsko",capital:"Bělehrad",capLat:44.7866,capLng:20.4489,peak:"Midžor",elev:2169,peakLat:43.4058,peakLng:22.6997},
         {id:"slovakia",name:"Slovensko",capital:"Bratislava",capLat:48.1486,capLng:17.1077,peak:"Gerlachovský štít",elev:2655,peakLat:49.1667,peakLng:20.1394},
@@ -269,6 +275,15 @@
         {id:"ukraine",name:"Ukrajina",capital:"Kyjev",capLat:50.4501,capLng:30.5234,peak:"Hoverla",elev:2061,peakLat:48.1567,peakLng:24.5003},
         {id:"uk",name:"Spojené království",capital:"Londýn",capLat:51.5074,capLng:-0.1278,peak:"Ben Nevis",elev:1345,peakLat:56.7969,peakLng:-5.0036},
         {id:"vatican",name:"Vatikán",capital:"Vatikán",capLat:41.9029,capLng:12.4534,peak:"Vatikánský pahorek",elev:75,peakLat:41.9022,peakLng:12.4534}
+    ];
+
+    // Země geograficky / politicky mimo Evropu (5)
+    const EXTRA_COUNTRIES = [
+        {id:"armenia",name:"Arménie",capital:"Jerevan",capLat:40.1792,capLng:44.4991,peak:"Aragac",elev:4090,peakLat:40.5377,peakLng:44.1907},
+        {id:"azerbaijan",name:"Ázerbájdžán",capital:"Baku",capLat:40.4093,capLng:49.8671,peak:"Bazardüzü",elev:4466,peakLat:41.2214,peakLng:47.8583},
+        {id:"cyprus",name:"Kypr",capital:"Nikósie",capLat:35.1856,capLng:33.3823,peak:"Olympos (Troodos)",elev:1952,peakLat:34.9358,peakLng:32.8656},
+        {id:"georgia",name:"Gruzie",capital:"Tbilisi",capLat:41.7151,capLng:44.8271,peak:"Kazbek",elev:5054,peakLat:42.6972,peakLng:44.5194},
+        {id:"russia",name:"Rusko",capital:"Moskva",capLat:55.7558,capLng:37.6173,peak:"Elbrus",elev:5642,peakLat:43.3499,peakLng:42.4453}
     ];
 
     const DIFF_LABELS = {
@@ -465,12 +480,14 @@
         if(!map || !markersLayer) return;
         markersLayer.clearLayers();
 
-        COUNTRIES.forEach(c => {
-            const e = getEntry(c.id);
-            const isCaucasus = ['georgia', 'armenia', 'azerbaijan'].includes(c.id);
+        const allMapCountries = [...COUNTRIES, ...EXTRA_COUNTRIES];
 
-            const defaultFill = isCaucasus ? '#173322' : '#28513a';
-            const defaultStroke = isCaucasus ? '#365c44' : '#557a63';
+        allMapCountries.forEach(c => {
+            const e = getEntry(c.id);
+            const isExtra = EXTRA_COUNTRIES.some(x => x.id === c.id);
+
+            const defaultFill = isExtra ? '#173322' : '#28513a';
+            const defaultStroke = isExtra ? '#365c44' : '#557a63';
 
             const peakColor = e.peak.done ? '#dba641' : defaultFill;
             const peakStroke = e.peak.done ? '#f0bd5f' : defaultStroke;
@@ -584,8 +601,8 @@
         }
     }
 
-    function sortedFilteredCountries(){
-        let list = COUNTRIES.filter(c => c.name.toLowerCase().includes(filterText.toLowerCase()) || c.capital.toLowerCase().includes(filterText.toLowerCase()));
+    function sortedFilteredList(sourceArray){
+        let list = sourceArray.filter(c => c.name.toLowerCase().includes(filterText.toLowerCase()) || c.capital.toLowerCase().includes(filterText.toLowerCase()));
         if(sortMode==='az') list = list.slice().sort((a,b)=>a.name.localeCompare(b.name,'cs'));
         else if(sortMode==='elev') list = list.slice().sort((a,b)=>b.elev-a.elev);
         else if(sortMode==='progress'){
@@ -594,6 +611,7 @@
         }
         return list;
     }
+
     function miniDots(e){
         return `<div class="mini-dots" title="Návštěva · Vrchol · Hl. město · Jídlo">
     <div class="mini-dot ${e.visited.done?'on':''}"></div>
@@ -609,9 +627,17 @@
         const e = getEntry(c.id);
         const status = isFull(e) ? 'full' : (anyDone(e) ? 'partial' : 'none');
         const diff = DIFF_LABELS[e.peak.diff] || DIFF_LABELS[3];
-        const isCaucasus = ['georgia', 'armenia', 'azerbaijan'].includes(c.id);
-        const cardClass = isCaucasus ? 'country-card caucasus-card' : 'country-card';
+
+        const isExtra = EXTRA_COUNTRIES.some(x => x.id === c.id);
+        const cardClass = isExtra ? 'country-card caucasus-card' : 'country-card';
         const disabledAttr = isAdmin ? '' : 'disabled';
+
+        let badgeText = '';
+        if (['georgia', 'armenia', 'azerbaijan'].includes(c.id)) badgeText = 'Kavkaz';
+        else if (c.id === 'russia') badgeText = 'Eurasie';
+        else if (c.id === 'cyprus') badgeText = 'Blízký východ';
+
+        const badgeHtml = badgeText ? `<span class="caucasus-badge">${badgeText}</span>` : '';
 
         return `
   <details class="${cardClass}" data-status="${status}" id="card-${c.id}">
@@ -619,7 +645,7 @@
       <div class="card-head">
         <span class="chevron">▶</span>
         <div class="card-titles">
-          <div class="cname">${c.name} ${isCaucasus ? '<span class="caucasus-badge">Kavkaz</span>' : ''}</div>
+          <div class="cname">${c.name} ${badgeHtml}</div>
           <div class="cmeta">${c.capital} · ${c.peak} (${c.elev} m)</div>
         </div>
         ${miniDots(e)}
@@ -689,10 +715,10 @@
 
     function renderBonusSection(){
         return `
-  <div class="bonus-section">
+  <div class="bonus-section" style="margin-top: 50px;">
     <div class="bonus-header">
-      <h2>Vrcholy mimo výzvu</h2>
-      <p>Kavkaz, sedmitisícovky a další cíle mimo evropskou výzvu — vlastní seznam, nepočítá se do progressu výše.</p>
+      <h2>Vlastní vrcholy mimo výzvu</h2>
+      <p>Sedmitisícovky a další cíle zcela mimo evropskou výzvu.</p>
     </div>
     ${isAdmin ? `
     <details class="add-form" id="addBonusForm">
@@ -759,8 +785,12 @@
     function renderAll(){
         updateHeroInPlace();
         document.getElementById('toolbarWrap').innerHTML = renderToolbar();
-        const list = sortedFilteredCountries();
+
+        const list = sortedFilteredList(COUNTRIES);
+        const extraList = sortedFilteredList(EXTRA_COUNTRIES);
+
         document.getElementById('listWrap').innerHTML = list.map(renderCountryCard).join('');
+        document.getElementById('extraListWrap').innerHTML = extraList.map(renderCountryCard).join('');
         document.getElementById('bonusSectionWrap').innerHTML = renderBonusSection();
         document.getElementById('countPill').textContent = list.length + ' / ' + COUNTRIES.length + ' zemí';
         document.getElementById('adminPanelWrap').innerHTML = renderAdminPanel();
@@ -773,8 +803,10 @@
     function attachBaseEvents(){
         document.getElementById('searchInput').addEventListener('input', (ev)=>{
             filterText = ev.target.value;
-            const list = sortedFilteredCountries();
+            const list = sortedFilteredList(COUNTRIES);
+            const extraList = sortedFilteredList(EXTRA_COUNTRIES);
             document.getElementById('listWrap').innerHTML = list.map(renderCountryCard).join('');
+            document.getElementById('extraListWrap').innerHTML = extraList.map(renderCountryCard).join('');
             document.getElementById('countPill').textContent = list.length + ' / ' + COUNTRIES.length + ' zemí';
             attachListEvents();
         });
@@ -827,8 +859,10 @@
     function preserveOpenAndRerenderList(id){
         const card = document.getElementById('card-'+id);
         const wasOpen = card ? card.hasAttribute('open') : false;
-        const list = sortedFilteredCountries();
-        document.getElementById('listWrap').innerHTML = list.map(renderCountryCard).join('');
+
+        document.getElementById('listWrap').innerHTML = sortedFilteredList(COUNTRIES).map(renderCountryCard).join('');
+        document.getElementById('extraListWrap').innerHTML = sortedFilteredList(EXTRA_COUNTRIES).map(renderCountryCard).join('');
+
         attachListEvents();
         if(wasOpen){ const c2 = document.getElementById('card-'+id); if(c2) c2.setAttribute('open',''); }
     }
