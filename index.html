@@ -210,7 +210,7 @@
         <div class="bonus-section" style="margin-top: 50px;">
             <div class="bonus-header">
                 <h2>Země na pomezí Evropy</h2>
-                <p>Tyto státy leží geograficky či politicky mimo hlavní území Evropy. Jsou součástí mé výzvy, ale nezapočítávají se do hlavního postupu 44 zemí.</p>
+                <p>Tyto státy leží geograficky či politicky mimo hlavní území Evropy. Jsou součástí mé výzvy, ale nezapočítávají se do hlavního postupu 46 zemí.</p>
             </div>
             <div id="extraListWrap"></div>
         </div>
@@ -220,7 +220,7 @@
         <div id="adminPanelWrap"></div>
 
         <div class="footer-note">
-            Tento tracker sdílím veřejně. Sleduj moji cestu na Instagramu <a href="https://www.instagram.com/adrian.schram/" target="_blank" style="color:var(--accent); text-decoration:none; font-weight:600;">@adrian.schram</a> 🚀<br>
+            Tento tracker sdílím veřejně. Sleduj moji cestu na Instagramu <a href="https://instagram.com/tvuj_instagram" target="_blank" style="color:var(--accent); text-decoration:none; font-weight:600;">@tvuj_instagram</a> 🚀<br>
             <span style="opacity:0.6; font-size:11.5px; margin-top:6px; display:inline-block;">Data se pro vás živě synchronizují. Fotky jsou na pozadí automaticky komprimovány.</span>
         </div>
     </div>
@@ -232,7 +232,7 @@
 
 <script>
     /* ============================= DATA ============================= */
-    // Hlavní evropské státy (44)
+    // Hlavní evropské státy (46 vč. Ruska a Kypru)
     const COUNTRIES = [
         {id:"albania",name:"Albánie",capital:"Tirana",capLat:41.3275,capLng:19.8187,peak:"Korab",elev:2764,peakLat:41.7842,peakLng:20.5486},
         {id:"andorra",name:"Andorra",capital:"Andorra la Vella",capLat:42.5063,capLng:1.5218,peak:"Coma Pedrosa",elev:2942,peakLat:42.5761,peakLng:1.4703},
@@ -242,6 +242,7 @@
         {id:"bosnia",name:"Bosna a Hercegovina",capital:"Sarajevo",capLat:43.8563,capLng:18.4131,peak:"Maglić",elev:2386,peakLat:43.2667,peakLng:18.7833},
         {id:"bulgaria",name:"Bulharsko",capital:"Sofie",capLat:42.6977,capLng:23.3219,peak:"Musala",elev:2925,peakLat:42.1804,peakLng:23.5867},
         {id:"croatia",name:"Chorvatsko",capital:"Záhřeb",capLat:45.8150,capLng:15.9819,peak:"Dinara",elev:1831,peakLat:43.9967,peakLng:16.3814},
+        {id:"cyprus",name:"Kypr",capital:"Nikósie",capLat:35.1856,capLng:33.3823,peak:"Olympos (Troodos)",elev:1952,peakLat:34.9358,peakLng:32.8656},
         {id:"czechia",name:"Česko",capital:"Praha",capLat:50.0755,capLng:14.4378,peak:"Sněžka",elev:1603,peakLat:50.7361,peakLng:15.7400},
         {id:"denmark",name:"Dánsko",capital:"Kodaň",capLat:55.6761,capLng:12.5683,peak:"Møllehøj",elev:171,peakLat:56.0997,peakLng:9.3500},
         {id:"estonia",name:"Estonsko",capital:"Tallinn",capLat:59.4370,capLng:24.7536,peak:"Suur Munamägi",elev:318,peakLat:57.7075,peakLng:27.0561},
@@ -263,11 +264,12 @@
         {id:"monaco",name:"Monako",capital:"Monako",capLat:43.7384,capLng:7.4246,peak:"Chemin des Révoires",elev:161,peakLat:43.7500,peakLng:7.4200},
         {id:"montenegro",name:"Černá Hora",capital:"Podgorica",capLat:42.4304,capLng:19.2594,peak:"Zla Kolata",elev:2534,peakLat:42.6167,peakLng:19.8167},
         {id:"netherlands",name:"Nizozemsko",capital:"Amsterdam",capLat:52.3676,capLng:4.9041,peak:"Vaalserberg",elev:322,peakLat:50.7539,peakLng:6.0208},
-        {id:"nmacedonia",name:"Severní Makedonie",capital:"Skopje",capLat:41.9981,capLng:21.4254,peak:"Golem Korab",elev:2764,peakLat:41.7842,peakLng:20.5486},
+        {id:"nmacedonia",name:"Severní Makedonie",capital:"Skopje",capLat:41.9981,capLng:21.4254,peak:"Korab",elev:2764,peakLat:41.7842,peakLng:20.5486},
         {id:"norway",name:"Norsko",capital:"Oslo",capLat:59.9139,capLng:10.7522,peak:"Galdhøpiggen",elev:2469,peakLat:61.6360,peakLng:8.3125},
         {id:"poland",name:"Polsko",capital:"Varšava",capLat:52.2297,capLng:21.0122,peak:"Rysy",elev:2499,peakLat:49.1793,peakLng:20.0881},
         {id:"portugal",name:"Portugalsko",capital:"Lisabon",capLat:38.7223,capLng:-9.1393,peak:"Serra da Estrela",elev:1993,peakLat:40.3308,peakLng:-7.6141},
         {id:"romania",name:"Rumunsko",capital:"Bukurešť",capLat:44.4268,capLng:26.1025,peak:"Moldoveanu",elev:2544,peakLat:45.6069,peakLng:24.7358},
+        {id:"russia",name:"Rusko",capital:"Moskva",capLat:55.7558,capLng:37.6173,peak:"Elbrus",elev:5642,peakLat:43.3499,peakLng:42.4453},
         {id:"sanmarino",name:"San Marino",capital:"San Marino",capLat:43.9424,capLng:12.4578,peak:"Monte Titano",elev:749,peakLat:43.9360,peakLng:12.4530},
         {id:"serbia",name:"Srbsko",capital:"Bělehrad",capLat:44.7866,capLng:20.4489,peak:"Midžor",elev:2169,peakLat:43.4058,peakLng:22.6997},
         {id:"slovakia",name:"Slovensko",capital:"Bratislava",capLat:48.1486,capLng:17.1077,peak:"Gerlachovský štít",elev:2655,peakLat:49.1667,peakLng:20.1394},
@@ -280,14 +282,20 @@
         {id:"vatican",name:"Vatikán",capital:"Vatikán",capLat:41.9029,capLng:12.4534,peak:"Vatikánský pahorek",elev:75,peakLat:41.9022,peakLng:12.4534}
     ];
 
-    // Země geograficky / politicky mimo Evropu (5)
+    // Kavkaz - politicky/geograficky hraniční země
     const EXTRA_COUNTRIES = [
         {id:"armenia",name:"Arménie",capital:"Jerevan",capLat:40.1792,capLng:44.4991,peak:"Aragac",elev:4090,peakLat:40.5377,peakLng:44.1907},
         {id:"azerbaijan",name:"Ázerbájdžán",capital:"Baku",capLat:40.4093,capLng:49.8671,peak:"Bazardüzü",elev:4466,peakLat:41.2214,peakLng:47.8583},
-        {id:"cyprus",name:"Kypr",capital:"Nikósie",capLat:35.1856,capLng:33.3823,peak:"Olympos (Troodos)",elev:1952,peakLat:34.9358,peakLng:32.8656},
-        {id:"georgia",name:"Gruzie",capital:"Tbilisi",capLat:41.7151,capLng:44.8271,peak:"Kazbek",elev:5054,peakLat:42.6972,peakLng:44.5194},
-        {id:"russia",name:"Rusko",capital:"Moskva",capLat:55.7558,capLng:37.6173,peak:"Elbrus",elev:5642,peakLat:43.3499,peakLng:42.4453}
+        {id:"georgia",name:"Gruzie",capital:"Tbilisi",capLat:41.7151,capLng:44.8271,peak:"Kazbek",elev:5054,peakLat:42.6972,peakLng:44.5194}
     ];
+
+    // Definice sdílených vrcholů, aby se automaticky zrcadlily do druhé země[cite: 1]
+    const SHARED_PEAKS = {
+        "france": "italy",
+        "italy": "france",
+        "albania": "nmacedonia",
+        "nmacedonia": "albania"
+    };
 
     const DIFF_LABELS = {
         1:{label:"Snadná", color:"#7fb0a0"},
@@ -438,6 +446,17 @@
         reader.readAsText(file);
     }
 
+    /* Zrcadlení dat u sdílených vrcholů */
+    async function handleSyncAndSave(id) {
+        await saveEntry(id);
+        // Pokud měním zemi se sdíleným vrcholem, zrcadlím data vrcholu do spřátelené země
+        if(SHARED_PEAKS[id]) {
+            const targetId = SHARED_PEAKS[id];
+            getEntry(targetId).peak = JSON.parse(JSON.stringify(getEntry(id).peak));
+            await saveEntry(targetId);
+        }
+    }
+
     /* ============================= LOAD / SAVE ============================= */
     async function loadAll(){
         try{
@@ -533,11 +552,24 @@
 
     /* ============================= UI COMPONENTS ============================= */
     function renderHero(){
-        const total = COUNTRIES.length;
-        const peaksDone = COUNTRIES.filter(c=>getEntry(c.id).peak.done).length;
+        const totalCountries = COUNTRIES.length;
+        const totalUniquePeaks = 44;
+
+        // Získání unikátních vrcholů[cite: 1]
+        let uniquePeaksDoneSet = new Set();
+        COUNTRIES.forEach(c => {
+            if (getEntry(c.id).peak.done) {
+                if (c.id === 'italy' || c.id === 'france') uniquePeaksDoneSet.add('mont_blanc');
+                else if (c.id === 'albania' || c.id === 'nmacedonia') uniquePeaksDoneSet.add('korab');
+                else uniquePeaksDoneSet.add(c.id);
+            }
+        });
+        const peaksDone = uniquePeaksDoneSet.size;
         const fullDone = COUNTRIES.filter(c=>isFull(getEntry(c.id))).length;
+
         const bonusDone = Object.values(bonusState).filter(b=>b.done).length;
         const bonusTotal = Object.keys(bonusState).length;
+
         const contourSVG = `<svg class="hero-contours" viewBox="0 0 600 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M-20 160 Q 100 100 220 150 T 460 130 T 640 160" stroke="#dba641" stroke-width="1" fill="none"/>
     <path d="M-20 180 Q 120 130 240 170 T 480 150 T 640 180" stroke="#dba641" stroke-width="1" fill="none"/>
@@ -550,17 +582,17 @@
     <div class="hero-top">
       <div class="hero-eyebrow">Moje cestovatelská výzva</div>
       <h1>Koruna Evropy</h1>
-      <p class="sub">Mým cílem je navštívit každou evropskou zemi, zdolat její nejvyšší vrchol, projít hlavní město a ochutnat místní specialitu. Sledujte můj postup! ${total} zemí, ${total} vrcholů, jeden cíl.</p>
+      <p class="sub">Mým cílem je navštívit každou evropskou zemi, zdolat její nejvyšší vrchol, projít hlavní město a ochutnat místní specialitu. Sledujte můj postup! ${totalCountries} zemí, ${totalUniquePeaks} vrcholů, jeden cíl.</p>
       <div class="progress-row">
         <div class="progress-card">
-          <div class="plabel">Zdolané vrcholy</div>
-          <div class="pnum">${peaksDone} <span>/ ${total}</span></div>
-          <div class="bar-track"><div class="bar-fill peaks" style="width:${(peaksDone/total*100).toFixed(1)}%"></div></div>
+          <div class="plabel">Unikátní vrcholy</div>
+          <div class="pnum">${peaksDone} <span>/ ${totalUniquePeaks}</span></div>
+          <div class="bar-track"><div class="bar-fill peaks" style="width:${(peaksDone/totalUniquePeaks*100).toFixed(1)}%"></div></div>
         </div>
         <div class="progress-card">
           <div class="plabel">Kompletní země</div>
-          <div class="pnum">${fullDone} <span>/ ${total}</span></div>
-          <div class="bar-track"><div class="bar-fill complete" style="width:${(fullDone/total*100).toFixed(1)}%"></div></div>
+          <div class="pnum">${fullDone} <span>/ ${totalCountries}</span></div>
+          <div class="bar-track"><div class="bar-fill complete" style="width:${(fullDone/totalCountries*100).toFixed(1)}%"></div></div>
         </div>
       </div>
       ${bonusTotal>0 ? `<div class="bonus-count">+ ${bonusDone} / ${bonusTotal} vrcholů zdoláno mimo výzvu</div>` : ''}
@@ -641,8 +673,6 @@
 
         let badgeText = '';
         if (['georgia', 'armenia', 'azerbaijan'].includes(c.id)) badgeText = 'Kavkaz';
-        else if (c.id === 'russia') badgeText = 'Eurasie';
-        else if (c.id === 'cyprus') badgeText = 'Blízký východ';
 
         const badgeHtml = badgeText ? `<span class="caucasus-badge">${badgeText}</span>` : '';
 
@@ -832,7 +862,9 @@
                 e[field].done = !e[field].done;
                 if(e[field].done && field!=='peak' && field!=='food' && !e[field].date) e[field].date = new Date().toISOString().slice(0,10);
                 if(e[field].done && field==='peak' && !e.peak.date) e.peak.date = new Date().toISOString().slice(0,16);
-                await saveEntry(id);
+
+                await handleSyncAndSave(id); // Synchronizace spřátelené země[cite: 1]
+
                 preserveOpenAndRerenderList(id);
                 updateHeroInPlace();
                 refreshMap();
@@ -846,7 +878,9 @@
                 if(!field) return;
                 const e = getEntry(id);
                 e[field][key] = el.value;
-                await saveEntry(id);
+
+                await handleSyncAndSave(id); // Synchronizace spřátelené země[cite: 1]
+
                 preserveOpenAndRerenderList(id);
                 updateHeroInPlace();
                 refreshMap();
@@ -1027,7 +1061,8 @@
                     e.peak.photo = dataUrl;
                     e.peak.photoDate = exifDateStr;
                     if(exifDateStr && !e.peak.date) e.peak.date = exifDateStr;
-                    await saveEntry(id);
+
+                    await handleSyncAndSave(id); // Synchronizace spřátelené země[cite: 1]
                     preserveOpenAndRerenderList(id);
                 } else {
                     const b = bonusState[id];
