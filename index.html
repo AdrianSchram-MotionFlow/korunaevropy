@@ -211,7 +211,7 @@
         <div id="adminPanelWrap"></div>
 
         <div class="footer-note">
-            Tento tracker sdílím veřejně. Sleduj moji cestu na Instagramu <a href="https://instagram.com/tvuj_instagram" target="_blank" style="color:var(--accent); text-decoration:none; font-weight:600;">@tvuj_instagram</a> 🚀<br>
+            Tento tracker sdílím veřejně. Sleduj moji cestu na Instagramu <a href="https://www.instagram.com/adrian.schram/" target="_blank" style="color:var(--accent); text-decoration:none; font-weight:600;">@adrian.schram</a> 🚀<br>
             <span style="opacity:0.6; font-size:11.5px; margin-top:6px; display:inline-block;">Data se pro vás živě synchronizují. Fotky jsou na pozadí automaticky komprimovány.</span>
         </div>
     </div>
@@ -223,7 +223,7 @@
 
 <script>
     /* ============================= DATA ============================= */
-    // Hlavní evropské státy (46 vč. Ruska a Kypru)[cite: 1]
+    // Hlavní evropské státy (46 vč. Ruska a Kypru)
     const COUNTRIES = [
         {id:"albania",name:"Albánie",capital:"Tirana",capLat:41.3275,capLng:19.8187,peak:"Korab",elev:2764,peakLat:41.7842,peakLng:20.5486},
         {id:"andorra",name:"Andorra",capital:"Andorra la Vella",capLat:42.5063,capLng:1.5218,peak:"Coma Pedrosa",elev:2942,peakLat:42.5761,peakLng:1.4703},
@@ -279,7 +279,7 @@
         {id:"georgia",name:"Gruzie",capital:"Tbilisi",capLat:41.7151,capLng:44.8271,peak:"Kazbek",elev:5054,peakLat:42.6972,peakLng:44.5194}
     ];
 
-    // Definice sdílených vrcholů, aby se automaticky zrcadlily do druhé země[cite: 1]
+    // Definice sdílených vrcholů, aby se automaticky zrcadlily do druhé země
     const SHARED_PEAKS = {
         "france": "italy",
         "italy": "france",
@@ -545,7 +545,7 @@
         const totalCountries = COUNTRIES.length;
         const totalUniquePeaks = 44;
 
-        // Získání unikátních vrcholů[cite: 1]
+        // Získání unikátních vrcholů
         let uniquePeaksDoneSet = new Set();
         COUNTRIES.forEach(c => {
             if (getEntry(c.id).peak.done) {
@@ -858,7 +858,7 @@
                 if(e[field].done && field!=='peak' && field!=='food' && !e[field].date) e[field].date = new Date().toISOString().slice(0,10);
                 if(e[field].done && field==='peak' && !e.peak.date) e.peak.date = new Date().toISOString().slice(0,16);
 
-                await handleSyncAndSave(id); // Synchronizace spřátelené země[cite: 1]
+                await handleSyncAndSave(id);
 
                 preserveOpenAndRerenderList(id);
                 updateHeroInPlace();
@@ -874,7 +874,7 @@
                 const e = getEntry(id);
                 e[field][key] = el.value;
 
-                await handleSyncAndSave(id); // Synchronizace spřátelené země[cite: 1]
+                await handleSyncAndSave(id);
 
                 preserveOpenAndRerenderList(id);
                 updateHeroInPlace();
@@ -1059,7 +1059,7 @@
                     e.peak.photoDate = exifDateStr;
                     if(exifDateStr && !e.peak.date) e.peak.date = exifDateStr;
 
-                    await handleSyncAndSave(id); // Synchronizace spřátelené země[cite: 1]
+                    await handleSyncAndSave(id);
                     preserveOpenAndRerenderList(id);
                 } else {
                     const b = bonusState[id];
