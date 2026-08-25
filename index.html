@@ -138,10 +138,10 @@
         .clear-link{font-size:11px;color:var(--text-faint);text-decoration:underline;cursor:pointer;background:none;border:none;font-family:var(--font-body);padding:0;}
         .clear-link:hover{color:var(--danger);}
 
-        .bonus-section{margin-top:38px;}
+        .bonus-section{margin-top:50px;}
         .bonus-header{margin-bottom:14px;}
         .bonus-header h2{font-size:22px;font-weight:700;color:var(--text);}
-        .bonus-header p{color:var(--text-muted);font-size:13.5px;margin-top:4px;}
+        .bonus-header p{color:var(--text-muted);font-size:13.5px;margin-top:4px; line-height: 1.5;}
         .add-form{background:var(--card);border:1px solid var(--border-soft);border-radius:var(--radius-sm);margin-bottom:14px;padding:0 16px;}
         .add-form summary{list-style:none;cursor:pointer;padding:14px 0;font-family:var(--font-body);font-weight:500;color:var(--accent-strong);font-size:13.5px;}
         .add-form summary::-webkit-details-marker{display:none;}
@@ -206,15 +206,6 @@
         <div id="toolbarWrap"></div>
 
         <div id="listWrap"></div>
-
-        <div class="bonus-section" style="margin-top: 50px;">
-            <div class="bonus-header">
-                <h2>Země na pomezí Evropy</h2>
-                <p>Tyto státy leží geograficky či politicky mimo hlavní území Evropy. Jsou součástí mé výzvy, ale nezapočítávají se do hlavního postupu 46 zemí.</p>
-            </div>
-            <div id="extraListWrap"></div>
-        </div>
-
         <div id="bonusSectionWrap"></div>
 
         <div id="adminPanelWrap"></div>
@@ -232,7 +223,7 @@
 
 <script>
     /* ============================= DATA ============================= */
-    // Hlavní evropské státy (46 vč. Ruska a Kypru)
+    // Hlavní evropské státy (46 vč. Ruska a Kypru)[cite: 1]
     const COUNTRIES = [
         {id:"albania",name:"Albánie",capital:"Tirana",capLat:41.3275,capLng:19.8187,peak:"Korab",elev:2764,peakLat:41.7842,peakLng:20.5486},
         {id:"andorra",name:"Andorra",capital:"Andorra la Vella",capLat:42.5063,capLng:1.5218,peak:"Coma Pedrosa",elev:2942,peakLat:42.5761,peakLng:1.4703},
@@ -282,10 +273,9 @@
         {id:"vatican",name:"Vatikán",capital:"Vatikán",capLat:41.9029,capLng:12.4534,peak:"Vatikánský pahorek",elev:75,peakLat:41.9022,peakLng:12.4534}
     ];
 
-    // Kavkaz - politicky/geograficky hraniční země
+    // Kavkaz - politicky/geograficky hraniční země (pouze jako zmínky mimo výzvu)
     const EXTRA_COUNTRIES = [
         {id:"armenia",name:"Arménie",capital:"Jerevan",capLat:40.1792,capLng:44.4991,peak:"Aragac",elev:4090,peakLat:40.5377,peakLng:44.1907},
-        {id:"azerbaijan",name:"Ázerbájdžán",capital:"Baku",capLat:40.4093,capLng:49.8671,peak:"Bazardüzü",elev:4466,peakLat:41.2214,peakLng:47.8583},
         {id:"georgia",name:"Gruzie",capital:"Tbilisi",capLat:41.7151,capLng:44.8271,peak:"Kazbek",elev:5054,peakLat:42.6972,peakLng:44.5194}
     ];
 
@@ -567,9 +557,6 @@
         const peaksDone = uniquePeaksDoneSet.size;
         const fullDone = COUNTRIES.filter(c=>isFull(getEntry(c.id))).length;
 
-        const bonusDone = Object.values(bonusState).filter(b=>b.done).length;
-        const bonusTotal = Object.keys(bonusState).length;
-
         const contourSVG = `<svg class="hero-contours" viewBox="0 0 600 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M-20 160 Q 100 100 220 150 T 460 130 T 640 160" stroke="#dba641" stroke-width="1" fill="none"/>
     <path d="M-20 180 Q 120 130 240 170 T 480 150 T 640 180" stroke="#dba641" stroke-width="1" fill="none"/>
@@ -595,7 +582,6 @@
           <div class="bar-track"><div class="bar-fill complete" style="width:${(fullDone/totalCountries*100).toFixed(1)}%"></div></div>
         </div>
       </div>
-      ${bonusTotal>0 ? `<div class="bonus-count">+ ${bonusDone} / ${bonusTotal} vrcholů zdoláno mimo výzvu</div>` : ''}
     </div>
   </div>`;
     }
@@ -672,7 +658,7 @@
         const disabledAttr = isAdmin ? '' : 'disabled';
 
         let badgeText = '';
-        if (['georgia', 'armenia', 'azerbaijan'].includes(c.id)) badgeText = 'Kavkaz';
+        if (['georgia', 'armenia'].includes(c.id)) badgeText = 'Kavkaz';
 
         const badgeHtml = badgeText ? `<span class="caucasus-badge">${badgeText}</span>` : '';
 
@@ -751,15 +737,21 @@
     }
 
     function renderBonusSection(){
+        const extraList = sortedFilteredList(EXTRA_COUNTRIES);
+        const extraCardsHtml = extraList.map(renderCountryCard).join('');
+
         return `
   <div class="bonus-section" style="margin-top: 50px;">
     <div class="bonus-header">
-      <h2>Vlastní vrcholy mimo výzvu</h2>
-      <p>Sedmitisícovky a další cíle zcela mimo evropskou výzvu.</p>
+      <h2>Vrcholy a zmínky mimo výzvu</h2>
+      <p>Tyto cíle nejsou součástí hlavní výzvy 46 zemí, ale budou mě na mé cestě doprovázet jako hezké zmínky. Patří sem například vysoké kavkazské hory jako Aragac nebo Kazbek. (Pozn.: Kazbek sice není nejvyšší horou Gruzie – tou je Šchara – ale logisticky i lezecky jsem si pro výstup vybral právě Kazbek). Níže najdete i další přidané extra cíle.</p>
     </div>
+
+    <div id="extraListWrap">${extraCardsHtml}</div>
+
     ${isAdmin ? `
-    <details class="add-form" id="addBonusForm">
-      <summary>+ Přidat vrchol mimo výzvu</summary>
+    <details class="add-form" id="addBonusForm" style="margin-top:20px;">
+      <summary>+ Přidat další vlastní vrchol</summary>
       <div class="add-form-body">
         <input type="text" id="bf-name" placeholder="Název vrcholu (např. Ushba)">
         <input type="text" id="bf-region" placeholder="Region / země (např. Gruzie, Kavkaz)">
@@ -774,9 +766,10 @@
     <div id="bonusListWrap">${getBonusCardsHtml()}</div>
   </div>`;
     }
+
     function getBonusCardsHtml(){
         const list = Object.values(bonusState).sort((a,b)=> (b.elev||0)-(a.elev||0));
-        return list.map(renderBonusCard).join('') || '<p style="color:var(--text-faint);font-size:13px;">Zatím žádné neevropské vrcholy.</p>';
+        return list.map(renderBonusCard).join('') || '<p style="color:var(--text-faint);font-size:13px; margin-top:10px;">Zatím žádné další vlastní vrcholy.</p>';
     }
 
     function renderBonusCard(b){
@@ -824,11 +817,10 @@
         document.getElementById('toolbarWrap').innerHTML = renderToolbar();
 
         const list = sortedFilteredList(COUNTRIES);
-        const extraList = sortedFilteredList(EXTRA_COUNTRIES);
 
         document.getElementById('listWrap').innerHTML = list.map(renderCountryCard).join('');
-        document.getElementById('extraListWrap').innerHTML = extraList.map(renderCountryCard).join('');
         document.getElementById('bonusSectionWrap').innerHTML = renderBonusSection();
+
         document.getElementById('countPill').textContent = list.length + ' / ' + COUNTRIES.length + ' zemí';
         document.getElementById('adminPanelWrap').innerHTML = renderAdminPanel();
 
@@ -841,9 +833,12 @@
         document.getElementById('searchInput').addEventListener('input', (ev)=>{
             filterText = ev.target.value;
             const list = sortedFilteredList(COUNTRIES);
-            const extraList = sortedFilteredList(EXTRA_COUNTRIES);
             document.getElementById('listWrap').innerHTML = list.map(renderCountryCard).join('');
-            document.getElementById('extraListWrap').innerHTML = extraList.map(renderCountryCard).join('');
+
+            const extraList = sortedFilteredList(EXTRA_COUNTRIES);
+            const extraWrap = document.getElementById('extraListWrap');
+            if(extraWrap) extraWrap.innerHTML = extraList.map(renderCountryCard).join('');
+
             document.getElementById('countPill').textContent = list.length + ' / ' + COUNTRIES.length + ' zemí';
             attachListEvents();
         });
@@ -902,7 +897,9 @@
         const wasOpen = card ? card.hasAttribute('open') : false;
 
         document.getElementById('listWrap').innerHTML = sortedFilteredList(COUNTRIES).map(renderCountryCard).join('');
-        document.getElementById('extraListWrap').innerHTML = sortedFilteredList(EXTRA_COUNTRIES).map(renderCountryCard).join('');
+
+        const extraWrap = document.getElementById('extraListWrap');
+        if(extraWrap) extraWrap.innerHTML = sortedFilteredList(EXTRA_COUNTRIES).map(renderCountryCard).join('');
 
         attachListEvents();
         if(wasOpen){ const c2 = document.getElementById('card-'+id); if(c2) c2.setAttribute('open',''); }
