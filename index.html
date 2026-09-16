@@ -70,7 +70,6 @@
         .bar-track{height:7px;border-radius:5px;background:rgba(255,255,255,0.06);margin-top:12px;overflow:hidden;}
         .bar-fill{height:100%;border-radius:5px;transition:width .5s ease;}
         .bar-fill.peaks{background:linear-gradient(90deg,var(--accent),var(--accent-strong));}
-        .bonus-count{margin-top:12px;font-size:12.5px;color:var(--bonus-strong);position:relative;z-index:1;}
 
         .map-wrap{border-radius:var(--radius);overflow:hidden;border:1px solid var(--border-soft);margin-bottom:26px;position:relative;background:#081209;}
         #mapCanvas{width:100%;height:480px;background:#081209;z-index:1;}
@@ -81,7 +80,7 @@
         .toolbar{display:flex;gap:10px;align-items:center;margin-bottom:16px;flex-wrap:wrap;}
         .toolbar input[type="text"]{flex:1;min-width:180px;background:var(--card);border:1px solid var(--border-soft);color:var(--text);padding:10px 14px;border-radius:var(--radius-sm);font-family:var(--font-body);font-size:14px;}
         .toolbar input[type="text"]::placeholder{color:var(--text-faint);}
-        .toolbar select{background:var(--card);border:1px solid var(--border-soft);color:var(--text);padding:10px 12px;border-radius:var(--radius-sm);font-family:var(--font-body);font-size:14px;}
+        .toolbar select{background:var(--card);border:1px solid var(--border-soft);color:var(--text);padding:10px 12px;border-radius:var(--radius-sm);font-family:var(--font-body);font-size:14px; cursor:pointer;}
         .count-pill{font-size:12px;color:var(--text-muted);white-space:nowrap;}
 
         .country-card{background:var(--card);border:1px solid var(--border-soft);border-left:3px solid var(--border);border-radius:var(--radius-sm);margin-bottom:10px;overflow:hidden;transition:border-color .2s ease, background .2s ease;}
@@ -117,6 +116,10 @@
         .item-fields input:disabled { opacity:0.6; cursor:not-allowed; }
         .item-fields label.small{font-size:11.5px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.05em;font-weight:500;}
         .diff-badge{display:inline-block;font-size:11px;padding:3px 8px;border-radius:20px;font-weight:600;}
+
+        .stats-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 4px; max-width:400px; }
+        .stats-row .stat-col { flex: 1; min-width: 100px; }
+        .stats-row input { width: 100% !important; margin-top: 4px;}
 
         /* Rating Pills */
         .rating-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom:4px; }
@@ -227,7 +230,6 @@
 
 <script>
     /* ============================= DATA ============================= */
-    // Přidáno ISO_A3 pro spárování s mapovými daty
     const COUNTRIES = [
         {id:"albania",iso:"ALB",name:"Albánie",capital:"Tirana",capLat:41.3275,capLng:19.8187,peak:"Korab",elev:2764,peakLat:41.7842,peakLng:20.5486},
         {id:"andorra",iso:"AND",name:"Andorra",capital:"Andorra la Vella",capLat:42.5063,capLng:1.5218,peak:"Coma Pedrosa",elev:2942,peakLat:42.5761,peakLng:1.4703},
@@ -249,7 +251,7 @@
         {id:"iceland",iso:"ISL",name:"Island",capital:"Reykjavík",capLat:64.1466,capLng:-21.9426,peak:"Hvannadalshnúkur",elev:2110,peakLat:64.0157,peakLng:-16.6845},
         {id:"ireland",iso:"IRL",name:"Irsko",capital:"Dublin",capLat:53.3498,capLng:-6.2603,peak:"Carrauntoohil",elev:1038,peakLat:51.9992,peakLng:-9.7549},
         {id:"italy",iso:"ITA",name:"Itálie",capital:"Řím",capLat:41.9028,capLng:12.4964,peak:"Mont Blanc (Monte Bianco)",elev:4808,peakLat:45.8326,peakLng:6.8652},
-        {id:"kosovo",iso:"KOS",name:"Kosovo",capital:"Priština",capLat:42.6629,capLng:21.1655,peak:"Gjeravica",elev:2656,peakLat:42.4667,peakLng:20.1500},
+        {id:"kosovo",iso:"KOS",name:"Kosovo",capital:"Priština",capLat:42.6629,capLng:21.1655,peak:"Velika Rudoka",elev:2658,peakLat:41.8500,peakLng:20.7833},
         {id:"latvia",iso:"LVA",name:"Lotyšsko",capital:"Riga",capLat:56.9496,capLng:24.1052,peak:"Gaiziņkalns",elev:312,peakLat:56.8686,peakLng:25.9917},
         {id:"liechtenstein",iso:"LIE",name:"Lichtenštejnsko",capital:"Vaduz",capLat:47.1410,capLng:9.5209,peak:"Vorder Grauspitz",elev:2599,peakLat:47.0631,peakLng:9.5947},
         {id:"lithuania",iso:"LTU",name:"Litva",capital:"Vilnius",capLat:54.6872,capLng:25.2797,peak:"Aukštojas",elev:294,peakLat:54.8558,peakLng:25.5567},
@@ -262,14 +264,14 @@
         {id:"nmacedonia",iso:"MKD",name:"Severní Makedonie",capital:"Skopje",capLat:41.9981,capLng:21.4254,peak:"Korab",elev:2764,peakLat:41.7842,peakLng:20.5486},
         {id:"norway",iso:"NOR",name:"Norsko",capital:"Oslo",capLat:59.9139,capLng:10.7522,peak:"Galdhøpiggen",elev:2469,peakLat:61.6360,peakLng:8.3125},
         {id:"poland",iso:"POL",name:"Polsko",capital:"Varšava",capLat:52.2297,capLng:21.0122,peak:"Rysy",elev:2499,peakLat:49.1793,peakLng:20.0881},
-        {id:"portugal",iso:"PRT",name:"Portugalsko",capital:"Lisabon",capLat:38.7223,capLng:-9.1393,peak:"Serra da Estrela",elev:1993,peakLat:40.3308,peakLng:-7.6141},
+        {id:"portugal",iso:"PRT",name:"Portugalsko",capital:"Lisabon",capLat:38.7223,capLng:-9.1393,peak:"Ponta do Pico",elev:2351,peakLat:38.4686,peakLng:-28.3997},
         {id:"romania",iso:"ROU",name:"Rumunsko",capital:"Bukurešť",capLat:44.4268,capLng:26.1025,peak:"Moldoveanu",elev:2544,peakLat:45.6069,peakLng:24.7358},
         {id:"russia",iso:"RUS",name:"Rusko",capital:"Moskva",capLat:55.7558,capLng:37.6173,peak:"Elbrus",elev:5642,peakLat:43.3499,peakLng:42.4453},
         {id:"sanmarino",iso:"SMR",name:"San Marino",capital:"San Marino",capLat:43.9424,capLng:12.4578,peak:"Monte Titano",elev:749,peakLat:43.9360,peakLng:12.4530},
         {id:"serbia",iso:"SRB",name:"Srbsko",capital:"Bělehrad",capLat:44.7866,capLng:20.4489,peak:"Midžor",elev:2169,peakLat:43.4058,peakLng:22.6997},
         {id:"slovakia",iso:"SVK",name:"Slovensko",capital:"Bratislava",capLat:48.1486,capLng:17.1077,peak:"Gerlachovský štít",elev:2655,peakLat:49.1667,peakLng:20.1394},
         {id:"slovenia",iso:"SVN",name:"Slovinsko",capital:"Lublaň",capLat:46.0569,capLng:14.5058,peak:"Triglav",elev:2864,peakLat:46.3781,peakLng:13.8353},
-        {id:"spain",iso:"ESP",name:"Španělsko",capital:"Madrid",capLat:40.4168,capLng:-3.7038,peak:"Mulhacén",elev:3479,peakLat:37.0538,peakLng:-3.3128},
+        {id:"spain",iso:"ESP",name:"Španělsko",capital:"Madrid",capLat:40.4168,capLng:-3.7038,peak:"Pico de Teide",elev:3718,peakLat:28.2723,peakLng:-16.6425},
         {id:"sweden",iso:"SWE",name:"Švédsko",capital:"Stockholm",capLat:59.3293,capLng:18.0686,peak:"Kebnekaise",elev:2097,peakLat:67.9010,peakLng:18.5428},
         {id:"switzerland",iso:"CHE",name:"Švýcarsko",capital:"Bern",capLat:46.9480,capLng:7.4474,peak:"Dufourspitze",elev:4634,peakLat:45.9369,peakLng:7.8666},
         {id:"ukraine",iso:"UKR",name:"Ukrajina",capital:"Kyjev",capLat:50.4501,capLng:30.5234,peak:"Hoverla",elev:2061,peakLat:48.1567,peakLng:24.5003},
@@ -283,7 +285,7 @@
         {id:"georgia",iso:"GEO",name:"Gruzie",capital:"Tbilisi",capLat:41.7151,capLng:44.8271,peak:"Kazbek",elev:5054,peakLat:42.6972,peakLng:44.5194}
     ];
 
-    // Definice sdílených vrcholů, aby se automaticky zrcadlily do druhé země
+    // Definice sdílených vrcholů
     const SHARED_PEAKS = {
         "france": "italy",
         "italy": "france",
@@ -343,23 +345,20 @@
     let bonusState = {};
     let filterText = "";
     let sortMode = "az";
+    let statusFilter = "all"; // all, done, not_done
     let map, markersLayer, geojsonLayer;
     let geojsonData = null;
     let isAdmin = localStorage.getItem('ke_admin') === 'true';
 
     function emptyEntry(){
         return {
-            peak:{done:false,date:"",diff:1,photo:"",photoDate:"",note:""},
-            // ponecháno kvůli zpětné kompatibilitě s již uloženými daty
-            visited:{done:false,date:""},
-            capital:{done:false,date:""},
-            food:{done:false,date:"",note:""}
+            peak:{done:false,date:"",diff:1,photo:"",photoDate:"",note:"",km:"",elevGain:"",time:""}
         };
     }
     function getEntry(id){ if(!state[id]) state[id]=emptyEntry(); return state[id]; }
     function isFull(e){ return e.peak.done; }
 
-    function emptyBonus(){ return {id:"",name:"",region:"",elev:"",lat:"",lng:"",done:false,date:"",diff:1,photo:"",photoDate:"",notes:""}; }
+    function emptyBonus(){ return {id:"",name:"",region:"",elev:"",lat:"",lng:"",done:false,date:"",diff:1,photo:"",photoDate:"",notes:"",km:"",elevGain:"",time:""}; }
     function genId(){ return "b"+Date.now().toString(36)+Math.random().toString(36).slice(2,7); }
 
     function escapeHtml(str){
@@ -509,10 +508,10 @@
     /* ============================= LEAFLET MAP ============================= */
     function initMap(){
         map = L.map('mapCanvas', {zoomControl: true}).setView([49, 15], 4);
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-            attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
-            subdomains: 'abcd',
-            maxZoom: 19
+        // Používáme stabilní a bezplatnou mapu Esri Dark Gray bez tokenu
+        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+            attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
+            maxZoom: 16
         }).addTo(map);
         markersLayer = L.layerGroup().addTo(map);
         refreshMap();
@@ -532,10 +531,11 @@
                 style: feature => {
                     const iso = feature.properties.ISO_A3;
                     const cId = isoToId[iso];
+                    // Některé geojson soubory mohou mít Kosovo jako -99 nebo chybět, zachycujeme co se dá
                     if (!cId) return { weight: 0, fillOpacity: 0 };
 
                     if (getEntry(cId).peak.done) {
-                        return { fillColor: '#dba641', weight: 1, color: '#f0bd5f', fillOpacity: 0.12, opacity: 0.5 };
+                        return { fillColor: '#dba641', weight: 1, color: '#f0bd5f', fillOpacity: 0.15, opacity: 0.6 };
                     } else {
                         return { weight: 0, fillOpacity: 0 };
                     }
@@ -582,6 +582,7 @@
 
     /* ============================= UI COMPONENTS ============================= */
     function renderHero(){
+        const totalCountries = COUNTRIES.length;
         const totalUniquePeaks = 44;
 
         let uniquePeaksDoneSet = new Set();
@@ -626,6 +627,11 @@
         return `
   <div class="toolbar">
     <input type="text" id="searchInput" placeholder="Hledat zemi…" value="${escapeHtml(filterText)}">
+    <select id="filterSelect">
+      <option value="all" ${statusFilter==='all'?'selected':''}>Všechny vrcholy</option>
+      <option value="done" ${statusFilter==='done'?'selected':''}>Pouze zdolané</option>
+      <option value="not_done" ${statusFilter==='not_done'?'selected':''}>Pouze nezdolané</option>
+    </select>
     <select id="sortSelect">
       <option value="az" ${sortMode==='az'?'selected':''}>Řadit A–Z</option>
       <option value="progress" ${sortMode==='progress'?'selected':''}>Řadit dle postupu</option>
@@ -660,6 +666,13 @@
 
     function sortedFilteredList(sourceArray){
         let list = sourceArray.filter(c => c.name.toLowerCase().includes(filterText.toLowerCase()) || c.capital.toLowerCase().includes(filterText.toLowerCase()));
+
+        if (statusFilter === 'done') {
+            list = list.filter(c => getEntry(c.id).peak.done);
+        } else if (statusFilter === 'not_done') {
+            list = list.filter(c => !getEntry(c.id).peak.done);
+        }
+
         if(sortMode==='az') list = list.slice().sort((a,b)=>a.name.localeCompare(b.name,'cs'));
         else if(sortMode==='elev') list = list.slice().sort((a,b)=>b.elev-a.elev);
         else if(sortMode==='progress'){
@@ -707,6 +720,19 @@
         <div class="item-fields">
           <label class="small">Datum a čas výstupu</label>
           <input type="datetime-local" data-id="${c.id}" data-field="peak" data-key="date" value="${e.peak.date}" ${disabledAttr}>
+
+          <label class="small" style="margin-top:6px;">Statistiky z trasy</label>
+          <div class="stats-row">
+            <div class="stat-col">
+              <input type="number" step="0.1" data-id="${c.id}" data-field="peak" data-key="km" value="${e.peak.km||''}" ${disabledAttr} placeholder="Vzdálenost (km)">
+            </div>
+            <div class="stat-col">
+              <input type="number" data-id="${c.id}" data-field="peak" data-key="elevGain" value="${e.peak.elevGain||''}" ${disabledAttr} placeholder="Převýšení (m)">
+            </div>
+            <div class="stat-col">
+              <input type="text" data-id="${c.id}" data-field="peak" data-key="time" value="${e.peak.time||''}" ${disabledAttr} placeholder="Čas (např. 6:30)">
+            </div>
+          </div>
 
           <label class="small" style="margin-top:6px;">Hodnocení obtížnosti</label>
           <div class="rating-pills">
@@ -764,7 +790,15 @@
 
     function getBonusCardsHtml(){
         const list = Object.values(bonusState).sort((a,b)=> (b.elev||0)-(a.elev||0));
-        return list.map(renderBonusCard).join('') || '<p style="color:var(--text-faint);font-size:13px; margin-top:10px;">Zatím žádné další vlastní vrcholy.</p>';
+        let filteredList = list;
+
+        if (statusFilter === 'done') {
+            filteredList = filteredList.filter(b => b.done);
+        } else if (statusFilter === 'not_done') {
+            filteredList = filteredList.filter(b => !b.done);
+        }
+
+        return filteredList.map(renderBonusCard).join('') || '<p style="color:var(--text-faint);font-size:13px; margin-top:10px;">Zatím žádné další vlastní vrcholy.</p>';
     }
 
     function renderBonusCard(b){
@@ -792,6 +826,19 @@
         <div class="item-fields">
           <label class="small">Datum a čas výstupu</label>
           <input type="datetime-local" data-bonus="${b.id}" data-key="date" value="${b.date}" ${disabledAttr}>
+
+          <label class="small" style="margin-top:6px;">Statistiky z trasy</label>
+          <div class="stats-row">
+            <div class="stat-col">
+              <input type="number" step="0.1" data-bonus="${b.id}" data-key="km" value="${b.km||''}" ${disabledAttr} placeholder="Vzdálenost (km)">
+            </div>
+            <div class="stat-col">
+              <input type="number" data-bonus="${b.id}" data-key="elevGain" value="${b.elevGain||''}" ${disabledAttr} placeholder="Převýšení (m)">
+            </div>
+            <div class="stat-col">
+              <input type="text" data-bonus="${b.id}" data-key="time" value="${b.time||''}" ${disabledAttr} placeholder="Čas (např. 6:30)">
+            </div>
+          </div>
 
           <label class="small" style="margin-top:6px;">Hodnocení obtížnosti</label>
           <div class="rating-pills">
@@ -848,6 +895,7 @@
             attachListEvents();
         });
         document.getElementById('sortSelect').addEventListener('change', (ev)=>{ sortMode = ev.target.value; renderAll(); });
+        document.getElementById('filterSelect').addEventListener('change', (ev)=>{ statusFilter = ev.target.value; renderAll(); });
     }
 
     function attachListEvents(){
@@ -869,7 +917,7 @@
                 refreshMap();
             });
         });
-        document.querySelectorAll('.card-body input[type="date"], .card-body input[type="datetime-local"], .card-body input[type="text"], .card-body select').forEach(el=>{
+        document.querySelectorAll('.card-body input[type="date"], .card-body input[type="datetime-local"], .card-body input[type="text"], .card-body input[type="number"], .card-body select').forEach(el=>{
             if(el.dataset.bonus) return;
             el.addEventListener('change', async ()=>{
                 if(!isAdmin) return;
@@ -960,6 +1008,7 @@
             });
         });
         document.querySelectorAll('[data-bonus]').forEach(el=>{
+            if(el.type === 'button') return;
             el.addEventListener('change', async ()=>{
                 if(!isAdmin) return;
                 const id = el.dataset.bonus, key = el.dataset.key;
