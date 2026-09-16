@@ -65,16 +65,15 @@
         .progress-row{display:flex;gap:14px;margin-top:24px;flex-wrap:wrap;position:relative;z-index:1;}
         .progress-card{flex:1;min-width:200px;background:rgba(12,29,20,0.55);border:1px solid var(--border-soft);border-radius:var(--radius-sm);padding:16px 18px;}
         .progress-card .plabel{font-size:12px;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);font-weight:500;}
-        .progress-card .pnum{font-family:var(--font-display);font-size:26px;font-weight:700;margin-top:4px;color:var(--text);}
-        .progress-card .pnum span{color:var(--text-faint);font-size:16px;font-weight:500;}
-        .bar-track{height:7px;border-radius:5px;background:rgba(255,255,255,0.06);margin-top:10px;overflow:hidden;}
+        .progress-card .pnum{font-family:var(--font-display);font-size:32px;font-weight:700;margin-top:4px;color:var(--text);}
+        .progress-card .pnum span{color:var(--text-faint);font-size:18px;font-weight:500;}
+        .bar-track{height:7px;border-radius:5px;background:rgba(255,255,255,0.06);margin-top:12px;overflow:hidden;}
         .bar-fill{height:100%;border-radius:5px;transition:width .5s ease;}
-        .bar-fill.peaks{background:linear-gradient(90deg,var(--peak),#a7cfc0);}
-        .bar-fill.complete{background:linear-gradient(90deg,var(--accent),var(--accent-strong));}
+        .bar-fill.peaks{background:linear-gradient(90deg,var(--accent),var(--accent-strong));}
         .bonus-count{margin-top:12px;font-size:12.5px;color:var(--bonus-strong);position:relative;z-index:1;}
 
         .map-wrap{border-radius:var(--radius);overflow:hidden;border:1px solid var(--border-soft);margin-bottom:26px;position:relative;background:#081209;}
-        #mapCanvas{width:100%;height:450px;background:#081209;z-index:1;}
+        #mapCanvas{width:100%;height:480px;background:#081209;z-index:1;}
         .map-legend{position:absolute;bottom:16px;left:16px;z-index:400;background:rgba(11,29,20,0.88);border:1px solid var(--border-soft);border-radius:10px;padding:9px 13px;font-size:12px;color:var(--text-muted);display:flex;gap:14px;flex-wrap:wrap;backdrop-filter:blur(4px);pointer-events:none;}
         .map-legend .li{display:flex;align-items:center;gap:6px;}
         .leaflet-container .leaflet-control-attribution{background:rgba(11,29,20,0.7) !important;color:var(--text-faint) !important;}
@@ -88,7 +87,6 @@
         .country-card{background:var(--card);border:1px solid var(--border-soft);border-left:3px solid var(--border);border-radius:var(--radius-sm);margin-bottom:10px;overflow:hidden;transition:border-color .2s ease, background .2s ease;}
         .country-card.caucasus-card{background:var(--card-caucasus);border-color:#173322;border-left-color:var(--caucasus-stroke);}
         .country-card[data-status="full"]{border-left-color:var(--accent);}
-        .country-card[data-status="partial"]{border-left-color:var(--peak);}
         .bonus-card[data-status="full"]{border-left-color:var(--bonus);}
         .country-card summary{list-style:none;cursor:pointer;}
         .country-card summary::-webkit-details-marker{display:none;}
@@ -96,41 +94,46 @@
         .card-head:hover{background:var(--card-hover);}
         .chevron{color:var(--text-faint);font-size:13px;transition:transform .2s ease;flex-shrink:0;}
         details[open] .chevron{transform:rotate(90deg);}
-        .card-titles{flex:1;min-width:0;}
-        .card-titles .cname{display:flex;align-items:center;gap:8px;font-family:var(--font-display);font-weight:700;font-size:16px;color:var(--text);}
-        .card-titles .cmeta{font-size:12.5px;color:var(--text-muted);margin-top:2px;}
-        .caucasus-badge{font-size:9.5px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.05em;background:rgba(0,0,0,0.25);padding:3px 7px;border-radius:5px;border:1px solid rgba(255,255,255,0.05);font-family:var(--font-body);font-weight:500;}
+        .card-titles{flex:1;min-width:0;display:flex;align-items:center;flex-wrap:wrap;gap:8px;}
+        .card-titles .cname{font-family:var(--font-display);font-weight:700;font-size:17px;color:var(--text);}
+        .card-titles .cmeta{font-size:13px;color:var(--text-muted);}
+        .caucasus-badge{font-size:10px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.05em;background:rgba(0,0,0,0.25);padding:3px 7px;border-radius:5px;border:1px solid rgba(255,255,255,0.05);font-family:var(--font-body);font-weight:500;}
 
-        .mini-dots{display:flex;gap:5px;flex-shrink:0;}
-        .mini-dot{width:9px;height:9px;border-radius:3px;background:rgba(255,255,255,0.09);border:1px solid rgba(255,255,255,0.08);}
-        .mini-dot.on{background:var(--accent);border-color:var(--accent);}
-        .mini-dot.on.peakdot{background:var(--peak);border-color:var(--peak);}
+        .card-body{padding:4px 16px 20px 44px;}
 
-        .card-body{padding:4px 16px 20px 44px;display:grid;grid-template-columns:1fr 1fr;gap:14px 18px;}
-        @media (max-width:640px){.card-body{grid-template-columns:1fr;padding-left:16px;}}
-
-        .item{background:var(--bg-soft);border:1px solid var(--border-soft);border-radius:var(--radius-sm);padding:13px 14px;}
+        .item{background:var(--bg-soft);border:1px solid var(--border-soft);border-radius:var(--radius-sm);padding:16px;}
         .caucasus-card .item{background:rgba(11,29,20,0.6);}
-        .item-top{display:flex;align-items:center;gap:10px;}
-        .check{width:20px;height:20px;border-radius:6px;border:1.5px solid var(--text-faint);flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s ease, border-color .15s ease;}
+        .item-top{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+        .check{width:24px;height:24px;border-radius:6px;border:2px solid var(--text-faint);flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s ease;}
         .check.checked{background:var(--accent);border-color:var(--accent);}
-        .check.checked.peakcheck{background:var(--peak);border-color:var(--peak);}
         .check.checked.bonuscheck{background:var(--bonus);border-color:var(--bonus);}
-        .check svg{width:12px;height:12px;opacity:0;transition:opacity .1s ease;}
+        .check svg{width:14px;height:14px;opacity:0;transition:opacity .1s ease;}
         .check.checked svg{opacity:1;}
-        .item-label{font-weight:500;font-size:14px;flex:1;}
-        .item-sub{font-size:12px;color:var(--text-faint);margin-left:30px;margin-top:1px;}
-        .item-fields{margin-top:10px;margin-left:30px;display:flex;flex-direction:column;gap:8px;}
-        .item-fields input[type="datetime-local"], .item-fields input[type="date"], .item-fields input[type="text"], .item-fields input[type="number"], .item-fields select{
-            background:var(--bg);border:1px solid var(--border-soft);color:var(--text);padding:7px 10px;border-radius:8px;font-family:var(--font-body);font-size:13px;width:100%;}
-        .item-fields input:disabled, .item-fields select:disabled { opacity:0.6; cursor:not-allowed; }
-        .item-fields label.small{font-size:11px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.05em;}
-        .diff-badge{display:inline-block;font-size:11px;padding:2px 8px;border-radius:20px;font-weight:600;margin-left:6px;}
+        .item-label{font-weight:600;font-size:15px;}
 
-        .photo-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
-        .photo-btn{background:var(--border-soft);color:var(--text);border:1px solid var(--border);padding:7px 11px;border-radius:8px;font-size:12.5px;cursor:pointer;font-family:var(--font-body);display:inline-block;}
+        .item-fields{display:flex;flex-direction:column;gap:12px;}
+        .item-fields input[type="datetime-local"], .item-fields input[type="date"], .item-fields input[type="text"], .item-fields input[type="number"]{
+            background:var(--bg);border:1px solid var(--border-soft);color:var(--text);padding:9px 12px;border-radius:8px;font-family:var(--font-body);font-size:13.5px;width:100%;max-width:400px;}
+        .item-fields input:disabled { opacity:0.6; cursor:not-allowed; }
+        .item-fields label.small{font-size:11.5px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.05em;font-weight:500;}
+        .diff-badge{display:inline-block;font-size:11px;padding:3px 8px;border-radius:20px;font-weight:600;}
+
+        /* Rating Pills */
+        .rating-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom:4px; }
+        .rating-pill {
+            background: var(--bg); border: 1px solid var(--border-soft); color: var(--text-faint);
+            padding: 8px 14px; border-radius: 20px; font-size: 13px; font-family: var(--font-body); font-weight:500;
+            cursor: pointer; transition: all 0.2s;
+        }
+        .rating-pill:hover:not(:disabled) { border-color: var(--rc); color: var(--rc); }
+        .rating-pill.active { background: var(--rc); color: #111; border-color: var(--rc); font-weight: 600; }
+        .rating-pill:disabled { cursor: not-allowed; opacity: 0.6; }
+        .rating-pill.active:disabled { opacity: 1; }
+
+        .photo-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+        .photo-btn{background:var(--border-soft);color:var(--text);border:1px solid var(--border);padding:9px 14px;border-radius:8px;font-size:13px;cursor:pointer;font-family:var(--font-body);font-weight:500;}
         .photo-btn:hover{background:var(--border);}
-        .photo-thumb{width:44px;height:44px;object-fit:cover;border-radius:8px;border:1px solid var(--border);cursor:zoom-in;transition:opacity 0.2s ease;}
+        .photo-thumb{width:54px;height:54px;object-fit:cover;border-radius:8px;border:1px solid var(--border);cursor:zoom-in;transition:opacity 0.2s ease;}
         .photo-thumb:hover{opacity:0.8;}
         .exif-hint{font-size:11px;color:var(--peak);}
         .exif-hint.none{color:var(--text-faint);}
@@ -198,6 +201,7 @@
             <div id="mapCanvas"></div>
             <div class="map-legend">
                 <span class="li"><svg width="16" height="16" viewBox="-8 -8 16 16"><path d="M-7 8 L0 -8 L4 0 L7 8 Z" fill="#dba641" stroke="#f0bd5f" stroke-width="1"/></svg> zdoláno</span>
+                <span class="li"><svg width="16" height="16" viewBox="-8 -8 16 16"><rect x="-6" y="-6" width="12" height="12" fill="#dba641" fill-opacity="0.3" stroke="#f0bd5f" stroke-width="1"/></svg> území zdoláno</span>
                 <span class="li"><svg width="16" height="16" viewBox="-8 -8 16 16"><path d="M-7 8 L0 -8 L4 0 L7 8 Z" fill="#28513a" stroke="#557a63" stroke-width="1"/></svg> evropa</span>
                 <span class="li"><svg width="16" height="16" viewBox="-8 -8 16 16"><path d="M-7 8 L0 -8 L4 0 L7 8 Z" fill="#173322" stroke="#365c44" stroke-width="1"/></svg> pomezí Evropy</span>
                 <span class="li"><svg width="16" height="16" viewBox="-8 -8 16 16"><path d="M0 -8 L2 -2.5 L8 -2 L3.2 1.6 L5 8 L0 4.2 L-5 8 L-3.2 1.6 L-8 -2 L-2 -2.5 Z" fill="#4a7c59" stroke="#64a377" stroke-width="1"/></svg> neevropský vrchol</span>
@@ -223,60 +227,60 @@
 
 <script>
     /* ============================= DATA ============================= */
-    // Hlavní evropské státy (46 vč. Ruska a Kypru)
+    // Přidáno ISO_A3 pro spárování s mapovými daty
     const COUNTRIES = [
-        {id:"albania",name:"Albánie",capital:"Tirana",capLat:41.3275,capLng:19.8187,peak:"Korab",elev:2764,peakLat:41.7842,peakLng:20.5486},
-        {id:"andorra",name:"Andorra",capital:"Andorra la Vella",capLat:42.5063,capLng:1.5218,peak:"Coma Pedrosa",elev:2942,peakLat:42.5761,peakLng:1.4703},
-        {id:"austria",name:"Rakousko",capital:"Vídeň",capLat:48.2082,capLng:16.3738,peak:"Grossglockner",elev:3798,peakLat:47.0742,peakLng:12.6944},
-        {id:"belarus",name:"Bělorusko",capital:"Minsk",capLat:53.9006,capLng:27.5590,peak:"Dzjaržynská hora",elev:345,peakLat:53.6572,peakLng:26.9614},
-        {id:"belgium",name:"Belgie",capital:"Brusel",capLat:50.8503,capLng:4.3517,peak:"Signal de Botrange",elev:694,peakLat:50.5064,peakLng:6.0814},
-        {id:"bosnia",name:"Bosna a Hercegovina",capital:"Sarajevo",capLat:43.8563,capLng:18.4131,peak:"Maglić",elev:2386,peakLat:43.2667,peakLng:18.7833},
-        {id:"bulgaria",name:"Bulharsko",capital:"Sofie",capLat:42.6977,capLng:23.3219,peak:"Musala",elev:2925,peakLat:42.1804,peakLng:23.5867},
-        {id:"croatia",name:"Chorvatsko",capital:"Záhřeb",capLat:45.8150,capLng:15.9819,peak:"Dinara",elev:1831,peakLat:43.9967,peakLng:16.3814},
-        {id:"cyprus",name:"Kypr",capital:"Nikósie",capLat:35.1856,capLng:33.3823,peak:"Olympos (Troodos)",elev:1952,peakLat:34.9358,peakLng:32.8656},
-        {id:"czechia",name:"Česko",capital:"Praha",capLat:50.0755,capLng:14.4378,peak:"Sněžka",elev:1603,peakLat:50.7361,peakLng:15.7400},
-        {id:"denmark",name:"Dánsko",capital:"Kodaň",capLat:55.6761,capLng:12.5683,peak:"Møllehøj",elev:171,peakLat:56.0997,peakLng:9.3500},
-        {id:"estonia",name:"Estonsko",capital:"Tallinn",capLat:59.4370,capLng:24.7536,peak:"Suur Munamägi",elev:318,peakLat:57.7075,peakLng:27.0561},
-        {id:"finland",name:"Finsko",capital:"Helsinki",capLat:60.1699,capLng:24.9384,peak:"Halti",elev:1324,peakLat:69.3222,peakLng:21.2842},
-        {id:"france",name:"Francie",capital:"Paříž",capLat:48.8566,capLng:2.3522,peak:"Mont Blanc",elev:4808,peakLat:45.8326,peakLng:6.8652},
-        {id:"germany",name:"Německo",capital:"Berlín",capLat:52.5200,capLng:13.4050,peak:"Zugspitze",elev:2962,peakLat:47.4210,peakLng:10.9852},
-        {id:"greece",name:"Řecko",capital:"Athény",capLat:37.9838,capLng:23.7275,peak:"Olymp",elev:2917,peakLat:40.0855,peakLng:22.3583},
-        {id:"hungary",name:"Maďarsko",capital:"Budapešť",capLat:47.4979,capLng:19.0402,peak:"Kékes",elev:1014,peakLat:47.8703,peakLng:20.0117},
-        {id:"iceland",name:"Island",capital:"Reykjavík",capLat:64.1466,capLng:-21.9426,peak:"Hvannadalshnúkur",elev:2110,peakLat:64.0157,peakLng:-16.6845},
-        {id:"ireland",name:"Irsko",capital:"Dublin",capLat:53.3498,capLng:-6.2603,peak:"Carrauntoohil",elev:1038,peakLat:51.9992,peakLng:-9.7549},
-        {id:"italy",name:"Itálie",capital:"Řím",capLat:41.9028,capLng:12.4964,peak:"Mont Blanc (Monte Bianco)",elev:4808,peakLat:45.8326,peakLng:6.8652},
-        {id:"kosovo",name:"Kosovo",capital:"Priština",capLat:42.6629,capLng:21.1655,peak:"Gjeravica",elev:2656,peakLat:42.4667,peakLng:20.1500},
-        {id:"latvia",name:"Lotyšsko",capital:"Riga",capLat:56.9496,capLng:24.1052,peak:"Gaiziņkalns",elev:312,peakLat:56.8686,peakLng:25.9917},
-        {id:"liechtenstein",name:"Lichtenštejnsko",capital:"Vaduz",capLat:47.1410,capLng:9.5209,peak:"Vorder Grauspitz",elev:2599,peakLat:47.0631,peakLng:9.5947},
-        {id:"lithuania",name:"Litva",capital:"Vilnius",capLat:54.6872,capLng:25.2797,peak:"Aukštojas",elev:294,peakLat:54.8558,peakLng:25.5567},
-        {id:"luxembourg",name:"Lucembursko",capital:"Lucemburk",capLat:49.6116,capLng:6.1319,peak:"Kneiff",elev:560,peakLat:50.1289,peakLng:6.0333},
-        {id:"malta",name:"Malta",capital:"Valletta",capLat:35.8989,capLng:14.5146,peak:"Ta' Dmejrek",elev:253,peakLat:35.8722,peakLng:14.3711},
-        {id:"moldova",name:"Moldavsko",capital:"Kišiněv",capLat:47.0105,capLng:28.8638,peak:"Bălănești",elev:430,peakLat:47.0994,peakLng:28.3597},
-        {id:"monaco",name:"Monako",capital:"Monako",capLat:43.7384,capLng:7.4246,peak:"Chemin des Révoires",elev:161,peakLat:43.7500,peakLng:7.4200},
-        {id:"montenegro",name:"Černá Hora",capital:"Podgorica",capLat:42.4304,capLng:19.2594,peak:"Zla Kolata",elev:2534,peakLat:42.6167,peakLng:19.8167},
-        {id:"netherlands",name:"Nizozemsko",capital:"Amsterdam",capLat:52.3676,capLng:4.9041,peak:"Vaalserberg",elev:322,peakLat:50.7539,peakLng:6.0208},
-        {id:"nmacedonia",name:"Severní Makedonie",capital:"Skopje",capLat:41.9981,capLng:21.4254,peak:"Korab",elev:2764,peakLat:41.7842,peakLng:20.5486},
-        {id:"norway",name:"Norsko",capital:"Oslo",capLat:59.9139,capLng:10.7522,peak:"Galdhøpiggen",elev:2469,peakLat:61.6360,peakLng:8.3125},
-        {id:"poland",name:"Polsko",capital:"Varšava",capLat:52.2297,capLng:21.0122,peak:"Rysy",elev:2499,peakLat:49.1793,peakLng:20.0881},
-        {id:"portugal",name:"Portugalsko",capital:"Lisabon",capLat:38.7223,capLng:-9.1393,peak:"Serra da Estrela",elev:1993,peakLat:40.3308,peakLng:-7.6141},
-        {id:"romania",name:"Rumunsko",capital:"Bukurešť",capLat:44.4268,capLng:26.1025,peak:"Moldoveanu",elev:2544,peakLat:45.6069,peakLng:24.7358},
-        {id:"russia",name:"Rusko",capital:"Moskva",capLat:55.7558,capLng:37.6173,peak:"Elbrus",elev:5642,peakLat:43.3499,peakLng:42.4453},
-        {id:"sanmarino",name:"San Marino",capital:"San Marino",capLat:43.9424,capLng:12.4578,peak:"Monte Titano",elev:749,peakLat:43.9360,peakLng:12.4530},
-        {id:"serbia",name:"Srbsko",capital:"Bělehrad",capLat:44.7866,capLng:20.4489,peak:"Midžor",elev:2169,peakLat:43.4058,peakLng:22.6997},
-        {id:"slovakia",name:"Slovensko",capital:"Bratislava",capLat:48.1486,capLng:17.1077,peak:"Gerlachovský štít",elev:2655,peakLat:49.1667,peakLng:20.1394},
-        {id:"slovenia",name:"Slovinsko",capital:"Lublaň",capLat:46.0569,capLng:14.5058,peak:"Triglav",elev:2864,peakLat:46.3781,peakLng:13.8353},
-        {id:"spain",name:"Španělsko",capital:"Madrid",capLat:40.4168,capLng:-3.7038,peak:"Mulhacén",elev:3479,peakLat:37.0538,peakLng:-3.3128},
-        {id:"sweden",name:"Švédsko",capital:"Stockholm",capLat:59.3293,capLng:18.0686,peak:"Kebnekaise",elev:2097,peakLat:67.9010,peakLng:18.5428},
-        {id:"switzerland",name:"Švýcarsko",capital:"Bern",capLat:46.9480,capLng:7.4474,peak:"Dufourspitze",elev:4634,peakLat:45.9369,peakLng:7.8666},
-        {id:"ukraine",name:"Ukrajina",capital:"Kyjev",capLat:50.4501,capLng:30.5234,peak:"Hoverla",elev:2061,peakLat:48.1567,peakLng:24.5003},
-        {id:"uk",name:"Spojené království",capital:"Londýn",capLat:51.5074,capLng:-0.1278,peak:"Ben Nevis",elev:1345,peakLat:56.7969,peakLng:-5.0036},
-        {id:"vatican",name:"Vatikán",capital:"Vatikán",capLat:41.9029,capLng:12.4534,peak:"Vatikánský pahorek",elev:75,peakLat:41.9022,peakLng:12.4534}
+        {id:"albania",iso:"ALB",name:"Albánie",capital:"Tirana",capLat:41.3275,capLng:19.8187,peak:"Korab",elev:2764,peakLat:41.7842,peakLng:20.5486},
+        {id:"andorra",iso:"AND",name:"Andorra",capital:"Andorra la Vella",capLat:42.5063,capLng:1.5218,peak:"Coma Pedrosa",elev:2942,peakLat:42.5761,peakLng:1.4703},
+        {id:"austria",iso:"AUT",name:"Rakousko",capital:"Vídeň",capLat:48.2082,capLng:16.3738,peak:"Grossglockner",elev:3798,peakLat:47.0742,peakLng:12.6944},
+        {id:"belarus",iso:"BLR",name:"Bělorusko",capital:"Minsk",capLat:53.9006,capLng:27.5590,peak:"Dzjaržynská hora",elev:345,peakLat:53.6572,peakLng:26.9614},
+        {id:"belgium",iso:"BEL",name:"Belgie",capital:"Brusel",capLat:50.8503,capLng:4.3517,peak:"Signal de Botrange",elev:694,peakLat:50.5064,peakLng:6.0814},
+        {id:"bosnia",iso:"BIH",name:"Bosna a Hercegovina",capital:"Sarajevo",capLat:43.8563,capLng:18.4131,peak:"Maglić",elev:2386,peakLat:43.2667,peakLng:18.7833},
+        {id:"bulgaria",iso:"BGR",name:"Bulharsko",capital:"Sofie",capLat:42.6977,capLng:23.3219,peak:"Musala",elev:2925,peakLat:42.1804,peakLng:23.5867},
+        {id:"croatia",iso:"HRV",name:"Chorvatsko",capital:"Záhřeb",capLat:45.8150,capLng:15.9819,peak:"Dinara",elev:1831,peakLat:43.9967,peakLng:16.3814},
+        {id:"cyprus",iso:"CYP",name:"Kypr",capital:"Nikósie",capLat:35.1856,capLng:33.3823,peak:"Olympos (Troodos)",elev:1952,peakLat:34.9358,peakLng:32.8656},
+        {id:"czechia",iso:"CZE",name:"Česko",capital:"Praha",capLat:50.0755,capLng:14.4378,peak:"Sněžka",elev:1603,peakLat:50.7361,peakLng:15.7400},
+        {id:"denmark",iso:"DNK",name:"Dánsko",capital:"Kodaň",capLat:55.6761,capLng:12.5683,peak:"Møllehøj",elev:171,peakLat:56.0997,peakLng:9.3500},
+        {id:"estonia",iso:"EST",name:"Estonsko",capital:"Tallinn",capLat:59.4370,capLng:24.7536,peak:"Suur Munamägi",elev:318,peakLat:57.7075,peakLng:27.0561},
+        {id:"finland",iso:"FIN",name:"Finsko",capital:"Helsinki",capLat:60.1699,capLng:24.9384,peak:"Halti",elev:1324,peakLat:69.3222,peakLng:21.2842},
+        {id:"france",iso:"FRA",name:"Francie",capital:"Paříž",capLat:48.8566,capLng:2.3522,peak:"Mont Blanc",elev:4808,peakLat:45.8326,peakLng:6.8652},
+        {id:"germany",iso:"DEU",name:"Německo",capital:"Berlín",capLat:52.5200,capLng:13.4050,peak:"Zugspitze",elev:2962,peakLat:47.4210,peakLng:10.9852},
+        {id:"greece",iso:"GRC",name:"Řecko",capital:"Athény",capLat:37.9838,capLng:23.7275,peak:"Olymp",elev:2917,peakLat:40.0855,peakLng:22.3583},
+        {id:"hungary",iso:"HUN",name:"Maďarsko",capital:"Budapešť",capLat:47.4979,capLng:19.0402,peak:"Kékes",elev:1014,peakLat:47.8703,peakLng:20.0117},
+        {id:"iceland",iso:"ISL",name:"Island",capital:"Reykjavík",capLat:64.1466,capLng:-21.9426,peak:"Hvannadalshnúkur",elev:2110,peakLat:64.0157,peakLng:-16.6845},
+        {id:"ireland",iso:"IRL",name:"Irsko",capital:"Dublin",capLat:53.3498,capLng:-6.2603,peak:"Carrauntoohil",elev:1038,peakLat:51.9992,peakLng:-9.7549},
+        {id:"italy",iso:"ITA",name:"Itálie",capital:"Řím",capLat:41.9028,capLng:12.4964,peak:"Mont Blanc (Monte Bianco)",elev:4808,peakLat:45.8326,peakLng:6.8652},
+        {id:"kosovo",iso:"KOS",name:"Kosovo",capital:"Priština",capLat:42.6629,capLng:21.1655,peak:"Gjeravica",elev:2656,peakLat:42.4667,peakLng:20.1500},
+        {id:"latvia",iso:"LVA",name:"Lotyšsko",capital:"Riga",capLat:56.9496,capLng:24.1052,peak:"Gaiziņkalns",elev:312,peakLat:56.8686,peakLng:25.9917},
+        {id:"liechtenstein",iso:"LIE",name:"Lichtenštejnsko",capital:"Vaduz",capLat:47.1410,capLng:9.5209,peak:"Vorder Grauspitz",elev:2599,peakLat:47.0631,peakLng:9.5947},
+        {id:"lithuania",iso:"LTU",name:"Litva",capital:"Vilnius",capLat:54.6872,capLng:25.2797,peak:"Aukštojas",elev:294,peakLat:54.8558,peakLng:25.5567},
+        {id:"luxembourg",iso:"LUX",name:"Lucembursko",capital:"Lucemburk",capLat:49.6116,capLng:6.1319,peak:"Kneiff",elev:560,peakLat:50.1289,peakLng:6.0333},
+        {id:"malta",iso:"MLT",name:"Malta",capital:"Valletta",capLat:35.8989,capLng:14.5146,peak:"Ta' Dmejrek",elev:253,peakLat:35.8722,peakLng:14.3711},
+        {id:"moldova",iso:"MDA",name:"Moldavsko",capital:"Kišiněv",capLat:47.0105,capLng:28.8638,peak:"Bălănești",elev:430,peakLat:47.0994,peakLng:28.3597},
+        {id:"monaco",iso:"MCO",name:"Monako",capital:"Monako",capLat:43.7384,capLng:7.4246,peak:"Chemin des Révoires",elev:161,peakLat:43.7500,peakLng:7.4200},
+        {id:"montenegro",iso:"MNE",name:"Černá Hora",capital:"Podgorica",capLat:42.4304,capLng:19.2594,peak:"Zla Kolata",elev:2534,peakLat:42.6167,peakLng:19.8167},
+        {id:"netherlands",iso:"NLD",name:"Nizozemsko",capital:"Amsterdam",capLat:52.3676,capLng:4.9041,peak:"Vaalserberg",elev:322,peakLat:50.7539,peakLng:6.0208},
+        {id:"nmacedonia",iso:"MKD",name:"Severní Makedonie",capital:"Skopje",capLat:41.9981,capLng:21.4254,peak:"Korab",elev:2764,peakLat:41.7842,peakLng:20.5486},
+        {id:"norway",iso:"NOR",name:"Norsko",capital:"Oslo",capLat:59.9139,capLng:10.7522,peak:"Galdhøpiggen",elev:2469,peakLat:61.6360,peakLng:8.3125},
+        {id:"poland",iso:"POL",name:"Polsko",capital:"Varšava",capLat:52.2297,capLng:21.0122,peak:"Rysy",elev:2499,peakLat:49.1793,peakLng:20.0881},
+        {id:"portugal",iso:"PRT",name:"Portugalsko",capital:"Lisabon",capLat:38.7223,capLng:-9.1393,peak:"Serra da Estrela",elev:1993,peakLat:40.3308,peakLng:-7.6141},
+        {id:"romania",iso:"ROU",name:"Rumunsko",capital:"Bukurešť",capLat:44.4268,capLng:26.1025,peak:"Moldoveanu",elev:2544,peakLat:45.6069,peakLng:24.7358},
+        {id:"russia",iso:"RUS",name:"Rusko",capital:"Moskva",capLat:55.7558,capLng:37.6173,peak:"Elbrus",elev:5642,peakLat:43.3499,peakLng:42.4453},
+        {id:"sanmarino",iso:"SMR",name:"San Marino",capital:"San Marino",capLat:43.9424,capLng:12.4578,peak:"Monte Titano",elev:749,peakLat:43.9360,peakLng:12.4530},
+        {id:"serbia",iso:"SRB",name:"Srbsko",capital:"Bělehrad",capLat:44.7866,capLng:20.4489,peak:"Midžor",elev:2169,peakLat:43.4058,peakLng:22.6997},
+        {id:"slovakia",iso:"SVK",name:"Slovensko",capital:"Bratislava",capLat:48.1486,capLng:17.1077,peak:"Gerlachovský štít",elev:2655,peakLat:49.1667,peakLng:20.1394},
+        {id:"slovenia",iso:"SVN",name:"Slovinsko",capital:"Lublaň",capLat:46.0569,capLng:14.5058,peak:"Triglav",elev:2864,peakLat:46.3781,peakLng:13.8353},
+        {id:"spain",iso:"ESP",name:"Španělsko",capital:"Madrid",capLat:40.4168,capLng:-3.7038,peak:"Mulhacén",elev:3479,peakLat:37.0538,peakLng:-3.3128},
+        {id:"sweden",iso:"SWE",name:"Švédsko",capital:"Stockholm",capLat:59.3293,capLng:18.0686,peak:"Kebnekaise",elev:2097,peakLat:67.9010,peakLng:18.5428},
+        {id:"switzerland",iso:"CHE",name:"Švýcarsko",capital:"Bern",capLat:46.9480,capLng:7.4474,peak:"Dufourspitze",elev:4634,peakLat:45.9369,peakLng:7.8666},
+        {id:"ukraine",iso:"UKR",name:"Ukrajina",capital:"Kyjev",capLat:50.4501,capLng:30.5234,peak:"Hoverla",elev:2061,peakLat:48.1567,peakLng:24.5003},
+        {id:"uk",iso:"GBR",name:"Spojené království",capital:"Londýn",capLat:51.5074,capLng:-0.1278,peak:"Ben Nevis",elev:1345,peakLat:56.7969,peakLng:-5.0036},
+        {id:"vatican",iso:"VAT",name:"Vatikán",capital:"Vatikán",capLat:41.9029,capLng:12.4534,peak:"Vatikánský pahorek",elev:75,peakLat:41.9022,peakLng:12.4534}
     ];
 
-    // Kavkaz - politicky/geograficky hraniční země (pouze jako zmínky mimo výzvu)
+    // Kavkaz - politicky/geograficky hraniční země
     const EXTRA_COUNTRIES = [
-        {id:"armenia",name:"Arménie",capital:"Jerevan",capLat:40.1792,capLng:44.4991,peak:"Aragac",elev:4090,peakLat:40.5377,peakLng:44.1907},
-        {id:"georgia",name:"Gruzie",capital:"Tbilisi",capLat:41.7151,capLng:44.8271,peak:"Kazbek",elev:5054,peakLat:42.6972,peakLng:44.5194}
+        {id:"armenia",iso:"ARM",name:"Arménie",capital:"Jerevan",capLat:40.1792,capLng:44.4991,peak:"Aragac",elev:4090,peakLat:40.5377,peakLng:44.1907},
+        {id:"georgia",iso:"GEO",name:"Gruzie",capital:"Tbilisi",capLat:41.7151,capLng:44.8271,peak:"Kazbek",elev:5054,peakLat:42.6972,peakLng:44.5194}
     ];
 
     // Definice sdílených vrcholů, aby se automaticky zrcadlily do druhé země
@@ -287,12 +291,13 @@
         "nmacedonia": "albania"
     };
 
+    // Rating systém
     const DIFF_LABELS = {
-        1:{label:"Snadná", color:"#7fb0a0"},
-        2:{label:"Turistická", color:"#8fbf7a"},
-        3:{label:"Náročná", color:"#dba641"},
-        4:{label:"Alpská", color:"#d98f5f"},
-        5:{label:"Extrémní", color:"#c96f5f"}
+        1:{label:"Snadná", color:"#8fbf7a"},
+        2:{label:"Střední", color:"#dba641"},
+        3:{label:"Náročnější", color:"#d98f5f"},
+        4:{label:"Těžká", color:"#c96f5f"},
+        5:{label:"Extrém", color:"#8b5a8c"}
     };
 
     /* ============================= API ============================= */
@@ -338,22 +343,23 @@
     let bonusState = {};
     let filterText = "";
     let sortMode = "az";
-    let map, markersLayer;
+    let map, markersLayer, geojsonLayer;
+    let geojsonData = null;
     let isAdmin = localStorage.getItem('ke_admin') === 'true';
 
     function emptyEntry(){
         return {
+            peak:{done:false,date:"",diff:1,photo:"",photoDate:"",note:""},
+            // ponecháno kvůli zpětné kompatibilitě s již uloženými daty
             visited:{done:false,date:""},
-            peak:{done:false,date:"",diff:3,photo:"",photoDate:""},
             capital:{done:false,date:""},
             food:{done:false,date:"",note:""}
         };
     }
     function getEntry(id){ if(!state[id]) state[id]=emptyEntry(); return state[id]; }
-    function isFull(e){ return e.visited.done && e.peak.done && e.capital.done && e.food.done; }
-    function anyDone(e){ return e.visited.done || e.peak.done || e.capital.done || e.food.done; }
+    function isFull(e){ return e.peak.done; }
 
-    function emptyBonus(){ return {id:"",name:"",region:"",elev:"",lat:"",lng:"",done:false,date:"",diff:3,photo:"",photoDate:"",notes:""}; }
+    function emptyBonus(){ return {id:"",name:"",region:"",elev:"",lat:"",lng:"",done:false,date:"",diff:1,photo:"",photoDate:"",notes:""}; }
     function genId(){ return "b"+Date.now().toString(36)+Math.random().toString(36).slice(2,7); }
 
     function escapeHtml(str){
@@ -439,7 +445,6 @@
     /* Zrcadlení dat u sdílených vrcholů */
     async function handleSyncAndSave(id) {
         await saveEntry(id);
-        // Pokud měním zemi se sdíleným vrcholem, zrcadlím data vrcholu do spřátelené země
         if(SHARED_PEAKS[id]) {
             const targetId = SHARED_PEAKS[id];
             getEntry(targetId).peak = JSON.parse(JSON.stringify(getEntry(id).peak));
@@ -448,6 +453,13 @@
     }
 
     /* ============================= LOAD / SAVE ============================= */
+    async function loadGeoJson(){
+        try {
+            const res = await fetch('https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson');
+            geojsonData = await res.json();
+        } catch (e) { console.error("Nelze načíst GeoJSON hranic.", e); }
+    }
+
     async function loadAll(){
         try{
             const listRes = await api.list("country_");
@@ -477,6 +489,23 @@
     async function saveBonus(id){ try{ await api.set("bonus_"+id, JSON.stringify(bonusState[id])); }catch(e){ console.error(e); } }
     async function deleteBonus(id){ delete bonusState[id]; try{ await api.delete("bonus_"+id); }catch(e){} document.getElementById('bonusListWrap').innerHTML = getBonusCardsHtml(); attachBonusEvents(); updateHeroInPlace(); refreshMap(); }
 
+    window.updateRating = async function(id, val) {
+        if(!isAdmin) return;
+        getEntry(id).peak.diff = val;
+        await handleSyncAndSave(id);
+        preserveOpenAndRerenderList(id);
+    }
+    window.updateBonusRating = async function(id, val) {
+        if(!isAdmin) return;
+        bonusState[id].diff = val;
+        await saveBonus(id);
+        const card = document.getElementById('bonus-'+id);
+        const wasOpen = card ? card.hasAttribute('open') : false;
+        document.getElementById('bonusListWrap').innerHTML = getBonusCardsHtml();
+        attachBonusEvents();
+        if(wasOpen){ const c2=document.getElementById('bonus-'+id); if(c2) c2.setAttribute('open',''); }
+    }
+
     /* ============================= LEAFLET MAP ============================= */
     function initMap(){
         map = L.map('mapCanvas', {zoomControl: true}).setView([49, 15], 4);
@@ -492,8 +521,27 @@
     function refreshMap(){
         if(!map || !markersLayer) return;
         markersLayer.clearLayers();
+        if(geojsonLayer) { map.removeLayer(geojsonLayer); geojsonLayer = null; }
 
         const allMapCountries = [...COUNTRIES, ...EXTRA_COUNTRIES];
+        const isoToId = {};
+        allMapCountries.forEach(c => { if(c.iso) isoToId[c.iso] = c.id; });
+
+        if (geojsonData) {
+            geojsonLayer = L.geoJSON(geojsonData, {
+                style: feature => {
+                    const iso = feature.properties.ISO_A3;
+                    const cId = isoToId[iso];
+                    if (!cId) return { weight: 0, fillOpacity: 0 };
+
+                    if (getEntry(cId).peak.done) {
+                        return { fillColor: '#dba641', weight: 1, color: '#f0bd5f', fillOpacity: 0.12, opacity: 0.5 };
+                    } else {
+                        return { weight: 0, fillOpacity: 0 };
+                    }
+                }
+            }).addTo(map);
+        }
 
         allMapCountries.forEach(c => {
             const e = getEntry(c.id);
@@ -508,14 +556,6 @@
             const peakIcon = L.divIcon({ html: peakHtml, className: '', iconSize: [16,16], iconAnchor: [8,8] });
             L.marker([c.peakLat, c.peakLng], {icon: peakIcon, zIndexOffset: e.peak.done ? 1000 : 0})
                 .bindTooltip(`${c.peak} (${c.name})${e.peak.done?' - zdoláno':''}`)
-                .on('click', () => focusCountry(c.id)).addTo(markersLayer);
-
-            const capColor = e.capital.done ? '#dba641' : defaultFill;
-            const capStroke = e.capital.done ? '#f0bd5f' : defaultStroke;
-            const capHtml = `<svg width="12" height="12" viewBox="-8 -8 16 16" style="filter: drop-shadow(0 2px 3px rgba(0,0,0,0.5))"><circle r="4.3" fill="${capColor}" stroke="${capStroke}" stroke-width="1.3"/></svg>`;
-            const capIcon = L.divIcon({ html: capHtml, className: '', iconSize: [12,12], iconAnchor: [6,6] });
-            L.marker([c.capLat, c.capLng], {icon: capIcon})
-                .bindTooltip(`${c.capital} (${c.name})${e.capital.done?' - navštíveno':''}`)
                 .on('click', () => focusCountry(c.id)).addTo(markersLayer);
         });
 
@@ -542,10 +582,8 @@
 
     /* ============================= UI COMPONENTS ============================= */
     function renderHero(){
-        const totalCountries = COUNTRIES.length;
         const totalUniquePeaks = 44;
 
-        // Získání unikátních vrcholů
         let uniquePeaksDoneSet = new Set();
         COUNTRIES.forEach(c => {
             if (getEntry(c.id).peak.done) {
@@ -555,7 +593,6 @@
             }
         });
         const peaksDone = uniquePeaksDoneSet.size;
-        const fullDone = COUNTRIES.filter(c=>isFull(getEntry(c.id))).length;
 
         const contourSVG = `<svg class="hero-contours" viewBox="0 0 600 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M-20 160 Q 100 100 220 150 T 460 130 T 640 160" stroke="#dba641" stroke-width="1" fill="none"/>
@@ -569,17 +606,12 @@
     <div class="hero-top">
       <div class="hero-eyebrow">Moje cestovatelská výzva</div>
       <h1>Koruna Evropy</h1>
-      <p class="sub">Mým cílem je navštívit každou evropskou zemi, zdolat její nejvyšší vrchol, projít hlavní město a ochutnat místní specialitu. Sledujte můj postup! ${totalCountries} zemí, ${totalUniquePeaks} vrcholů, jeden cíl.</p>
+      <p class="sub">Mým cílem je zdolat nejvyšší bod každého evropského státu. Sledujte můj postup! 46 zemí, ${totalUniquePeaks} unikátních vrcholů, jeden cíl.</p>
       <div class="progress-row">
         <div class="progress-card">
-          <div class="plabel">Unikátní vrcholy</div>
+          <div class="plabel">Zdolané unikátní vrcholy</div>
           <div class="pnum">${peaksDone} <span>/ ${totalUniquePeaks}</span></div>
           <div class="bar-track"><div class="bar-fill peaks" style="width:${(peaksDone/totalUniquePeaks*100).toFixed(1)}%"></div></div>
-        </div>
-        <div class="progress-card">
-          <div class="plabel">Kompletní země</div>
-          <div class="pnum">${fullDone} <span>/ ${totalCountries}</span></div>
-          <div class="bar-track"><div class="bar-fill complete" style="width:${(fullDone/totalCountries*100).toFixed(1)}%"></div></div>
         </div>
       </div>
     </div>
@@ -631,27 +663,19 @@
         if(sortMode==='az') list = list.slice().sort((a,b)=>a.name.localeCompare(b.name,'cs'));
         else if(sortMode==='elev') list = list.slice().sort((a,b)=>b.elev-a.elev);
         else if(sortMode==='progress'){
-            const score = c => { const e=getEntry(c.id); return [e.visited.done,e.peak.done,e.capital.done,e.food.done].filter(Boolean).length; };
+            const score = c => getEntry(c.id).peak.done ? 1 : 0;
             list = list.slice().sort((a,b)=> score(b)-score(a) || a.name.localeCompare(b.name,'cs'));
         }
         return list;
     }
 
-    function miniDots(e){
-        return `<div class="mini-dots" title="Návštěva · Vrchol · Hl. město · Jídlo">
-    <div class="mini-dot ${e.visited.done?'on':''}"></div>
-    <div class="mini-dot ${e.peak.done?'on peakdot':''}"></div>
-    <div class="mini-dot ${e.capital.done?'on':''}"></div>
-    <div class="mini-dot ${e.food.done?'on':''}"></div>
-  </div>`;
-    }
     function checkSVG(){ return `<svg viewBox="0 0 24 24" fill="none"><path d="M4 12 L10 18 L20 6" stroke="#0b1d14" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>`; }
     function formatExif(raw){ try{ const d=new Date(raw); return d.toLocaleString('cs-CZ',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}); }catch(e){ return raw; } }
 
     function renderCountryCard(c){
         const e = getEntry(c.id);
-        const status = isFull(e) ? 'full' : (anyDone(e) ? 'partial' : 'none');
-        const diff = DIFF_LABELS[e.peak.diff] || DIFF_LABELS[3];
+        const status = isFull(e) ? 'full' : 'none';
+        const diff = DIFF_LABELS[e.peak.diff] || DIFF_LABELS[1];
 
         const isExtra = EXTRA_COUNTRIES.some(x => x.id === c.id);
         const cardClass = isExtra ? 'country-card caucasus-card' : 'country-card';
@@ -661,6 +685,7 @@
         if (['georgia', 'armenia'].includes(c.id)) badgeText = 'Kavkaz';
 
         const badgeHtml = badgeText ? `<span class="caucasus-badge">${badgeText}</span>` : '';
+        const diffBadgeHtml = e.peak.done ? `<span class="diff-badge" style="background:${diff.color};color:#111;">${diff.label}</span>` : '';
 
         return `
   <details class="${cardClass}" data-status="${status}" id="card-${c.id}">
@@ -668,39 +693,32 @@
       <div class="card-head">
         <span class="chevron">▶</span>
         <div class="card-titles">
-          <div class="cname">${c.name} ${badgeHtml}</div>
-          <div class="cmeta">${c.capital} · ${c.peak} (${c.elev} m)</div>
+          <div class="cname">${c.name} ${badgeHtml} ${diffBadgeHtml}</div>
+          <div class="cmeta">${c.peak} (${c.elev} m)</div>
         </div>
-        ${miniDots(e)}
       </div>
     </summary>
     <div class="card-body">
-      <div class="item">
-        <div class="item-top">
-          <div class="check ${e.visited.done?'checked':''}" data-action="toggle" data-id="${c.id}" data-field="visited">${checkSVG()}</div>
-          <div class="item-label">Země navštívena</div>
-        </div>
-        <div class="item-sub">alespoň 2 dny a 1 noc</div>
-        <div class="item-fields">
-          <label class="small">Datum</label>
-          <input type="date" data-id="${c.id}" data-field="visited" data-key="date" value="${e.visited.date}" ${disabledAttr}>
-        </div>
-      </div>
-      <div class="item">
+      <div class="item" style="grid-column: 1/-1;">
         <div class="item-top">
           <div class="check peakcheck ${e.peak.done?'checked':''}" data-action="toggle" data-id="${c.id}" data-field="peak">${checkSVG()}</div>
           <div class="item-label">Vrchol zdolán</div>
-          ${e.peak.done ? `<span class="diff-badge" style="background:${diff.color}22;color:${diff.color};border:1px solid ${diff.color}55">${diff.label}</span>` : ''}
         </div>
-        <div class="item-sub">${c.peak} · ${c.elev} m n. m.</div>
         <div class="item-fields">
           <label class="small">Datum a čas výstupu</label>
           <input type="datetime-local" data-id="${c.id}" data-field="peak" data-key="date" value="${e.peak.date}" ${disabledAttr}>
-          <label class="small">Obtížnost</label>
-          <select data-id="${c.id}" data-field="peak" data-key="diff" ${disabledAttr}>
-            ${Object.entries(DIFF_LABELS).map(([k,v])=>`<option value="${k}" ${String(e.peak.diff)===k?'selected':''}>${v.label}</option>`).join('')}
-          </select>
-          <label class="small">Fotka z vrcholu</label>
+
+          <label class="small" style="margin-top:6px;">Hodnocení obtížnosti</label>
+          <div class="rating-pills">
+            ${Object.entries(DIFF_LABELS).map(([k,v]) => `
+              <button type="button" class="rating-pill ${String(e.peak.diff)===k?'active':''}" style="--rc:${v.color}" onclick="updateRating('${c.id}', ${k})" ${disabledAttr}>${v.label}</button>
+            `).join('')}
+          </div>
+
+          <label class="small" style="margin-top:6px;">Zážitek / Poznámka z výstupu</label>
+          <input type="text" placeholder="Jaké to bylo?..." data-id="${c.id}" data-field="peak" data-key="note" value="${escapeHtml(e.peak.note)}" ${disabledAttr}>
+
+          <label class="small" style="margin-top:6px;">Fotka z vrcholu</label>
           <div class="photo-row">
             ${isAdmin ? `<label class="photo-btn" for="photo-${c.id}">Nahrát fotku</label><input type="file" accept="image/*" id="photo-${c.id}" data-id="${c.id}" style="display:none">` : ''}
             ${e.peak.photo ? `<img class="photo-thumb" src="${e.peak.photo}" onclick="openLightbox(this.src); event.stopPropagation();">` : ''}
@@ -708,30 +726,7 @@
           </div>
         </div>
       </div>
-      <div class="item">
-        <div class="item-top">
-          <div class="check ${e.capital.done?'checked':''}" data-action="toggle" data-id="${c.id}" data-field="capital">${checkSVG()}</div>
-          <div class="item-label">Hlavní město navštíveno</div>
-        </div>
-        <div class="item-sub">${c.capital}</div>
-        <div class="item-fields">
-          <label class="small">Datum</label>
-          <input type="date" data-id="${c.id}" data-field="capital" data-key="date" value="${e.capital.date}" ${disabledAttr}>
-        </div>
-      </div>
-      <div class="item">
-        <div class="item-top">
-          <div class="check ${e.food.done?'checked':''}" data-action="toggle" data-id="${c.id}" data-field="food">${checkSVG()}</div>
-          <div class="item-label">Ochutnáno místní jídlo</div>
-        </div>
-        <div class="item-fields">
-          <label class="small">Co bylo ochutnáno</label>
-          <input type="text" placeholder="např. gulyás…" data-id="${c.id}" data-field="food" data-key="note" value="${escapeHtml(e.food.note)}" ${disabledAttr}>
-          <label class="small">Datum</label>
-          <input type="date" data-id="${c.id}" data-field="food" data-key="date" value="${e.food.date}" ${disabledAttr}>
-        </div>
-      </div>
-      ${isAdmin ? `<div style="grid-column:1/-1;text-align:right;"><button class="clear-link" data-action="clear" data-id="${c.id}">Smazat data o této zemi</button></div>` : ''}
+      ${isAdmin ? `<div style="grid-column:1/-1;text-align:right;margin-top:-8px;"><button class="clear-link" data-action="clear" data-id="${c.id}">Smazat data o této zemi</button></div>` : ''}
     </div>
   </details>`;
     }
@@ -773,32 +768,42 @@
     }
 
     function renderBonusCard(b){
-        const diff = DIFF_LABELS[b.diff] || DIFF_LABELS[3];
+        const diff = DIFF_LABELS[b.diff] || DIFF_LABELS[1];
         const disabledAttr = isAdmin ? '' : 'disabled';
+        const diffBadgeHtml = b.done ? `<span class="diff-badge" style="background:${diff.color};color:#111;">${diff.label}</span>` : '';
+
         return `
   <details class="country-card bonus-card" data-status="${b.done?'full':'none'}" id="bonus-${b.id}">
     <summary>
       <div class="card-head">
         <span class="chevron">▶</span>
         <div class="card-titles">
-          <div class="cname">${escapeHtml(b.name)}</div>
+          <div class="cname">${escapeHtml(b.name)} ${diffBadgeHtml}</div>
           <div class="cmeta">${escapeHtml(b.region)}${b.elev?' · '+b.elev+' m':''}</div>
         </div>
-        <div class="check ${b.done?'checked bonuscheck':''}" data-action="bonus-toggle" data-id="${b.id}">${checkSVG()}</div>
       </div>
     </summary>
-    <div class="card-body" style="grid-template-columns:1fr;">
-      <div class="item">
-        <div class="item-fields" style="margin-left:0;margin-top:0;">
+    <div class="card-body">
+      <div class="item" style="grid-column: 1/-1;">
+        <div class="item-top">
+          <div class="check ${b.done?'checked bonuscheck':''}" data-action="bonus-toggle" data-id="${b.id}">${checkSVG()}</div>
+          <div class="item-label">Vrchol zdolán</div>
+        </div>
+        <div class="item-fields">
           <label class="small">Datum a čas výstupu</label>
           <input type="datetime-local" data-bonus="${b.id}" data-key="date" value="${b.date}" ${disabledAttr}>
-          <label class="small">Obtížnost</label>
-          <select data-bonus="${b.id}" data-key="diff" ${disabledAttr}>
-            ${Object.entries(DIFF_LABELS).map(([k,v])=>`<option value="${k}" ${String(b.diff)===k?'selected':''}>${v.label}</option>`).join('')}
-          </select>
-          <label class="small">Poznámka</label>
+
+          <label class="small" style="margin-top:6px;">Hodnocení obtížnosti</label>
+          <div class="rating-pills">
+            ${Object.entries(DIFF_LABELS).map(([k,v]) => `
+              <button type="button" class="rating-pill ${String(b.diff)===k?'active':''}" style="--rc:${v.color}" onclick="updateBonusRating('${b.id}', ${k})" ${disabledAttr}>${v.label}</button>
+            `).join('')}
+          </div>
+
+          <label class="small" style="margin-top:6px;">Zážitek / Poznámka</label>
           <input type="text" data-bonus="${b.id}" data-key="notes" value="${escapeHtml(b.notes)}" placeholder="poznámky…" ${disabledAttr}>
-          <label class="small">Fotka</label>
+
+          <label class="small" style="margin-top:6px;">Fotka z vrcholu</label>
           <div class="photo-row">
             ${isAdmin ? `<label class="photo-btn" for="bphoto-${b.id}">Nahrát fotku</label><input type="file" accept="image/*" id="bphoto-${b.id}" data-bonusphoto="${b.id}" style="display:none">` : ''}
             ${b.photo ? `<img class="photo-thumb" src="${b.photo}" onclick="openLightbox(this.src); event.stopPropagation();">` : ''}
@@ -806,7 +811,7 @@
           </div>
         </div>
       </div>
-      ${isAdmin ? `<div style="text-align:right;"><button class="clear-link" data-action="bonus-delete" data-id="${b.id}">Smazat vrchol</button></div>` : ''}
+      ${isAdmin ? `<div style="grid-column:1/-1;text-align:right;margin-top:-8px;"><button class="clear-link" data-action="bonus-delete" data-id="${b.id}">Smazat vrchol</button></div>` : ''}
     </div>
   </details>`;
     }
@@ -855,8 +860,7 @@
                 const id = el.dataset.id, field = el.dataset.field;
                 const e = getEntry(id);
                 e[field].done = !e[field].done;
-                if(e[field].done && field!=='peak' && field!=='food' && !e[field].date) e[field].date = new Date().toISOString().slice(0,10);
-                if(e[field].done && field==='peak' && !e.peak.date) e.peak.date = new Date().toISOString().slice(0,16);
+                if(e[field].done && !e.peak.date) e.peak.date = new Date().toISOString().slice(0,16);
 
                 await handleSyncAndSave(id);
 
@@ -1081,7 +1085,7 @@
 
     /* ============================= INIT ============================= */
     (async function init(){
-        await loadAll();
+        await Promise.all([loadAll(), loadGeoJson()]);
         document.getElementById('loadingMsg').style.display = 'none';
         document.getElementById('appContent').style.display = 'block';
         renderAll();
