@@ -1,613 +1,664 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Koruna Evropy</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@500;600;700;800&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.min.js"></script>
-    <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <!-- HEIC to JPEG converter -->
-    <script src="https://cdn.jsdelivr.net/npm/heic2any@0.0.4/dist/heic2any.min.js"></script>
-    <style>
-        :root{
-            --bg:#0b1d14;
-            --bg-soft:#102a1c;
-            --card:#153524;
-            --card-hover:#1b422c;
-            --card-caucasus:#112a1c;
-            --border:#28513a;
-            --border-soft:#1e3d29;
-            --text:#eef3ea;
-            --text-muted:#9db6a4;
-            --text-faint:#6f8b78;
-            --accent:#dba641;
-            --accent-strong:#f0bd5f;
-            --peak:#7fb0a0;
-            --caucasus-fill:#173322;
-            --caucasus-stroke:#365c44;
-            --bonus:#4a7c59;
-            --bonus-strong:#64a377;
-            --danger:#c96f5f;
-            --radius:16px;
-            --radius-sm:10px;
-            --font-display:'League Spartan',sans-serif;
-            --font-body:'Poppins',sans-serif;
-        }
-        *{box-sizing:border-box;}
-        html,body{margin:0;padding:0;}
-        body{
-            background:
-                    radial-gradient(ellipse 900px 500px at 15% -10%, rgba(219,166,65,0.08), transparent 60%),
-                    radial-gradient(ellipse 700px 500px at 100% 0%, rgba(127,176,160,0.08), transparent 55%),
-                    var(--bg);
-            color:var(--text);
-            font-family:var(--font-body);
-            font-weight:400;
-            min-height:100vh;
-        }
-        #root{max-width:1180px;margin:0 auto;padding:28px 20px 80px;}
-        h1,h2,h3{font-family:var(--font-display);margin:0;letter-spacing:0.01em;}
-        @media (prefers-reduced-motion: reduce){ *{transition:none !important;animation:none !important;} }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Koruna Evropy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@500;600;700;800&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.min.js"></script>
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<!-- HEIC to JPEG converter -->
+<script src="https://cdn.jsdelivr.net/npm/heic2any@0.0.4/dist/heic2any.min.js"></script>
+<style>
+:root{
+  --bg:#0b1d14;
+  --bg-soft:#102a1c;
+  --card:#153524;
+  --card-hover:#1b422c;
+  --card-caucasus:#112a1c; 
+  --border:#28513a;
+  --border-soft:#1e3d29;
+  --text:#eef3ea;
+  --text-muted:#9db6a4;
+  --text-faint:#6f8b78;
+  --accent:#dba641;
+  --accent-strong:#f0bd5f;
+  --peak:#7fb0a0;
+  --caucasus-fill:#173322; 
+  --caucasus-stroke:#365c44;
+  --bonus:#4a7c59; 
+  --bonus-strong:#64a377;
+  --danger:#c96f5f;
+  --radius:16px;
+  --radius-sm:10px;
+  --font-display:'League Spartan',sans-serif;
+  --font-body:'Poppins',sans-serif;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:
+    radial-gradient(ellipse 900px 500px at 15% -10%, rgba(219,166,65,0.08), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 100% 0%, rgba(127,176,160,0.08), transparent 55%),
+    var(--bg);
+  color:var(--text);
+  font-family:var(--font-body);
+  font-weight:400;
+  min-height:100vh;
+}
+#root{max-width:1180px;margin:0 auto;padding:28px 20px 80px;}
+h1,h2,h3{font-family:var(--font-display);margin:0;letter-spacing:0.01em;}
+@media (prefers-reduced-motion: reduce){ *{transition:none !important;animation:none !important;} }
 
-        .hero{position:relative;border-radius:22px;padding:34px 30px;overflow:hidden;
-            background:linear-gradient(160deg,var(--bg-soft) 0%, #0d2318 100%);
-            border:1px solid var(--border-soft);margin-bottom:26px;}
-        .hero-contours{position:absolute;inset:0;opacity:0.35;pointer-events:none;}
-        .hero-top{position:relative;z-index:1;}
-        .hero-eyebrow{font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent-strong);font-weight:600;margin-bottom:8px;}
-        .hero h1{font-size:clamp(30px,4.2vw,44px);font-weight:800;color:var(--text);line-height:1.05;}
-        .hero p.sub{color:var(--text-muted);margin-top:10px;font-size:15px;max-width:560px;line-height:1.5;}
-        .progress-row{display:flex;gap:14px;margin-top:24px;flex-wrap:wrap;position:relative;z-index:1;}
-        .progress-card{flex:1;min-width:200px;background:rgba(12,29,20,0.55);border:1px solid var(--border-soft);border-radius:var(--radius-sm);padding:16px 18px;}
-        .progress-card .plabel{font-size:12px;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);font-weight:500;}
-        .progress-card .pnum{font-family:var(--font-display);font-size:32px;font-weight:700;margin-top:4px;color:var(--text);}
-        .progress-card .pnum span{color:var(--text-faint);font-size:18px;font-weight:500;}
-        .bar-track{height:7px;border-radius:5px;background:rgba(255,255,255,0.06);margin-top:12px;overflow:hidden;}
-        .bar-fill{height:100%;border-radius:5px;transition:width .5s ease;}
-        .bar-fill.peaks{background:linear-gradient(90deg,var(--accent),var(--accent-strong));}
+.header-brand {
+  display: flex; align-items: center; gap: 14px; margin-bottom: 24px;
+}
+.brand-logo { height: 42px; width: auto; }
+.brand-text { font-family: var(--font-display); font-size: 26px; font-weight: 800; color: var(--text); letter-spacing: 0.04em; }
 
-        .map-wrap{border-radius:var(--radius);overflow:hidden;border:1px solid var(--border-soft);margin-bottom:26px;position:relative;background:#081209;}
-        #mapCanvas{width:100%;height:480px;background:#081209;z-index:1;}
-        .map-legend{position:absolute;bottom:16px;left:16px;z-index:400;background:rgba(11,29,20,0.88);border:1px solid var(--border-soft);border-radius:10px;padding:9px 13px;font-size:12px;color:var(--text-muted);display:flex;gap:14px;flex-wrap:wrap;backdrop-filter:blur(4px);pointer-events:none;}
-        .map-legend .li{display:flex;align-items:center;gap:6px;}
-        .leaflet-container .leaflet-control-attribution{background:rgba(11,29,20,0.7) !important;color:var(--text-faint) !important;}
+.hero{position:relative;border-radius:22px;padding:34px 30px;overflow:hidden;
+  background:linear-gradient(160deg,var(--bg-soft) 0%, #0d2318 100%);
+  border:1px solid var(--border-soft);margin-bottom:26px;}
+.hero-contours{position:absolute;inset:0;opacity:0.35;pointer-events:none;}
+.hero-top{position:relative;z-index:1;}
+.hero-eyebrow{font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent-strong);font-weight:600;margin-bottom:8px;}
+.hero h1{font-size:clamp(30px,4.2vw,44px);font-weight:800;color:var(--text);line-height:1.05;}
+.hero p.sub{color:var(--text-muted);margin-top:10px;font-size:15px;max-width:560px;line-height:1.5;}
+.progress-row{display:flex;gap:14px;margin-top:24px;flex-wrap:wrap;position:relative;z-index:1;}
+.progress-card{flex:1;min-width:200px;background:rgba(12,29,20,0.55);border:1px solid var(--border-soft);border-radius:var(--radius-sm);padding:16px 18px;}
+.progress-card .plabel{font-size:12px;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);font-weight:500;}
+.progress-card .pnum{font-family:var(--font-display);font-size:32px;font-weight:700;margin-top:4px;color:var(--text);}
+.progress-card .pnum span{color:var(--text-faint);font-size:18px;font-weight:500;}
+.bar-track{height:7px;border-radius:5px;background:rgba(255,255,255,0.06);margin-top:12px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:5px;transition:width .5s ease;}
+.bar-fill.peaks{background:linear-gradient(90deg,var(--accent),var(--accent-strong));}
 
-        .toolbar{display:flex;gap:10px;align-items:center;margin-bottom:16px;flex-wrap:wrap;}
-        .toolbar input[type="text"]{flex:1;min-width:180px;background:var(--card);border:1px solid var(--border-soft);color:var(--text);padding:10px 14px;border-radius:var(--radius-sm);font-family:var(--font-body);font-size:14px;}
-        .toolbar input[type="text"]::placeholder{color:var(--text-faint);}
-        .toolbar select{background:var(--card);border:1px solid var(--border-soft);color:var(--text);padding:10px 12px;border-radius:var(--radius-sm);font-family:var(--font-body);font-size:14px; cursor:pointer;}
-        .count-pill{font-size:12px;color:var(--text-muted);white-space:nowrap;}
+.methodology-box { background: rgba(12, 29, 20, 0.4); border: 1px solid var(--border-soft); border-radius: var(--radius-sm); padding: 18px 22px; margin-top: 24px; position: relative; z-index: 1; }
+.methodology-box h3 { font-size: 15px; color: var(--accent-strong); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.06em; font-family: var(--font-body); font-weight: 600; }
+.methodology-box p { color: var(--text-muted); font-size: 13.5px; line-height: 1.6; margin: 0; }
 
-        .country-card{background:var(--card);border:1px solid var(--border-soft);border-left:3px solid var(--border);border-radius:var(--radius-sm);margin-bottom:10px;overflow:hidden;transition:border-color .2s ease, background .2s ease;}
-        .country-card.caucasus-card{background:var(--card-caucasus);border-color:#173322;border-left-color:var(--caucasus-stroke);}
-        .country-card[data-status="full"]{border-left-color:var(--accent);}
-        .bonus-card[data-status="full"]{border-left-color:var(--bonus);}
-        .country-card summary{list-style:none;cursor:pointer;}
-        .country-card summary::-webkit-details-marker{display:none;}
-        .card-head{display:flex;align-items:center;gap:14px;padding:14px 16px;}
-        .card-head:hover{background:var(--card-hover);}
-        .chevron{color:var(--text-faint);font-size:13px;transition:transform .2s ease;flex-shrink:0;}
-        details[open] .chevron{transform:rotate(90deg);}
-        .card-titles{flex:1;min-width:0;display:flex;align-items:center;flex-wrap:wrap;gap:8px;}
-        .card-titles .cname{font-family:var(--font-display);font-weight:700;font-size:17px;color:var(--text);}
-        .card-titles .cmeta{font-size:13px;color:var(--text-muted);}
-        .caucasus-badge{font-size:10px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.05em;background:rgba(0,0,0,0.25);padding:3px 7px;border-radius:5px;border:1px solid rgba(255,255,255,0.05);font-family:var(--font-body);font-weight:500;}
+.map-wrap{border-radius:var(--radius);overflow:hidden;border:1px solid var(--border-soft);margin-bottom:26px;position:relative;background:#081209;}
+#mapCanvas{width:100%;height:480px;background:#081209;z-index:1;}
+.map-legend{position:absolute;bottom:16px;left:16px;z-index:400;background:rgba(11,29,20,0.88);border:1px solid var(--border-soft);border-radius:10px;padding:9px 13px;font-size:12px;color:var(--text-muted);display:flex;gap:14px;flex-wrap:wrap;backdrop-filter:blur(4px);pointer-events:none;}
+.map-legend .li{display:flex;align-items:center;gap:6px;}
+.leaflet-container .leaflet-control-attribution{background:rgba(11,29,20,0.7) !important;color:var(--text-faint) !important;}
 
-        .card-body{padding:4px 16px 20px 44px;}
+.toolbar{display:flex;gap:10px;align-items:center;margin-bottom:16px;flex-wrap:wrap;}
+.toolbar input[type="text"]{flex:1;min-width:180px;background:var(--card);border:1px solid var(--border-soft);color:var(--text);padding:10px 14px;border-radius:var(--radius-sm);font-family:var(--font-body);font-size:14px;}
+.toolbar input[type="text"]::placeholder{color:var(--text-faint);}
+.toolbar select{background:var(--card);border:1px solid var(--border-soft);color:var(--text);padding:10px 12px;border-radius:var(--radius-sm);font-family:var(--font-body);font-size:14px; cursor:pointer;}
+.count-pill{font-size:12px;color:var(--text-muted);white-space:nowrap;}
 
-        .item{background:var(--bg-soft);border:1px solid var(--border-soft);border-radius:var(--radius-sm);padding:16px;}
-        .caucasus-card .item{background:rgba(11,29,20,0.6);}
-        .item-top{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
-        .check{width:24px;height:24px;border-radius:6px;border:2px solid var(--text-faint);flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s ease;}
-        .check.checked{background:var(--accent);border-color:var(--accent);}
-        .check.checked.bonuscheck{background:var(--bonus);border-color:var(--bonus);}
-        .check svg{width:14px;height:14px;opacity:0;transition:opacity .1s ease;}
-        .check.checked svg{opacity:1;}
-        .item-label{font-weight:600;font-size:15px;}
+.country-card{background:var(--card);border:1px solid var(--border-soft);border-left:3px solid var(--border);border-radius:var(--radius-sm);margin-bottom:10px;overflow:hidden;transition:border-color .2s ease, background .2s ease;}
+.country-card.caucasus-card{background:var(--card-caucasus);border-color:#173322;border-left-color:var(--caucasus-stroke);}
+.country-card[data-status="full"]{border-left-color:var(--accent);}
+.bonus-card[data-status="full"]{border-left-color:var(--bonus);}
+.country-card summary{list-style:none;cursor:pointer;}
+.country-card summary::-webkit-details-marker{display:none;}
+.card-head{display:flex;align-items:center;gap:14px;padding:14px 16px;}
+.card-head:hover{background:var(--card-hover);}
+.chevron{color:var(--text-faint);font-size:13px;transition:transform .2s ease;flex-shrink:0;}
+details[open] .chevron{transform:rotate(90deg);}
+.card-titles{flex:1;min-width:0;display:flex;align-items:center;flex-wrap:wrap;gap:8px;}
+.card-titles .cname{font-family:var(--font-display);font-weight:700;font-size:17px;color:var(--text);}
+.card-titles .cmeta{font-size:13px;color:var(--text-muted);}
+.caucasus-badge{font-size:10px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.05em;background:rgba(0,0,0,0.25);padding:3px 7px;border-radius:5px;border:1px solid rgba(255,255,255,0.05);font-family:var(--font-body);font-weight:500;}
 
-        .item-fields{display:flex;flex-direction:column;gap:12px;}
-        .item-fields input[type="datetime-local"], .item-fields input[type="date"], .item-fields input[type="text"], .item-fields input[type="number"]{
-            background:var(--bg);border:1px solid var(--border-soft);color:var(--text);padding:9px 12px;border-radius:8px;font-family:var(--font-body);font-size:13.5px;width:100%;max-width:400px;}
-        .item-fields input:disabled { opacity:0.6; cursor:not-allowed; }
-        .item-fields label.small{font-size:11.5px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.05em;font-weight:500;}
-        .diff-badge{display:inline-block;font-size:11px;padding:3px 8px;border-radius:20px;font-weight:600;}
+.card-body{padding:4px 16px 20px 44px;}
 
-        .stats-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 4px; max-width:400px; }
-        .stats-row .stat-col { flex: 1; min-width: 100px; }
-        .stats-row input { width: 100% !important; margin-top: 4px;}
+.item{background:var(--bg-soft);border:1px solid var(--border-soft);border-radius:var(--radius-sm);padding:16px;}
+.caucasus-card .item{background:rgba(11,29,20,0.6);}
+.item-top{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+.check{width:24px;height:24px;border-radius:6px;border:2px solid var(--text-faint);flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s ease;}
+.check.checked{background:var(--accent);border-color:var(--accent);}
+.check.checked.bonuscheck{background:var(--bonus);border-color:var(--bonus);}
+.check svg{width:14px;height:14px;opacity:0;transition:opacity .1s ease;}
+.check.checked svg{opacity:1;}
+.item-label{font-weight:600;font-size:15px;}
 
-        /* Rating Pills */
-        .rating-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom:4px; }
-        .rating-pill {
-            background: var(--bg); border: 1px solid var(--border-soft); color: var(--text-faint);
-            padding: 8px 14px; border-radius: 20px; font-size: 13px; font-family: var(--font-body); font-weight:500;
-            cursor: pointer; transition: all 0.2s;
-        }
-        .rating-pill:hover:not(:disabled) { border-color: var(--rc); color: var(--rc); }
-        .rating-pill.active { background: var(--rc); color: #111; border-color: var(--rc); font-weight: 600; }
-        .rating-pill:disabled { cursor: not-allowed; opacity: 0.6; }
-        .rating-pill.active:disabled { opacity: 1; }
+.item-fields{display:flex;flex-direction:column;gap:12px;}
+.item-fields input[type="datetime-local"], .item-fields input[type="date"], .item-fields input[type="text"], .item-fields input[type="number"]{
+  background:var(--bg);border:1px solid var(--border-soft);color:var(--text);padding:9px 12px;border-radius:8px;font-family:var(--font-body);font-size:13.5px;width:100%;max-width:400px;}
+.item-fields input:disabled { opacity:0.6; cursor:not-allowed; }
+.item-fields label.small{font-size:11.5px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.05em;font-weight:500;}
+.diff-badge{display:inline-block;font-size:11px;padding:3px 8px;border-radius:20px;font-weight:600;}
 
-        .photo-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
-        .photo-btn{background:var(--border-soft);color:var(--text);border:1px solid var(--border);padding:9px 14px;border-radius:8px;font-size:13px;cursor:pointer;font-family:var(--font-body);font-weight:500;}
-        .photo-btn:hover{background:var(--border);}
-        .photo-thumb{width:54px;height:54px;object-fit:cover;border-radius:8px;border:1px solid var(--border);cursor:zoom-in;transition:opacity 0.2s ease;}
-        .photo-thumb:hover{opacity:0.8;}
-        .exif-hint{font-size:11px;color:var(--peak);}
-        .exif-hint.none{color:var(--text-faint);}
+.stats-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 4px; max-width:400px; }
+.stats-row .stat-col { flex: 1; min-width: 100px; }
+.stats-row input { width: 100% !important; margin-top: 4px;}
 
-        .clear-link{font-size:11px;color:var(--text-faint);text-decoration:underline;cursor:pointer;background:none;border:none;font-family:var(--font-body);padding:0;}
-        .clear-link:hover{color:var(--danger);}
+/* Rating Pills */
+.rating-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom:4px; }
+.rating-pill {
+  background: var(--bg); border: 1px solid var(--border-soft); color: var(--text-faint);
+  padding: 8px 14px; border-radius: 20px; font-size: 13px; font-family: var(--font-body); font-weight:500;
+  cursor: pointer; transition: all 0.2s;
+}
+.rating-pill:hover:not(:disabled) { border-color: var(--rc); color: var(--rc); }
+.rating-pill.active { background: var(--rc); color: #111; border-color: var(--rc); font-weight: 600; }
+.rating-pill:disabled { cursor: not-allowed; opacity: 0.6; }
+.rating-pill.active:disabled { opacity: 1; }
 
-        .bonus-section{margin-top:50px;}
-        .bonus-header{margin-bottom:14px;}
-        .bonus-header h2{font-size:22px;font-weight:700;color:var(--text);}
-        .bonus-header p{color:var(--text-muted);font-size:13.5px;margin-top:4px; line-height: 1.5;}
-        .add-form{background:var(--card);border:1px solid var(--border-soft);border-radius:var(--radius-sm);margin-bottom:14px;padding:0 16px;}
-        .add-form summary{list-style:none;cursor:pointer;padding:14px 0;font-family:var(--font-body);font-weight:500;color:var(--accent-strong);font-size:13.5px;}
-        .add-form summary::-webkit-details-marker{display:none;}
-        .add-form-body{display:flex;flex-direction:column;gap:10px;padding-bottom:18px;max-width:420px;}
-        .add-form-body input{background:var(--bg-soft);border:1px solid var(--border-soft);color:var(--text);padding:9px 12px;border-radius:8px;font-family:var(--font-body);font-size:13.5px;}
-        .add-form-body .row2{display:flex;gap:10px;}
-        .add-form-body button{align-self:flex-start;background:var(--bonus);color:#ffffff;border:none;padding:9px 16px;border-radius:8px;font-weight:600;cursor:pointer;font-family:var(--font-body);font-size:13.5px;}
-        .add-form-body button:hover{background:var(--bonus-strong);}
+.photo-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+.photo-btn{background:var(--border-soft);color:var(--text);border:1px solid var(--border);padding:9px 14px;border-radius:8px;font-size:13px;cursor:pointer;font-family:var(--font-body);font-weight:500;}
+.photo-btn:hover{background:var(--border);}
+.photo-thumb{width:54px;height:54px;object-fit:cover;border-radius:8px;border:1px solid var(--border);cursor:zoom-in;transition:opacity 0.2s ease;}
+.photo-thumb:hover{opacity:0.8;}
+.exif-hint{font-size:11px;color:var(--peak);}
+.exif-hint.none{color:var(--text-faint);}
 
-        /* Admin Panel */
-        .admin-panel {
-            text-align: center;
-            margin-top: 40px;
-            padding: 20px;
-            background: var(--card);
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--border-soft);
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-        .admin-panel button, .admin-panel .file-label-btn {
-            background: var(--bg-soft);
-            color: var(--text);
-            border: 1px solid var(--border);
-            padding: 8px 14px;
-            border-radius: 8px;
-            font-size: 13px;
-            cursor: pointer;
-            font-family: var(--font-body);
-        }
-        .admin-panel button:hover, .admin-panel .file-label-btn:hover { background: var(--border); }
-        .admin-panel .primary-btn { background: var(--accent); color: #111; border: none; font-weight: 500; }
-        .admin-panel .primary-btn:hover { background: var(--accent-strong); }
+.clear-link{font-size:11px;color:var(--text-faint);text-decoration:underline;cursor:pointer;background:none;border:none;font-family:var(--font-body);padding:0;}
+.clear-link:hover{color:var(--danger);}
 
-        .footer-note{text-align:center;color:var(--text-faint);font-size:13px;margin-top:24px;line-height:1.6;}
-        .loading{text-align:center;color:var(--text-muted);padding:60px 0;font-size:14px;}
-        .save-indicator{position:fixed;bottom:18px;right:18px;background:var(--card);border:1px solid var(--border-soft);color:var(--text-muted);padding:8px 14px;border-radius:20px;font-size:12px;opacity:0;transition:opacity .3s ease;pointer-events:none;z-index:9000;}
-        .save-indicator.show{opacity:1;}
+.bonus-section{margin-top:50px;}
+.bonus-header{margin-bottom:14px;}
+.bonus-header h2{font-size:22px;font-weight:700;color:var(--text);}
+.bonus-header p{color:var(--text-muted);font-size:13.5px;margin-top:4px; line-height: 1.5;}
+.add-form{background:var(--card);border:1px solid var(--border-soft);border-radius:var(--radius-sm);margin-bottom:14px;padding:0 16px;}
+.add-form summary{list-style:none;cursor:pointer;padding:14px 0;font-family:var(--font-body);font-weight:500;color:var(--accent-strong);font-size:13.5px;}
+.add-form summary::-webkit-details-marker{display:none;}
+.add-form-body{display:flex;flex-direction:column;gap:10px;padding-bottom:18px;max-width:420px;}
+.add-form-body input{background:var(--bg-soft);border:1px solid var(--border-soft);color:var(--text);padding:9px 12px;border-radius:8px;font-family:var(--font-body);font-size:13.5px;}
+.add-form-body .row2{display:flex;gap:10px;}
+.add-form-body button{align-self:flex-start;background:var(--bonus);color:#ffffff;border:none;padding:9px 16px;border-radius:8px;font-weight:600;cursor:pointer;font-family:var(--font-body);font-size:13.5px;}
+.add-form-body button:hover{background:var(--bonus-strong);}
 
-        /* Lightbox Modal */
-        #lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:9999;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(5px);cursor:pointer;}
-        #lightbox img{max-width:100%;max-height:100%;border-radius:8px;box-shadow:0 10px 30px rgba(0,0,0,0.5);object-fit:contain;}
-    </style>
+/* Admin Panel */
+.admin-panel {
+  text-align: center;
+  margin-top: 40px;
+  padding: 20px;
+  background: var(--card);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-soft);
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.admin-panel button, .admin-panel .file-label-btn {
+  background: var(--bg-soft);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  font-family: var(--font-body);
+}
+.admin-panel button:hover, .admin-panel .file-label-btn:hover { background: var(--border); }
+.admin-panel .primary-btn { background: var(--accent); color: #111; border: none; font-weight: 500; }
+.admin-panel .primary-btn:hover { background: var(--accent-strong); }
+
+.footer-note{text-align:center;color:var(--text-faint);font-size:13px;margin-top:24px;line-height:1.6;}
+.loading{text-align:center;color:var(--text-muted);padding:60px 0;font-size:14px;}
+.save-indicator{position:fixed;bottom:18px;right:18px;background:var(--card);border:1px solid var(--border-soft);color:var(--text-muted);padding:8px 14px;border-radius:20px;font-size:12px;opacity:0;transition:opacity .3s ease;pointer-events:none;z-index:9000;}
+.save-indicator.show{opacity:1;}
+
+/* Lightbox Modal */
+#lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:9999;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(5px);cursor:pointer;}
+#lightbox img{max-width:100%;max-height:100%;border-radius:8px;box-shadow:0 10px 30px rgba(0,0,0,0.5);object-fit:contain;}
+</style>
 </head>
 <body>
 <div id="root">
-    <div class="loading" id="loadingMsg">Načítám Korunu Evropy…</div>
-    <div id="appContent" style="display:none;">
-        <div id="heroWrap"></div>
-        <div class="map-wrap">
-            <div id="mapCanvas"></div>
-            <div class="map-legend">
-                <span class="li"><svg width="16" height="16" viewBox="-8 -8 16 16"><path d="M-7 8 L0 -8 L4 0 L7 8 Z" fill="#dba641" stroke="#f0bd5f" stroke-width="1"/></svg> zdoláno</span>
-                <span class="li"><svg width="16" height="16" viewBox="-8 -8 16 16"><rect x="-6" y="-6" width="12" height="12" fill="#dba641" fill-opacity="0.3" stroke="#f0bd5f" stroke-width="1"/></svg> území zdoláno</span>
-                <span class="li"><svg width="16" height="16" viewBox="-8 -8 16 16"><path d="M-7 8 L0 -8 L4 0 L7 8 Z" fill="#28513a" stroke="#557a63" stroke-width="1"/></svg> evropa</span>
-                <span class="li"><svg width="16" height="16" viewBox="-8 -8 16 16"><path d="M-7 8 L0 -8 L4 0 L7 8 Z" fill="#173322" stroke="#365c44" stroke-width="1"/></svg> pomezí Evropy</span>
-                <span class="li"><svg width="16" height="16" viewBox="-8 -8 16 16"><path d="M0 -8 L2 -2.5 L8 -2 L3.2 1.6 L5 8 L0 4.2 L-5 8 L-3.2 1.6 L-8 -2 L-2 -2.5 Z" fill="#4a7c59" stroke="#64a377" stroke-width="1"/></svg> neevropský vrchol</span>
-            </div>
-        </div>
-        <div id="toolbarWrap"></div>
-
-        <div id="listWrap"></div>
-        <div id="bonusSectionWrap"></div>
-
-        <div id="adminPanelWrap"></div>
-
-        <div class="footer-note">
-            Tento tracker sdílím veřejně. Sleduj moji cestu na Instagramu <a href="https://www.instagram.com/adrian.schram/" target="_blank" style="color:var(--accent); text-decoration:none; font-weight:600;">@adrian.schram</a> 🚀<br>
-            <span style="opacity:0.6; font-size:11.5px; margin-top:6px; display:inline-block;">Data se pro vás živě synchronizují. Fotky jsou na pozadí automaticky komprimovány.</span>
-        </div>
+  <div class="loading" id="loadingMsg">Načítám Korunu Evropy…</div>
+  <div id="appContent" style="display:none;">
+    
+    <div class="header-brand">
+      <img src="3.png" alt="Logo" class="brand-logo">
+      <span class="brand-text">PROJEKT 25</span>
     </div>
+
+    <div id="heroWrap"></div>
+    <div class="map-wrap">
+      <div id="mapCanvas"></div>
+      <div class="map-legend">
+        <span class="li"><svg width="16" height="16" viewBox="-8 -8 16 16"><path d="M-7 8 L0 -8 L4 0 L7 8 Z" fill="#dba641" stroke="#f0bd5f" stroke-width="1"/></svg> zdoláno</span>
+        <span class="li"><svg width="16" height="16" viewBox="-8 -8 16 16"><rect x="-6" y="-6" width="12" height="12" fill="#dba641" fill-opacity="0.3" stroke="#f0bd5f" stroke-width="1"/></svg> území zdoláno</span>
+        <span class="li"><svg width="16" height="16" viewBox="-8 -8 16 16"><path d="M-7 8 L0 -8 L4 0 L7 8 Z" fill="#28513a" stroke="#557a63" stroke-width="1"/></svg> evropa</span>
+        <span class="li"><svg width="16" height="16" viewBox="-8 -8 16 16"><path d="M-7 8 L0 -8 L4 0 L7 8 Z" fill="#173322" stroke="#365c44" stroke-width="1"/></svg> pomezí Evropy</span>
+        <span class="li"><svg width="16" height="16" viewBox="-8 -8 16 16"><path d="M0 -8 L2 -2.5 L8 -2 L3.2 1.6 L5 8 L0 4.2 L-5 8 L-3.2 1.6 L-8 -2 L-2 -2.5 Z" fill="#4a7c59" stroke="#64a377" stroke-width="1"/></svg> neevropský vrchol</span>
+      </div>
+    </div>
+    <div id="toolbarWrap"></div>
+    
+    <div id="listWrap"></div>
+    <div id="bonusSectionWrap"></div>
+    
+    <div id="adminPanelWrap"></div>
+
+    <div class="footer-note">
+      Tento tracker sdílím veřejně. Sleduj moji cestu na Instagramu <a href="https://www.instagram.com/adrian.schram/" target="_blank" style="color:var(--accent); text-decoration:none; font-weight:600;">@adrian.schram</a> 🚀<br>
+      <span style="opacity:0.6; font-size:11.5px; margin-top:6px; display:inline-block;">Data se pro vás živě synchronizují. Fotky jsou na pozadí automaticky komprimovány.</span>
+    </div>
+  </div>
 </div>
 <div class="save-indicator" id="saveIndicator">Ukládám…</div>
 <div id="lightbox" onclick="this.style.display='none'">
-    <img id="lightbox-img" src="">
+  <img id="lightbox-img" src="">
 </div>
 
 <script>
-    /* ============================= DATA ============================= */
-    const COUNTRIES = [
-        {id:"albania",iso:"ALB",name:"Albánie",capital:"Tirana",capLat:41.3275,capLng:19.8187,peak:"Korab",elev:2764,peakLat:41.7842,peakLng:20.5486},
-        {id:"andorra",iso:"AND",name:"Andorra",capital:"Andorra la Vella",capLat:42.5063,capLng:1.5218,peak:"Coma Pedrosa",elev:2942,peakLat:42.5761,peakLng:1.4703},
-        {id:"austria",iso:"AUT",name:"Rakousko",capital:"Vídeň",capLat:48.2082,capLng:16.3738,peak:"Grossglockner",elev:3798,peakLat:47.0742,peakLng:12.6944},
-        {id:"belarus",iso:"BLR",name:"Bělorusko",capital:"Minsk",capLat:53.9006,capLng:27.5590,peak:"Dzjaržynská hora",elev:345,peakLat:53.6572,peakLng:26.9614},
-        {id:"belgium",iso:"BEL",name:"Belgie",capital:"Brusel",capLat:50.8503,capLng:4.3517,peak:"Signal de Botrange",elev:694,peakLat:50.5064,peakLng:6.0814},
-        {id:"bosnia",iso:"BIH",name:"Bosna a Hercegovina",capital:"Sarajevo",capLat:43.8563,capLng:18.4131,peak:"Maglić",elev:2386,peakLat:43.2667,peakLng:18.7833},
-        {id:"bulgaria",iso:"BGR",name:"Bulharsko",capital:"Sofie",capLat:42.6977,capLng:23.3219,peak:"Musala",elev:2925,peakLat:42.1804,peakLng:23.5867},
-        {id:"croatia",iso:"HRV",name:"Chorvatsko",capital:"Záhřeb",capLat:45.8150,capLng:15.9819,peak:"Dinara",elev:1831,peakLat:43.9967,peakLng:16.3814},
-        {id:"cyprus",iso:"CYP",name:"Kypr",capital:"Nikósie",capLat:35.1856,capLng:33.3823,peak:"Olympos (Troodos)",elev:1952,peakLat:34.9358,peakLng:32.8656},
-        {id:"czechia",iso:"CZE",name:"Česko",capital:"Praha",capLat:50.0755,capLng:14.4378,peak:"Sněžka",elev:1603,peakLat:50.7361,peakLng:15.7400},
-        {id:"denmark",iso:"DNK",name:"Dánsko",capital:"Kodaň",capLat:55.6761,capLng:12.5683,peak:"Møllehøj",elev:171,peakLat:56.0997,peakLng:9.3500},
-        {id:"estonia",iso:"EST",name:"Estonsko",capital:"Tallinn",capLat:59.4370,capLng:24.7536,peak:"Suur Munamägi",elev:318,peakLat:57.7075,peakLng:27.0561},
-        {id:"finland",iso:"FIN",name:"Finsko",capital:"Helsinki",capLat:60.1699,capLng:24.9384,peak:"Halti",elev:1324,peakLat:69.3222,peakLng:21.2842},
-        {id:"france",iso:"FRA",name:"Francie",capital:"Paříž",capLat:48.8566,capLng:2.3522,peak:"Mont Blanc",elev:4808,peakLat:45.8326,peakLng:6.8652},
-        {id:"germany",iso:"DEU",name:"Německo",capital:"Berlín",capLat:52.5200,capLng:13.4050,peak:"Zugspitze",elev:2962,peakLat:47.4210,peakLng:10.9852},
-        {id:"greece",iso:"GRC",name:"Řecko",capital:"Athény",capLat:37.9838,capLng:23.7275,peak:"Olymp",elev:2917,peakLat:40.0855,peakLng:22.3583},
-        {id:"hungary",iso:"HUN",name:"Maďarsko",capital:"Budapešť",capLat:47.4979,capLng:19.0402,peak:"Kékes",elev:1014,peakLat:47.8703,peakLng:20.0117},
-        {id:"iceland",iso:"ISL",name:"Island",capital:"Reykjavík",capLat:64.1466,capLng:-21.9426,peak:"Hvannadalshnúkur",elev:2110,peakLat:64.0157,peakLng:-16.6845},
-        {id:"ireland",iso:"IRL",name:"Irsko",capital:"Dublin",capLat:53.3498,capLng:-6.2603,peak:"Carrauntoohil",elev:1038,peakLat:51.9992,peakLng:-9.7549},
-        {id:"italy",iso:"ITA",name:"Itálie",capital:"Řím",capLat:41.9028,capLng:12.4964,peak:"Mont Blanc (Monte Bianco)",elev:4808,peakLat:45.8326,peakLng:6.8652},
-        {id:"kosovo",iso:"KOS",name:"Kosovo",capital:"Priština",capLat:42.6629,capLng:21.1655,peak:"Velika Rudoka",elev:2658,peakLat:41.8500,peakLng:20.7833},
-        {id:"latvia",iso:"LVA",name:"Lotyšsko",capital:"Riga",capLat:56.9496,capLng:24.1052,peak:"Gaiziņkalns",elev:312,peakLat:56.8686,peakLng:25.9917},
-        {id:"liechtenstein",iso:"LIE",name:"Lichtenštejnsko",capital:"Vaduz",capLat:47.1410,capLng:9.5209,peak:"Vorder Grauspitz",elev:2599,peakLat:47.0631,peakLng:9.5947},
-        {id:"lithuania",iso:"LTU",name:"Litva",capital:"Vilnius",capLat:54.6872,capLng:25.2797,peak:"Aukštojas",elev:294,peakLat:54.8558,peakLng:25.5567},
-        {id:"luxembourg",iso:"LUX",name:"Lucembursko",capital:"Lucemburk",capLat:49.6116,capLng:6.1319,peak:"Kneiff",elev:560,peakLat:50.1289,peakLng:6.0333},
-        {id:"malta",iso:"MLT",name:"Malta",capital:"Valletta",capLat:35.8989,capLng:14.5146,peak:"Ta' Dmejrek",elev:253,peakLat:35.8722,peakLng:14.3711},
-        {id:"moldova",iso:"MDA",name:"Moldavsko",capital:"Kišiněv",capLat:47.0105,capLng:28.8638,peak:"Bălănești",elev:430,peakLat:47.0994,peakLng:28.3597},
-        {id:"monaco",iso:"MCO",name:"Monako",capital:"Monako",capLat:43.7384,capLng:7.4246,peak:"Chemin des Révoires",elev:161,peakLat:43.7500,peakLng:7.4200},
-        {id:"montenegro",iso:"MNE",name:"Černá Hora",capital:"Podgorica",capLat:42.4304,capLng:19.2594,peak:"Zla Kolata",elev:2534,peakLat:42.6167,peakLng:19.8167},
-        {id:"netherlands",iso:"NLD",name:"Nizozemsko",capital:"Amsterdam",capLat:52.3676,capLng:4.9041,peak:"Vaalserberg",elev:322,peakLat:50.7539,peakLng:6.0208},
-        {id:"nmacedonia",iso:"MKD",name:"Severní Makedonie",capital:"Skopje",capLat:41.9981,capLng:21.4254,peak:"Korab",elev:2764,peakLat:41.7842,peakLng:20.5486},
-        {id:"norway",iso:"NOR",name:"Norsko",capital:"Oslo",capLat:59.9139,capLng:10.7522,peak:"Galdhøpiggen",elev:2469,peakLat:61.6360,peakLng:8.3125},
-        {id:"poland",iso:"POL",name:"Polsko",capital:"Varšava",capLat:52.2297,capLng:21.0122,peak:"Rysy",elev:2499,peakLat:49.1793,peakLng:20.0881},
-        {id:"portugal",iso:"PRT",name:"Portugalsko",capital:"Lisabon",capLat:38.7223,capLng:-9.1393,peak:"Ponta do Pico",elev:2351,peakLat:38.4686,peakLng:-28.3997},
-        {id:"romania",iso:"ROU",name:"Rumunsko",capital:"Bukurešť",capLat:44.4268,capLng:26.1025,peak:"Moldoveanu",elev:2544,peakLat:45.6069,peakLng:24.7358},
-        {id:"russia",iso:"RUS",name:"Rusko",capital:"Moskva",capLat:55.7558,capLng:37.6173,peak:"Elbrus",elev:5642,peakLat:43.3499,peakLng:42.4453},
-        {id:"sanmarino",iso:"SMR",name:"San Marino",capital:"San Marino",capLat:43.9424,capLng:12.4578,peak:"Monte Titano",elev:749,peakLat:43.9360,peakLng:12.4530},
-        {id:"serbia",iso:"SRB",name:"Srbsko",capital:"Bělehrad",capLat:44.7866,capLng:20.4489,peak:"Midžor",elev:2169,peakLat:43.4058,peakLng:22.6997},
-        {id:"slovakia",iso:"SVK",name:"Slovensko",capital:"Bratislava",capLat:48.1486,capLng:17.1077,peak:"Gerlachovský štít",elev:2655,peakLat:49.1667,peakLng:20.1394},
-        {id:"slovenia",iso:"SVN",name:"Slovinsko",capital:"Lublaň",capLat:46.0569,capLng:14.5058,peak:"Triglav",elev:2864,peakLat:46.3781,peakLng:13.8353},
-        {id:"spain",iso:"ESP",name:"Španělsko",capital:"Madrid",capLat:40.4168,capLng:-3.7038,peak:"Pico de Teide",elev:3718,peakLat:28.2723,peakLng:-16.6425},
-        {id:"sweden",iso:"SWE",name:"Švédsko",capital:"Stockholm",capLat:59.3293,capLng:18.0686,peak:"Kebnekaise",elev:2097,peakLat:67.9010,peakLng:18.5428},
-        {id:"switzerland",iso:"CHE",name:"Švýcarsko",capital:"Bern",capLat:46.9480,capLng:7.4474,peak:"Dufourspitze",elev:4634,peakLat:45.9369,peakLng:7.8666},
-        {id:"ukraine",iso:"UKR",name:"Ukrajina",capital:"Kyjev",capLat:50.4501,capLng:30.5234,peak:"Hoverla",elev:2061,peakLat:48.1567,peakLng:24.5003},
-        {id:"uk",iso:"GBR",name:"Spojené království",capital:"Londýn",capLat:51.5074,capLng:-0.1278,peak:"Ben Nevis",elev:1345,peakLat:56.7969,peakLng:-5.0036},
-        {id:"vatican",iso:"VAT",name:"Vatikán",capital:"Vatikán",capLat:41.9029,capLng:12.4534,peak:"Vatikánský pahorek",elev:75,peakLat:41.9022,peakLng:12.4534}
-    ];
+/* ============================= DATA ============================= */
+// Přidáno peakId pro jednoznačné určení unikátního vrcholu
+const COUNTRIES = [
+{id:"albania",iso:"ALB",name:"Albánie",capital:"Tirana",peak:"Korab",peakId:"korab",elev:2764,peakLat:41.7842,peakLng:20.5486},
+{id:"andorra",iso:"AND",name:"Andorra",capital:"Andorra la Vella",peak:"Coma Pedrosa",peakId:"coma_pedrosa",elev:2942,peakLat:42.5761,peakLng:1.4703},
+{id:"austria",iso:"AUT",name:"Rakousko",capital:"Vídeň",peak:"Grossglockner",peakId:"grossglockner",elev:3798,peakLat:47.0742,peakLng:12.6944},
+{id:"belarus",iso:"BLR",name:"Bělorusko",capital:"Minsk",peak:"Dzjaržynská hora",peakId:"dzyarzhynskaya",elev:345,peakLat:53.6572,peakLng:26.9614},
+{id:"belgium",iso:"BEL",name:"Belgie",capital:"Brusel",peak:"Signal de Botrange",peakId:"botrange",elev:694,peakLat:50.5064,peakLng:6.0814},
+{id:"bosnia",iso:"BIH",name:"Bosna a Hercegovina",capital:"Sarajevo",peak:"Maglić",peakId:"maglic",elev:2386,peakLat:43.2667,peakLng:18.7833},
+{id:"bulgaria",iso:"BGR",name:"Bulharsko",capital:"Sofie",peak:"Musala",peakId:"musala",elev:2925,peakLat:42.1804,peakLng:23.5867},
+{id:"croatia",iso:"HRV",name:"Chorvatsko",capital:"Záhřeb",peak:"Dinara",peakId:"dinara",elev:1831,peakLat:43.9967,peakLng:16.3814},
+{id:"cyprus",iso:"CYP",name:"Kypr",capital:"Nikósie",peak:"Olympos (Troodos)",peakId:"olympos_cyp",elev:1952,peakLat:34.9358,peakLng:32.8656},
+{id:"czechia",iso:"CZE",name:"Česko",capital:"Praha",peak:"Sněžka",peakId:"snezka",elev:1603,peakLat:50.7361,peakLng:15.7400},
+{id:"denmark",iso:"DNK",name:"Dánsko",capital:"Kodaň",peak:"Møllehøj",peakId:"mollehoj",elev:171,peakLat:56.0997,peakLng:9.3500},
+{id:"estonia",iso:"EST",name:"Estonsko",capital:"Tallinn",peak:"Suur Munamägi",peakId:"suur_munamagi",elev:318,peakLat:57.7075,peakLng:27.0561},
+{id:"finland",iso:"FIN",name:"Finsko",capital:"Helsinki",peak:"Halti",peakId:"halti",elev:1324,peakLat:69.3222,peakLng:21.2842},
+{id:"france",iso:"FRA",name:"Francie",capital:"Paříž",peak:"Mont Blanc",peakId:"mont_blanc",elev:4808,peakLat:45.8326,peakLng:6.8652},
+{id:"germany",iso:"DEU",name:"Německo",capital:"Berlín",peak:"Zugspitze",peakId:"zugspitze",elev:2962,peakLat:47.4210,peakLng:10.9852},
+{id:"greece",iso:"GRC",name:"Řecko",capital:"Athény",peak:"Olymp",peakId:"olympus",elev:2917,peakLat:40.0855,peakLng:22.3583},
+{id:"hungary",iso:"HUN",name:"Maďarsko",capital:"Budapešť",peak:"Kékes",peakId:"kekes",elev:1014,peakLat:47.8703,peakLng:20.0117},
+{id:"iceland",iso:"ISL",name:"Island",capital:"Reykjavík",peak:"Hvannadalshnúkur",peakId:"hvannadalshnukur",elev:2110,peakLat:64.0157,peakLng:-16.6845},
+{id:"ireland",iso:"IRL",name:"Irsko",capital:"Dublin",peak:"Carrauntoohil",peakId:"carrauntoohil",elev:1038,peakLat:51.9992,peakLng:-9.7549},
+{id:"italy",iso:"ITA",name:"Itálie",capital:"Řím",peak:"Mont Blanc",peakId:"mont_blanc",elev:4808,peakLat:45.8326,peakLng:6.8652},
+{id:"kosovo",iso:"KOS",name:"Kosovo",capital:"Priština",peak:"Velika Rudoka",peakId:"velika_rudoka",elev:2658,peakLat:41.8500,peakLng:20.7833},
+{id:"latvia",iso:"LVA",name:"Lotyšsko",capital:"Riga",peak:"Gaiziņkalns",peakId:"gaizinkalns",elev:312,peakLat:56.8686,peakLng:25.9917},
+{id:"liechtenstein",iso:"LIE",name:"Lichtenštejnsko",capital:"Vaduz",peak:"Vorder Grauspitz",peakId:"grauspitz",elev:2599,peakLat:47.0631,peakLng:9.5947},
+{id:"lithuania",iso:"LTU",name:"Litva",capital:"Vilnius",peak:"Aukštojas",peakId:"aukstojas",elev:294,peakLat:54.8558,peakLng:25.5567},
+{id:"luxembourg",iso:"LUX",name:"Lucembursko",capital:"Lucemburk",peak:"Kneiff",peakId:"kneiff",elev:560,peakLat:50.1289,peakLng:6.0333},
+{id:"malta",iso:"MLT",name:"Malta",capital:"Valletta",peak:"Ta' Dmejrek",peakId:"ta_dmejrek",elev:253,peakLat:35.8722,peakLng:14.3711},
+{id:"moldova",iso:"MDA",name:"Moldavsko",capital:"Kišiněv",peak:"Bălănești",peakId:"balanesti",elev:430,peakLat:47.0994,peakLng:28.3597},
+{id:"monaco",iso:"MCO",name:"Monako",capital:"Monako",peak:"Chemin des Révoires",peakId:"revoires",elev:161,peakLat:43.7500,peakLng:7.4200},
+{id:"montenegro",iso:"MNE",name:"Černá Hora",capital:"Podgorica",peak:"Zla Kolata",peakId:"zla_kolata",elev:2534,peakLat:42.6167,peakLng:19.8167},
+{id:"netherlands",iso:"NLD",name:"Nizozemsko",capital:"Amsterdam",peak:"Vaalserberg",peakId:"vaalserberg",elev:322,peakLat:50.7539,peakLng:6.0208},
+{id:"nmacedonia",iso:"MKD",name:"Severní Makedonie",capital:"Skopje",peak:"Korab",peakId:"korab",elev:2764,peakLat:41.7842,peakLng:20.5486},
+{id:"norway",iso:"NOR",name:"Norsko",capital:"Oslo",peak:"Galdhøpiggen",peakId:"galdhopiggen",elev:2469,peakLat:61.6360,peakLng:8.3125},
+{id:"poland",iso:"POL",name:"Polsko",capital:"Varšava",peak:"Rysy",peakId:"rysy",elev:2499,peakLat:49.1793,peakLng:20.0881},
+{id:"prt_main",iso:"PRT",name:"Portugalsko",capital:"Lisabon",peak:"Torre",peakId:"torre",elev:1993,peakLat:40.3219,peakLng:-7.6133},
+{id:"romania",iso:"ROU",name:"Rumunsko",capital:"Bukurešť",peak:"Moldoveanu",peakId:"moldoveanu",elev:2544,peakLat:45.6069,peakLng:24.7358},
+{id:"russia",iso:"RUS",name:"Rusko",capital:"Moskva",peak:"Elbrus",peakId:"elbrus",elev:5642,peakLat:43.3499,peakLng:42.4453},
+{id:"sanmarino",iso:"SMR",name:"San Marino",capital:"San Marino",peak:"Monte Titano",peakId:"monte_titano",elev:749,peakLat:43.9360,peakLng:12.4530},
+{id:"serbia",iso:"SRB",name:"Srbsko",capital:"Bělehrad",peak:"Midžor",peakId:"midzor",elev:2169,peakLat:43.4058,peakLng:22.6997},
+{id:"slovakia",iso:"SVK",name:"Slovensko",capital:"Bratislava",peak:"Gerlachovský štít",peakId:"gerlach",elev:2655,peakLat:49.1667,peakLng:20.1394},
+{id:"slovenia",iso:"SVN",name:"Slovinsko",capital:"Lublaň",peak:"Triglav",peakId:"triglav",elev:2864,peakLat:46.3781,peakLng:13.8353},
+{id:"esp_main",iso:"ESP",name:"Španělsko",capital:"Madrid",peak:"Mulhacén",peakId:"mulhacen",elev:3479,peakLat:37.0536,peakLng:-3.3114},
+{id:"sweden",iso:"SWE",name:"Švédsko",capital:"Stockholm",peak:"Kebnekaise",peakId:"kebnekaise",elev:2097,peakLat:67.9010,peakLng:18.5428},
+{id:"switzerland",iso:"CHE",name:"Švýcarsko",capital:"Bern",peak:"Dufourspitze",peakId:"dufourspitze",elev:4634,peakLat:45.9369,peakLng:7.8666},
+{id:"ukraine",iso:"UKR",name:"Ukrajina",capital:"Kyjev",peak:"Hoverla",peakId:"hoverla",elev:2061,peakLat:48.1567,peakLng:24.5003},
+{id:"uk",iso:"GBR",name:"Spojené království",capital:"Londýn",peak:"Ben Nevis",peakId:"ben_nevis",elev:1345,peakLat:56.7969,peakLng:-5.0036},
+{id:"vatican",iso:"VAT",name:"Vatikán",capital:"Vatikán",peak:"Vatikánský pahorek",peakId:"vatican_hill",elev:75,peakLat:41.9022,peakLng:12.4534}
+];
 
-    // Kavkaz - politicky/geograficky hraniční země
-    const EXTRA_COUNTRIES = [
-        {id:"armenia",iso:"ARM",name:"Arménie",capital:"Jerevan",capLat:40.1792,capLng:44.4991,peak:"Aragac",elev:4090,peakLat:40.5377,peakLng:44.1907},
-        {id:"georgia",iso:"GEO",name:"Gruzie",capital:"Tbilisi",capLat:41.7151,capLng:44.8271,peak:"Kazbek",elev:5054,peakLat:42.6972,peakLng:44.5194}
-    ];
+// Kavkaz - politicky/geograficky hraniční země + bonusy mimo výzvu
+const EXTRA_COUNTRIES = [
+{id:"armenia",iso:"ARM",name:"Arménie",capital:"Jerevan",peak:"Aragac",peakId:"aragac",elev:4090,peakLat:40.5377,peakLng:44.1907},
+{id:"georgia",iso:"GEO",name:"Gruzie",capital:"Tbilisi",peak:"Kazbek",peakId:"kazbek",elev:5054,peakLat:42.6972,peakLng:44.5194},
+{id:"turkey",iso:"TUR",name:"Turecko",capital:"Ankara",peak:"Mahya Dağı",peakId:"mahya_dagi",elev:1031,peakLat:41.7822,peakLng:27.6139}
+];
 
-    // Definice sdílených vrcholů
-    const SHARED_PEAKS = {
-        "france": "italy",
-        "italy": "france",
-        "albania": "nmacedonia",
-        "nmacedonia": "albania"
-    };
+// Definice sdílených vrcholů
+const SHARED_PEAKS = {
+  "france": "italy",
+  "italy": "france",
+  "albania": "nmacedonia",
+  "nmacedonia": "albania"
+};
 
-    // Rating systém
-    const DIFF_LABELS = {
-        1:{label:"Snadná", color:"#8fbf7a"},
-        2:{label:"Střední", color:"#dba641"},
-        3:{label:"Náročnější", color:"#d98f5f"},
-        4:{label:"Těžká", color:"#c96f5f"},
-        5:{label:"Extrém", color:"#8b5a8c"}
-    };
+// Rating systém
+const DIFF_LABELS = {
+  1:{label:"Snadná", color:"#8fbf7a"},
+  2:{label:"Střední", color:"#dba641"},
+  3:{label:"Náročnější", color:"#d98f5f"},
+  4:{label:"Těžká", color:"#c96f5f"},
+  5:{label:"Extrém", color:"#8b5a8c"}
+};
 
-    /* ============================= API ============================= */
-    const API_BASE = "/api/data";
-    const api = {
-        async list(prefix){
-            const res = await fetch(API_BASE+"?prefix="+encodeURIComponent(prefix));
-            if(!res.ok) return {keys:[]};
-            return res.json();
-        },
-        async get(key){
-            const res = await fetch(API_BASE+"?key="+encodeURIComponent(key));
-            if(res.status===404) return null;
-            const text = await res.text();
-            if(!text || text==="null") return null;
-            return {key, value:text};
-        },
-        async set(key, value){
-            showSaving(true);
-            await fetch(API_BASE, {method:"PUT", headers:{"Content-Type":"application/json"}, body:JSON.stringify({key,value})});
-            showSaving(false);
-            return {key,value};
-        },
-        async delete(key){
-            await fetch(API_BASE+"?key="+encodeURIComponent(key), {method:"DELETE"});
-            return {key, deleted:true};
+/* ============================= API ============================= */
+const API_BASE = "/api/data";
+const api = {
+  async list(prefix){
+    const res = await fetch(API_BASE+"?prefix="+encodeURIComponent(prefix));
+    if(!res.ok) return {keys:[]};
+    return res.json();
+  },
+  async get(key){
+    const res = await fetch(API_BASE+"?key="+encodeURIComponent(key));
+    if(res.status===404) return null;
+    const text = await res.text();
+    if(!text || text==="null") return null;
+    return {key, value:text};
+  },
+  async set(key, value){
+    showSaving(true);
+    await fetch(API_BASE, {method:"PUT", headers:{"Content-Type":"application/json"}, body:JSON.stringify({key,value})});
+    showSaving(false);
+    return {key,value};
+  },
+  async delete(key){
+    await fetch(API_BASE+"?key="+encodeURIComponent(key), {method:"DELETE"});
+    return {key, deleted:true};
+  }
+};
+let saveTimer=null;
+function showSaving(on){
+  const el = document.getElementById('saveIndicator');
+  if(!el) return;
+  if(on){ el.classList.add('show'); el.textContent='Ukládám…'; }
+  else{
+    el.textContent='Uloženo';
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(()=> el.classList.remove('show'), 900);
+  }
+}
+
+/* ============================= STATE & AUTH ============================= */
+let state = {};
+let bonusState = {};
+let filterText = "";
+let sortMode = "az";
+let statusFilter = "all"; 
+let map, markersLayer, geojsonLayer;
+let geojsonData = null;
+let isAdmin = localStorage.getItem('ke_admin') === 'true'; 
+
+function emptyEntry(){
+  return {
+    peak:{done:false,date:"",diff:1,photo:"",photoDate:"",note:"",km:"",elevGain:"",time:""}
+  };
+}
+function getEntry(id){ if(!state[id]) state[id]=emptyEntry(); return state[id]; }
+function isFull(e){ return e.peak.done; }
+
+function emptyBonus(){ return {id:"",name:"",region:"",elev:"",lat:"",lng:"",done:false,date:"",diff:1,photo:"",photoDate:"",notes:"",km:"",elevGain:"",time:""}; }
+function genId(){ return "b"+Date.now().toString(36)+Math.random().toString(36).slice(2,7); }
+
+function escapeHtml(str){
+  return String(str==null?"":str).replace(/[&<>"']/g, s=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[s]));
+}
+function openLightbox(src){
+  document.getElementById('lightbox-img').src = src;
+  document.getElementById('lightbox').style.display = 'flex';
+}
+
+/* ============================= ADMIN ACTIONS ============================= */
+function login() {
+  const pwInput = document.getElementById('adminPw');
+  if (!pwInput) return;
+  if (pwInput.value === "As300407") {
+    localStorage.setItem('ke_admin', 'true');
+    isAdmin = true;
+    renderAll();
+  } else {
+    alert("Špatné heslo.");
+    pwInput.value = '';
+  }
+}
+
+function logout() {
+  localStorage.removeItem('ke_admin');
+  isAdmin = false;
+  renderAll();
+}
+
+function downloadBackup() {
+  const dataToBackup = { state, bonusState };
+  const blob = new Blob([JSON.stringify(dataToBackup, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `koruna_evropy_zaloha_${new Date().toISOString().slice(0,10)}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function uploadBackup(ev) {
+  const file = ev.target.files[0];
+  if(!file) return;
+  if(!confirm("Opravdu chceš přepsat svá aktuální data touto zálohou? (Tato akce je nevratná)")) {
+    ev.target.value = '';
+    return;
+  }
+  
+  const reader = new FileReader();
+  reader.onload = async (e) => {
+    try {
+      const data = JSON.parse(e.target.result);
+      showSaving(true);
+      document.getElementById('saveIndicator').textContent = 'Obnovuji ze zálohy...';
+      
+      if(data.state) {
+        for(const [id, entry] of Object.entries(data.state)) {
+          state[id] = entry;
+          await api.set("country_"+id, JSON.stringify(entry));
         }
-    };
-    let saveTimer=null;
-    function showSaving(on){
-        const el = document.getElementById('saveIndicator');
-        if(!el) return;
-        if(on){ el.classList.add('show'); el.textContent='Ukládám…'; }
-        else{
-            el.textContent='Uloženo';
-            clearTimeout(saveTimer);
-            saveTimer = setTimeout(()=> el.classList.remove('show'), 900);
+      }
+      if(data.bonusState) {
+        for(const [id, entry] of Object.entries(data.bonusState)) {
+          bonusState[id] = entry;
+          await api.set("bonus_"+id, JSON.stringify(entry));
         }
+      }
+      
+      showSaving(false);
+      alert('Záloha úspěšně nahrána a uložena!');
+      ev.target.value = ''; 
+      renderAll();
+    } catch(err) {
+      alert('Chybný formát souboru zálohy.');
+      showSaving(false);
+      ev.target.value = '';
     }
+  };
+  reader.readAsText(file);
+}
 
-    /* ============================= STATE & AUTH ============================= */
-    let state = {};
-    let bonusState = {};
-    let filterText = "";
-    let sortMode = "az";
-    let statusFilter = "all"; // all, done, not_done
-    let map, markersLayer, geojsonLayer;
-    let geojsonData = null;
-    let isAdmin = localStorage.getItem('ke_admin') === 'true';
+/* Zrcadlení dat u sdílených vrcholů */
+async function handleSyncAndSave(id) {
+  await saveEntry(id);
+  if(SHARED_PEAKS[id]) {
+      const targetId = SHARED_PEAKS[id];
+      getEntry(targetId).peak = JSON.parse(JSON.stringify(getEntry(id).peak));
+      await saveEntry(targetId);
+  }
+}
 
-    function emptyEntry(){
-        return {
-            peak:{done:false,date:"",diff:1,photo:"",photoDate:"",note:"",km:"",elevGain:"",time:""}
-        };
+/* ============================= LOAD / SAVE ============================= */
+async function loadGeoJson(){
+  try {
+    const res = await fetch('https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson');
+    geojsonData = await res.json();
+  } catch (e) { console.error("Nelze načíst GeoJSON hranic.", e); }
+}
+
+async function loadAll(){
+  try{
+    const listRes = await api.list("country_");
+    const keys = listRes.keys || [];
+    await Promise.all(keys.map(async k=>{
+      const r = await api.get(k);
+      if(r && r.value){
+        const id = k.replace("country_","");
+        try{ state[id] = Object.assign(emptyEntry(), JSON.parse(r.value)); }catch(e){}
+      }
+    }));
+  }catch(e){ console.error("Chyba při načítání:", e); }
+
+  try{
+    const listRes2 = await api.list("bonus_");
+    const keys2 = listRes2.keys || [];
+    await Promise.all(keys2.map(async k=>{
+      const r = await api.get(k);
+      if(r && r.value){
+        try{ const parsed = JSON.parse(r.value); bonusState[parsed.id] = Object.assign(emptyBonus(), parsed); }catch(e){}
+      }
+    }));
+  }catch(e){ console.error("Chyba při načítání bonusů:", e); }
+
+  // Auto-Migrace starých ID do bonusů
+  if (state['spain']) {
+    if (state['spain'].peak && state['spain'].peak.done) {
+      const bId = "b_teide";
+      if(!bonusState[bId]) {
+        bonusState[bId] = { ...emptyBonus(), id: bId, name: "Pico de Teide", region: "Španělsko (ostrovy)", elev: 3718, lat: 28.2723, lng: -16.6425, done: true, date: state['spain'].peak.date, diff: state['spain'].peak.diff, photo: state['spain'].peak.photo, photoDate: state['spain'].peak.photoDate, notes: state['spain'].peak.note, km: state['spain'].peak.km, elevGain: state['spain'].peak.elevGain, time: state['spain'].peak.time };
+        await api.set("bonus_"+bId, JSON.stringify(bonusState[bId]));
+      }
     }
-    function getEntry(id){ if(!state[id]) state[id]=emptyEntry(); return state[id]; }
-    function isFull(e){ return e.peak.done; }
+    await api.delete("country_spain");
+    delete state['spain'];
+  }
 
-    function emptyBonus(){ return {id:"",name:"",region:"",elev:"",lat:"",lng:"",done:false,date:"",diff:1,photo:"",photoDate:"",notes:"",km:"",elevGain:"",time:""}; }
-    function genId(){ return "b"+Date.now().toString(36)+Math.random().toString(36).slice(2,7); }
-
-    function escapeHtml(str){
-        return String(str==null?"":str).replace(/[&<>"']/g, s=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[s]));
+  if (state['portugal']) {
+    if (state['portugal'].peak && state['portugal'].peak.done) {
+      const bId = "b_pico";
+      if(!bonusState[bId]) {
+        bonusState[bId] = { ...emptyBonus(), id: bId, name: "Ponta do Pico", region: "Portugalsko (ostrovy)", elev: 2351, lat: 38.4686, lng: -28.3997, done: true, date: state['portugal'].peak.date, diff: state['portugal'].peak.diff, photo: state['portugal'].peak.photo, photoDate: state['portugal'].peak.photoDate, notes: state['portugal'].peak.note, km: state['portugal'].peak.km, elevGain: state['portugal'].peak.elevGain, time: state['portugal'].peak.time };
+        await api.set("bonus_"+bId, JSON.stringify(bonusState[bId]));
+      }
     }
-    function openLightbox(src){
-        document.getElementById('lightbox-img').src = src;
-        document.getElementById('lightbox').style.display = 'flex';
-    }
+    await api.delete("country_portugal");
+    delete state['portugal'];
+  }
+}
 
-    /* ============================= ADMIN ACTIONS ============================= */
-    function login() {
-        const pwInput = document.getElementById('adminPw');
-        if (!pwInput) return;
-        if (pwInput.value === "As300407") {
-            localStorage.setItem('ke_admin', 'true');
-            isAdmin = true;
-            renderAll();
+async function saveEntry(id){ try{ await api.set("country_"+id, JSON.stringify(state[id])); }catch(e){ console.error(e); } }
+async function clearEntry(id){ state[id]=emptyEntry(); try{ await api.delete("country_"+id); }catch(e){} preserveOpenAndRerenderList(id); updateHeroInPlace(); refreshMap(); }
+async function saveBonus(id){ try{ await api.set("bonus_"+id, JSON.stringify(bonusState[id])); }catch(e){ console.error(e); } }
+async function deleteBonus(id){ delete bonusState[id]; try{ await api.delete("bonus_"+id); }catch(e){} document.getElementById('bonusListWrap').innerHTML = getBonusCardsHtml(); attachBonusEvents(); updateHeroInPlace(); refreshMap(); }
+
+window.updateRating = async function(id, val) {
+  if(!isAdmin) return;
+  getEntry(id).peak.diff = val;
+  await handleSyncAndSave(id);
+  preserveOpenAndRerenderList(id);
+}
+window.updateBonusRating = async function(id, val) {
+  if(!isAdmin) return;
+  bonusState[id].diff = val;
+  await saveBonus(id);
+  const card = document.getElementById('bonus-'+id);
+  const wasOpen = card ? card.hasAttribute('open') : false;
+  document.getElementById('bonusListWrap').innerHTML = getBonusCardsHtml();
+  attachBonusEvents();
+  if(wasOpen){ const c2=document.getElementById('bonus-'+id); if(c2) c2.setAttribute('open',''); }
+}
+
+/* ============================= LEAFLET MAP ============================= */
+function initMap(){
+  map = L.map('mapCanvas', {zoomControl: true}).setView([49, 15], 4);
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
+    maxZoom: 16
+  }).addTo(map);
+  markersLayer = L.layerGroup().addTo(map);
+  refreshMap();
+}
+
+function refreshMap(){
+  if(!map || !markersLayer) return;
+  markersLayer.clearLayers();
+  if(geojsonLayer) { map.removeLayer(geojsonLayer); geojsonLayer = null; }
+
+  const allMapCountries = [...COUNTRIES, ...EXTRA_COUNTRIES];
+  const isoToId = {};
+  allMapCountries.forEach(c => { if(c.iso) isoToId[c.iso] = c.id; });
+
+  if (geojsonData) {
+    geojsonLayer = L.geoJSON(geojsonData, {
+      style: feature => {
+        const iso = feature.properties.ISO_A3;
+        const cId = isoToId[iso];
+        if (!cId) return { weight: 0, fillOpacity: 0 }; 
+
+        if (getEntry(cId).peak.done) {
+          return { fillColor: '#dba641', weight: 1, color: '#f0bd5f', fillOpacity: 0.15, opacity: 0.6 };
         } else {
-            alert("Špatné heslo.");
-            pwInput.value = '';
+          return { weight: 0, fillOpacity: 0 };
         }
+      }
+    }).addTo(map);
+  }
+
+  allMapCountries.forEach(c => {
+    const e = getEntry(c.id);
+    const isExtra = EXTRA_COUNTRIES.some(x => x.id === c.id);
+    
+    const defaultFill = isExtra ? '#173322' : '#28513a';
+    const defaultStroke = isExtra ? '#365c44' : '#557a63';
+
+    const peakColor = e.peak.done ? '#dba641' : defaultFill;
+    const peakStroke = e.peak.done ? '#f0bd5f' : defaultStroke;
+    const peakHtml = `<svg width="16" height="16" viewBox="-8 -8 16 16" style="filter: drop-shadow(0 2px 3px rgba(0,0,0,0.5))"><path d="M-7 8 L0 -8 L4 0 L7 8 Z" fill="${peakColor}" stroke="${peakStroke}" stroke-width="1"/></svg>`;
+    const peakIcon = L.divIcon({ html: peakHtml, className: '', iconSize: [16,16], iconAnchor: [8,8] });
+    L.marker([c.peakLat, c.peakLng], {icon: peakIcon, zIndexOffset: e.peak.done ? 1000 : 0})
+     .bindTooltip(`${c.peak} (${c.name})${e.peak.done?' - zdoláno':''}`)
+     .on('click', () => focusCountry(c.id)).addTo(markersLayer);
+  });
+
+  Object.values(bonusState).forEach(b => {
+    const lat=parseFloat(b.lat), lng=parseFloat(b.lng);
+    if(isNaN(lat)||isNaN(lng)) return;
+    const bColor = b.done ? '#4a7c59' : '#1c3625';
+    const bStroke = b.done ? '#64a377' : '#2d543a';
+    const bHtml = `<svg width="16" height="16" viewBox="-8 -8 16 16" style="filter: drop-shadow(0 2px 3px rgba(0,0,0,0.5))"><path d="M0 -8 L2 -2.5 L8 -2 L3.2 1.6 L5 8 L0 4.2 L-5 8 L-3.2 1.6 L-8 -2 L-2 -2.5 Z" fill="${bColor}" stroke="${bStroke}" stroke-width="1"/></svg>`;
+    const bIcon = L.divIcon({ html: bHtml, className: '', iconSize: [16,16], iconAnchor: [8,8] });
+    L.marker([lat, lng], {icon: bIcon, zIndexOffset: b.done ? 1000 : 0})
+     .bindTooltip(`${escapeHtml(b.name)}${b.done?' - zdoláno':''}`)
+     .on('click', () => focusBonus(b.id)).addTo(markersLayer);
+  });
+}
+function focusCountry(id){
+  const el = document.getElementById('card-'+id);
+  if(el){ el.setAttribute('open',''); el.scrollIntoView({behavior:'smooth', block:'center'}); }
+}
+function focusBonus(id){
+  const el = document.getElementById('bonus-'+id);
+  if(el){ el.setAttribute('open',''); el.scrollIntoView({behavior:'smooth', block:'center'}); }
+}
+
+/* ============================= UI COMPONENTS ============================= */
+function renderHero(){
+  const totalCountries = COUNTRIES.length; 
+  
+  // Získání celkového počtu unikátních vrcholů přes definované peakId
+  const totalUniquePeaksSet = new Set(COUNTRIES.map(c => c.peakId));
+  const totalUniquePeaks = totalUniquePeaksSet.size;
+
+  // Získání zdolaných unikátních vrcholů
+  let uniquePeaksDoneSet = new Set();
+  COUNTRIES.forEach(c => {
+    if (getEntry(c.id).peak.done) {
+        uniquePeaksDoneSet.add(c.peakId);
     }
+  });
+  const peaksDone = uniquePeaksDoneSet.size;
+  const fullDone = COUNTRIES.filter(c=>isFull(getEntry(c.id))).length;
 
-    function logout() {
-        localStorage.removeItem('ke_admin');
-        isAdmin = false;
-        renderAll();
-    }
-
-    function downloadBackup() {
-        const dataToBackup = { state, bonusState };
-        const blob = new Blob([JSON.stringify(dataToBackup, null, 2)], { type: "application/json" });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `koruna_evropy_zaloha_${new Date().toISOString().slice(0,10)}.json`;
-        a.click();
-        URL.revokeObjectURL(url);
-    }
-
-    function uploadBackup(ev) {
-        const file = ev.target.files[0];
-        if(!file) return;
-        if(!confirm("Opravdu chceš přepsat svá aktuální data touto zálohou? (Tato akce je nevratná)")) {
-            ev.target.value = '';
-            return;
-        }
-
-        const reader = new FileReader();
-        reader.onload = async (e) => {
-            try {
-                const data = JSON.parse(e.target.result);
-                showSaving(true);
-                document.getElementById('saveIndicator').textContent = 'Obnovuji ze zálohy...';
-
-                if(data.state) {
-                    for(const [id, entry] of Object.entries(data.state)) {
-                        state[id] = entry;
-                        await api.set("country_"+id, JSON.stringify(entry));
-                    }
-                }
-                if(data.bonusState) {
-                    for(const [id, entry] of Object.entries(data.bonusState)) {
-                        bonusState[id] = entry;
-                        await api.set("bonus_"+id, JSON.stringify(entry));
-                    }
-                }
-
-                showSaving(false);
-                alert('Záloha úspěšně nahrána a uložena!');
-                ev.target.value = '';
-                renderAll();
-            } catch(err) {
-                alert('Chybný formát souboru zálohy.');
-                showSaving(false);
-                ev.target.value = '';
-            }
-        };
-        reader.readAsText(file);
-    }
-
-    /* Zrcadlení dat u sdílených vrcholů */
-    async function handleSyncAndSave(id) {
-        await saveEntry(id);
-        if(SHARED_PEAKS[id]) {
-            const targetId = SHARED_PEAKS[id];
-            getEntry(targetId).peak = JSON.parse(JSON.stringify(getEntry(id).peak));
-            await saveEntry(targetId);
-        }
-    }
-
-    /* ============================= LOAD / SAVE ============================= */
-    async function loadGeoJson(){
-        try {
-            const res = await fetch('https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson');
-            geojsonData = await res.json();
-        } catch (e) { console.error("Nelze načíst GeoJSON hranic.", e); }
-    }
-
-    async function loadAll(){
-        try{
-            const listRes = await api.list("country_");
-            const keys = listRes.keys || [];
-            await Promise.all(keys.map(async k=>{
-                const r = await api.get(k);
-                if(r && r.value){
-                    const id = k.replace("country_","");
-                    try{ state[id] = Object.assign(emptyEntry(), JSON.parse(r.value)); }catch(e){}
-                }
-            }));
-        }catch(e){ console.error("Chyba při načítání:", e); }
-
-        try{
-            const listRes2 = await api.list("bonus_");
-            const keys2 = listRes2.keys || [];
-            await Promise.all(keys2.map(async k=>{
-                const r = await api.get(k);
-                if(r && r.value){
-                    try{ const parsed = JSON.parse(r.value); bonusState[parsed.id] = Object.assign(emptyBonus(), parsed); }catch(e){}
-                }
-            }));
-        }catch(e){ console.error("Chyba při načítání bonusů:", e); }
-    }
-    async function saveEntry(id){ try{ await api.set("country_"+id, JSON.stringify(state[id])); }catch(e){ console.error(e); } }
-    async function clearEntry(id){ state[id]=emptyEntry(); try{ await api.delete("country_"+id); }catch(e){} preserveOpenAndRerenderList(id); updateHeroInPlace(); refreshMap(); }
-    async function saveBonus(id){ try{ await api.set("bonus_"+id, JSON.stringify(bonusState[id])); }catch(e){ console.error(e); } }
-    async function deleteBonus(id){ delete bonusState[id]; try{ await api.delete("bonus_"+id); }catch(e){} document.getElementById('bonusListWrap').innerHTML = getBonusCardsHtml(); attachBonusEvents(); updateHeroInPlace(); refreshMap(); }
-
-    window.updateRating = async function(id, val) {
-        if(!isAdmin) return;
-        getEntry(id).peak.diff = val;
-        await handleSyncAndSave(id);
-        preserveOpenAndRerenderList(id);
-    }
-    window.updateBonusRating = async function(id, val) {
-        if(!isAdmin) return;
-        bonusState[id].diff = val;
-        await saveBonus(id);
-        const card = document.getElementById('bonus-'+id);
-        const wasOpen = card ? card.hasAttribute('open') : false;
-        document.getElementById('bonusListWrap').innerHTML = getBonusCardsHtml();
-        attachBonusEvents();
-        if(wasOpen){ const c2=document.getElementById('bonus-'+id); if(c2) c2.setAttribute('open',''); }
-    }
-
-    /* ============================= LEAFLET MAP ============================= */
-    function initMap(){
-        map = L.map('mapCanvas', {zoomControl: true}).setView([49, 15], 4);
-        // Používáme stabilní a bezplatnou mapu Esri Dark Gray bez tokenu
-        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
-            attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
-            maxZoom: 16
-        }).addTo(map);
-        markersLayer = L.layerGroup().addTo(map);
-        refreshMap();
-    }
-
-    function refreshMap(){
-        if(!map || !markersLayer) return;
-        markersLayer.clearLayers();
-        if(geojsonLayer) { map.removeLayer(geojsonLayer); geojsonLayer = null; }
-
-        const allMapCountries = [...COUNTRIES, ...EXTRA_COUNTRIES];
-        const isoToId = {};
-        allMapCountries.forEach(c => { if(c.iso) isoToId[c.iso] = c.id; });
-
-        if (geojsonData) {
-            geojsonLayer = L.geoJSON(geojsonData, {
-                style: feature => {
-                    const iso = feature.properties.ISO_A3;
-                    const cId = isoToId[iso];
-                    // Některé geojson soubory mohou mít Kosovo jako -99 nebo chybět, zachycujeme co se dá
-                    if (!cId) return { weight: 0, fillOpacity: 0 };
-
-                    if (getEntry(cId).peak.done) {
-                        return { fillColor: '#dba641', weight: 1, color: '#f0bd5f', fillOpacity: 0.15, opacity: 0.6 };
-                    } else {
-                        return { weight: 0, fillOpacity: 0 };
-                    }
-                }
-            }).addTo(map);
-        }
-
-        allMapCountries.forEach(c => {
-            const e = getEntry(c.id);
-            const isExtra = EXTRA_COUNTRIES.some(x => x.id === c.id);
-
-            const defaultFill = isExtra ? '#173322' : '#28513a';
-            const defaultStroke = isExtra ? '#365c44' : '#557a63';
-
-            const peakColor = e.peak.done ? '#dba641' : defaultFill;
-            const peakStroke = e.peak.done ? '#f0bd5f' : defaultStroke;
-            const peakHtml = `<svg width="16" height="16" viewBox="-8 -8 16 16" style="filter: drop-shadow(0 2px 3px rgba(0,0,0,0.5))"><path d="M-7 8 L0 -8 L4 0 L7 8 Z" fill="${peakColor}" stroke="${peakStroke}" stroke-width="1"/></svg>`;
-            const peakIcon = L.divIcon({ html: peakHtml, className: '', iconSize: [16,16], iconAnchor: [8,8] });
-            L.marker([c.peakLat, c.peakLng], {icon: peakIcon, zIndexOffset: e.peak.done ? 1000 : 0})
-                .bindTooltip(`${c.peak} (${c.name})${e.peak.done?' - zdoláno':''}`)
-                .on('click', () => focusCountry(c.id)).addTo(markersLayer);
-        });
-
-        Object.values(bonusState).forEach(b => {
-            const lat=parseFloat(b.lat), lng=parseFloat(b.lng);
-            if(isNaN(lat)||isNaN(lng)) return;
-            const bColor = b.done ? '#4a7c59' : '#1c3625';
-            const bStroke = b.done ? '#64a377' : '#2d543a';
-            const bHtml = `<svg width="16" height="16" viewBox="-8 -8 16 16" style="filter: drop-shadow(0 2px 3px rgba(0,0,0,0.5))"><path d="M0 -8 L2 -2.5 L8 -2 L3.2 1.6 L5 8 L0 4.2 L-5 8 L-3.2 1.6 L-8 -2 L-2 -2.5 Z" fill="${bColor}" stroke="${bStroke}" stroke-width="1"/></svg>`;
-            const bIcon = L.divIcon({ html: bHtml, className: '', iconSize: [16,16], iconAnchor: [8,8] });
-            L.marker([lat, lng], {icon: bIcon, zIndexOffset: b.done ? 1000 : 0})
-                .bindTooltip(`${escapeHtml(b.name)}${b.done?' - zdoláno':''}`)
-                .on('click', () => focusBonus(b.id)).addTo(markersLayer);
-        });
-    }
-    function focusCountry(id){
-        const el = document.getElementById('card-'+id);
-        if(el){ el.setAttribute('open',''); el.scrollIntoView({behavior:'smooth', block:'center'}); }
-    }
-    function focusBonus(id){
-        const el = document.getElementById('bonus-'+id);
-        if(el){ el.setAttribute('open',''); el.scrollIntoView({behavior:'smooth', block:'center'}); }
-    }
-
-    /* ============================= UI COMPONENTS ============================= */
-    function renderHero(){
-        const totalCountries = COUNTRIES.length;
-        const totalUniquePeaks = 44;
-
-        let uniquePeaksDoneSet = new Set();
-        COUNTRIES.forEach(c => {
-            if (getEntry(c.id).peak.done) {
-                if (c.id === 'italy' || c.id === 'france') uniquePeaksDoneSet.add('mont_blanc');
-                else if (c.id === 'albania' || c.id === 'nmacedonia') uniquePeaksDoneSet.add('korab');
-                else uniquePeaksDoneSet.add(c.id);
-            }
-        });
-        const peaksDone = uniquePeaksDoneSet.size;
-
-        const contourSVG = `<svg class="hero-contours" viewBox="0 0 600 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+  const contourSVG = `<svg class="hero-contours" viewBox="0 0 600 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M-20 160 Q 100 100 220 150 T 460 130 T 640 160" stroke="#dba641" stroke-width="1" fill="none"/>
     <path d="M-20 180 Q 120 130 240 170 T 480 150 T 640 180" stroke="#dba641" stroke-width="1" fill="none"/>
     <path d="M-20 140 Q 90 70 220 120 T 470 100 T 640 130" stroke="#7fb0a0" stroke-width="1" fill="none"/>
     <path d="M-20 120 Q 80 40 210 90 T 460 70 T 640 100" stroke="#7fb0a0" stroke-width="1" fill="none"/>
   </svg>`;
-        return `
+  return `
   <div class="hero">
     ${contourSVG}
     <div class="hero-top">
       <div class="hero-eyebrow">Moje cestovatelská výzva</div>
       <h1>Koruna Evropy</h1>
-      <p class="sub">Mým cílem je zdolat nejvyšší bod každého evropského státu. Sledujte můj postup! 46 zemí, ${totalUniquePeaks} unikátních vrcholů, jeden cíl.</p>
+      <p class="sub">Mým cílem je zdolat nejvyšší bod každého evropského státu. Sledujte můj postup! ${totalCountries} zemí, ${totalUniquePeaks} unikátních vrcholů, jeden cíl.</p>
+      
+      <div class="methodology-box">
+        <h3>Jakou Korunu sbíráme?</h3>
+        <p>Moje Koruna Evropy: ${totalUniquePeaks} vrcholů ve ${totalCountries} zemích. Držím se pevně zvoleného seznamu, který zahrnuje také Kosovo a Kypr. Francie a Itálie sdílejí Mont Blanc, Albánie a Severní Makedonie Korab — proto je vrcholů o dva méně než zemí. Španělsko zastupuje Mulhacén a Portugalsko Torre. Turecko a vybrané ostrovní vrcholy vedu jako bonusy mimo hlavní výzvu.</p>
+      </div>
+
       <div class="progress-row">
         <div class="progress-card">
           <div class="plabel">Zdolané unikátní vrcholy</div>
@@ -617,14 +668,14 @@
       </div>
     </div>
   </div>`;
-    }
-    function updateHeroInPlace(){
-        const heroWrap = document.getElementById('heroWrap');
-        if(heroWrap) heroWrap.innerHTML = renderHero();
-    }
+}
+function updateHeroInPlace(){
+  const heroWrap = document.getElementById('heroWrap');
+  if(heroWrap) heroWrap.innerHTML = renderHero();
+}
 
-    function renderToolbar(){
-        return `
+function renderToolbar(){
+  return `
   <div class="toolbar">
     <input type="text" id="searchInput" placeholder="Hledat zemi…" value="${escapeHtml(filterText)}">
     <select id="filterSelect">
@@ -639,11 +690,11 @@
     </select>
     <span class="count-pill" id="countPill"></span>
   </div>`;
-    }
+}
 
-    function renderAdminPanel() {
-        if (isAdmin) {
-            return `
+function renderAdminPanel() {
+  if (isAdmin) {
+    return `
     <div class="admin-panel">
       <div style="width:100%; font-weight:600; color:var(--accent); font-size:14px; margin-bottom:4px;">🔓 Režim úprav odemčen</div>
       <button onclick="downloadBackup()">↓ Stáhnout zálohu (.json)</button>
@@ -651,8 +702,8 @@
       <button onclick="logout()">🔒 Uzamknout a odhlásit</button>
     </div>
     `;
-        } else {
-            return `
+  } else {
+    return `
     <div class="admin-panel">
       <div style="width:100%; font-size:13px; color:var(--text-muted); margin-bottom:8px;">Zobrazení pro sledující (pouze pro čtení). Autorský přístup:</div>
       <div style="display:flex; gap:8px; justify-content:center; align-items:center;">
@@ -661,46 +712,46 @@
       </div>
     </div>
     `;
-        }
-    }
+  }
+}
 
-    function sortedFilteredList(sourceArray){
-        let list = sourceArray.filter(c => c.name.toLowerCase().includes(filterText.toLowerCase()) || c.capital.toLowerCase().includes(filterText.toLowerCase()));
+function sortedFilteredList(sourceArray){
+  let list = sourceArray.filter(c => c.name.toLowerCase().includes(filterText.toLowerCase()) || c.peak.toLowerCase().includes(filterText.toLowerCase()));
+  
+  if (statusFilter === 'done') {
+    list = list.filter(c => getEntry(c.id).peak.done);
+  } else if (statusFilter === 'not_done') {
+    list = list.filter(c => !getEntry(c.id).peak.done);
+  }
 
-        if (statusFilter === 'done') {
-            list = list.filter(c => getEntry(c.id).peak.done);
-        } else if (statusFilter === 'not_done') {
-            list = list.filter(c => !getEntry(c.id).peak.done);
-        }
+  if(sortMode==='az') list = list.slice().sort((a,b)=>a.name.localeCompare(b.name,'cs'));
+  else if(sortMode==='elev') list = list.slice().sort((a,b)=>b.elev-a.elev);
+  else if(sortMode==='progress'){
+    const score = c => getEntry(c.id).peak.done ? 1 : 0;
+    list = list.slice().sort((a,b)=> score(b)-score(a) || a.name.localeCompare(b.name,'cs'));
+  }
+  return list;
+}
 
-        if(sortMode==='az') list = list.slice().sort((a,b)=>a.name.localeCompare(b.name,'cs'));
-        else if(sortMode==='elev') list = list.slice().sort((a,b)=>b.elev-a.elev);
-        else if(sortMode==='progress'){
-            const score = c => getEntry(c.id).peak.done ? 1 : 0;
-            list = list.slice().sort((a,b)=> score(b)-score(a) || a.name.localeCompare(b.name,'cs'));
-        }
-        return list;
-    }
+function checkSVG(){ return `<svg viewBox="0 0 24 24" fill="none"><path d="M4 12 L10 18 L20 6" stroke="#0b1d14" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>`; }
+function formatExif(raw){ try{ const d=new Date(raw); return d.toLocaleString('cs-CZ',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}); }catch(e){ return raw; } }
 
-    function checkSVG(){ return `<svg viewBox="0 0 24 24" fill="none"><path d="M4 12 L10 18 L20 6" stroke="#0b1d14" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>`; }
-    function formatExif(raw){ try{ const d=new Date(raw); return d.toLocaleString('cs-CZ',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}); }catch(e){ return raw; } }
+function renderCountryCard(c){
+  const e = getEntry(c.id);
+  const status = isFull(e) ? 'full' : 'none';
+  const diff = DIFF_LABELS[e.peak.diff] || DIFF_LABELS[1];
+  
+  const isExtra = EXTRA_COUNTRIES.some(x => x.id === c.id);
+  const cardClass = isExtra ? 'country-card caucasus-card' : 'country-card';
+  const disabledAttr = isAdmin ? '' : 'disabled';
+  
+  let badgeText = '';
+  if (['georgia', 'armenia'].includes(c.id)) badgeText = 'Kavkaz';
 
-    function renderCountryCard(c){
-        const e = getEntry(c.id);
-        const status = isFull(e) ? 'full' : 'none';
-        const diff = DIFF_LABELS[e.peak.diff] || DIFF_LABELS[1];
+  const badgeHtml = badgeText ? `<span class="caucasus-badge">${badgeText}</span>` : '';
+  const diffBadgeHtml = e.peak.done ? `<span class="diff-badge" style="background:${diff.color};color:#111;">${diff.label}</span>` : '';
 
-        const isExtra = EXTRA_COUNTRIES.some(x => x.id === c.id);
-        const cardClass = isExtra ? 'country-card caucasus-card' : 'country-card';
-        const disabledAttr = isAdmin ? '' : 'disabled';
-
-        let badgeText = '';
-        if (['georgia', 'armenia'].includes(c.id)) badgeText = 'Kavkaz';
-
-        const badgeHtml = badgeText ? `<span class="caucasus-badge">${badgeText}</span>` : '';
-        const diffBadgeHtml = e.peak.done ? `<span class="diff-badge" style="background:${diff.color};color:#111;">${diff.label}</span>` : '';
-
-        return `
+  return `
   <details class="${cardClass}" data-status="${status}" id="card-${c.id}">
     <summary>
       <div class="card-head">
@@ -720,7 +771,7 @@
         <div class="item-fields">
           <label class="small">Datum a čas výstupu</label>
           <input type="datetime-local" data-id="${c.id}" data-field="peak" data-key="date" value="${e.peak.date}" ${disabledAttr}>
-
+          
           <label class="small" style="margin-top:6px;">Statistiky z trasy</label>
           <div class="stats-row">
             <div class="stat-col">
@@ -737,7 +788,7 @@
           <label class="small" style="margin-top:6px;">Hodnocení obtížnosti</label>
           <div class="rating-pills">
             ${Object.entries(DIFF_LABELS).map(([k,v]) => `
-              <button type="button" class="rating-pill ${String(e.peak.diff)===k?'active':''}" style="--rc:${v.color}" onclick="updateRating('${c.id}', ${k})" ${disabledAttr}>${v.label}</button>
+              <button type="button" class="rating-pill ${String(e.peak.diff)===k?'active':''}" style="--rc:${v.color}" onclick="updateRating('${c.id}',${k})" ${disabledAttr}>${v.label}</button>
             `).join('')}
           </div>
 
@@ -755,19 +806,19 @@
       ${isAdmin ? `<div style="grid-column:1/-1;text-align:right;margin-top:-8px;"><button class="clear-link" data-action="clear" data-id="${c.id}">Smazat data o této zemi</button></div>` : ''}
     </div>
   </details>`;
-    }
+}
 
-    function renderBonusSection(){
-        const extraList = sortedFilteredList(EXTRA_COUNTRIES);
-        const extraCardsHtml = extraList.map(renderCountryCard).join('');
+function renderBonusSection(){
+  const extraList = sortedFilteredList(EXTRA_COUNTRIES);
+  const extraCardsHtml = extraList.map(renderCountryCard).join('');
 
-        return `
+  return `
   <div class="bonus-section" style="margin-top: 50px;">
     <div class="bonus-header">
       <h2>Vrcholy a zmínky mimo výzvu</h2>
-      <p>Tyto cíle nejsou součástí hlavní výzvy 46 zemí, ale budou mě na mé cestě doprovázet jako hezké zmínky. Patří sem například vysoké kavkazské hory jako Aragac nebo Kazbek. (Pozn.: Kazbek sice není nejvyšší horou Gruzie – tou je Šchara – ale logisticky i lezecky jsem si pro výstup vybral právě Kazbek). Níže najdete i další přidané extra cíle.</p>
+      <p>Níže najdete další přidané extra cíle a vrcholy, které nejsou v hlavní výzvě počítány.</p>
     </div>
-
+    
     <div id="extraListWrap">${extraCardsHtml}</div>
 
     ${isAdmin ? `
@@ -786,27 +837,27 @@
     </details>` : ''}
     <div id="bonusListWrap">${getBonusCardsHtml()}</div>
   </div>`;
-    }
+}
 
-    function getBonusCardsHtml(){
-        const list = Object.values(bonusState).sort((a,b)=> (b.elev||0)-(a.elev||0));
-        let filteredList = list;
+function getBonusCardsHtml(){
+  const list = Object.values(bonusState).sort((a,b)=> (b.elev||0)-(a.elev||0));
+  let filteredList = list;
 
-        if (statusFilter === 'done') {
-            filteredList = filteredList.filter(b => b.done);
-        } else if (statusFilter === 'not_done') {
-            filteredList = filteredList.filter(b => !b.done);
-        }
+  if (statusFilter === 'done') {
+    filteredList = filteredList.filter(b => b.done);
+  } else if (statusFilter === 'not_done') {
+    filteredList = filteredList.filter(b => !b.done);
+  }
 
-        return filteredList.map(renderBonusCard).join('') || '<p style="color:var(--text-faint);font-size:13px; margin-top:10px;">Zatím žádné další vlastní vrcholy.</p>';
-    }
+  return filteredList.map(renderBonusCard).join('') || '<p style="color:var(--text-faint);font-size:13px; margin-top:10px;">Zatím žádné další vlastní vrcholy.</p>';
+}
 
-    function renderBonusCard(b){
-        const diff = DIFF_LABELS[b.diff] || DIFF_LABELS[1];
-        const disabledAttr = isAdmin ? '' : 'disabled';
-        const diffBadgeHtml = b.done ? `<span class="diff-badge" style="background:${diff.color};color:#111;">${diff.label}</span>` : '';
+function renderBonusCard(b){
+  const diff = DIFF_LABELS[b.diff] || DIFF_LABELS[1];
+  const disabledAttr = isAdmin ? '' : 'disabled';
+  const diffBadgeHtml = b.done ? `<span class="diff-badge" style="background:${diff.color};color:#111;">${diff.label}</span>` : '';
 
-        return `
+  return `
   <details class="country-card bonus-card" data-status="${b.done?'full':'none'}" id="bonus-${b.id}">
     <summary>
       <div class="card-head">
@@ -826,7 +877,7 @@
         <div class="item-fields">
           <label class="small">Datum a čas výstupu</label>
           <input type="datetime-local" data-bonus="${b.id}" data-key="date" value="${b.date}" ${disabledAttr}>
-
+          
           <label class="small" style="margin-top:6px;">Statistiky z trasy</label>
           <div class="stats-row">
             <div class="stat-col">
@@ -843,13 +894,13 @@
           <label class="small" style="margin-top:6px;">Hodnocení obtížnosti</label>
           <div class="rating-pills">
             ${Object.entries(DIFF_LABELS).map(([k,v]) => `
-              <button type="button" class="rating-pill ${String(b.diff)===k?'active':''}" style="--rc:${v.color}" onclick="updateBonusRating('${b.id}', ${k})" ${disabledAttr}>${v.label}</button>
+              <button type="button" class="rating-pill ${String(b.diff)===k?'active':''}" style="--rc:${v.color}" onclick="updateBonusRating('${b.id}',${k})" ${disabledAttr}>${v.label}</button>
             `).join('')}
           </div>
 
           <label class="small" style="margin-top:6px;">Zážitek / Poznámka</label>
           <input type="text" data-bonus="${b.id}" data-key="notes" value="${escapeHtml(b.notes)}" placeholder="poznámky…" ${disabledAttr}>
-
+          
           <label class="small" style="margin-top:6px;">Fotka z vrcholu</label>
           <div class="photo-row">
             ${isAdmin ? `<label class="photo-btn" for="bphoto-${b.id}">Nahrát fotku</label><input type="file" accept="image/*" id="bphoto-${b.id}" data-bonusphoto="${b.id}" style="display:none">` : ''}
@@ -861,285 +912,285 @@
       ${isAdmin ? `<div style="grid-column:1/-1;text-align:right;margin-top:-8px;"><button class="clear-link" data-action="bonus-delete" data-id="${b.id}">Smazat vrchol</button></div>` : ''}
     </div>
   </details>`;
+}
+
+/* ============================= RENDER & EVENTS ============================= */
+function renderAll(){
+  updateHeroInPlace();
+  document.getElementById('toolbarWrap').innerHTML = renderToolbar();
+  
+  const list = sortedFilteredList(COUNTRIES);
+  
+  document.getElementById('listWrap').innerHTML = list.map(renderCountryCard).join('');
+  document.getElementById('bonusSectionWrap').innerHTML = renderBonusSection();
+  
+  document.getElementById('countPill').textContent = list.length + ' / ' + COUNTRIES.length + ' zemí';
+  document.getElementById('adminPanelWrap').innerHTML = renderAdminPanel();
+
+  attachBaseEvents();
+  attachListEvents();
+  attachBonusEvents();
+}
+
+function attachBaseEvents(){
+  document.getElementById('searchInput').addEventListener('input', (ev)=>{
+    filterText = ev.target.value;
+    const list = sortedFilteredList(COUNTRIES);
+    document.getElementById('listWrap').innerHTML = list.map(renderCountryCard).join('');
+    
+    const extraList = sortedFilteredList(EXTRA_COUNTRIES);
+    const extraWrap = document.getElementById('extraListWrap');
+    if(extraWrap) extraWrap.innerHTML = extraList.map(renderCountryCard).join('');
+    
+    document.getElementById('countPill').textContent = list.length + ' / ' + COUNTRIES.length + ' zemí';
+    attachListEvents();
+  });
+  document.getElementById('sortSelect').addEventListener('change', (ev)=>{ sortMode = ev.target.value; renderAll(); });
+  document.getElementById('filterSelect').addEventListener('change', (ev)=>{ statusFilter = ev.target.value; renderAll(); });
+}
+
+function attachListEvents(){
+  document.querySelectorAll('[data-action="toggle"]').forEach(el=>{
+    el.addEventListener('click', async (ev)=>{
+      ev.preventDefault();
+      ev.stopPropagation();
+      if(!isAdmin) { alert("Jsi v režimu prohlížení (Guest mode). Pro úpravy se musíš přihlásit dole na stránce."); return; }
+
+      const id = el.dataset.id, field = el.dataset.field;
+      const e = getEntry(id);
+      e[field].done = !e[field].done;
+      if(e[field].done && !e.peak.date) e.peak.date = new Date().toISOString().slice(0,16);
+      
+      await handleSyncAndSave(id); 
+      
+      preserveOpenAndRerenderList(id);
+      updateHeroInPlace();
+      refreshMap();
+    });
+  });
+  document.querySelectorAll('.card-body input[type="date"], .card-body input[type="datetime-local"], .card-body input[type="text"], .card-body input[type="number"], .card-body select').forEach(el=>{
+    if(el.dataset.bonus) return;
+    el.addEventListener('change', async ()=>{
+      if(!isAdmin) return;
+      const id = el.dataset.id, field = el.dataset.field, key = el.dataset.key;
+      if(!field) return;
+      const e = getEntry(id);
+      e[field][key] = el.value;
+      
+      await handleSyncAndSave(id); 
+      
+      preserveOpenAndRerenderList(id);
+      updateHeroInPlace();
+      refreshMap();
+    });
+  });
+  document.querySelectorAll('input[type="file"][data-id]').forEach(el=>{
+    el.addEventListener('change', (ev)=> handlePhoto(ev, el.dataset.id, 'country'));
+  });
+  document.querySelectorAll('[data-action="clear"]').forEach(el=>{
+    el.addEventListener('click', ()=> { 
+      if(!isAdmin) return;
+      if(confirm('Opravdu smazat všechna uložená data pro tuto zemi?')) clearEntry(el.dataset.id); 
+    });
+  });
+}
+
+function preserveOpenAndRerenderList(id){
+  const card = document.getElementById('card-'+id);
+  const wasOpen = card ? card.hasAttribute('open') : false;
+  
+  document.getElementById('listWrap').innerHTML = sortedFilteredList(COUNTRIES).map(renderCountryCard).join('');
+  
+  const extraWrap = document.getElementById('extraListWrap');
+  if(extraWrap) extraWrap.innerHTML = sortedFilteredList(EXTRA_COUNTRIES).map(renderCountryCard).join('');
+  
+  attachListEvents();
+  if(wasOpen){ const c2 = document.getElementById('card-'+id); if(c2) c2.setAttribute('open',''); }
+}
+
+function attachBonusEvents(){
+  const saveBtn = document.getElementById('bf-save');
+  if(saveBtn){
+    saveBtn.addEventListener('click', async ()=>{
+      if(!isAdmin) return;
+      const name = document.getElementById('bf-name').value.trim();
+      if(!name){ alert('Zadej název vrcholu.'); return; }
+      const b = emptyBonus();
+      b.id = genId();
+      b.name = name;
+      b.region = document.getElementById('bf-region').value.trim();
+      b.elev = document.getElementById('bf-elev').value.trim();
+      b.lat = document.getElementById('bf-lat').value.trim();
+      b.lng = document.getElementById('bf-lng').value.trim();
+      bonusState[b.id] = b;
+      await saveBonus(b.id);
+      
+      document.getElementById('bf-name').value = '';
+      document.getElementById('bf-region').value = '';
+      document.getElementById('bf-elev').value = '';
+      document.getElementById('bf-lat').value = '';
+      document.getElementById('bf-lng').value = '';
+      
+      document.getElementById('bonusListWrap').innerHTML = getBonusCardsHtml();
+      attachBonusEvents();
+      updateHeroInPlace();
+      refreshMap();
+    });
+  }
+  document.querySelectorAll('[data-action="bonus-toggle"]').forEach(el=>{
+    el.addEventListener('click', async (ev)=>{
+      ev.preventDefault();
+      ev.stopPropagation();
+      if(!isAdmin) { alert("Jsi v režimu prohlížení (Guest mode). Pro úpravy se musíš přihlásit dole na stránce."); return; }
+
+      const id = el.dataset.id;
+      const b = bonusState[id];
+      b.done = !b.done;
+      if(b.done && !b.date) b.date = new Date().toISOString().slice(0,16);
+      await saveBonus(id);
+      
+      const card = document.getElementById('bonus-'+id);
+      const wasOpen = card ? card.hasAttribute('open') : false;
+      document.getElementById('bonusListWrap').innerHTML = getBonusCardsHtml();
+      attachBonusEvents();
+      if(wasOpen){ const c2=document.getElementById('bonus-'+id); if(c2) c2.setAttribute('open',''); }
+      updateHeroInPlace();
+      refreshMap();
+    });
+  });
+  document.querySelectorAll('[data-bonus]').forEach(el=>{
+    if(el.type === 'button') return;
+    el.addEventListener('change', async ()=>{
+      if(!isAdmin) return;
+      const id = el.dataset.bonus, key = el.dataset.key;
+      bonusState[id][key] = el.value;
+      await saveBonus(id);
+      const card = document.getElementById('bonus-'+id);
+      const wasOpen = card ? card.hasAttribute('open') : false;
+      document.getElementById('bonusListWrap').innerHTML = getBonusCardsHtml();
+      attachBonusEvents();
+      if(wasOpen){ const c2=document.getElementById('bonus-'+id); if(c2) c2.setAttribute('open',''); }
+      refreshMap();
+    });
+  });
+  document.querySelectorAll('input[type="file"][data-bonusphoto]').forEach(el=>{
+    el.addEventListener('change', (ev)=> handlePhoto(ev, el.dataset.bonusphoto, 'bonus'));
+  });
+  document.querySelectorAll('[data-action="bonus-delete"]').forEach(el=>{
+    el.addEventListener('click', ()=> { 
+      if(!isAdmin) return;
+      if(confirm('Opravdu smazat tento vrchol?')) deleteBonus(el.dataset.id); 
+    });
+  });
+}
+
+/* ============================= PHOTO ============================= */
+async function handlePhoto(ev, id, kind){
+  if(!isAdmin) return;
+  const fileInput = ev.target;
+  let file = fileInput.files[0];
+  if(!file) return;
+
+  let isConverted = false;
+
+  if (file.name.toLowerCase().endsWith('.heic') || file.name.toLowerCase().endsWith('.heif') || file.type === 'image/heic') {
+    try {
+      showSaving(true);
+      const ind = document.getElementById('saveIndicator');
+      if(ind) ind.textContent = 'Zpracovávám HEIC…';
+      
+      const convertedBlob = await heic2any({ blob: file, toType: "image/jpeg", quality: 0.8 });
+      const convertedFile = Array.isArray(convertedBlob) ? convertedBlob[0] : convertedBlob;
+      file = new File([convertedFile], file.name.replace(/\.heic$/i, '.jpg').replace(/\.heif$/i, '.jpg'), { type: 'image/jpeg' });
+      isConverted = true;
+      
+      showSaving(false);
+    } catch (e) {
+      console.error("HEIC konverze selhala", e);
+      alert("Nepodařilo se zpracovat formát HEIC z iPhonu. Zkuste nahrát klasický JPEG.");
+      showSaving(false);
+      fileInput.value = '';
+      return;
     }
+  }
 
-    /* ============================= RENDER & EVENTS ============================= */
-    function renderAll(){
-        updateHeroInPlace();
-        document.getElementById('toolbarWrap').innerHTML = renderToolbar();
+  let finished = false;
+  const proceed = (exifDateStr) => {
+    if(finished) return;
+    finished = true;
+    finishPhotoProcessing(file, id, exifDateStr, kind);
+    fileInput.value = ''; 
+  };
 
-        const list = sortedFilteredList(COUNTRIES);
+  if (isConverted) {
+    proceed("");
+    return;
+  }
 
-        document.getElementById('listWrap').innerHTML = list.map(renderCountryCard).join('');
-        document.getElementById('bonusSectionWrap').innerHTML = renderBonusSection();
+  try{
+    EXIF.getData(file, function(){
+      const raw = EXIF.getTag(this, "DateTimeOriginal") || EXIF.getTag(this, "DateTime");
+      let exifDateStr = "";
+      if(raw){
+        const iso = raw.replace(/^(\d{4}):(\d{2}):(\d{2})/, '$1-$2-$3').replace(' ', 'T').slice(0,16);
+        exifDateStr = iso;
+      }
+      proceed(exifDateStr);
+    });
+    setTimeout(() => proceed(""), 1500);
+  }catch(e){ 
+    proceed(""); 
+  }
+}
 
-        document.getElementById('countPill').textContent = list.length + ' / ' + COUNTRIES.length + ' zemí';
-        document.getElementById('adminPanelWrap').innerHTML = renderAdminPanel();
+function finishPhotoProcessing(file, id, exifDateStr, kind){
+  const reader = new FileReader();
+  reader.onload = function(ev){
+    const img = new Image();
+    img.onload = async function(){
+      const maxW = 900;
+      const scale = Math.min(1, maxW / img.width);
+      const canvas = document.createElement('canvas');
+      canvas.width = img.width * scale;
+      canvas.height = img.height * scale;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      const dataUrl = canvas.toDataURL('image/jpeg', 0.6);
 
-        attachBaseEvents();
-        attachListEvents();
-        attachBonusEvents();
-    }
-
-    function attachBaseEvents(){
-        document.getElementById('searchInput').addEventListener('input', (ev)=>{
-            filterText = ev.target.value;
-            const list = sortedFilteredList(COUNTRIES);
-            document.getElementById('listWrap').innerHTML = list.map(renderCountryCard).join('');
-
-            const extraList = sortedFilteredList(EXTRA_COUNTRIES);
-            const extraWrap = document.getElementById('extraListWrap');
-            if(extraWrap) extraWrap.innerHTML = extraList.map(renderCountryCard).join('');
-
-            document.getElementById('countPill').textContent = list.length + ' / ' + COUNTRIES.length + ' zemí';
-            attachListEvents();
-        });
-        document.getElementById('sortSelect').addEventListener('change', (ev)=>{ sortMode = ev.target.value; renderAll(); });
-        document.getElementById('filterSelect').addEventListener('change', (ev)=>{ statusFilter = ev.target.value; renderAll(); });
-    }
-
-    function attachListEvents(){
-        document.querySelectorAll('[data-action="toggle"]').forEach(el=>{
-            el.addEventListener('click', async (ev)=>{
-                ev.preventDefault();
-                ev.stopPropagation();
-                if(!isAdmin) { alert("Jsi v režimu prohlížení (Guest mode). Pro úpravy se musíš přihlásit dole na stránce."); return; }
-
-                const id = el.dataset.id, field = el.dataset.field;
-                const e = getEntry(id);
-                e[field].done = !e[field].done;
-                if(e[field].done && !e.peak.date) e.peak.date = new Date().toISOString().slice(0,16);
-
-                await handleSyncAndSave(id);
-
-                preserveOpenAndRerenderList(id);
-                updateHeroInPlace();
-                refreshMap();
-            });
-        });
-        document.querySelectorAll('.card-body input[type="date"], .card-body input[type="datetime-local"], .card-body input[type="text"], .card-body input[type="number"], .card-body select').forEach(el=>{
-            if(el.dataset.bonus) return;
-            el.addEventListener('change', async ()=>{
-                if(!isAdmin) return;
-                const id = el.dataset.id, field = el.dataset.field, key = el.dataset.key;
-                if(!field) return;
-                const e = getEntry(id);
-                e[field][key] = el.value;
-
-                await handleSyncAndSave(id);
-
-                preserveOpenAndRerenderList(id);
-                updateHeroInPlace();
-                refreshMap();
-            });
-        });
-        document.querySelectorAll('input[type="file"][data-id]').forEach(el=>{
-            el.addEventListener('change', (ev)=> handlePhoto(ev, el.dataset.id, 'country'));
-        });
-        document.querySelectorAll('[data-action="clear"]').forEach(el=>{
-            el.addEventListener('click', ()=> {
-                if(!isAdmin) return;
-                if(confirm('Opravdu smazat všechna uložená data pro tuto zemi?')) clearEntry(el.dataset.id);
-            });
-        });
-    }
-
-    function preserveOpenAndRerenderList(id){
-        const card = document.getElementById('card-'+id);
+      if(kind==='country'){
+        const e = getEntry(id);
+        e.peak.photo = dataUrl;
+        e.peak.photoDate = exifDateStr;
+        if(exifDateStr && !e.peak.date) e.peak.date = exifDateStr;
+        
+        await handleSyncAndSave(id); 
+        preserveOpenAndRerenderList(id);
+      } else {
+        const b = bonusState[id];
+        b.photo = dataUrl;
+        b.photoDate = exifDateStr;
+        if(exifDateStr && !b.date) b.date = exifDateStr;
+        await saveBonus(id);
+        const card = document.getElementById('bonus-'+id);
         const wasOpen = card ? card.hasAttribute('open') : false;
+        document.getElementById('bonusListWrap').innerHTML = getBonusCardsHtml();
+        attachBonusEvents();
+        if(wasOpen){ const c2=document.getElementById('bonus-'+id); if(c2) c2.setAttribute('open',''); }
+      }
+    };
+    img.src = ev.target.result;
+  };
+  reader.readAsDataURL(file);
+}
 
-        document.getElementById('listWrap').innerHTML = sortedFilteredList(COUNTRIES).map(renderCountryCard).join('');
-
-        const extraWrap = document.getElementById('extraListWrap');
-        if(extraWrap) extraWrap.innerHTML = sortedFilteredList(EXTRA_COUNTRIES).map(renderCountryCard).join('');
-
-        attachListEvents();
-        if(wasOpen){ const c2 = document.getElementById('card-'+id); if(c2) c2.setAttribute('open',''); }
-    }
-
-    function attachBonusEvents(){
-        const saveBtn = document.getElementById('bf-save');
-        if(saveBtn){
-            saveBtn.addEventListener('click', async ()=>{
-                if(!isAdmin) return;
-                const name = document.getElementById('bf-name').value.trim();
-                if(!name){ alert('Zadej název vrcholu.'); return; }
-                const b = emptyBonus();
-                b.id = genId();
-                b.name = name;
-                b.region = document.getElementById('bf-region').value.trim();
-                b.elev = document.getElementById('bf-elev').value.trim();
-                b.lat = document.getElementById('bf-lat').value.trim();
-                b.lng = document.getElementById('bf-lng').value.trim();
-                bonusState[b.id] = b;
-                await saveBonus(b.id);
-
-                document.getElementById('bf-name').value = '';
-                document.getElementById('bf-region').value = '';
-                document.getElementById('bf-elev').value = '';
-                document.getElementById('bf-lat').value = '';
-                document.getElementById('bf-lng').value = '';
-
-                document.getElementById('bonusListWrap').innerHTML = getBonusCardsHtml();
-                attachBonusEvents();
-                updateHeroInPlace();
-                refreshMap();
-            });
-        }
-        document.querySelectorAll('[data-action="bonus-toggle"]').forEach(el=>{
-            el.addEventListener('click', async (ev)=>{
-                ev.preventDefault();
-                ev.stopPropagation();
-                if(!isAdmin) { alert("Jsi v režimu prohlížení (Guest mode). Pro úpravy se musíš přihlásit dole na stránce."); return; }
-
-                const id = el.dataset.id;
-                const b = bonusState[id];
-                b.done = !b.done;
-                if(b.done && !b.date) b.date = new Date().toISOString().slice(0,16);
-                await saveBonus(id);
-
-                const card = document.getElementById('bonus-'+id);
-                const wasOpen = card ? card.hasAttribute('open') : false;
-                document.getElementById('bonusListWrap').innerHTML = getBonusCardsHtml();
-                attachBonusEvents();
-                if(wasOpen){ const c2=document.getElementById('bonus-'+id); if(c2) c2.setAttribute('open',''); }
-                updateHeroInPlace();
-                refreshMap();
-            });
-        });
-        document.querySelectorAll('[data-bonus]').forEach(el=>{
-            if(el.type === 'button') return;
-            el.addEventListener('change', async ()=>{
-                if(!isAdmin) return;
-                const id = el.dataset.bonus, key = el.dataset.key;
-                bonusState[id][key] = el.value;
-                await saveBonus(id);
-                const card = document.getElementById('bonus-'+id);
-                const wasOpen = card ? card.hasAttribute('open') : false;
-                document.getElementById('bonusListWrap').innerHTML = getBonusCardsHtml();
-                attachBonusEvents();
-                if(wasOpen){ const c2=document.getElementById('bonus-'+id); if(c2) c2.setAttribute('open',''); }
-                refreshMap();
-            });
-        });
-        document.querySelectorAll('input[type="file"][data-bonusphoto]').forEach(el=>{
-            el.addEventListener('change', (ev)=> handlePhoto(ev, el.dataset.bonusphoto, 'bonus'));
-        });
-        document.querySelectorAll('[data-action="bonus-delete"]').forEach(el=>{
-            el.addEventListener('click', ()=> {
-                if(!isAdmin) return;
-                if(confirm('Opravdu smazat tento vrchol?')) deleteBonus(el.dataset.id);
-            });
-        });
-    }
-
-    /* ============================= PHOTO ============================= */
-    async function handlePhoto(ev, id, kind){
-        if(!isAdmin) return;
-        const fileInput = ev.target;
-        let file = fileInput.files[0];
-        if(!file) return;
-
-        let isConverted = false;
-
-        if (file.name.toLowerCase().endsWith('.heic') || file.name.toLowerCase().endsWith('.heif') || file.type === 'image/heic') {
-            try {
-                showSaving(true);
-                const ind = document.getElementById('saveIndicator');
-                if(ind) ind.textContent = 'Zpracovávám HEIC…';
-
-                const convertedBlob = await heic2any({ blob: file, toType: "image/jpeg", quality: 0.8 });
-                const convertedFile = Array.isArray(convertedBlob) ? convertedBlob[0] : convertedBlob;
-                file = new File([convertedFile], file.name.replace(/\.heic$/i, '.jpg').replace(/\.heif$/i, '.jpg'), { type: 'image/jpeg' });
-                isConverted = true;
-
-                showSaving(false);
-            } catch (e) {
-                console.error("HEIC konverze selhala", e);
-                alert("Nepodařilo se zpracovat formát HEIC z iPhonu. Zkuste nahrát klasický JPEG.");
-                showSaving(false);
-                fileInput.value = '';
-                return;
-            }
-        }
-
-        let finished = false;
-        const proceed = (exifDateStr) => {
-            if(finished) return;
-            finished = true;
-            finishPhotoProcessing(file, id, exifDateStr, kind);
-            fileInput.value = '';
-        };
-
-        if (isConverted) {
-            proceed("");
-            return;
-        }
-
-        try{
-            EXIF.getData(file, function(){
-                const raw = EXIF.getTag(this, "DateTimeOriginal") || EXIF.getTag(this, "DateTime");
-                let exifDateStr = "";
-                if(raw){
-                    const iso = raw.replace(/^(\d{4}):(\d{2}):(\d{2})/, '$1-$2-$3').replace(' ', 'T').slice(0,16);
-                    exifDateStr = iso;
-                }
-                proceed(exifDateStr);
-            });
-            setTimeout(() => proceed(""), 1500);
-        }catch(e){
-            proceed("");
-        }
-    }
-
-    function finishPhotoProcessing(file, id, exifDateStr, kind){
-        const reader = new FileReader();
-        reader.onload = function(ev){
-            const img = new Image();
-            img.onload = async function(){
-                const maxW = 900;
-                const scale = Math.min(1, maxW / img.width);
-                const canvas = document.createElement('canvas');
-                canvas.width = img.width * scale;
-                canvas.height = img.height * scale;
-                const ctx = canvas.getContext('2d');
-                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                const dataUrl = canvas.toDataURL('image/jpeg', 0.6);
-
-                if(kind==='country'){
-                    const e = getEntry(id);
-                    e.peak.photo = dataUrl;
-                    e.peak.photoDate = exifDateStr;
-                    if(exifDateStr && !e.peak.date) e.peak.date = exifDateStr;
-
-                    await handleSyncAndSave(id);
-                    preserveOpenAndRerenderList(id);
-                } else {
-                    const b = bonusState[id];
-                    b.photo = dataUrl;
-                    b.photoDate = exifDateStr;
-                    if(exifDateStr && !b.date) b.date = exifDateStr;
-                    await saveBonus(id);
-                    const card = document.getElementById('bonus-'+id);
-                    const wasOpen = card ? card.hasAttribute('open') : false;
-                    document.getElementById('bonusListWrap').innerHTML = getBonusCardsHtml();
-                    attachBonusEvents();
-                    if(wasOpen){ const c2=document.getElementById('bonus-'+id); if(c2) c2.setAttribute('open',''); }
-                }
-            };
-            img.src = ev.target.result;
-        };
-        reader.readAsDataURL(file);
-    }
-
-    /* ============================= INIT ============================= */
-    (async function init(){
-        await Promise.all([loadAll(), loadGeoJson()]);
-        document.getElementById('loadingMsg').style.display = 'none';
-        document.getElementById('appContent').style.display = 'block';
-        renderAll();
-        initMap();
-    })();
+/* ============================= INIT ============================= */
+(async function init(){
+  await Promise.all([loadAll(), loadGeoJson()]);
+  document.getElementById('loadingMsg').style.display = 'none';
+  document.getElementById('appContent').style.display = 'block';
+  renderAll();
+  initMap();
+})();
 </script>
 </body>
 </html>
