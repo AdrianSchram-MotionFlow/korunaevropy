@@ -55,10 +55,10 @@ h1,h2,h3{font-family:var(--font-display);margin:0;letter-spacing:0.01em;}
 @media (prefers-reduced-motion: reduce){ *{transition:none !important;animation:none !important;} }
 
 .header-brand {
-  display: flex; align-items: center; gap: 14px; margin-bottom: 24px;
+  display: flex; align-items: center; gap: 16px; margin-bottom: 24px;
 }
-.brand-logo { height: 42px; width: auto; }
-.brand-text { font-family: var(--font-display); font-size: 26px; font-weight: 800; color: var(--text); letter-spacing: 0.04em; }
+.brand-logo { height: 75px; width: auto; }
+.brand-text { font-family: var(--font-display); font-size: 28px; font-weight: 800; color: var(--text); letter-spacing: 0.04em; }
 
 .hero{position:relative;border-radius:22px;padding:34px 30px;overflow:hidden;
   background:linear-gradient(160deg,var(--bg-soft) 0%, #0d2318 100%);
@@ -246,7 +246,7 @@ details[open] .chevron{transform:rotate(90deg);}
 
 <script>
 /* ============================= DATA ============================= */
-// Přidáno peakId pro jednoznačné určení unikátního vrcholu
+// Hlavní evropské státy
 const COUNTRIES = [
 {id:"albania",iso:"ALB",name:"Albánie",capital:"Tirana",peak:"Korab",peakId:"korab",elev:2764,peakLat:41.7842,peakLng:20.5486},
 {id:"andorra",iso:"AND",name:"Andorra",capital:"Andorra la Vella",peak:"Coma Pedrosa",peakId:"coma_pedrosa",elev:2942,peakLat:42.5761,peakLng:1.4703},
@@ -638,7 +638,6 @@ function renderHero(){
     }
   });
   const peaksDone = uniquePeaksDoneSet.size;
-  const fullDone = COUNTRIES.filter(c=>isFull(getEntry(c.id))).length;
 
   const contourSVG = `<svg class="hero-contours" viewBox="0 0 600 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M-20 160 Q 100 100 220 150 T 460 130 T 640 160" stroke="#dba641" stroke-width="1" fill="none"/>
