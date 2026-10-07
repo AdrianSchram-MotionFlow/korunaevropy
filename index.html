@@ -54,6 +54,10 @@ body{
 h1,h2,h3{font-family:var(--font-display);margin:0;letter-spacing:0.01em;}
 @media (prefers-reduced-motion: reduce){ *{transition:none !important;animation:none !important;} }
 
+.header-brand {
+  display: flex; align-items: center; gap: 16px; margin-bottom: 24px;
+}
+
 .hero{position:relative;border-radius:22px;padding:34px 30px;overflow:hidden;
   background:linear-gradient(160deg,var(--bg-soft) 0%, #0d2318 100%);
   border:1px solid var(--border-soft);margin-bottom:26px;}
@@ -112,7 +116,7 @@ details[open] .chevron{transform:rotate(90deg);}
 .card-body{padding:4px 16px 20px 44px;}
 
 /* Zobrazení pro sledující (Viewer) */
-.viewer-layout { display: flex; gap: 20px; align-items: flex-start; padding: 6px 0; }
+.viewer-layout { display: flex; gap: 20px; align-items: flex-start; padding: 6px 0; margin-bottom: 12px; }
 .v-photo { width: 130px; height: 130px; object-fit: cover; border-radius: 12px; cursor: zoom-in; flex-shrink: 0; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border: 1px solid var(--border); }
 .v-content { flex: 1; min-width: 0; }
 .v-date { font-size: 13px; color: var(--accent); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 10px; }
@@ -125,7 +129,7 @@ details[open] .chevron{transform:rotate(90deg);}
 .empty-state { color: var(--text-faint); font-size: 14px; font-style: italic; padding: 10px 0; }
 
 /* Admin formulář */
-.admin-layout { border-top: 1px dashed var(--border-soft); margin-top: 24px; padding-top: 24px; }
+.admin-layout { border-top: 1px dashed var(--border-soft); padding-top: 24px; }
 .item-top{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
 .check{width:24px;height:24px;border-radius:6px;border:2px solid var(--text-faint);flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s ease;}
 .check.checked{background:var(--accent);border-color:var(--accent);}
@@ -548,7 +552,7 @@ async function loadAll(){
     }));
   }catch(e){ console.error("Chyba při načítání bonusů:", e); }
 
-  // Auto-Migrace starých ID
+  // Auto-Migrace starých ID do bonusů
   if (state['spain']) {
     if (state['spain'].peak && state['spain'].peak.done) {
       const bId = "b_teide";
@@ -573,6 +577,11 @@ async function loadAll(){
     delete state['portugal'];
   }
 }
+
+async function saveEntry(id){ try{ await api.set("country_"+id, JSON.stringify(state[id])); }catch(e){ console.error(e); } }
+async function clearEntry(id){ state[id]=emptyEntry(); try{ await api.delete("country_"+id); }catch(e){} preserveOpenAndRerenderList(id); updateHeroInPlace(); refreshMap(); }
+async function saveBonus(id){ try{ await api.set("bonus_"+id, JSON.stringify(bonusState[id])); }catch(e){ console.error(e); } }
+async function deleteBonus(id){ delete bonusState[id]; try{ await api.delete("bonus_"+id); }catch(e){} document.getElementById('bonusListWrap').innerHTML = getBonusCardsHtml(); attachBonusEvents(); updateHeroInPlace(); refreshMap(); }
 
 window.updatePeakProp = async function(id, prop, val) {
   if(!isAdmin) return;
@@ -696,7 +705,7 @@ function renderHero(){
           <h1>Koruna Evropy</h1>
         </div>
         <div class="hero-brand">
-          <img src="src/3.png" alt="Projekt 25 Logo" class="brand-logo">
+          <img src="src/projekt25.png" alt="Projekt 25 Logo" class="brand-logo">
         </div>
       </div>
       
@@ -787,7 +796,6 @@ function renderCountryCard(c){
   const e = getEntry(c.id);
   const status = isFull(e) ? 'full' : 'none';
   const diff = DIFF_LABELS[e.peak.diff] || DIFF_LABELS[1];
-  const dur = DUR_LABELS[e.peak.dur];
   
   const isExtra = EXTRA_COUNTRIES.some(x => x.id === c.id);
   const cardClass = isExtra ? 'country-card caucasus-card' : 'country-card';
@@ -799,42 +807,69 @@ function renderCountryCard(c){
   const badgeHtml = badgeText ? `<span class="caucasus-badge">${badgeText}</span>` : '';
   const diffBadgeHtml = e.peak.done ? `<span class="diff-badge" style="background:${diff.color};color:#111;">${diff.label}</span>` : '';
 
-  return `
-  <details class="${cardClass}" data-status="${status}" id="card-${c.id}">
-    <summary>
-      <div class="card-head">
-        <span class="chevron">▶</span>
-        <div class="card-titles">
-          <div class="cname">${c.name} ${badgeHtml} ${diffBadgeHtml}</div>
-          <div class="cmeta">${c.peak} (${c.elev} m)</div>
-        </div>
-      </div>
-    </summary>
-    <div class="card-body">
-      
-      ${e.peak.done ? `
+  let viewerHtml = '';
+  let adminHtml = '';
+
+  if (e.peak.done) {
+    let statsHtml = '';
+    if (e.peak.km || e.peak.elevGain || e.peak.time) {
+      let kmHtml = e.peak.km ? `<div class="v-stat">🥾 ${e.peak.km} km</div>` : '';
+      let elevHtml = e.peak.elevGain ? `<div class="v-stat">⛰️ ${e.peak.elevGain} m+</div>` : '';
+      let timeHtml = e.peak.time ? `<div class="v-stat">⏱️ ${e.peak.time}</div>` : '';
+      statsHtml = `<div class="v-stats">${kmHtml}${elevHtml}${timeHtml}</div>`;
+    }
+
+    let starsHtml = e.peak.rating ? `<div class="v-stars">${'⭐️'.repeat(e.peak.rating)}</div>` : '';
+    let noteHtml = e.peak.note ? `<div class="v-note"><strong>TL;DR:</strong> ${escapeHtml(e.peak.note)}</div>` : '';
+    let photoHtml = e.peak.photo ? `<img class="v-photo" src="${e.peak.photo}" onclick="openLightbox(this.src)">` : '';
+
+    viewerHtml = `
       <div class="viewer-layout">
-         ${e.peak.photo ? `<img class="v-photo" src="${e.peak.photo}" onclick="openLightbox(this.src)">` : ''}
+         ${photoHtml}
          <div class="v-content">
-            <div class="v-date">${formatDateView(e.peak.date)}</div>${(e.peak.km || e.peak.elevGain || e.peak.time) ? `
-            <div class="v-stats">
-                ${e.peak.km ? `<div class="v-stat">🥾 ${e.peak.km} km</div>` : ''}
-                ${e.peak.elevGain ? `<div class="v-stat">⛰️ ${e.peak.elevGain} m+</div>` : ''}
-                ${e.peak.time ? `<div class="v-stat">⏱️ ${e.peak.time}</div>` : ''}
-            </div>` : ''}
+            <div class="v-date">${formatDateView(e.peak.date)}</div>
+            ${statsHtml}
             <div class="v-badges">
-                <div class="v-badge">🏔️ ${TERRAIN_LABELS[e.peak.terrain] || TERRAIN_LABELS[1]}</div>
-                <div class="v-badge" title="${WEATHER_NAMES[e.peak.weather] \vert{}\vert{} WEATHER_NAMES['sun']}">${WEATHER_ICONS[e.peak.weather] || WEATHER_ICONS['sun']} ${WEATHER_NAMES[e.peak.weather] \vert{}\vert{} WEATHER_NAMES['sun']}</div>${e.peak.dur ? `<div class="v-badge">⏳ ${DUR_LABELS[e.peak.dur].label}</div>` : ''}
-                ${e.peak.rating ? `<div class="v-stars">${'⭐️'.repeat(e.peak.rating)}</div>` : ''}
+                <div class="v-badge">🏔️ ${TERRAIN_LABELS[e.peak.terrain || 1]}</div>
+                <div class="v-badge" title="${WEATHER_NAMES[e.peak.weather || 'sun']}">${WEATHER_ICONS[e.peak.weather || 'sun']} ${WEATHER_NAMES[e.peak.weather || 'sun']}</div>
+                ${e.peak.dur ? `<div class="v-badge">⏳ ${DUR_LABELS[e.peak.dur].label}</div>` : ''}
+                ${starsHtml}
             </div>
-            ${e.peak.note ? `<div class="v-note"><strong>TL;DR:</strong> ${escapeHtml(e.peak.note)}</div>` : ''}
+            ${noteHtml}
          </div>
       </div>
-      ` : `
-      <div class="empty-state">Na tento vrchol se teprve chystám.</div>
-      `}
+    `;
+  } else {
+    viewerHtml = `<div class="empty-state">Na tento vrchol se teprve chystám.</div>`;
+  }
 
-      ${isAdmin ? `
+  if (isAdmin) {
+     let diffPills = Object.entries(DIFF_LABELS).map(([k,v]) => {
+        let active = String(e.peak.diff) === k ? 'active' : '';
+        return `<button type="button" class="rating-pill ${active}" style="--rc:${v.color}" onclick="updatePeakProp('${c.id}', 'diff', ${k})" ${disabledAttr}>${v.label}</button>`;
+     }).join('');
+
+     let durPills = Object.entries(DUR_LABELS).map(([k,v]) => {
+        let active = String(e.peak.dur) === k ? 'active' : '';
+        return `<button type="button" class="rating-pill ${active}" style="--rc:var(--accent)" onclick="updatePeakProp('${c.id}', 'dur', ${k})" ${disabledAttr}>${v.label}</button>`;
+     }).join('');
+
+     let terrPills = Object.entries(TERRAIN_LABELS).map(([k,label]) => {
+        let active = String(e.peak.terrain || 1) === k ? 'active' : '';
+        return `<button type="button" class="rating-pill ${active}" style="--rc:var(--accent)" onclick="updatePeakProp('${c.id}', 'terrain', ${k})" ${disabledAttr}>${label}</button>`;
+     }).join('');
+
+     let weathPills = Object.entries(WEATHER_ICONS).map(([k,icon]) => {
+        let active = String(e.peak.weather || 'sun') === k ? 'active' : '';
+        return `<button type="button" class="rating-pill ${active}" style="--rc:var(--accent)" onclick="updatePeakProp('${c.id}', 'weather', '${k}')" title="${WEATHER_NAMES[k]}" ${disabledAttr}>${icon}</button>`;
+     }).join('');
+
+     let starPills = [1,2,3,4,5].map(i => {
+        let op = (e.peak.rating||0) >= i ? '1' : '0.25';
+        return `<span style="cursor:pointer; opacity:${op}; transition:opacity .2s;" onclick="updatePeakProp('${c.id}', 'rating', ${i})">⭐️</span>`;
+     }).join('');
+
+     adminHtml = `
       <div class="admin-layout" style="${!e.peak.done ? 'border-top:none; margin-top:0; padding-top:10px;' : ''}">
           <div class="item-top" style="margin-bottom: 16px;">
             <div class="check peakcheck ${e.peak.done?'checked':''}" data-action="toggle" data-id="${c.id}" data-field="peak">${checkSVG()}</div>
@@ -848,63 +883,63 @@ function renderCountryCard(c){
             <label class="small" style="margin-top:6px;">Statistiky z trasy (volitelné)</label>
             <div class="stats-row">
               <div class="stat-col">
-                <input type="number" step="0.1" data-id="${c.id}" data-field="peak" data-key="km" value="${e.peak.km\vert{}\vert{}''}" ${disabledAttr} placeholder="Vzdálenost (km)">
+                <input type="number" step="0.1" data-id="${c.id}" data-field="peak" data-key="km" value="${e.peak.km||''}" ${disabledAttr} placeholder="Vzdálenost (km)">
               </div>
               <div class="stat-col">
-                <input type="number" data-id="${c.id}" data-field="peak" data-key="elevGain" value="${e.peak.elevGain\vert{}\vert{}''}" ${disabledAttr} placeholder="Převýšení (m)">
+                <input type="number" data-id="${c.id}" data-field="peak" data-key="elevGain" value="${e.peak.elevGain||''}" ${disabledAttr} placeholder="Převýšení (m)">
               </div>
               <div class="stat-col">
-                <input type="text" data-id="${c.id}" data-field="peak" data-key="time" value="${e.peak.time\vert{}\vert{}''}" ${disabledAttr} placeholder="Čas (např. 6:30)">
+                <input type="text" data-id="${c.id}" data-field="peak" data-key="time" value="${e.peak.time||''}" ${disabledAttr} placeholder="Čas (např. 6:30)">
               </div>
             </div>
 
             <label class="small" style="margin-top:6px;">Celková obtížnost</label>
-            <div class="rating-pills">
-              ${Object.entries(DIFF_LABELS).map(([k,v]) => `
-                <button type="button" class="rating-pill ${String(e.peak.diff)===k?'active':''}" style="--rc:${v.color}" onclick="updatePeakProp('${c.id}', 'diff', ${k})" ${disabledAttr}>${v.label}</button>
-              `).join('')}
-            </div>
+            <div class="rating-pills">${diffPills}</div>
 
             <label class="small" style="margin-top:6px;">Délka trasy</label>
-            <div class="rating-pills">
-              ${Object.entries(DUR_LABELS).map(([k,v]) => `
-                <button type="button" class="rating-pill ${String(e.peak.dur)===k?'active':''}" style="--rc:var(--accent)" onclick="updatePeakProp('${c.id}', 'dur', ${k})" ${disabledAttr}>${v.label}</button>
-              `).join('')}
-            </div>
+            <div class="rating-pills">${durPills}</div>
 
             <label class="small" style="margin-top:6px;">Terén</label>
-            <div class="rating-pills">
-              ${Object.entries(TERRAIN_LABELS).map(([k,label]) => `
-                <button type="button" class="rating-pill ${String(e.peak.terrain||1)===k?'active':''}" style="--rc:var(--accent)" onclick="updatePeakProp('${c.id}', 'terrain', ${k})" ${disabledAttr}>${label}</button>
-              `).join('')}
-            </div>
+            <div class="rating-pills">${terrPills}</div>
 
             <label class="small" style="margin-top:6px;">Počasí</label>
-            <div class="rating-pills">
-              ${Object.entries(WEATHER_ICONS).map(([k,icon]) => `
-                <button type="button" class="rating-pill ${String(e.peak.weather||'sun')===k?'active':''}" style="--rc:var(--accent)" onclick="updatePeakProp('${c.id}', 'weather', '${k}')" title="${WEATHER_NAMES[k]}" ${disabledAttr}>${icon}</button>
-              `).join('')}
-            </div>
+            <div class="rating-pills">${weathPills}</div>
 
             <label class="small" style="margin-top:6px;">Hodnocení (Worth it?)</label>
-            <div class="rating-pills" style="font-size:22px; gap:4px;">
-              ${[1,2,3,4,5].map(i => `
-                <span style="cursor:pointer; opacity:${(e.peak.rating||0) >= i ? '1' : '0.25'}; transition:opacity .2s;" onclick="updatePeakProp('${c.id}', 'rating', ${i})">⭐️</span>
-              `).join('')}
-            </div>
+            <div class="rating-pills" style="font-size:22px; gap:4px;">${starPills}</div>
 
             <label class="small" style="margin-top:6px;">TL;DR / Shrnutí (1-2 věty)</label>
             <input type="text" placeholder="Jaké to bylo?..." data-id="${c.id}" data-field="peak" data-key="note" value="${escapeHtml(e.peak.note)}" ${disabledAttr}>
 
             <label class="small" style="margin-top:6px;">Fotka z vrcholu</label>
             <div class="photo-row">
-              ${isAdmin ? `<label class="photo-btn" for="photo-${c.id}">Nahrát fotku</label><input type="file" accept="image/*" id="photo-${c.id}" data-id="${c.id}" style="display:none">` : ''}
+              <label class="photo-btn" for="photo-${c.id}">Nahrát fotku</label><input type="file" accept="image/*" id="photo-${c.id}" data-id="${c.id}" style="display:none">
               ${e.peak.photo ? `<img class="photo-thumb" src="${e.peak.photo}" onclick="openLightbox(this.src); event.stopPropagation();">` : ''}
               <span class="exif-hint ${e.peak.photoDate?'':'none'}">${e.peak.photoDate ? ('EXIF: '+formatExif(e.peak.photoDate)) : (e.peak.photo ? 'Fotka bez EXIF data.' : '')}</span>
             </div>
+            
+            <div style="margin-top: 16px; text-align: right;">
+                <button class="clear-link" data-action="clear" data-id="${c.id}">Smazat data o této zemi</button>
+            </div>
           </div>
       </div>
-      ${isAdmin ? `<div style="grid-column:1/-1;text-align:right;margin-top:-8px;"><button class="clear-link" data-action="clear" data-id="${c.id}">Smazat data o této zemi</button></div>` : ''}
+     `;
+  }
+
+  return `
+  <details class="${cardClass}" data-status="${status}" id="card-${c.id}">
+    <summary>
+      <div class="card-head">
+        <span class="chevron">▶</span>
+        <div class="card-titles">
+          <div class="cname">${c.name} ${badgeHtml} ${diffBadgeHtml}</div>
+          <div class="cmeta">${c.peak} (${c.elev} m)</div>
+        </div>
+      </div>
+    </summary>
+    <div class="card-body">
+      ${viewerHtml}
+      ${adminHtml}
     </div>
   </details>`;
 }
@@ -955,49 +990,76 @@ function getBonusCardsHtml(){
 
 function renderBonusCard(b){
   const diff = DIFF_LABELS[b.diff] || DIFF_LABELS[1];
-  const dur = DUR_LABELS[b.dur];
   const disabledAttr = isAdmin ? '' : 'disabled';
-  
   const diffBadgeHtml = b.done ? `<span class="diff-badge" style="background:${diff.color};color:#111;">${diff.label}</span>` : '';
 
-  return `
-  <details class="country-card bonus-card" data-status="${b.done?'full':'none'}" id="bonus-${b.id}">
-    <summary>
-      <div class="card-head">
-        <span class="chevron">▶</span>
-        <div class="card-titles">
-          <div class="cname">${escapeHtml(b.name)}${diffBadgeHtml}</div>
-          <div class="cmeta">${escapeHtml(b.region)}${b.elev?' · '+b.elev+' m':''}</div>
-        </div>
-      </div>
-    </summary>
-    <div class="card-body">
-      
-      ${b.done ? `
+  let viewerHtml = '';
+  let adminHtml = '';
+
+  if (b.done) {
+    let statsHtml = '';
+    if (b.km || b.elevGain || b.time) {
+      let kmHtml = b.km ? `<div class="v-stat">🥾 ${b.km} km</div>` : '';
+      let elevHtml = b.elevGain ? `<div class="v-stat">⛰️ ${b.elevGain} m+</div>` : '';
+      let timeHtml = b.time ? `<div class="v-stat">⏱️ ${b.time}</div>` : '';
+      statsHtml = `<div class="v-stats">${kmHtml}${elevHtml}${timeHtml}</div>`;
+    }
+
+    let starsHtml = b.rating ? `<div class="v-stars">${'⭐️'.repeat(b.rating)}</div>` : '';
+    let noteHtml = b.notes ? `<div class="v-note"><strong>TL;DR:</strong> ${escapeHtml(b.notes)}</div>` : '';
+    let photoHtml = b.photo ? `<img class="v-photo" src="${b.photo}" onclick="openLightbox(this.src)">` : '';
+
+    viewerHtml = `
       <div class="viewer-layout">
-         ${b.photo ? `<img class="v-photo" src="${b.photo}" onclick="openLightbox(this.src)">` : ''}
+         ${photoHtml}
          <div class="v-content">
             <div class="v-date">${formatDateView(b.date)}</div>
-            ${(b.km || b.elevGain || b.time) ? `
-            <div class="v-stats">
-                ${b.km ? `<div class="v-stat">🥾 ${b.km} km</div>` : ''}
-                ${b.elevGain ? `<div class="v-stat">⛰️ ${b.elevGain} m+</div>` : ''}
-                ${b.time ? `<div class="v-stat">⏱️ ${b.time}</div>` : ''}
-            </div>` : ''}
+            ${statsHtml}
             <div class="v-badges">
-                <div class="v-badge">🏔️ ${TERRAIN_LABELS[b.terrain] || TERRAIN_LABELS[1]}</div>
-                <div class="v-badge" title="${WEATHER_NAMES[b.weather] || WEATHER_NAMES['sun']}">${WEATHER_ICONS[b.weather] || WEATHER_ICONS['sun']} ${WEATHER_NAMES[b.weather] || WEATHER_NAMES['sun']}</div>
+                <div class="v-badge">🏔️ ${TERRAIN_LABELS[b.terrain || 1]}</div>
+                <div class="v-badge" title="${WEATHER_NAMES[b.weather || 'sun']}">${WEATHER_ICONS[b.weather || 'sun']} ${WEATHER_NAMES[b.weather || 'sun']}</div>
                 ${b.dur ? `<div class="v-badge">⏳ ${DUR_LABELS[b.dur].label}</div>` : ''}
-                ${b.rating ? `<div class="v-stars">${'⭐️'.repeat(b.rating)}</div>` : ''}
+                ${starsHtml}
             </div>
-            ${b.notes ? `<div class="v-note"><strong>TL;DR:</strong> ${escapeHtml(b.notes)}</div>` : ''}
+            ${noteHtml}
          </div>
       </div>
-      ` : `
-      <div class="empty-state">Na tento vrchol se teprve chystám.</div>
-      `}
+    `;
+  } else {
+    viewerHtml = `<div class="empty-state">Na tento vrchol se teprve chystám.</div>`;
+  }
 
-      ${isAdmin ? `
+  if (isAdmin) {
+     let diffPills = Object.entries(DIFF_LABELS).map(([k,v]) => {
+        let active = String(b.diff) === k ? 'active' : '';
+        return `<button type="button" class="rating-pill ${active}" style="--rc:${v.color}" onclick="updateBonusProp('${b.id}', 'diff', ${k})" ${disabledAttr}>${v.label}</button>`;
+     }).join('');
+
+     let durPills = Object.entries(DUR_LABELS).map(([k,v]) => {
+        let active = String(b.dur) === k ? 'active' : '';
+        return `<button type="button" class="rating-pill ${active}" style="--rc:var(--accent)" onclick="updateBonusProp('${b.id}', 'dur', ${k})" ${disabledAttr}>${v.label}</button>`;
+     }).join('');
+
+     let terrPills = Object.entries(TERRAIN_LABELS).map(([k,label]) => {
+        let active = String(b.terrain || 1) === k ? 'active' : '';
+        return `<button type="button" class="rating-pill ${active}" style="--rc:var(--accent)" onclick="updateBonusProp('${b.id}', 'terrain', ${k})" ${disabledAttr}>${label}</button>`;
+     }).join('');
+
+     let weathPills = Object.entries(WEATHER_ICONS).map(([k,icon]) => {
+        let active = String(b.weather || 'sun') === k ? 'active' : '';
+        return `<button type="button" class="rating-pill ${active}" style="--rc:var(--accent)" onclick="updateBonusProp('${b.id}', 'weather', '${k}')" title="${WEATHER_NAMES[k]}" ${disabledAttr}>${icon}</button>`;
+     }).join('');
+
+     let starPills = [1,2,3,4,5].map(i => {
+        let op = (b.rating||0) >= i ? '1' : '0.25';
+        return `<span style="cursor:pointer; opacity:${op}; transition:opacity .2s;" onclick="updateBonusProp('${b.id}', 'rating', ${i})">⭐️</span>`;
+     }).join('');
+
+     let photoBtn = `<label class="photo-btn" for="bphoto-${b.id}">Nahrát fotku</label><input type="file" accept="image/*" id="bphoto-${b.id}" data-bonusphoto="${b.id}" style="display:none">`;
+     let photoImg = b.photo ? `<img class="photo-thumb" src="${b.photo}" onclick="openLightbox(this.src); event.stopPropagation();">` : '';
+     let photoExif = b.photoDate ? `<span class="exif-hint">EXIF: ${formatExif(b.photoDate)}</span>` : (b.photo ? `<span class="exif-hint">Fotka bez EXIF data.</span>` : '');
+
+     adminHtml = `
       <div class="admin-layout" style="${!b.done ? 'border-top:none; margin-top:0; padding-top:10px;' : ''}">
           <div class="item-top" style="margin-bottom: 16px;">
             <div class="check ${b.done?'checked bonuscheck':''}" data-action="bonus-toggle" data-id="${b.id}">${checkSVG()}</div>
@@ -1021,53 +1083,50 @@ function renderBonusCard(b){
               </div>
             </div>
 
-            <label class="small" style="margin-top:6px;">Hodnocení obtížnosti</label>
-            <div class="rating-pills">
-              ${Object.entries(DIFF_LABELS).map(([k,v]) => `
-                <button type="button" class="rating-pill ${String(b.diff)===k?'active':''}" style="--rc:${v.color}" onclick="updateBonusProp('${b.id}', 'diff',${k})" ${disabledAttr}>${v.label}</button>
-              `).join('')}
-            </div>
+            <label class="small" style="margin-top:6px;">Celková obtížnost</label>
+            <div class="rating-pills">${diffPills}</div>
 
             <label class="small" style="margin-top:6px;">Délka trasy</label>
-            <div class="rating-pills">
-              ${Object.entries(DUR_LABELS).map(([k,v]) => `
-                <button type="button" class="rating-pill ${String(b.dur)===k?'active':''}" style="--rc:var(--accent)" onclick="updateBonusProp('${b.id}', 'dur',${k})" ${disabledAttr}>${v.label}</button>
-              `).join('')}
-            </div>
+            <div class="rating-pills">${durPills}</div>
 
             <label class="small" style="margin-top:6px;">Terén</label>
-            <div class="rating-pills">
-              ${Object.entries(TERRAIN_LABELS).map(([k,label]) => `
-                <button type="button" class="rating-pill ${String(b.terrain||1)===k?'active':''}" style="--rc:var(--accent)" onclick="updateBonusProp('${b.id}', 'terrain',${k})" ${disabledAttr}>${label}</button>
-              `).join('')}
-            </div>
+            <div class="rating-pills">${terrPills}</div>
 
             <label class="small" style="margin-top:6px;">Počasí</label>
-            <div class="rating-pills">
-              ${Object.entries(WEATHER_ICONS).map(([k,icon]) => `
-                <button type="button" class="rating-pill ${String(b.weather\vert{}\vert{}'sun')===k?'active':''}" style="--rc:var(--accent)" onclick="updateBonusProp('${b.id}', 'weather', '${k}')" title="${WEATHER_NAMES[k]}" ${disabledAttr}>${icon}</button>
-              `).join('')}
-            </div>
+            <div class="rating-pills">${weathPills}</div>
 
             <label class="small" style="margin-top:6px;">Hodnocení (Worth it?)</label>
-            <div class="rating-pills" style="font-size:22px; gap:4px;">
-              ${[1,2,3,4,5].map(i => `
-                <span style="cursor:pointer; opacity:${(b.rating||0) >= i ? '1' : '0.25'}; transition:opacity .2s;" onclick="updateBonusProp('${b.id}', 'rating',${i})">⭐️</span>
-              `).join('')}
-            </div>
+            <div class="rating-pills" style="font-size:22px; gap:4px;">${starPills}</div>
 
             <label class="small" style="margin-top:6px;">Zážitek / Poznámka</label>
             <input type="text" data-bonus="${b.id}" data-key="notes" value="${escapeHtml(b.notes)}" placeholder="poznámky…" ${disabledAttr}>
             
             <label class="small" style="margin-top:6px;">Fotka z vrcholu</label>
             <div class="photo-row">
-              ${isAdmin ? `<label class="photo-btn" for="bphoto-${b.id}">Nahrát fotku</label><input type="file" accept="image/*" id="bphoto-${b.id}" data-bonusphoto="${b.id}" style="display:none">` : ''}
-              ${b.photo ? `<img class="photo-thumb" src="${b.photo}" onclick="openLightbox(this.src); event.stopPropagation();">` : ''}
-              <span class="exif-hint ${b.photoDate?'':'none'}">${b.photoDate ? ('EXIF: '+formatExif(b.photoDate)) : (b.photo ? 'Fotka bez EXIF data.' : '')}</span>
+              ${photoBtn}
+              ${photoImg}
+              ${photoExif}
             </div>
           </div>
       </div>
-      ${isAdmin ? `<div style="grid-column:1/-1;text-align:right;margin-top:-8px;"><button class="clear-link" data-action="bonus-delete" data-id="${b.id}">Smazat vrchol</button></div>` : ''}
+      <div style="grid-column:1/-1;text-align:right;margin-top:8px;"><button class="clear-link" data-action="bonus-delete" data-id="${b.id}">Smazat vrchol</button></div>
+     `;
+  }
+
+  return `
+  <details class="country-card bonus-card" data-status="${b.done?'full':'none'}" id="bonus-${b.id}">
+    <summary>
+      <div class="card-head">
+        <span class="chevron">▶</span>
+        <div class="card-titles">
+          <div class="cname">${escapeHtml(b.name)} ${diffBadgeHtml}</div>
+          <div class="cmeta">${escapeHtml(b.region)}${b.elev?' · '+b.elev+' m':''}</div>
+        </div>
+      </div>
+    </summary>
+    <div class="card-body">
+      ${viewerHtml}
+      ${adminHtml}
     </div>
   </details>`;
 }
