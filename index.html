@@ -263,6 +263,7 @@ details[open] .chevron{transform:rotate(90deg);}
 
 <script>
 /* ============================= DATA ============================= */
+// Hlavní evropské státy
 const COUNTRIES = [
 {id:"albania",iso:"ALB",name:"Albánie",capital:"Tirana",peak:"Korab",peakId:"korab",elev:2764,peakLat:41.7842,peakLng:20.5486},
 {id:"andorra",iso:"AND",name:"Andorra",capital:"Andorra la Vella",peak:"Coma Pedrosa",peakId:"coma_pedrosa",elev:2942,peakLat:42.5761,peakLng:1.4703},
@@ -507,6 +508,7 @@ function uploadBackup(ev) {
 /* Zrcadlení dat u sdílených vrcholů */
 async function handleSyncAndSave(id) {
   await saveEntry(id);
+  // Pokud měním zemi se sdíleným vrcholem, zrcadlím data vrcholu do spřátelené země
   if(SHARED_PEAKS[id]) {
       const targetId = SHARED_PEAKS[id];
       getEntry(targetId).peak = JSON.parse(JSON.stringify(getEntry(id).peak));
@@ -546,7 +548,7 @@ async function loadAll(){
     }));
   }catch(e){ console.error("Chyba při načítání bonusů:", e); }
 
-  // Auto-Migrace starých ID do bonusů
+  // Auto-Migrace
   if (state['spain']) {
     if (state['spain'].peak && state['spain'].peak.done) {
       const bId = "b_teide";
@@ -671,9 +673,11 @@ function focusBonus(id){
 function renderHero(){
   const totalCountries = COUNTRIES.length; 
   
+  // Získání celkového počtu unikátních vrcholů přes definované peakId
   const totalUniquePeaksSet = new Set(COUNTRIES.map(c => c.peakId));
   const totalUniquePeaks = totalUniquePeaksSet.size;
 
+  // Získání zdolaných unikátních vrcholů
   let uniquePeaksDoneSet = new Set();
   COUNTRIES.forEach(c => {
     if (getEntry(c.id).peak.done) {
@@ -699,7 +703,7 @@ function renderHero(){
           <h1>Koruna Evropy</h1>
         </div>
         <div class="hero-brand">
-          <img src="src/projekt25.png" alt="Projekt 25 Logo" class="brand-logo">
+          <img src="src/3.png" alt="Projekt 25 Logo" class="brand-logo">
         </div>
       </div>
       
@@ -793,7 +797,6 @@ function renderCountryCard(c){
   
   const isExtra = EXTRA_COUNTRIES.some(x => x.id === c.id);
   const cardClass = isExtra ? 'country-card caucasus-card' : 'country-card';
-  const disabledAttr = isAdmin ? '' : 'disabled';
   
   let badgeText = '';
   if (['georgia', 'armenia'].includes(c.id)) badgeText = 'Kavkaz';
@@ -827,8 +830,8 @@ function renderCountryCard(c){
             </div>` : ''}
             <div class="v-badges">
                 <div class="v-badge">🏔️ ${TERRAIN_LABELS[e.peak.terrain || 1]}</div>
-                <div class="v-badge">${WEATHER_ICONS[e.peak.weather || 'sun']} ${WEATHER_NAMES[e.peak.weather || 'sun']}</div>
-                ${e.peak.rating ? `<div class="v-badge">${'⭐️'.repeat(e.peak.rating)}</div>` : ''}
+                <div class="v-badge" title="${WEATHER_NAMES[e.peak.weather || 'sun']}">${WEATHER_ICONS[e.peak.weather || 'sun']} ${WEATHER_NAMES[e.peak.weather || 'sun']}</div>
+                ${e.peak.rating ? `<div class="v-stars">${'⭐️'.repeat(e.peak.rating)}</div>` : ''}
             </div>
             ${e.peak.note ? `<div class="v-note"><strong>TL;DR:</strong> ${escapeHtml(e.peak.note)}</div>` : ''}
          </div>
@@ -955,7 +958,6 @@ function getBonusCardsHtml(){
 
 function renderBonusCard(b){
   const diff = DIFF_LABELS[b.diff] || DIFF_LABELS[1];
-  const disabledAttr = isAdmin ? '' : 'disabled';
   const diffBadgeHtml = b.done ? `<span class="diff-badge" style="background:${diff.color};color:#111;">${diff.label}</span>` : '';
 
   return `
@@ -984,8 +986,8 @@ function renderBonusCard(b){
             </div>` : ''}
             <div class="v-badges">
                 <div class="v-badge">🏔️ ${TERRAIN_LABELS[b.terrain || 1]}</div>
-                <div class="v-badge">${WEATHER_ICONS[b.weather || 'sun']} ${WEATHER_NAMES[b.weather || 'sun']}</div>
-                ${b.rating ? `<div class="v-badge">${'⭐️'.repeat(b.rating)}</div>` : ''}
+                <div class="v-badge" title="${WEATHER_NAMES[b.weather || 'sun']}">${WEATHER_ICONS[b.weather || 'sun']} ${WEATHER_NAMES[b.weather || 'sun']}</div>
+                ${b.rating ? `<div class="v-stars">${'⭐️'.repeat(b.rating)}</div>` : ''}
             </div>
             ${b.notes ? `<div class="v-note"><strong>TL;DR:</strong> ${escapeHtml(b.notes)}</div>` : ''}
          </div>
@@ -1005,7 +1007,7 @@ function renderBonusCard(b){
             <label class="small">Datum a čas výstupu</label>
             <input type="datetime-local" data-bonus="${b.id}" data-key="date" value="${b.date}">
             
-            <label class="small" style="margin-top:6px;">Statistiky z trasy</label>
+            <label class="small" style="margin-top:6px;">Statistiky z trasy (volitelné)</label>
             <div class="stats-row">
               <div class="stat-col">
                 <input type="number" step="0.1" data-bonus="${b.id}" data-key="km" value="${b.km||''}" placeholder="Vzdálenost (km)">
@@ -1018,7 +1020,7 @@ function renderBonusCard(b){
               </div>
             </div>
 
-            <label class="small" style="margin-top:6px;">Hodnocení obtížnosti</label>
+            <label class="small" style="margin-top:6px;">Celková obtížnost</label>
             <div class="rating-pills">
               ${Object.entries(DIFF_LABELS).map(([k,v]) => `
                 <button type="button" class="rating-pill ${String(b.diff)===k?'active':''}" style="--rc:${v.color}" onclick="updateBonusProp('${b.id}', 'diff', ${k})">${v.label}</button>
@@ -1055,9 +1057,12 @@ function renderBonusCard(b){
               ${b.photo ? `<img class="photo-thumb" src="${b.photo}" onclick="openLightbox(this.src); event.stopPropagation();">` : ''}
               <span class="exif-hint ${b.photoDate?'':'none'}">${b.photoDate ? ('EXIF: '+formatExif(b.photoDate)) : (b.photo ? 'Fotka bez EXIF data.' : '')}</span>
             </div>
+            
+            <div style="margin-top: 16px; text-align: right;">
+                <button class="clear-link" data-action="bonus-delete" data-id="${b.id}">Smazat vrchol</button>
+            </div>
           </div>
       </div>
-      <div style="grid-column:1/-1;text-align:right;margin-top:-8px;"><button class="clear-link" data-action="bonus-delete" data-id="${b.id}">Smazat vrchol</button></div>
     </div>
   </details>`;
 }
