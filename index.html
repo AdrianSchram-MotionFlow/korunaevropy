@@ -61,9 +61,11 @@ h1,h2,h3{font-family:var(--font-display);margin:0;letter-spacing:0.01em;}
 .hero-top{position:relative;z-index:1;}
 
 .hero-main-row { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; margin-bottom: 12px; }
+.hero-titles { flex: 1; min-width: 250px; }
 .hero-brand { display: flex; align-items: center; flex-shrink: 0; }
-/* Zvětšeno pro kombinovaný obrázek (logo + text) z Canvy */
-.brand-logo { height: 85px; width: auto; object-fit: contain; }
+
+/* Zvětšeno pro kompenzaci prázdného plátna z Canvy */
+.brand-logo { height: 180px; width: auto; object-fit: contain; margin: -60px -10px -60px 0; }
 
 .hero-eyebrow{font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent-strong);font-weight:600;margin-bottom:8px;}
 .hero h1{font-size:clamp(30px,4.2vw,44px);font-weight:800;color:var(--text);line-height:1;margin:0;}
@@ -206,8 +208,8 @@ details[open] .chevron{transform:rotate(90deg);}
 #lightbox img{max-width:100%;max-height:100%;border-radius:8px;box-shadow:0 10px 30px rgba(0,0,0,0.5);object-fit:contain;}
 
 @media (max-width: 640px) {
-  .hero-main-row { flex-direction: column; align-items: flex-start; gap: 16px; }
-  .brand-logo { height: 60px; }
+  .hero-main-row { flex-direction: column; align-items: flex-start; gap: 16px; margin-bottom: 0; }
+  .brand-logo { height: 140px; margin: -30px 0 -30px -10px; }
 }
 </style>
 </head>
@@ -215,7 +217,7 @@ details[open] .chevron{transform:rotate(90deg);}
 <div id="root">
   <div class="loading" id="loadingMsg">Načítám Korunu Evropy…</div>
   <div id="appContent" style="display:none;">
-
+    
     <div id="heroWrap"></div>
     <div class="map-wrap">
       <div id="mapCanvas"></div>
@@ -296,7 +298,7 @@ const COUNTRIES = [
 {id:"vatican",iso:"VAT",name:"Vatikán",capital:"Vatikán",peak:"Vatikánský pahorek",peakId:"vatican_hill",elev:75,peakLat:41.9022,peakLng:12.4534}
 ];
 
-// Kavkaz - politicky/geograficky hraniční země
+// Kavkaz - politicky/geograficky hraniční země + bonusy mimo výzvu
 const EXTRA_COUNTRIES = [
 {id:"armenia",iso:"ARM",name:"Arménie",capital:"Jerevan",peak:"Aragac",peakId:"aragac",elev:4090,peakLat:40.5377,peakLng:44.1907},
 {id:"georgia",iso:"GEO",name:"Gruzie",capital:"Tbilisi",peak:"Kazbek",peakId:"kazbek",elev:5054,peakLat:42.6972,peakLng:44.5194},
@@ -501,7 +503,7 @@ async function loadAll(){
     }));
   }catch(e){ console.error("Chyba při načítání bonusů:", e); }
 
-  // Auto-Migrace
+  // Auto-Migrace starých ID do bonusů
   if (state['spain']) {
     if (state['spain'].peak && state['spain'].peak.done) {
       const bId = "b_teide";
@@ -654,7 +656,7 @@ function renderHero(){
           <h1>Koruna Evropy</h1>
         </div>
         <div class="hero-brand">
-          <img src="src/projekt25.png" alt="Projekt 25 Logo" class="brand-logo">
+          <img src="src/3.png" alt="Projekt 25 Logo" class="brand-logo">
         </div>
       </div>
       
