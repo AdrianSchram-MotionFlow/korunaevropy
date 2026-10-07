@@ -54,6 +54,10 @@ body{
 h1,h2,h3{font-family:var(--font-display);margin:0;letter-spacing:0.01em;}
 @media (prefers-reduced-motion: reduce){ *{transition:none !important;animation:none !important;} }
 
+.header-brand {
+  display: flex; align-items: center; gap: 16px; margin-bottom: 24px;
+}
+
 .hero{position:relative;border-radius:22px;padding:34px 30px;overflow:hidden;
   background:linear-gradient(160deg,var(--bg-soft) 0%, #0d2318 100%);
   border:1px solid var(--border-soft);margin-bottom:26px;}
@@ -63,9 +67,8 @@ h1,h2,h3{font-family:var(--font-display);margin:0;letter-spacing:0.01em;}
 .hero-main-row { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; margin-bottom: 12px; }
 .hero-titles { flex: 1; min-width: 250px; }
 .hero-brand { display: flex; align-items: center; flex-shrink: 0; }
-
-/* Zvětšeno pro kompenzaci prázdného plátna z Canvy */
 .brand-logo { height: 90px; width: auto; object-fit: contain; margin: -10px 0; }
+
 .hero-eyebrow{font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent-strong);font-weight:600;margin-bottom:8px;}
 .hero h1{font-size:clamp(30px,4.2vw,44px);font-weight:800;color:var(--text);line-height:1;margin:0;}
 .hero p.sub{color:var(--text-muted);font-size:15px;line-height:1.5;margin:0;max-width:600px;}
@@ -112,8 +115,21 @@ details[open] .chevron{transform:rotate(90deg);}
 
 .card-body{padding:4px 16px 20px 44px;}
 
-.item{background:var(--bg-soft);border:1px solid var(--border-soft);border-radius:var(--radius-sm);padding:16px;}
-.caucasus-card .item{background:rgba(11,29,20,0.6);}
+/* Nádherné zobrazení pro sledující */
+.viewer-layout { display: flex; gap: 20px; align-items: flex-start; padding: 6px 0; }
+.v-photo { width: 130px; height: 130px; object-fit: cover; border-radius: 12px; cursor: zoom-in; flex-shrink: 0; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border: 1px solid var(--border); }
+.v-content { flex: 1; min-width: 0; }
+.v-date { font-size: 13px; color: var(--accent); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 10px; }
+.v-stats { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 12px; }
+.v-stat { font-size: 15px; font-weight: 600; color: var(--text); display: flex; align-items: center; gap: 6px; }
+.v-badges { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+.v-badge { background: rgba(0,0,0,0.3); border: 1px solid var(--border-soft); padding: 5px 12px; border-radius: 8px; font-size: 12.5px; color: var(--text-muted); font-weight: 500; display: flex; align-items: center; gap: 6px; }
+.v-stars { display: flex; gap: 4px; font-size: 14px; }
+.v-note { font-size: 14.5px; line-height: 1.6; color: var(--text); background: rgba(255,255,255,0.03); padding: 12px 18px; border-left: 3px solid var(--accent); border-radius: 4px 10px 10px 4px; font-style: italic; }
+.empty-state { color: var(--text-faint); font-size: 14px; font-style: italic; padding: 10px 0; }
+
+/* Admin formulář */
+.admin-layout { border-top: 1px dashed var(--border-soft); margin-top: 24px; padding-top: 24px; }
 .item-top{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
 .check{width:24px;height:24px;border-radius:6px;border:2px solid var(--text-faint);flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s ease;}
 .check.checked{background:var(--accent);border-color:var(--accent);}
@@ -123,9 +139,8 @@ details[open] .chevron{transform:rotate(90deg);}
 .item-label{font-weight:600;font-size:15px;}
 
 .item-fields{display:flex;flex-direction:column;gap:12px;}
-.item-fields input[type="datetime-local"], .item-fields input[type="date"], .item-fields input[type="text"], .item-fields input[type="number"]{
+.item-fields input[type="datetime-local"], .item-fields input[type="text"], .item-fields input[type="number"]{
   background:var(--bg);border:1px solid var(--border-soft);color:var(--text);padding:9px 12px;border-radius:8px;font-family:var(--font-body);font-size:13.5px;width:100%;max-width:400px;}
-.item-fields input:disabled { opacity:0.6; cursor:not-allowed; }
 .item-fields label.small{font-size:11.5px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.05em;font-weight:500;}
 .diff-badge{display:inline-block;font-size:11px;padding:3px 8px;border-radius:20px;font-weight:600;}
 
@@ -140,10 +155,8 @@ details[open] .chevron{transform:rotate(90deg);}
   padding: 8px 14px; border-radius: 20px; font-size: 13px; font-family: var(--font-body); font-weight:500;
   cursor: pointer; transition: all 0.2s;
 }
-.rating-pill:hover:not(:disabled) { border-color: var(--rc); color: var(--rc); }
+.rating-pill:hover { border-color: var(--rc); color: var(--rc); }
 .rating-pill.active { background: var(--rc); color: #111; border-color: var(--rc); font-weight: 600; }
-.rating-pill:disabled { cursor: not-allowed; opacity: 0.6; }
-.rating-pill.active:disabled { opacity: 1; }
 
 .photo-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
 .photo-btn{background:var(--border-soft);color:var(--text);border:1px solid var(--border);padding:9px 14px;border-radius:8px;font-size:13px;cursor:pointer;font-family:var(--font-body);font-weight:500;}
@@ -209,6 +222,8 @@ details[open] .chevron{transform:rotate(90deg);}
 @media (max-width: 640px) {
   .hero-main-row { flex-direction: column; align-items: flex-start; gap: 16px; margin-bottom: 0; }
   .brand-logo { height: 70px; margin: 0; }
+  .viewer-layout { flex-direction: column; gap: 16px; }
+  .v-photo { width: 100%; height: 200px; }
 }
 </style>
 </head>
@@ -312,13 +327,34 @@ const SHARED_PEAKS = {
   "nmacedonia": "albania"
 };
 
-// Rating systém
+// Dictionaries
 const DIFF_LABELS = {
   1:{label:"Snadná", color:"#8fbf7a"},
   2:{label:"Střední", color:"#dba641"},
   3:{label:"Náročnější", color:"#d98f5f"},
   4:{label:"Těžká", color:"#c96f5f"},
   5:{label:"Extrém", color:"#8b5a8c"}
+};
+const TERRAIN_LABELS = {
+  1: "Vyšlapaná cesta",
+  2: "Horský terén",
+  3: "Suťovisko / Skály",
+  4: "Ferrata / Lezení",
+  5: "Sníh / Ledovec"
+};
+const WEATHER_ICONS = {
+  "sun": "☀️",
+  "cloud": "☁️",
+  "rain": "🌧️",
+  "snow": "❄️",
+  "storm": "🌪️"
+};
+const WEATHER_NAMES = {
+  "sun": "Jasno",
+  "cloud": "Oblačno",
+  "rain": "Déšť",
+  "snow": "Sněžení",
+  "storm": "Bouře / Silný vítr"
 };
 
 /* ============================= API ============================= */
@@ -371,17 +407,25 @@ let isAdmin = localStorage.getItem('ke_admin') === 'true';
 
 function emptyEntry(){
   return {
-    peak:{done:false,date:"",diff:1,photo:"",photoDate:"",note:"",km:"",elevGain:"",time:""}
+    peak:{done:false,date:"",diff:1,terrain:1,weather:"sun",rating:0,photo:"",photoDate:"",note:"",km:"",elevGain:"",time:""}
   };
 }
 function getEntry(id){ if(!state[id]) state[id]=emptyEntry(); return state[id]; }
 function isFull(e){ return e.peak.done; }
 
-function emptyBonus(){ return {id:"",name:"",region:"",elev:"",lat:"",lng:"",done:false,date:"",diff:1,photo:"",photoDate:"",notes:"",km:"",elevGain:"",time:""}; }
+function emptyBonus(){ return {id:"",name:"",region:"",elev:"",lat:"",lng:"",done:false,date:"",diff:1,terrain:1,weather:"sun",rating:0,photo:"",photoDate:"",notes:"",km:"",elevGain:"",time:""}; }
 function genId(){ return "b"+Date.now().toString(36)+Math.random().toString(36).slice(2,7); }
 
 function escapeHtml(str){
   return String(str==null?"":str).replace(/[&<>"']/g, s=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[s]));
+}
+function formatDateView(isoStr) {
+  if(!isoStr) return "";
+  try {
+    const d = new Date(isoStr);
+    if(isNaN(d)) return isoStr;
+    return d.toLocaleDateString('cs-CZ', { day:'numeric', month:'long', year:'numeric' });
+  } catch(e) { return isoStr; }
 }
 function openLightbox(src){
   document.getElementById('lightbox-img').src = src;
@@ -533,15 +577,15 @@ async function clearEntry(id){ state[id]=emptyEntry(); try{ await api.delete("co
 async function saveBonus(id){ try{ await api.set("bonus_"+id, JSON.stringify(bonusState[id])); }catch(e){ console.error(e); } }
 async function deleteBonus(id){ delete bonusState[id]; try{ await api.delete("bonus_"+id); }catch(e){} document.getElementById('bonusListWrap').innerHTML = getBonusCardsHtml(); attachBonusEvents(); updateHeroInPlace(); refreshMap(); }
 
-window.updateRating = async function(id, val) {
+window.updatePeakProp = async function(id, prop, val) {
   if(!isAdmin) return;
-  getEntry(id).peak.diff = val;
+  getEntry(id).peak[prop] = val;
   await handleSyncAndSave(id);
   preserveOpenAndRerenderList(id);
 }
-window.updateBonusRating = async function(id, val) {
+window.updateBonusProp = async function(id, prop, val) {
   if(!isAdmin) return;
-  bonusState[id].diff = val;
+  bonusState[id][prop] = val;
   await saveBonus(id);
   const card = document.getElementById('bonus-'+id);
   const wasOpen = card ? card.hasAttribute('open') : false;
@@ -655,7 +699,7 @@ function renderHero(){
           <h1>Koruna Evropy</h1>
         </div>
         <div class="hero-brand">
-          <img src="src/projekt25_2.png" alt="Projekt 25 Logo" class="brand-logo">
+          <img src="src/projekt25.png" alt="Projekt 25 Logo" class="brand-logo">
         </div>
       </div>
       
@@ -669,7 +713,7 @@ function renderHero(){
       <div class="progress-row">
         <div class="progress-card">
           <div class="plabel">Zdolané unikátní vrcholy</div>
-          <div class="pnum">${peaksDone} <span>/ ${totalUniquePeaks}</span></div>
+          <div class="pnum">${peaksDone} <span>/${totalUniquePeaks}</span></div>
           <div class="bar-track"><div class="bar-fill peaks" style="width:${(peaksDone/totalUniquePeaks*100).toFixed(1)}%"></div></div>
         </div>
       </div>
@@ -741,7 +785,6 @@ function sortedFilteredList(sourceArray){
 }
 
 function checkSVG(){ return `<svg viewBox="0 0 24 24" fill="none"><path d="M4 12 L10 18 L20 6" stroke="#0b1d14" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>`; }
-function formatExif(raw){ try{ const d=new Date(raw); return d.toLocaleString('cs-CZ',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}); }catch(e){ return raw; } }
 
 function renderCountryCard(c){
   const e = getEntry(c.id);
@@ -764,53 +807,104 @@ function renderCountryCard(c){
       <div class="card-head">
         <span class="chevron">▶</span>
         <div class="card-titles">
-          <div class="cname">${c.name} ${badgeHtml} ${diffBadgeHtml}</div>
+          <div class="cname">${c.name} ${badgeHtml}${diffBadgeHtml}</div>
           <div class="cmeta">${c.peak} (${c.elev} m)</div>
         </div>
       </div>
     </summary>
     <div class="card-body">
-      <div class="item" style="grid-column: 1/-1;">
-        <div class="item-top">
-          <div class="check peakcheck ${e.peak.done?'checked':''}" data-action="toggle" data-id="${c.id}" data-field="peak">${checkSVG()}</div>
-          <div class="item-label">Vrchol zdolán</div>
-        </div>
-        <div class="item-fields">
-          <label class="small">Datum a čas výstupu</label>
-          <input type="datetime-local" data-id="${c.id}" data-field="peak" data-key="date" value="${e.peak.date}" ${disabledAttr}>
-          
-          <label class="small" style="margin-top:6px;">Statistiky z trasy</label>
-          <div class="stats-row">
-            <div class="stat-col">
-              <input type="number" step="0.1" data-id="${c.id}" data-field="peak" data-key="km" value="${e.peak.km||''}" ${disabledAttr} placeholder="Vzdálenost (km)">
+      
+      ${e.peak.done ? `
+      <div class="viewer-layout">
+         ${e.peak.photo ? `<img class="v-photo" src="${e.peak.photo}" onclick="openLightbox(this.src)">` : ''}
+         <div class="v-content">
+            <div class="v-date">${formatDateView(e.peak.date)}</div>
+            ${(e.peak.km || e.peak.elevGain || e.peak.time) ? `
+            <div class="v-stats">
+                ${e.peak.km ? `<div class="v-stat">🥾 ${e.peak.km} km</div>` : ''}
+                ${e.peak.elevGain ? `<div class="v-stat">⛰️ ${e.peak.elevGain} m+</div>` : ''}
+                ${e.peak.time ? `<div class="v-stat">⏱️ ${e.peak.time}</div>` : ''}
+            </div>` : ''}
+            <div class="v-badges">
+                <div class="v-badge">🏔️ ${TERRAIN_LABELS[e.peak.terrain || 1]}</div>
+                <div class="v-badge">${WEATHER_ICONS[e.peak.weather || 'sun']} ${WEATHER_NAMES[e.peak.weather || 'sun']}</div>
+                ${e.peak.rating ? `<div class="v-badge">${'⭐️'.repeat(e.peak.rating)}</div>` : ''}
             </div>
-            <div class="stat-col">
-              <input type="number" data-id="${c.id}" data-field="peak" data-key="elevGain" value="${e.peak.elevGain||''}" ${disabledAttr} placeholder="Převýšení (m)">
-            </div>
-            <div class="stat-col">
-              <input type="text" data-id="${c.id}" data-field="peak" data-key="time" value="${e.peak.time||''}" ${disabledAttr} placeholder="Čas (např. 6:30)">
-            </div>
-          </div>
-
-          <label class="small" style="margin-top:6px;">Hodnocení obtížnosti</label>
-          <div class="rating-pills">
-            ${Object.entries(DIFF_LABELS).map(([k,v]) => `
-              <button type="button" class="rating-pill ${String(e.peak.diff)===k?'active':''}" style="--rc:${v.color}" onclick="updateRating('${c.id}',${k})" ${disabledAttr}>${v.label}</button>
-            `).join('')}
-          </div>
-
-          <label class="small" style="margin-top:6px;">Zážitek / Poznámka z výstupu</label>
-          <input type="text" placeholder="Jaké to bylo?..." data-id="${c.id}" data-field="peak" data-key="note" value="${escapeHtml(e.peak.note)}" ${disabledAttr}>
-
-          <label class="small" style="margin-top:6px;">Fotka z vrcholu</label>
-          <div class="photo-row">
-            ${isAdmin ? `<label class="photo-btn" for="photo-${c.id}">Nahrát fotku</label><input type="file" accept="image/*" id="photo-${c.id}" data-id="${c.id}" style="display:none">` : ''}
-            ${e.peak.photo ? `<img class="photo-thumb" src="${e.peak.photo}" onclick="openLightbox(this.src); event.stopPropagation();">` : ''}
-            <span class="exif-hint ${e.peak.photoDate?'':'none'}">${e.peak.photoDate ? ('EXIF: '+formatExif(e.peak.photoDate)) : (e.peak.photo ? 'Fotka bez EXIF data.' : '')}</span>
-          </div>
-        </div>
+            ${e.peak.note ? `<div class="v-note"><strong>TL;DR:</strong> ${escapeHtml(e.peak.note)}</div>` : ''}
+         </div>
       </div>
-      ${isAdmin ? `<div style="grid-column:1/-1;text-align:right;margin-top:-8px;"><button class="clear-link" data-action="clear" data-id="${c.id}">Smazat data o této zemi</button></div>` : ''}
+      ` : `
+      <div class="empty-state">Na tento vrchol se teprve chystám.</div>
+      `}
+
+      ${isAdmin ? `
+      <div class="admin-layout" style="${!e.peak.done ? 'border-top:none; margin-top:0; padding-top:10px;' : ''}">
+          <div class="item-top" style="margin-bottom: 16px;">
+            <div class="check peakcheck ${e.peak.done?'checked':''}" data-action="toggle" data-id="${c.id}" data-field="peak">${checkSVG()}</div>
+            <div class="item-label" style="font-weight:600;">Označit vrchol jako zdolaný</div>
+          </div>
+
+          <div class="item-fields" style="${!e.peak.done ? 'display:none;' : ''}">
+            <label class="small">Datum a čas výstupu</label>
+            <input type="datetime-local" data-id="${c.id}" data-field="peak" data-key="date" value="${e.peak.date}">
+            
+            <label class="small" style="margin-top:6px;">Statistiky z trasy (volitelné)</label>
+            <div class="stats-row">
+              <div class="stat-col">
+                <input type="number" step="0.1" data-id="${c.id}" data-field="peak" data-key="km" value="${e.peak.km||''}" placeholder="Vzdálenost (km)">
+              </div>
+              <div class="stat-col">
+                <input type="number" data-id="${c.id}" data-field="peak" data-key="elevGain" value="${e.peak.elevGain||''}" placeholder="Převýšení (m)">
+              </div>
+              <div class="stat-col">
+                <input type="text" data-id="${c.id}" data-field="peak" data-key="time" value="${e.peak.time||''}" placeholder="Čas (např. 6:30)">
+              </div>
+            </div>
+
+            <label class="small" style="margin-top:6px;">Celková obtížnost</label>
+            <div class="rating-pills">
+              ${Object.entries(DIFF_LABELS).map(([k,v]) => `
+                <button type="button" class="rating-pill ${String(e.peak.diff)===k?'active':''}" style="--rc:${v.color}" onclick="updatePeakProp('${c.id}', 'diff', ${k})">${v.label}</button>
+              `).join('')}
+            </div>
+
+            <label class="small" style="margin-top:6px;">Terén</label>
+            <div class="rating-pills">
+              ${Object.entries(TERRAIN_LABELS).map(([k,label]) => `
+                <button type="button" class="rating-pill ${String(e.peak.terrain\vert{}\vert{}1)===k?'active':''}" style="--rc:var(--accent)" onclick="updatePeakProp('${c.id}', 'terrain', ${k})">${label}</button>
+              `).join('')}
+            </div>
+
+            <label class="small" style="margin-top:6px;">Počasí</label>
+            <div class="rating-pills">
+              ${Object.entries(WEATHER_ICONS).map(([k,icon]) => `
+                <button type="button" class="rating-pill ${String(e.peak.weather||'sun')===k?'active':''}" style="--rc:var(--accent)" onclick="updatePeakProp('${c.id}', 'weather', '${k}')" title="${WEATHER_NAMES[k]}">${icon}</button>
+              `).join('')}
+            </div>
+
+            <label class="small" style="margin-top:6px;">Hodnocení (Worth it?)</label>
+            <div class="rating-pills" style="font-size:22px; gap:4px;">
+              ${[1,2,3,4,5].map(i => `
+                <span style="cursor:pointer; opacity:${(e.peak.rating||0) >= i ? '1' : '0.25'}; transition:opacity .2s;" onclick="updatePeakProp('${c.id}', 'rating',${i})">⭐️</span>
+              `).join('')}
+            </div>
+
+            <label class="small" style="margin-top:6px;">TL;DR / Shrnutí (1-2 věty)</label>
+            <input type="text" placeholder="Jaké to bylo?..." data-id="${c.id}" data-field="peak" data-key="note" value="${escapeHtml(e.peak.note)}">
+
+            <label class="small" style="margin-top:6px;">Fotka z vrcholu</label>
+            <div class="photo-row">
+              <label class="photo-btn" for="photo-${c.id}">Nahrát fotku</label><input type="file" accept="image/*" id="photo-${c.id}" data-id="${c.id}" style="display:none">
+              ${e.peak.photo ? `<img class="photo-thumb" src="${e.peak.photo}" onclick="openLightbox(this.src); event.stopPropagation();">` : ''}
+              <span class="exif-hint ${e.peak.photoDate?'':'none'}">${e.peak.photoDate ? ('EXIF: '+formatExif(e.peak.photoDate)) : (e.peak.photo ? 'Fotka bez EXIF data.' : '')}</span>
+            </div>
+            
+            <div style="margin-top: 16px; text-align: right;">
+                <button class="clear-link" data-action="clear" data-id="${c.id}">Smazat data o této zemi</button>
+            </div>
+          </div>
+      </div>
+      ` : ''}
     </div>
   </details>`;
 }
@@ -870,53 +964,100 @@ function renderBonusCard(b){
       <div class="card-head">
         <span class="chevron">▶</span>
         <div class="card-titles">
-          <div class="cname">${escapeHtml(b.name)} ${diffBadgeHtml}</div>
+          <div class="cname">${escapeHtml(b.name)}${diffBadgeHtml}</div>
           <div class="cmeta">${escapeHtml(b.region)}${b.elev?' · '+b.elev+' m':''}</div>
         </div>
       </div>
     </summary>
     <div class="card-body">
-      <div class="item" style="grid-column: 1/-1;">
-        <div class="item-top">
-          <div class="check ${b.done?'checked bonuscheck':''}" data-action="bonus-toggle" data-id="${b.id}">${checkSVG()}</div>
-          <div class="item-label">Vrchol zdolán</div>
-        </div>
-        <div class="item-fields">
-          <label class="small">Datum a čas výstupu</label>
-          <input type="datetime-local" data-bonus="${b.id}" data-key="date" value="${b.date}" ${disabledAttr}>
-          
-          <label class="small" style="margin-top:6px;">Statistiky z trasy</label>
-          <div class="stats-row">
-            <div class="stat-col">
-              <input type="number" step="0.1" data-bonus="${b.id}" data-key="km" value="${b.km||''}" ${disabledAttr} placeholder="Vzdálenost (km)">
+      
+      ${b.done ? `
+      <div class="viewer-layout">
+         ${b.photo ? `<img class="v-photo" src="${b.photo}" onclick="openLightbox(this.src)">` : ''}
+         <div class="v-content">
+            <div class="v-date">${formatDateView(b.date)}</div>
+            ${(b.km || b.elevGain || b.time) ? `
+            <div class="v-stats">
+                ${b.km ? `<div class="v-stat">🥾 ${b.km} km</div>` : ''}
+                ${b.elevGain ? `<div class="v-stat">⛰️ ${b.elevGain} m+</div>` : ''}
+                ${b.time ? `<div class="v-stat">⏱️ ${b.time}</div>` : ''}
+            </div>` : ''}
+            <div class="v-badges">
+                <div class="v-badge">🏔️ ${TERRAIN_LABELS[b.terrain || 1]}</div>
+                <div class="v-badge">${WEATHER_ICONS[b.weather || 'sun']} ${WEATHER_NAMES[b.weather || 'sun']}</div>
+                ${b.rating ? `<div class="v-badge">${'⭐️'.repeat(b.rating)}</div>` : ''}
             </div>
-            <div class="stat-col">
-              <input type="number" data-bonus="${b.id}" data-key="elevGain" value="${b.elevGain||''}" ${disabledAttr} placeholder="Převýšení (m)">
-            </div>
-            <div class="stat-col">
-              <input type="text" data-bonus="${b.id}" data-key="time" value="${b.time||''}" ${disabledAttr} placeholder="Čas (např. 6:30)">
-            </div>
-          </div>
-
-          <label class="small" style="margin-top:6px;">Hodnocení obtížnosti</label>
-          <div class="rating-pills">
-            ${Object.entries(DIFF_LABELS).map(([k,v]) => `
-              <button type="button" class="rating-pill ${String(b.diff)===k?'active':''}" style="--rc:${v.color}" onclick="updateBonusRating('${b.id}',${k})" ${disabledAttr}>${v.label}</button>
-            `).join('')}
-          </div>
-
-          <label class="small" style="margin-top:6px;">Zážitek / Poznámka</label>
-          <input type="text" data-bonus="${b.id}" data-key="notes" value="${escapeHtml(b.notes)}" placeholder="poznámky…" ${disabledAttr}>
-          
-          <label class="small" style="margin-top:6px;">Fotka z vrcholu</label>
-          <div class="photo-row">
-            ${isAdmin ? `<label class="photo-btn" for="bphoto-${b.id}">Nahrát fotku</label><input type="file" accept="image/*" id="bphoto-${b.id}" data-bonusphoto="${b.id}" style="display:none">` : ''}
-            ${b.photo ? `<img class="photo-thumb" src="${b.photo}" onclick="openLightbox(this.src); event.stopPropagation();">` : ''}
-            <span class="exif-hint ${b.photoDate?'':'none'}">${b.photoDate ? ('EXIF: '+formatExif(b.photoDate)) : (b.photo ? 'Fotka bez EXIF data.' : '')}</span>
-          </div>
-        </div>
+            ${b.notes ? `<div class="v-note"><strong>TL;DR:</strong> ${escapeHtml(b.notes)}</div>` : ''}
+         </div>
       </div>
-      ${isAdmin ? `<div style="grid-column:1/-1;text-align:right;margin-top:-8px;"><button class="clear-link" data-action="bonus-delete" data-id="${b.id}">Smazat vrchol</button></div>` : ''}
+      ` : `
+      <div class="empty-state">Na tento vrchol se teprve chystám.</div>
+      `}
+
+      ${isAdmin ? `
+      <div class="admin-layout" style="${!b.done ? 'border-top:none; margin-top:0; padding-top:10px;' : ''}">
+          <div class="item-top" style="margin-bottom: 16px;">
+            <div class="check ${b.done?'checked bonuscheck':''}" data-action="bonus-toggle" data-id="${b.id}">${checkSVG()}</div>
+            <div class="item-label" style="font-weight:600;">Označit vrchol jako zdolaný</div>
+          </div>
+
+          <div class="item-fields" style="${!b.done ? 'display:none;' : ''}">
+            <label class="small">Datum a čas výstupu</label>
+            <input type="datetime-local" data-bonus="${b.id}" data-key="date" value="${b.date}">
+            
+            <label class="small" style="margin-top:6px;">Statistiky z trasy</label>
+            <div class="stats-row">
+              <div class="stat-col">
+                <input type="number" step="0.1" data-bonus="${b.id}" data-key="km" value="${b.km||''}" placeholder="Vzdálenost (km)">
+              </div>
+              <div class="stat-col">
+                <input type="number" data-bonus="${b.id}" data-key="elevGain" value="${b.elevGain||''}" placeholder="Převýšení (m)">
+              </div>
+              <div class="stat-col">
+                <input type="text" data-bonus="${b.id}" data-key="time" value="${b.time||''}" placeholder="Čas (např. 6:30)">
+              </div>
+            </div>
+
+            <label class="small" style="margin-top:6px;">Hodnocení obtížnosti</label>
+            <div class="rating-pills">
+              ${Object.entries(DIFF_LABELS).map(([k,v]) => `
+                <button type="button" class="rating-pill ${String(b.diff)===k?'active':''}" style="--rc:${v.color}" onclick="updateBonusProp('${b.id}', 'diff', ${k})">${v.label}</button>
+              `).join('')}
+            </div>
+
+            <label class="small" style="margin-top:6px;">Terén</label>
+            <div class="rating-pills">
+              ${Object.entries(TERRAIN_LABELS).map(([k,label]) => `
+                <button type="button" class="rating-pill ${String(b.terrain\vert{}\vert{}1)===k?'active':''}" style="--rc:var(--accent)" onclick="updateBonusProp('${b.id}', 'terrain', ${k})">${label}</button>
+              `).join('')}
+            </div>
+
+            <label class="small" style="margin-top:6px;">Počasí</label>
+            <div class="rating-pills">
+              ${Object.entries(WEATHER_ICONS).map(([k,icon]) => `
+                <button type="button" class="rating-pill ${String(b.weather||'sun')===k?'active':''}" style="--rc:var(--accent)" onclick="updateBonusProp('${b.id}', 'weather', '${k}')" title="${WEATHER_NAMES[k]}">${icon}</button>
+              `).join('')}
+            </div>
+
+            <label class="small" style="margin-top:6px;">Hodnocení (Worth it?)</label>
+            <div class="rating-pills" style="font-size:22px; gap:4px;">
+              ${[1,2,3,4,5].map(i => `
+                <span style="cursor:pointer; opacity:${(b.rating||0) >= i ? '1' : '0.25'}; transition:opacity .2s;" onclick="updateBonusProp('${b.id}', 'rating',${i})">⭐️</span>
+              `).join('')}
+            </div>
+
+            <label class="small" style="margin-top:6px;">TL;DR / Shrnutí</label>
+            <input type="text" data-bonus="${b.id}" data-key="notes" value="${escapeHtml(b.notes)}" placeholder="poznámky…">
+            
+            <label class="small" style="margin-top:6px;">Fotka z vrcholu</label>
+            <div class="photo-row">
+              <label class="photo-btn" for="bphoto-${b.id}">Nahrát fotku</label><input type="file" accept="image/*" id="bphoto-${b.id}" data-bonusphoto="${b.id}" style="display:none">
+              ${b.photo ? `<img class="photo-thumb" src="${b.photo}" onclick="openLightbox(this.src); event.stopPropagation();">` : ''}
+              <span class="exif-hint ${b.photoDate?'':'none'}">${b.photoDate ? ('EXIF: '+formatExif(b.photoDate)) : (b.photo ? 'Fotka bez EXIF data.' : '')}</span>
+            </div>
+          </div>
+      </div>
+      <div style="grid-column:1/-1;text-align:right;margin-top:-8px;"><button class="clear-link" data-action="bonus-delete" data-id="${b.id}">Smazat vrchol</button></div>
     </div>
   </details>`;
 }
