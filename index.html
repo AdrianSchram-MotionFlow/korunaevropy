@@ -61,9 +61,9 @@ h1,h2,h3{font-family:var(--font-display);margin:0;letter-spacing:0.01em;}
 .hero-top{position:relative;z-index:1;}
 
 .hero-main-row { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; margin-bottom: 12px; }
-.hero-brand { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
-.brand-logo { height: 50px; width: auto; }
-.brand-text { font-family: var(--font-display); font-size: 24px; font-weight: 800; color: var(--text); letter-spacing: 0.04em; margin: 0; line-height: 1; }
+.hero-brand { display: flex; align-items: center; flex-shrink: 0; }
+/* Zvětšeno pro kombinovaný obrázek (logo + text) z Canvy */
+.brand-logo { height: 85px; width: auto; object-fit: contain; }
 
 .hero-eyebrow{font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent-strong);font-weight:600;margin-bottom:8px;}
 .hero h1{font-size:clamp(30px,4.2vw,44px);font-weight:800;color:var(--text);line-height:1;margin:0;}
@@ -207,8 +207,7 @@ details[open] .chevron{transform:rotate(90deg);}
 
 @media (max-width: 640px) {
   .hero-main-row { flex-direction: column; align-items: flex-start; gap: 16px; }
-  .brand-logo { height: 40px; }
-  .brand-text { font-size: 20px; }
+  .brand-logo { height: 60px; }
 }
 </style>
 </head>
@@ -216,7 +215,7 @@ details[open] .chevron{transform:rotate(90deg);}
 <div id="root">
   <div class="loading" id="loadingMsg">Načítám Korunu Evropy…</div>
   <div id="appContent" style="display:none;">
-    
+
     <div id="heroWrap"></div>
     <div class="map-wrap">
       <div id="mapCanvas"></div>
@@ -248,7 +247,6 @@ details[open] .chevron{transform:rotate(90deg);}
 
 <script>
 /* ============================= DATA ============================= */
-// Hlavní evropské státy
 const COUNTRIES = [
 {id:"albania",iso:"ALB",name:"Albánie",capital:"Tirana",peak:"Korab",peakId:"korab",elev:2764,peakLat:41.7842,peakLng:20.5486},
 {id:"andorra",iso:"AND",name:"Andorra",capital:"Andorra la Vella",peak:"Coma Pedrosa",peakId:"coma_pedrosa",elev:2942,peakLat:42.5761,peakLng:1.4703},
@@ -298,7 +296,7 @@ const COUNTRIES = [
 {id:"vatican",iso:"VAT",name:"Vatikán",capital:"Vatikán",peak:"Vatikánský pahorek",peakId:"vatican_hill",elev:75,peakLat:41.9022,peakLng:12.4534}
 ];
 
-// Kavkaz - politicky/geograficky hraniční země + bonusy mimo výzvu
+// Kavkaz - politicky/geograficky hraniční země
 const EXTRA_COUNTRIES = [
 {id:"armenia",iso:"ARM",name:"Arménie",capital:"Jerevan",peak:"Aragac",peakId:"aragac",elev:4090,peakLat:40.5377,peakLng:44.1907},
 {id:"georgia",iso:"GEO",name:"Gruzie",capital:"Tbilisi",peak:"Kazbek",peakId:"kazbek",elev:5054,peakLat:42.6972,peakLng:44.5194},
@@ -503,7 +501,7 @@ async function loadAll(){
     }));
   }catch(e){ console.error("Chyba při načítání bonusů:", e); }
 
-  // Auto-Migrace starých ID do bonusů
+  // Auto-Migrace
   if (state['spain']) {
     if (state['spain'].peak && state['spain'].peak.done) {
       const bId = "b_teide";
@@ -628,11 +626,9 @@ function focusBonus(id){
 function renderHero(){
   const totalCountries = COUNTRIES.length; 
   
-  // Získání celkového počtu unikátních vrcholů přes definované peakId
   const totalUniquePeaksSet = new Set(COUNTRIES.map(c => c.peakId));
   const totalUniquePeaks = totalUniquePeaksSet.size;
 
-  // Získání zdolaných unikátních vrcholů
   let uniquePeaksDoneSet = new Set();
   COUNTRIES.forEach(c => {
     if (getEntry(c.id).peak.done) {
@@ -651,13 +647,14 @@ function renderHero(){
   <div class="hero">
     ${contourSVG}
     <div class="hero-top">
-      <div class="hero-eyebrow">Moje cestovatelská výzva</div>
       
       <div class="hero-main-row">
-        <h1>Koruna Evropy</h1>
+        <div class="hero-titles">
+          <div class="hero-eyebrow">Moje cestovatelská výzva</div>
+          <h1>Koruna Evropy</h1>
+        </div>
         <div class="hero-brand">
-          <img src="src/3.png" alt="Logo" class="brand-logo">
-          <span class="brand-text">PROJEKT 25</span>
+          <img src="src/3.png" alt="Projekt 25 Logo" class="brand-logo">
         </div>
       </div>
       
