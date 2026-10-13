@@ -272,7 +272,6 @@ const COUNTRIES = [
 {id:"bosnia",iso:"BIH",name:"Bosna a Hercegovina",capital:"Sarajevo",peak:"Maglić",peakId:"maglic",elev:2386,peakLat:43.2667,peakLng:18.7833},
 {id:"bulgaria",iso:"BGR",name:"Bulharsko",capital:"Sofie",peak:"Musala",peakId:"musala",elev:2925,peakLat:42.1804,peakLng:23.5867},
 {id:"croatia",iso:"HRV",name:"Chorvatsko",capital:"Záhřeb",peak:"Dinara",peakId:"dinara",elev:1831,peakLat:43.9967,peakLng:16.3814},
-{id:"cyprus",iso:"CYP",name:"Kypr",capital:"Nikósie",peak:"Olympos (Troodos)",peakId:"olympos_cyp",elev:1952,peakLat:34.9358,peakLng:32.8656},
 {id:"czechia",iso:"CZE",name:"Česko",capital:"Praha",peak:"Sněžka",peakId:"snezka",elev:1603,peakLat:50.7361,peakLng:15.7400},
 {id:"denmark",iso:"DNK",name:"Dánsko",capital:"Kodaň",peak:"Møllehøj",peakId:"mollehoj",elev:171,peakLat:56.0997,peakLng:9.3500},
 {id:"estonia",iso:"EST",name:"Estonsko",capital:"Tallinn",peak:"Suur Munamägi",peakId:"suur_munamagi",elev:318,peakLat:57.7075,peakLng:27.0561},
@@ -307,16 +306,17 @@ const COUNTRIES = [
 {id:"esp_main",iso:"ESP",name:"Španělsko",capital:"Madrid",peak:"Mulhacén",peakId:"mulhacen",elev:3479,peakLat:37.0536,peakLng:-3.3114},
 {id:"sweden",iso:"SWE",name:"Švédsko",capital:"Stockholm",peak:"Kebnekaise",peakId:"kebnekaise",elev:2097,peakLat:67.9010,peakLng:18.5428},
 {id:"switzerland",iso:"CHE",name:"Švýcarsko",capital:"Bern",peak:"Dufourspitze",peakId:"dufourspitze",elev:4634,peakLat:45.9369,peakLng:7.8666},
+{id:"turkey",iso:"TUR",name:"Turecko",capital:"Ankara",peak:"Mahya Dağı",peakId:"mahya_dagi",elev:1031,peakLat:41.7822,peakLng:27.6139},
 {id:"ukraine",iso:"UKR",name:"Ukrajina",capital:"Kyjev",peak:"Hoverla",peakId:"hoverla",elev:2061,peakLat:48.1567,peakLng:24.5003},
 {id:"uk",iso:"GBR",name:"Spojené království",capital:"Londýn",peak:"Ben Nevis",peakId:"ben_nevis",elev:1345,peakLat:56.7969,peakLng:-5.0036},
 {id:"vatican",iso:"VAT",name:"Vatikán",capital:"Vatikán",peak:"Vatikánský pahorek",peakId:"vatican_hill",elev:75,peakLat:41.9022,peakLng:12.4534}
 ];
 
-// Kavkaz a další cíle
+// Kavkaz a další cíle mimo hlavní výzvu
 const EXTRA_COUNTRIES = [
 {id:"armenia",iso:"ARM",name:"Arménie",capital:"Jerevan",peak:"Aragac",peakId:"aragac",elev:4090,peakLat:40.5377,peakLng:44.1907},
-{id:"georgia",iso:"GEO",name:"Gruzie",capital:"Tbilisi",peak:"Kazbek",peakId:"kazbek",elev:5054,peakLat:42.6972,peakLng:44.5194},
-{id:"turkey",iso:"TUR",name:"Turecko",capital:"Ankara",peak:"Mahya Dağı",peakId:"mahya_dagi",elev:1031,peakLat:41.7822,peakLng:27.6139}
+{id:"cyprus",iso:"CYP",name:"Kypr",capital:"Nikósie",peak:"Olympos (Troodos)",peakId:"olympos_cyp",elev:1952,peakLat:34.9358,peakLng:32.8656},
+{id:"georgia",iso:"GEO",name:"Gruzie",capital:"Tbilisi",peak:"Kazbek",peakId:"kazbek",elev:5054,peakLat:42.6972,peakLng:44.5194}
 ];
 
 // Sdílené vrcholy
@@ -552,12 +552,49 @@ async function loadAll(){
     }));
   }catch(e){ console.error("Chyba při načítání bonusů:", e); }
 
-  // Auto-Migrace starých ID do bonusů
+  // Auto-Migrace Kypr do bonusů a Turecko do main
+  if (state['cyprus']) {
+    if (state['cyprus'].peak && state['cyprus'].peak.done) {
+      const bId = "b_cyprus";
+      if(!bonusState[bId]) {
+        bonusState[bId] = { ...emptyBonus(), id: bId, name: "Olympos (Troodos)", region: "Kypr", elev: 1952, lat: 34.9358, lng: 32.8656, done: true, date: state['cyprus'].peak.date, diff: state['cyprus'].peak.diff, dur: state['cyprus'].peak.dur, terrain: state['cyprus'].peak.terrain, weather: state['cyprus'].peak.weather, rating: state['cyprus'].peak.rating, photo: state['cyprus'].peak.photo, photoDate: state['cyprus'].peak.photoDate, notes: state['cyprus'].peak.note, km: state['cyprus'].peak.km, elevGain: state['cyprus'].peak.elevGain, time: state['cyprus'].peak.time };
+        await api.set("bonus_"+bId, JSON.stringify(bonusState[bId]));
+      }
+    }
+    await api.delete("country_cyprus");
+    delete state['cyprus'];
+  }
+
+  if (bonusState['turkey']) {
+    if (bonusState['turkey'].done) {
+      if (!state['turkey']) state['turkey'] = emptyEntry();
+      state['turkey'].peak = {
+        done: true,
+        date: bonusState['turkey'].date,
+        diff: bonusState['turkey'].diff,
+        dur: bonusState['turkey'].dur,
+        terrain: bonusState['turkey'].terrain,
+        weather: bonusState['turkey'].weather,
+        rating: bonusState['turkey'].rating,
+        photo: bonusState['turkey'].photo,
+        photoDate: bonusState['turkey'].photoDate,
+        note: bonusState['turkey'].notes,
+        km: bonusState['turkey'].km,
+        elevGain: bonusState['turkey'].elevGain,
+        time: bonusState['turkey'].time
+      };
+      await api.set("country_turkey", JSON.stringify(state['turkey']));
+    }
+    await api.delete("bonus_turkey");
+    delete bonusState['turkey'];
+  }
+
+  // Stará migrace Španělsko/Portugalsko ostrovy
   if (state['spain']) {
     if (state['spain'].peak && state['spain'].peak.done) {
       const bId = "b_teide";
       if(!bonusState[bId]) {
-        bonusState[bId] = { ...emptyBonus(), id: bId, name: "Pico de Teide", region: "Španělsko (ostrovy)", elev: 3718, lat: 28.2723, lng: -16.6425, done: true, date: state['spain'].peak.date, diff: state['spain'].peak.diff, photo: state['spain'].peak.photo, photoDate: state['spain'].peak.photoDate, notes: state['spain'].peak.note, km: state['spain'].peak.km, elevGain: state['spain'].peak.elevGain, time: state['spain'].peak.time };
+        bonusState[bId] = { ...emptyBonus(), id: bId, name: "Pico de Teide", region: "Španělsko (ostrovy)", elev: 3718, lat: 28.2723, lng: -16.6425, done: true, date: state['spain'].peak.date, diff: state['spain'].peak.diff, dur: state['spain'].peak.dur, terrain: state['spain'].peak.terrain, weather: state['spain'].peak.weather, rating: state['spain'].peak.rating, photo: state['spain'].peak.photo, photoDate: state['spain'].peak.photoDate, notes: state['spain'].peak.note, km: state['spain'].peak.km, elevGain: state['spain'].peak.elevGain, time: state['spain'].peak.time };
         await api.set("bonus_"+bId, JSON.stringify(bonusState[bId]));
       }
     }
@@ -569,7 +606,7 @@ async function loadAll(){
     if (state['portugal'].peak && state['portugal'].peak.done) {
       const bId = "b_pico";
       if(!bonusState[bId]) {
-        bonusState[bId] = { ...emptyBonus(), id: bId, name: "Ponta do Pico", region: "Portugalsko (ostrovy)", elev: 2351, lat: 38.4686, lng: -28.3997, done: true, date: state['portugal'].peak.date, diff: state['portugal'].peak.diff, photo: state['portugal'].peak.photo, photoDate: state['portugal'].peak.photoDate, notes: state['portugal'].peak.note, km: state['portugal'].peak.km, elevGain: state['portugal'].peak.elevGain, time: state['portugal'].peak.time };
+        bonusState[bId] = { ...emptyBonus(), id: bId, name: "Ponta do Pico", region: "Portugalsko (ostrovy)", elev: 2351, lat: 38.4686, lng: -28.3997, done: true, date: state['portugal'].peak.date, diff: state['portugal'].peak.diff, dur: state['portugal'].peak.dur, terrain: state['portugal'].peak.terrain, weather: state['portugal'].peak.weather, rating: state['portugal'].peak.rating, photo: state['portugal'].peak.photo, photoDate: state['portugal'].peak.photoDate, notes: state['portugal'].peak.note, km: state['portugal'].peak.km, elevGain: state['portugal'].peak.elevGain, time: state['portugal'].peak.time };
         await api.set("bonus_"+bId, JSON.stringify(bonusState[bId]));
       }
     }
@@ -705,7 +742,7 @@ function renderHero(){
           <h1>Koruna Evropy</h1>
         </div>
         <div class="hero-brand">
-          <img src="src/projekt25.png" alt="Projekt 25 Logo" class="brand-logo">
+          <img src="src/3.png" alt="Projekt 25 Logo" class="brand-logo">
         </div>
       </div>
       
@@ -713,7 +750,7 @@ function renderHero(){
       
       <div class="methodology-box">
         <h3>Jakou Korunu sbíráme?</h3>
-        <p>Moje Koruna Evropy: ${totalUniquePeaks} vrcholů ve ${totalCountries} zemích. Držím se pevně zvoleného seznamu, který zahrnuje také Kosovo a Kypr. Francie a Itálie sdílejí Mont Blanc, Albánie a Severní Makedonie Korab — proto je vrcholů o dva méně než zemí. Španělsko zastupuje Mulhacén a Portugalsko Torre. Turecko a vybrané ostrovní vrcholy vedu jako bonusy mimo hlavní výzvu.</p>
+        <p>Moje Koruna Evropy: ${totalUniquePeaks} vrcholů ve ${totalCountries} zemích. Držím se pevně zvoleného seznamu, který zahrnuje také Kosovo a evropskou část Turecka. Francie a Itálie sdílejí Mont Blanc, Albánie a Severní Makedonie Korab — proto je vrcholů o dva méně než zemí. Španělsko zastupuje Mulhacén a Portugalsko Torre. Kypr a vybrané ostrovní vrcholy vedu jako bonusy mimo hlavní výzvu.</p>
       </div>
 
       <div class="progress-row">
@@ -808,8 +845,6 @@ function renderCountryCard(c){
   const diffBadgeHtml = e.peak.done ? `<span class="diff-badge" style="background:${diff.color};color:#111;">${diff.label}</span>` : '';
 
   let viewerHtml = '';
-  let adminHtml = '';
-
   if (e.peak.done) {
     let statsHtml = '';
     if (e.peak.km || e.peak.elevGain || e.peak.time) {
@@ -819,23 +854,28 @@ function renderCountryCard(c){
       statsHtml = `<div class="v-stats">${kmHtml}${elevHtml}${timeHtml}</div>`;
     }
 
-    let starsHtml = e.peak.rating ? `<div class="v-stars">${'⭐️'.repeat(e.peak.rating)}</div>` : '';
-    let noteHtml = e.peak.note ? `<div class="v-note"><strong>TL;DR:</strong> ${escapeHtml(e.peak.note)}</div>` : '';
-    let photoHtml = e.peak.photo ? `<img class="v-photo" src="${e.peak.photo}" onclick="openLightbox(this.src)">` : '';
+    let durBadge = (e.peak.dur && DUR_LABELS[e.peak.dur]) ? `<div class="v-badge">⏳ ${DUR_LABELS[e.peak.dur].label}</div>` : '';
+    let stars = e.peak.rating ? `<div class="v-stars">${'⭐️'.repeat(e.peak.rating)}</div>` : '';
+    let note = e.peak.note ? `<div class="v-note"><strong>TL;DR:</strong> ${escapeHtml(e.peak.note)}</div>` : '';
+    let photo = e.peak.photo ? `<img class="v-photo" src="${e.peak.photo}" onclick="openLightbox(this.src); event.stopPropagation();">` : '';
+    
+    let weatherIcon = WEATHER_ICONS[e.peak.weather || 'sun'];
+    let weatherName = WEATHER_NAMES[e.peak.weather || 'sun'];
+    let terrainName = TERRAIN_LABELS[e.peak.terrain || 1];
 
     viewerHtml = `
       <div class="viewer-layout">
-         ${photoHtml}
+         ${photo}
          <div class="v-content">
             <div class="v-date">${formatDateView(e.peak.date)}</div>
             ${statsHtml}
             <div class="v-badges">
-                <div class="v-badge">🏔️ ${TERRAIN_LABELS[e.peak.terrain || 1]}</div>
-                <div class="v-badge" title="${WEATHER_NAMES[e.peak.weather || 'sun']}">${WEATHER_ICONS[e.peak.weather || 'sun']} ${WEATHER_NAMES[e.peak.weather || 'sun']}</div>
-                ${e.peak.dur ? `<div class="v-badge">⏳ ${DUR_LABELS[e.peak.dur].label}</div>` : ''}
-                ${starsHtml}
+                <div class="v-badge">🏔️ ${terrainName}</div>
+                <div class="v-badge" title="${weatherName}">${weatherIcon} ${weatherName}</div>
+                ${durBadge}
+                ${stars}
             </div>
-            ${noteHtml}
+            ${note}
          </div>
       </div>
     `;
@@ -843,40 +883,48 @@ function renderCountryCard(c){
     viewerHtml = `<div class="empty-state">Na tento vrchol se teprve chystám.</div>`;
   }
 
+  let adminHtml = '';
   if (isAdmin) {
-     let diffPills = Object.entries(DIFF_LABELS).map(([k,v]) => {
-        let active = String(e.peak.diff) === k ? 'active' : '';
-        return `<button type="button" class="rating-pill ${active}" style="--rc:${v.color}" onclick="updatePeakProp('${c.id}', 'diff', ${k})" ${disabledAttr}>${v.label}</button>`;
-     }).join('');
+    let diffPills = Object.entries(DIFF_LABELS).map(([k,v]) => {
+      let active = String(e.peak.diff) === k ? 'active' : '';
+      return `<button type="button" class="rating-pill ${active}" style="--rc:${v.color}" onclick="updatePeakProp('${c.id}', 'diff', ${k})" ${disabledAttr}>${v.label}</button>`;
+    }).join('');
 
-     let durPills = Object.entries(DUR_LABELS).map(([k,v]) => {
-        let active = String(e.peak.dur) === k ? 'active' : '';
-        return `<button type="button" class="rating-pill ${active}" style="--rc:var(--accent)" onclick="updatePeakProp('${c.id}', 'dur', ${k})" ${disabledAttr}>${v.label}</button>`;
-     }).join('');
+    let durPills = Object.entries(DUR_LABELS).map(([k,v]) => {
+      let active = String(e.peak.dur) === k ? 'active' : '';
+      return `<button type="button" class="rating-pill ${active}" style="--rc:var(--accent)" onclick="updatePeakProp('${c.id}', 'dur', ${k})" ${disabledAttr}>${v.label}</button>`;
+    }).join('');
 
-     let terrPills = Object.entries(TERRAIN_LABELS).map(([k,label]) => {
-        let active = String(e.peak.terrain || 1) === k ? 'active' : '';
-        return `<button type="button" class="rating-pill ${active}" style="--rc:var(--accent)" onclick="updatePeakProp('${c.id}', 'terrain', ${k})" ${disabledAttr}>${label}</button>`;
-     }).join('');
+    let terrPills = Object.entries(TERRAIN_LABELS).map(([k,label]) => {
+      let active = String(e.peak.terrain || 1) === k ? 'active' : '';
+      return `<button type="button" class="rating-pill ${active}" style="--rc:var(--accent)" onclick="updatePeakProp('${c.id}', 'terrain', ${k})" ${disabledAttr}>${label}</button>`;
+    }).join('');
 
-     let weathPills = Object.entries(WEATHER_ICONS).map(([k,icon]) => {
-        let active = String(e.peak.weather || 'sun') === k ? 'active' : '';
-        return `<button type="button" class="rating-pill ${active}" style="--rc:var(--accent)" onclick="updatePeakProp('${c.id}', 'weather', '${k}')" title="${WEATHER_NAMES[k]}" ${disabledAttr}>${icon}</button>`;
-     }).join('');
+    let weathPills = Object.entries(WEATHER_ICONS).map(([k,icon]) => {
+      let active = String(e.peak.weather || 'sun') === k ? 'active' : '';
+      return `<button type="button" class="rating-pill ${active}" style="--rc:var(--accent)" onclick="updatePeakProp('${c.id}', 'weather', '${k}')" title="${WEATHER_NAMES[k]}" ${disabledAttr}>${icon}</button>`;
+    }).join('');
 
-     let starPills = [1,2,3,4,5].map(i => {
-        let op = (e.peak.rating||0) >= i ? '1' : '0.25';
-        return `<span style="cursor:pointer; opacity:${op}; transition:opacity .2s;" onclick="updatePeakProp('${c.id}', 'rating', ${i})">⭐️</span>`;
-     }).join('');
+    let starPills = [1,2,3,4,5].map(i => {
+      let op = (e.peak.rating||0) >= i ? '1' : '0.25';
+      return `<span style="cursor:pointer; opacity:${op}; transition:opacity .2s;" onclick="updatePeakProp('${c.id}', 'rating', ${i})">⭐️</span>`;
+    }).join('');
 
-     adminHtml = `
-      <div class="admin-layout" style="${!e.peak.done ? 'border-top:none; margin-top:0; padding-top:10px;' : ''}">
+    let photoBtn = `<label class="photo-btn" for="photo-${c.id}">Nahrát fotku</label><input type="file" accept="image/*" id="photo-${c.id}" data-id="${c.id}" style="display:none">`;
+    let photoImg = e.peak.photo ? `<img class="photo-thumb" src="${e.peak.photo}" onclick="openLightbox(this.src); event.stopPropagation();">` : '';
+    let photoExif = e.peak.photoDate ? `<span class="exif-hint">EXIF: ${formatExif(e.peak.photoDate)}</span>` : (e.peak.photo ? `<span class="exif-hint">Fotka bez EXIF data.</span>` : '');
+
+    let displayFields = !e.peak.done ? 'display:none;' : '';
+    let adminStyle = !e.peak.done ? 'border-top:none; margin-top:0; padding-top:10px;' : '';
+
+    adminHtml = `
+      <div class="admin-layout" style="${adminStyle}">
           <div class="item-top" style="margin-bottom: 16px;">
             <div class="check peakcheck ${e.peak.done?'checked':''}" data-action="toggle" data-id="${c.id}" data-field="peak">${checkSVG()}</div>
             <div class="item-label" style="font-weight:600;">Označit vrchol jako zdolaný</div>
           </div>
 
-          <div class="item-fields" style="${!e.peak.done ? 'display:none;' : ''}">
+          <div class="item-fields" style="${displayFields}">
             <label class="small">Datum a čas výstupu</label>
             <input type="datetime-local" data-id="${c.id}" data-field="peak" data-key="date" value="${e.peak.date}" ${disabledAttr}>
             
@@ -913,9 +961,9 @@ function renderCountryCard(c){
 
             <label class="small" style="margin-top:6px;">Fotka z vrcholu</label>
             <div class="photo-row">
-              <label class="photo-btn" for="photo-${c.id}">Nahrát fotku</label><input type="file" accept="image/*" id="photo-${c.id}" data-id="${c.id}" style="display:none">
-              ${e.peak.photo ? `<img class="photo-thumb" src="${e.peak.photo}" onclick="openLightbox(this.src); event.stopPropagation();">` : ''}
-              <span class="exif-hint ${e.peak.photoDate?'':'none'}">${e.peak.photoDate ? ('EXIF: '+formatExif(e.peak.photoDate)) : (e.peak.photo ? 'Fotka bez EXIF data.' : '')}</span>
+              ${photoBtn}
+              ${photoImg}
+              ${photoExif}
             </div>
             
             <div style="margin-top: 16px; text-align: right;">
@@ -923,7 +971,7 @@ function renderCountryCard(c){
             </div>
           </div>
       </div>
-     `;
+    `;
   }
 
   return `
@@ -947,17 +995,10 @@ function renderCountryCard(c){
 function renderBonusSection(){
   const extraList = sortedFilteredList(EXTRA_COUNTRIES);
   const extraCardsHtml = extraList.map(renderCountryCard).join('');
-
-  return `
-  <div class="bonus-section" style="margin-top: 50px;">
-    <div class="bonus-header">
-      <h2>Vrcholy a zmínky mimo výzvu</h2>
-      <p>Níže najdete další přidané extra cíle a vrcholy, které nejsou v hlavní výzvě počítány.</p>
-    </div>
-    
-    <div id="extraListWrap">${extraCardsHtml}</div>
-
-    ${isAdmin ? `
+  
+  let addBonusHtml = '';
+  if (isAdmin) {
+    addBonusHtml = `
     <details class="add-form" id="addBonusForm" style="margin-top:20px;">
       <summary>+ Přidat další vlastní vrchol</summary>
       <div class="add-form-body">
@@ -970,7 +1011,19 @@ function renderBonusSection(){
         </div>
         <button id="bf-save" type="button">Uložit vrchol</button>
       </div>
-    </details>` : ''}
+    </details>
+    `;
+  }
+
+  return `
+  <div class="bonus-section" style="margin-top: 50px;">
+    <div class="bonus-header">
+      <h2>Vrcholy a zmínky mimo výzvu</h2>
+      <p>Níže najdete další přidané extra cíle a vrcholy, které nejsou v hlavní výzvě počítány.</p>
+    </div>
+    
+    <div id="extraListWrap">${extraCardsHtml}</div>
+    ${addBonusHtml}
     <div id="bonusListWrap">${getBonusCardsHtml()}</div>
   </div>`;
 }
@@ -994,8 +1047,6 @@ function renderBonusCard(b){
   const diffBadgeHtml = b.done ? `<span class="diff-badge" style="background:${diff.color};color:#111;">${diff.label}</span>` : '';
 
   let viewerHtml = '';
-  let adminHtml = '';
-
   if (b.done) {
     let statsHtml = '';
     if (b.km || b.elevGain || b.time) {
@@ -1005,23 +1056,28 @@ function renderBonusCard(b){
       statsHtml = `<div class="v-stats">${kmHtml}${elevHtml}${timeHtml}</div>`;
     }
 
-    let starsHtml = b.rating ? `<div class="v-stars">${'⭐️'.repeat(b.rating)}</div>` : '';
-    let noteHtml = b.notes ? `<div class="v-note"><strong>TL;DR:</strong> ${escapeHtml(b.notes)}</div>` : '';
-    let photoHtml = b.photo ? `<img class="v-photo" src="${b.photo}" onclick="openLightbox(this.src)">` : '';
+    let durBadge = (b.dur && DUR_LABELS[b.dur]) ? `<div class="v-badge">⏳ ${DUR_LABELS[b.dur].label}</div>` : '';
+    let stars = b.rating ? `<div class="v-stars">${'⭐️'.repeat(b.rating)}</div>` : '';
+    let note = b.notes ? `<div class="v-note"><strong>TL;DR:</strong> ${escapeHtml(b.notes)}</div>` : '';
+    let photo = b.photo ? `<img class="v-photo" src="${b.photo}" onclick="openLightbox(this.src)">` : '';
+
+    let weatherIcon = WEATHER_ICONS[b.weather || 'sun'];
+    let weatherName = WEATHER_NAMES[b.weather || 'sun'];
+    let terrainName = TERRAIN_LABELS[b.terrain || 1];
 
     viewerHtml = `
       <div class="viewer-layout">
-         ${photoHtml}
+         ${photo}
          <div class="v-content">
             <div class="v-date">${formatDateView(b.date)}</div>
             ${statsHtml}
             <div class="v-badges">
-                <div class="v-badge">🏔️ ${TERRAIN_LABELS[b.terrain || 1]}</div>
-                <div class="v-badge" title="${WEATHER_NAMES[b.weather || 'sun']}">${WEATHER_ICONS[b.weather || 'sun']} ${WEATHER_NAMES[b.weather || 'sun']}</div>
-                ${b.dur ? `<div class="v-badge">⏳ ${DUR_LABELS[b.dur].label}</div>` : ''}
-                ${starsHtml}
+                <div class="v-badge">🏔️ ${terrainName}</div>
+                <div class="v-badge" title="${weatherName}">${weatherIcon} ${weatherName}</div>
+                ${durBadge}
+                ${stars}
             </div>
-            ${noteHtml}
+            ${note}
          </div>
       </div>
     `;
@@ -1029,48 +1085,52 @@ function renderBonusCard(b){
     viewerHtml = `<div class="empty-state">Na tento vrchol se teprve chystám.</div>`;
   }
 
+  let adminHtml = '';
   if (isAdmin) {
-     let diffPills = Object.entries(DIFF_LABELS).map(([k,v]) => {
-        let active = String(b.diff) === k ? 'active' : '';
-        return `<button type="button" class="rating-pill ${active}" style="--rc:${v.color}" onclick="updateBonusProp('${b.id}', 'diff', ${k})" ${disabledAttr}>${v.label}</button>`;
-     }).join('');
+    let diffPills = Object.entries(DIFF_LABELS).map(([k,v]) => {
+      let active = String(b.diff) === k ? 'active' : '';
+      return `<button type="button" class="rating-pill ${active}" style="--rc:${v.color}" onclick="updateBonusProp('${b.id}', 'diff', ${k})" ${disabledAttr}>${v.label}</button>`;
+    }).join('');
 
-     let durPills = Object.entries(DUR_LABELS).map(([k,v]) => {
-        let active = String(b.dur) === k ? 'active' : '';
-        return `<button type="button" class="rating-pill ${active}" style="--rc:var(--accent)" onclick="updateBonusProp('${b.id}', 'dur', ${k})" ${disabledAttr}>${v.label}</button>`;
-     }).join('');
+    let durPills = Object.entries(DUR_LABELS).map(([k,v]) => {
+      let active = String(b.dur) === k ? 'active' : '';
+      return `<button type="button" class="rating-pill ${active}" style="--rc:var(--accent)" onclick="updateBonusProp('${b.id}', 'dur', ${k})" ${disabledAttr}>${v.label}</button>`;
+    }).join('');
 
-     let terrPills = Object.entries(TERRAIN_LABELS).map(([k,label]) => {
-        let active = String(b.terrain || 1) === k ? 'active' : '';
-        return `<button type="button" class="rating-pill ${active}" style="--rc:var(--accent)" onclick="updateBonusProp('${b.id}', 'terrain', ${k})" ${disabledAttr}>${label}</button>`;
-     }).join('');
+    let terrPills = Object.entries(TERRAIN_LABELS).map(([k,label]) => {
+      let active = String(b.terrain || 1) === k ? 'active' : '';
+      return `<button type="button" class="rating-pill ${active}" style="--rc:var(--accent)" onclick="updateBonusProp('${b.id}', 'terrain', ${k})" ${disabledAttr}>${label}</button>`;
+    }).join('');
 
-     let weathPills = Object.entries(WEATHER_ICONS).map(([k,icon]) => {
-        let active = String(b.weather || 'sun') === k ? 'active' : '';
-        return `<button type="button" class="rating-pill ${active}" style="--rc:var(--accent)" onclick="updateBonusProp('${b.id}', 'weather', '${k}')" title="${WEATHER_NAMES[k]}" ${disabledAttr}>${icon}</button>`;
-     }).join('');
+    let weathPills = Object.entries(WEATHER_ICONS).map(([k,icon]) => {
+      let active = String(b.weather || 'sun') === k ? 'active' : '';
+      return `<button type="button" class="rating-pill ${active}" style="--rc:var(--accent)" onclick="updateBonusProp('${b.id}', 'weather', '${k}')" title="${WEATHER_NAMES[k]}" ${disabledAttr}>${icon}</button>`;
+    }).join('');
 
-     let starPills = [1,2,3,4,5].map(i => {
-        let op = (b.rating||0) >= i ? '1' : '0.25';
-        return `<span style="cursor:pointer; opacity:${op}; transition:opacity .2s;" onclick="updateBonusProp('${b.id}', 'rating', ${i})">⭐️</span>`;
-     }).join('');
+    let starPills = [1,2,3,4,5].map(i => {
+      let op = (b.rating||0) >= i ? '1' : '0.25';
+      return `<span style="cursor:pointer; opacity:${op}; transition:opacity .2s;" onclick="updateBonusProp('${b.id}', 'rating', ${i})">⭐️</span>`;
+    }).join('');
 
-     let photoBtn = `<label class="photo-btn" for="bphoto-${b.id}">Nahrát fotku</label><input type="file" accept="image/*" id="bphoto-${b.id}" data-bonusphoto="${b.id}" style="display:none">`;
-     let photoImg = b.photo ? `<img class="photo-thumb" src="${b.photo}" onclick="openLightbox(this.src); event.stopPropagation();">` : '';
-     let photoExif = b.photoDate ? `<span class="exif-hint">EXIF: ${formatExif(b.photoDate)}</span>` : (b.photo ? `<span class="exif-hint">Fotka bez EXIF data.</span>` : '');
+    let photoBtn = `<label class="photo-btn" for="bphoto-${b.id}">Nahrát fotku</label><input type="file" accept="image/*" id="bphoto-${b.id}" data-bonusphoto="${b.id}" style="display:none">`;
+    let photoImg = b.photo ? `<img class="photo-thumb" src="${b.photo}" onclick="openLightbox(this.src); event.stopPropagation();">` : '';
+    let photoExif = b.photoDate ? `<span class="exif-hint">EXIF: ${formatExif(b.photoDate)}</span>` : (b.photo ? `<span class="exif-hint">Fotka bez EXIF data.</span>` : '');
 
-     adminHtml = `
-      <div class="admin-layout" style="${!b.done ? 'border-top:none; margin-top:0; padding-top:10px;' : ''}">
+    let displayFields = !b.done ? 'display:none;' : '';
+    let adminStyle = !b.done ? 'border-top:none; margin-top:0; padding-top:10px;' : '';
+
+    adminHtml = `
+      <div class="admin-layout" style="${adminStyle}">
           <div class="item-top" style="margin-bottom: 16px;">
             <div class="check ${b.done?'checked bonuscheck':''}" data-action="bonus-toggle" data-id="${b.id}">${checkSVG()}</div>
             <div class="item-label" style="font-weight:600;">Označit vrchol jako zdolaný</div>
           </div>
 
-          <div class="item-fields" style="${!b.done ? 'display:none;' : ''}">
+          <div class="item-fields" style="${displayFields}">
             <label class="small">Datum a čas výstupu</label>
             <input type="datetime-local" data-bonus="${b.id}" data-key="date" value="${b.date}" ${disabledAttr}>
             
-            <label class="small" style="margin-top:6px;">Statistiky z trasy</label>
+            <label class="small" style="margin-top:6px;">Statistiky z trasy (volitelné)</label>
             <div class="stats-row">
               <div class="stat-col">
                 <input type="number" step="0.1" data-bonus="${b.id}" data-key="km" value="${b.km||''}" ${disabledAttr} placeholder="Vzdálenost (km)">
@@ -1098,7 +1158,7 @@ function renderBonusCard(b){
             <label class="small" style="margin-top:6px;">Hodnocení (Worth it?)</label>
             <div class="rating-pills" style="font-size:22px; gap:4px;">${starPills}</div>
 
-            <label class="small" style="margin-top:6px;">Zážitek / Poznámka</label>
+            <label class="small" style="margin-top:6px;">TL;DR / Shrnutí</label>
             <input type="text" data-bonus="${b.id}" data-key="notes" value="${escapeHtml(b.notes)}" placeholder="poznámky…" ${disabledAttr}>
             
             <label class="small" style="margin-top:6px;">Fotka z vrcholu</label>
@@ -1107,10 +1167,13 @@ function renderBonusCard(b){
               ${photoImg}
               ${photoExif}
             </div>
+            
+            <div style="margin-top: 16px; text-align: right;">
+                <button class="clear-link" data-action="bonus-delete" data-id="${b.id}">Smazat vrchol</button>
+            </div>
           </div>
       </div>
-      <div style="grid-column:1/-1;text-align:right;margin-top:8px;"><button class="clear-link" data-action="bonus-delete" data-id="${b.id}">Smazat vrchol</button></div>
-     `;
+    `;
   }
 
   return `
