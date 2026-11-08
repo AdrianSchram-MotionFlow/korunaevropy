@@ -1,1475 +1,389 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="cs">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Koruna Evropy</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Koruna Evropy · Projekt 25</title>
+<meta name="description" content="Nejvyšší vrcholy všech evropských zemí do 25. narozenin. Tracker Adriana Schrama.">
+<meta property="og:title" content="Koruna Evropy · Projekt 25">
+<meta property="og:description" content="Nejvyšší vrcholy všech evropských zemí do 25. narozenin.">
+<meta property="og:image" content="src/projekt25.png">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><path d='M2 28 13 8l6 10 3-4 8 14z' fill='%23d2352b'/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@500;600;700;800&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-<!-- Leaflet CSS -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.min.js"></script>
-<!-- Leaflet JS -->
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<!-- HEIC to JPEG converter -->
-<script src="https://cdn.jsdelivr.net/npm/heic2any@0.0.4/dist/heic2any.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500;62..125,700;62..125,800;62..125,900&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
+/* Layout: single column "summit register"; status shown as Czech trail markers (white–color–white) */
 :root{
-  --bg:#0b1d14;
-  --bg-soft:#102a1c;
-  --card:#153524;
-  --card-hover:#1b422c;
-  --card-caucasus:#112a1c; 
-  --border:#28513a;
-  --border-soft:#1e3d29;
-  --text:#eef3ea;
-  --text-muted:#9db6a4;
-  --text-faint:#6f8b78;
-  --accent:#dba641;
-  --accent-strong:#f0bd5f;
-  --peak:#7fb0a0;
-  --caucasus-fill:#173322; 
-  --caucasus-stroke:#365c44;
-  --bonus:#4a7c59; 
-  --bonus-strong:#64a377;
-  --danger:#c96f5f;
-  --radius:16px;
-  --radius-sm:10px;
-  --font-display:'League Spartan',sans-serif;
-  --font-body:'Poppins',sans-serif;
+  --paper:#f4f6f3; --card:#ffffff; --ink:#14212b; --mute:#5f6b72; --line:#d9dfdb; --land:#e4e9e5; --land2:#eef1ee;
+  --red:#d2352b; --blue:#2a5db0; --yellow:#d9a514; --green:#2e8b57; --white:#ffffff;
+  --display:"Archivo",ui-sans-serif,system-ui,sans-serif;
+  --body:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
 }
-*{box-sizing:border-box;}
-html,body{margin:0;padding:0;}
-body{
-  background:
-    radial-gradient(ellipse 900px 500px at 15% -10%, rgba(219,166,65,0.08), transparent 60%),
-    radial-gradient(ellipse 700px 500px at 100% 0%, rgba(127,176,160,0.08), transparent 55%),
-    var(--bg);
-  color:var(--text);
-  font-family:var(--font-body);
-  font-weight:400;
-  min-height:100vh;
-}
-#root{max-width:1180px;margin:0 auto;padding:28px 20px 80px;}
-h1,h2,h3{font-family:var(--font-display);margin:0;letter-spacing:0.01em;}
-@media (prefers-reduced-motion: reduce){ *{transition:none !important;animation:none !important;} }
-
-.header-brand {
-  display: flex; align-items: center; gap: 16px; margin-bottom: 24px;
-}
-
-.hero{position:relative;border-radius:22px;padding:34px 30px;overflow:hidden;
-  background:linear-gradient(160deg,var(--bg-soft) 0%, #0d2318 100%);
-  border:1px solid var(--border-soft);margin-bottom:26px;}
-.hero-contours{position:absolute;inset:0;opacity:0.35;pointer-events:none;}
-.hero-top{position:relative;z-index:1;}
-
-.hero-main-row { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; margin-bottom: 12px; }
-.hero-titles { flex: 1; min-width: 250px; }
-.hero-brand { display: flex; align-items: center; flex-shrink: 0; }
-.brand-logo { height: 90px; width: auto; object-fit: contain; margin: -10px 0; }
-
-.hero-eyebrow{font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent-strong);font-weight:600;margin-bottom:8px;}
-.hero h1{font-size:clamp(30px,4.2vw,44px);font-weight:800;color:var(--text);line-height:1;margin:0;}
-.hero p.sub{color:var(--text-muted);font-size:15px;line-height:1.5;margin:0;max-width:600px;}
-
-.progress-row{display:flex;gap:14px;margin-top:24px;flex-wrap:wrap;position:relative;z-index:1;}
-.progress-card{flex:1;min-width:200px;background:rgba(12,29,20,0.55);border:1px solid var(--border-soft);border-radius:var(--radius-sm);padding:16px 18px;}
-.progress-card .plabel{font-size:12px;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);font-weight:500;}
-.progress-card .pnum{font-family:var(--font-display);font-size:32px;font-weight:700;margin-top:4px;color:var(--text);}
-.progress-card .pnum span{color:var(--text-faint);font-size:18px;font-weight:500;}
-.bar-track{height:7px;border-radius:5px;background:rgba(255,255,255,0.06);margin-top:12px;overflow:hidden;}
-.bar-fill{height:100%;border-radius:5px;transition:width .5s ease;}
-.bar-fill.peaks{background:linear-gradient(90deg,var(--accent),var(--accent-strong));}
-
-.methodology-box { background: rgba(12, 29, 20, 0.4); border: 1px solid var(--border-soft); border-radius: var(--radius-sm); padding: 18px 22px; margin-top: 24px; position: relative; z-index: 1; }
-.methodology-box h3 { font-size: 15px; color: var(--accent-strong); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.06em; font-family: var(--font-body); font-weight: 600; }
-.methodology-box p { color: var(--text-muted); font-size: 13.5px; line-height: 1.6; margin: 0; }
-
-.map-wrap{border-radius:var(--radius);overflow:hidden;border:1px solid var(--border-soft);margin-bottom:26px;position:relative;background:#081209;}
-#mapCanvas{width:100%;height:480px;background:#081209;z-index:1;}
-.map-legend{position:absolute;bottom:16px;left:16px;z-index:400;background:rgba(11,29,20,0.88);border:1px solid var(--border-soft);border-radius:10px;padding:9px 13px;font-size:12px;color:var(--text-muted);display:flex;gap:14px;flex-wrap:wrap;backdrop-filter:blur(4px);pointer-events:none;}
-.map-legend .li{display:flex;align-items:center;gap:6px;}
-.leaflet-container .leaflet-control-attribution{background:rgba(11,29,20,0.7) !important;color:var(--text-faint) !important;}
-
-.toolbar{display:flex;gap:10px;align-items:center;margin-bottom:16px;flex-wrap:wrap;}
-.toolbar input[type="text"]{flex:1;min-width:180px;background:var(--card);border:1px solid var(--border-soft);color:var(--text);padding:10px 14px;border-radius:var(--radius-sm);font-family:var(--font-body);font-size:14px;}
-.toolbar input[type="text"]::placeholder{color:var(--text-faint);}
-.toolbar select{background:var(--card);border:1px solid var(--border-soft);color:var(--text);padding:10px 12px;border-radius:var(--radius-sm);font-family:var(--font-body);font-size:14px; cursor:pointer;}
-.count-pill{font-size:12px;color:var(--text-muted);white-space:nowrap;}
-
-.country-card{background:var(--card);border:1px solid var(--border-soft);border-left:3px solid var(--border);border-radius:var(--radius-sm);margin-bottom:10px;overflow:hidden;transition:border-color .2s ease, background .2s ease;}
-.country-card.caucasus-card{background:var(--card-caucasus);border-color:#173322;border-left-color:var(--caucasus-stroke);}
-.country-card[data-status="full"]{border-left-color:var(--accent);}
-.bonus-card[data-status="full"]{border-left-color:var(--bonus);}
-.country-card summary{list-style:none;cursor:pointer;}
-.country-card summary::-webkit-details-marker{display:none;}
-.card-head{display:flex;align-items:center;gap:14px;padding:14px 16px;}
-.card-head:hover{background:var(--card-hover);}
-.chevron{color:var(--text-faint);font-size:13px;transition:transform .2s ease;flex-shrink:0;}
-details[open] .chevron{transform:rotate(90deg);}
-.card-titles{flex:1;min-width:0;display:flex;align-items:center;flex-wrap:wrap;gap:8px;}
-.card-titles .cname{font-family:var(--font-display);font-weight:700;font-size:17px;color:var(--text);}
-.card-titles .cmeta{font-size:13px;color:var(--text-muted);}
-.caucasus-badge{font-size:10px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.05em;background:rgba(0,0,0,0.25);padding:3px 7px;border-radius:5px;border:1px solid rgba(255,255,255,0.05);font-family:var(--font-body);font-weight:500;}
-
-.card-body{padding:4px 16px 20px 44px;}
-
-/* Zobrazení pro sledující (Viewer) */
-.viewer-layout { display: flex; gap: 20px; align-items: flex-start; padding: 6px 0; margin-bottom: 12px; }
-.v-photo { width: 130px; height: 130px; object-fit: cover; border-radius: 12px; cursor: zoom-in; flex-shrink: 0; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border: 1px solid var(--border); }
-.v-content { flex: 1; min-width: 0; }
-.v-date { font-size: 13px; color: var(--accent); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 10px; }
-.v-stats { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 12px; }
-.v-stat { font-size: 15px; font-weight: 600; color: var(--text); display: flex; align-items: center; gap: 6px; }
-.v-badges { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
-.v-badge { background: rgba(0,0,0,0.3); border: 1px solid var(--border-soft); padding: 5px 12px; border-radius: 8px; font-size: 12.5px; color: var(--text-muted); font-weight: 500; display: flex; align-items: center; gap: 6px; }
-.v-stars { display: flex; gap: 4px; font-size: 14px; }
-.v-note { font-size: 14.5px; line-height: 1.6; color: var(--text); background: rgba(255,255,255,0.03); padding: 12px 18px; border-left: 3px solid var(--accent); border-radius: 4px 10px 10px 4px; font-style: italic; }
-.empty-state { color: var(--text-faint); font-size: 14px; font-style: italic; padding: 10px 0; }
-
-/* Admin formulář */
-.admin-layout { border-top: 1px dashed var(--border-soft); padding-top: 24px; }
-.item-top{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
-.check{width:24px;height:24px;border-radius:6px;border:2px solid var(--text-faint);flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s ease;}
-.check.checked{background:var(--accent);border-color:var(--accent);}
-.check.checked.bonuscheck{background:var(--bonus);border-color:var(--bonus);}
-.check svg{width:14px;height:14px;opacity:0;transition:opacity .1s ease;}
-.check.checked svg{opacity:1;}
-.item-label{font-weight:600;font-size:15px;}
-
-.item-fields{display:flex;flex-direction:column;gap:12px;}
-.item-fields input[type="datetime-local"], .item-fields input[type="text"], .item-fields input[type="number"]{
-  background:var(--bg);border:1px solid var(--border-soft);color:var(--text);padding:9px 12px;border-radius:8px;font-family:var(--font-body);font-size:13.5px;width:100%;max-width:400px;}
-.item-fields label.small{font-size:11.5px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.05em;font-weight:500;}
-.diff-badge{display:inline-block;font-size:11px;padding:3px 8px;border-radius:20px;font-weight:600;}
-
-.stats-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 4px; max-width:400px; }
-.stats-row .stat-col { flex: 1; min-width: 100px; }
-.stats-row input { width: 100% !important; margin-top: 4px;}
-
-/* Rating Pills */
-.rating-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom:4px; }
-.rating-pill {
-  background: var(--bg); border: 1px solid var(--border-soft); color: var(--text-faint);
-  padding: 8px 14px; border-radius: 20px; font-size: 13px; font-family: var(--font-body); font-weight:500;
-  cursor: pointer; transition: all 0.2s;
-}
-.rating-pill:hover { border-color: var(--rc); color: var(--rc); }
-.rating-pill.active { background: var(--rc); color: #111; border-color: var(--rc); font-weight: 600; }
-
-.photo-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
-.photo-btn{background:var(--border-soft);color:var(--text);border:1px solid var(--border);padding:9px 14px;border-radius:8px;font-size:13px;cursor:pointer;font-family:var(--font-body);font-weight:500;}
-.photo-btn:hover{background:var(--border);}
-.photo-thumb{width:54px;height:54px;object-fit:cover;border-radius:8px;border:1px solid var(--border);cursor:zoom-in;transition:opacity 0.2s ease;}
-.photo-thumb:hover{opacity:0.8;}
-.exif-hint{font-size:11px;color:var(--peak);}
-.exif-hint.none{color:var(--text-faint);}
-
-.clear-link{font-size:11px;color:var(--text-faint);text-decoration:underline;cursor:pointer;background:none;border:none;font-family:var(--font-body);padding:0;}
-.clear-link:hover{color:var(--danger);}
-
-.bonus-section{margin-top:50px;}
-.bonus-header{margin-bottom:14px;}
-.bonus-header h2{font-size:22px;font-weight:700;color:var(--text);}
-.bonus-header p{color:var(--text-muted);font-size:13.5px;margin-top:4px; line-height: 1.5;}
-.add-form{background:var(--card);border:1px solid var(--border-soft);border-radius:var(--radius-sm);margin-bottom:14px;padding:0 16px;}
-.add-form summary{list-style:none;cursor:pointer;padding:14px 0;font-family:var(--font-body);font-weight:500;color:var(--accent-strong);font-size:13.5px;}
-.add-form summary::-webkit-details-marker{display:none;}
-.add-form-body{display:flex;flex-direction:column;gap:10px;padding-bottom:18px;max-width:420px;}
-.add-form-body input{background:var(--bg-soft);border:1px solid var(--border-soft);color:var(--text);padding:9px 12px;border-radius:8px;font-family:var(--font-body);font-size:13.5px;}
-.add-form-body .row2{display:flex;gap:10px;}
-.add-form-body button{align-self:flex-start;background:var(--bonus);color:#ffffff;border:none;padding:9px 16px;border-radius:8px;font-weight:600;cursor:pointer;font-family:var(--font-body);font-size:13.5px;}
-.add-form-body button:hover{background:var(--bonus-strong);}
-
-/* Admin Panel */
-.admin-panel {
-  text-align: center;
-  margin-top: 40px;
-  padding: 20px;
-  background: var(--card);
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border-soft);
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-  flex-wrap: wrap;
-  align-items: center;
-}
-.admin-panel button, .admin-panel .file-label-btn {
-  background: var(--bg-soft);
-  color: var(--text);
-  border: 1px solid var(--border);
-  padding: 8px 14px;
-  border-radius: 8px;
-  font-size: 13px;
-  cursor: pointer;
-  font-family: var(--font-body);
-}
-.admin-panel button:hover, .admin-panel .file-label-btn:hover { background: var(--border); }
-.admin-panel .primary-btn { background: var(--accent); color: #111; border: none; font-weight: 500; }
-.admin-panel .primary-btn:hover { background: var(--accent-strong); }
-
-.footer-note{text-align:center;color:var(--text-faint);font-size:13px;margin-top:24px;line-height:1.6;}
-.loading{text-align:center;color:var(--text-muted);padding:60px 0;font-size:14px;}
-.save-indicator{position:fixed;bottom:18px;right:18px;background:var(--card);border:1px solid var(--border-soft);color:var(--text-muted);padding:8px 14px;border-radius:20px;font-size:12px;opacity:0;transition:opacity .3s ease;pointer-events:none;z-index:9000;}
-.save-indicator.show{opacity:1;}
-
-/* Lightbox Modal */
-#lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:9999;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(5px);cursor:pointer;}
-#lightbox img{max-width:100%;max-height:100%;border-radius:8px;box-shadow:0 10px 30px rgba(0,0,0,0.5);object-fit:contain;}
-
-@media (max-width: 640px) {
-  .hero-main-row { flex-direction: column; align-items: flex-start; gap: 16px; margin-bottom: 0; }
-  .brand-logo { height: 70px; margin: 0; }
-  .viewer-layout { flex-direction: column; gap: 16px; }
-  .v-photo { width: 100%; height: 200px; }
-}
+@media (prefers-color-scheme: dark){:root{
+  --paper:#0f171d; --card:#16222b; --ink:#e8eef1; --mute:#93a2ab; --line:#26343e; --land:#1f2c35; --land2:#18242c;
+  --red:#ef5a4f; --blue:#6e9cf0; --yellow:#e8bc3a; --green:#4cb57c; --white:#f3f3f0; color-scheme:dark}}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 var(--body)}
+a{color:inherit}
+.wrap{max-width:860px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
+section{padding-block:28px}
+h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance}
+h2{font-weight:800;font-stretch:80%;font-size:28px;letter-spacing:-.01em;text-transform:uppercase}
+.kicker{font:500 12px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+.sub{color:var(--mute);margin:6px 0 0}
+.num{font-variant-numeric:tabular-nums}
+/* trail marker */
+.mark{display:inline-block;width:24px;height:15px;flex:none;border-radius:2px;background:linear-gradient(var(--white) 0 33%,var(--c,var(--line)) 33% 67%,var(--white) 67%);box-shadow:0 0 0 1px var(--line);vertical-align:-2px}
+.s-done{--c:var(--red)}.s-planned{--c:var(--blue)}.s-attempt{--c:var(--yellow)}.s-todo{--c:var(--line)}
+/* hero */
+header{padding-block:28px 8px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.ig{font:600 14px var(--body);text-decoration:none;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:7px 14px}
+.ig:hover,.ig:focus-visible{border-color:var(--ink)}
+h1{font-weight:900;font-stretch:75%;font-size:clamp(52px,14vw,112px);line-height:.88;letter-spacing:-.02em;text-transform:uppercase;margin-top:22px}
+h1 span{color:var(--red)}
+.lede{max-width:560px;margin:14px 0 0;font-size:17px}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:24px}
+.stat{background:var(--card);padding:14px 16px;min-width:0}
+.stat b{display:block;white-space:nowrap;font:800 clamp(28px,7vw,40px)/1 var(--display);font-stretch:85%}
+.stat b small{font-size:.5em;color:var(--mute);font-weight:700}
+.stat span{font-size:13px;color:var(--mute)}
+.bar{height:10px;border-radius:10px;background:var(--land);overflow:hidden;margin-top:14px;display:flex}
+.bar i{display:block;height:100%}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:10px;font-size:13px;color:var(--mute)}
+.legend span{display:inline-flex;gap:7px;align-items:center}
+/* plan timeline */
+.timeline{list-style:none;margin:18px 0 0;padding:0;display:grid;gap:0}
+.timeline li{display:grid;grid-template-columns:118px 24px minmax(0,1fr);gap:12px;align-items:start;padding:12px 0;border-top:1px solid var(--line)}
+.timeline li:first-child{border-top:0}
+.timeline .when{font:500 13px/1.6 var(--mono);color:var(--mute)}
+.timeline .what{font:700 19px/1.25 var(--display);font-stretch:90%}
+.timeline .where{font-size:14px;color:var(--mute)}
+.timeline li.next .what{color:var(--blue)}
+.pill{display:inline-block;font:600 11px/1 var(--body);letter-spacing:.06em;text-transform:uppercase;background:var(--blue);color:var(--card);border-radius:4px;padding:4px 6px;margin-left:6px;vertical-align:3px}
+/* map */
+.mapbox{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-top:16px;position:relative}
+#map{display:block;width:100%;height:auto;aspect-ratio:4/3.4;max-width:100%}
+#map .c{stroke:var(--card);stroke-width:.6}
+#map .peak{cursor:pointer}
+.tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--paper);font-size:13px;padding:6px 9px;border-radius:8px;transform:translate(-50%,-120%);white-space:nowrap;opacity:0;transition:opacity .15s}
+.tip.show{opacity:1}
+.mapnote{font-size:13px;color:var(--mute);padding:10px 14px;border-top:1px solid var(--line)}
+/* peak cards */
+.cards{display:grid;gap:16px;margin-top:16px}
+.pc{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:grid}
+.pc .photo{aspect-ratio:16/9;background:var(--land2);display:grid;place-items:center;color:var(--mute);font-size:14px;max-width:100%}
+.pc .photo img{width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in}
+.pc .body{padding:16px 18px 18px;display:grid;gap:10px;min-width:0}
+.pc .head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.pc h3{font-weight:800;font-stretch:85%;font-size:26px;line-height:1.05;text-transform:uppercase}
+.pc .country{color:var(--mute);font-size:14px;margin-top:3px}
+.pc .elev{font:800 22px/1 var(--display);font-stretch:85%;white-space:nowrap;text-align:right}
+.pc .elev small{display:block;font:500 12px var(--mono);color:var(--mute);margin-top:4px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:13px;background:var(--land2);border:1px solid var(--line);border-radius:999px;padding:3px 10px}
+.chip.d{border-color:var(--dc);color:var(--ink)}
+.chip.d::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--dc);margin-right:6px;vertical-align:0}
+.figs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.figs div{background:var(--land2);border-radius:10px;padding:8px 10px}
+.figs b{display:block;font:700 18px var(--display);font-stretch:90%}
+.figs span{font-size:12px;color:var(--mute)}
+.tldr{margin:0}
+.pending{color:var(--mute);font-style:italic;font-size:14px;margin:0}
+.post{font-weight:600;font-size:14px}
+details.logi{border-top:1px solid var(--line);padding-top:10px}
+details.logi summary{cursor:pointer;font:700 15px var(--display);font-stretch:95%;text-transform:uppercase;letter-spacing:.02em;list-style:none;display:flex;justify-content:space-between;align-items:center}
+details.logi summary::-webkit-details-marker{display:none}
+details.logi summary::after{content:"+";font:500 20px var(--mono);color:var(--mute)}
+details.logi[open] summary::after{content:"–"}
+details.logi summary:focus-visible{outline:2px solid var(--blue);outline-offset:4px;border-radius:4px}
+.lg{display:grid;gap:12px;margin-top:12px}
+.lg h4{margin:0 0 2px;font:500 11px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+.lg p{margin:0}
+.lg ul{margin:0;padding-left:18px}
+.lg li{margin:2px 0}
+.cost{width:100%;border-collapse:collapse;font-size:14px}
+.cost td{padding:4px 0;border-bottom:1px dashed var(--line)}
+.cost td:last-child{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.cost tr.t td{border-bottom:0;font-weight:700;padding-top:8px}
+.planflag{font-size:13px;background:var(--land2);border-left:3px solid var(--blue);padding:6px 10px;border-radius:0 8px 8px 0}
+/* country list */
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin-top:14px}
+.filters button{font:600 14px var(--body);border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:7px 14px;cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.filters button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.clist{list-style:none;padding:0;margin:14px 0 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:0 24px}
+.clist li{display:grid;grid-template-columns:24px minmax(0,1fr) auto;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line)}
+.clist .n{font-weight:600;line-height:1.2}
+.clist .p{font-size:13px;color:var(--mute)}
+.clist .e{font:500 13px var(--mono);color:var(--mute)}
+footer{padding-block:30px 50px;color:var(--mute);font-size:13px;border-top:1px solid var(--line);margin-top:20px}
+#lightbox{position:fixed;inset:0;background:rgba(0,0,0,.88);display:grid;place-items:center;padding:20px;z-index:20}
+#lightbox img{max-width:100%;max-height:100%;border-radius:8px}
+@media (max-width:520px){.timeline li{grid-template-columns:24px minmax(0,1fr)}.timeline .when{grid-column:2;order:-1;margin-bottom:-10px}.timeline .mk{grid-row:1/3;padding-top:4px}}
+@media (min-width:760px){.pc{grid-template-columns:minmax(0,1fr) minmax(0,1.1fr)}.pc .photo{aspect-ratio:auto;min-height:100%}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
-<div id="root">
-  <div class="loading" id="loadingMsg">Načítám Korunu Evropy…</div>
-  <div id="appContent" style="display:none;">
-    
-    <div id="heroWrap"></div>
-    <div class="map-wrap">
-      <div id="mapCanvas"></div>
-      <div class="map-legend">
-        <span class="li"><svg width="16" height="16" viewBox="-8 -8 16 16"><path d="M-7 8 L0 -8 L4 0 L7 8 Z" fill="#dba641" stroke="#f0bd5f" stroke-width="1"/></svg> zdoláno</span>
-        <span class="li"><svg width="16" height="16" viewBox="-8 -8 16 16"><rect x="-6" y="-6" width="12" height="12" fill="#dba641" fill-opacity="0.3" stroke="#f0bd5f" stroke-width="1"/></svg> území zdoláno</span>
-        <span class="li"><svg width="16" height="16" viewBox="-8 -8 16 16"><path d="M-7 8 L0 -8 L4 0 L7 8 Z" fill="#28513a" stroke="#557a63" stroke-width="1"/></svg> evropa</span>
-        <span class="li"><svg width="16" height="16" viewBox="-8 -8 16 16"><path d="M-7 8 L0 -8 L4 0 L7 8 Z" fill="#173322" stroke="#365c44" stroke-width="1"/></svg> pomezí Evropy</span>
-        <span class="li"><svg width="16" height="16" viewBox="-8 -8 16 16"><path d="M0 -8 L2 -2.5 L8 -2 L3.2 1.6 L5 8 L0 4.2 L-5 8 L-3.2 1.6 L-8 -2 L-2 -2.5 Z" fill="#4a7c59" stroke="#64a377" stroke-width="1"/></svg> neevropský vrchol</span>
-      </div>
-    </div>
-    <div id="toolbarWrap"></div>
-    
-    <div id="listWrap"></div>
-    <div id="bonusSectionWrap"></div>
-    
-    <div id="adminPanelWrap"></div>
-
-    <div class="footer-note">
-      Tento tracker sdílím veřejně. Sleduj moji cestu na Instagramu <a href="https://www.instagram.com/adrian.schram/" target="_blank" style="color:var(--accent); text-decoration:none; font-weight:600;">@adrian.schram</a> 🚀<br>
-      <span style="opacity:0.6; font-size:11.5px; margin-top:6px; display:inline-block;">Data se pro vás živě synchronizují. Fotky jsou na pozadí automaticky komprimovány.</span>
-    </div>
+<header class="wrap">
+  <div class="top">
+    <span class="kicker">Projekt 25 · Adrian Schram</span>
+    <a class="ig" id="ig" href="https://www.instagram.com/adrian.schram/" target="_blank" rel="noopener">@adrian.schram</a>
   </div>
-</div>
-<div class="save-indicator" id="saveIndicator">Ukládám…</div>
-<div id="lightbox" onclick="this.style.display='none'">
-  <img id="lightbox-img" src="">
-</div>
+  <h1>Koruna <span>Evropy</span></h1>
+  <p class="lede">Nejvyšší vrchol každé evropské země. Všech 44 do mých 25. narozenin, 30. dubna 2032.</p>
+  <div class="stats">
+    <div class="stat"><b class="num" id="st-done">–</b><span>zdolaných vrcholů</span></div>
+    <div class="stat"><b class="num" id="st-high">–</b><span>nejvýš v Evropě</span></div>
+    <div class="stat"><b class="num" id="st-days">–</b><span>dní do deadlinu</span></div>
+  </div>
+  <div class="bar" id="bar" role="img"></div>
+  <div class="legend">
+    <span><i class="mark s-done"></i>zdoláno</span>
+    <span><i class="mark s-planned"></i>v plánu</span>
+    <span><i class="mark s-attempt"></i>pokus, otočka</span>
+    <span><i class="mark s-todo"></i>zbývá</span>
+  </div>
+</header>
 
+<main>
+  <section class="wrap" id="plan">
+    <span class="kicker">Co chystám dál</span>
+    <h2>Další výstupy</h2>
+    <ol class="timeline" id="timeline"></ol>
+  </section>
+
+  <section class="wrap" id="mapa">
+    <span class="kicker">Mapa</span>
+    <h2>Kde už jsem stál</h2>
+    <div class="mapbox">
+      <svg id="map" viewBox="0 0 800 680" role="img" aria-label="Mapa Evropy se zdolanými zeměmi"></svg>
+      <div class="tip" id="tip"></div>
+      <div class="mapnote" id="mapnote">Klepni na tečku vrcholu.</div>
+    </div>
+  </section>
+
+  <section class="wrap" id="zdolane">
+    <span class="kicker">Zápisník</span>
+    <h2>Zdolané vrcholy</h2>
+    <div class="cards" id="done"></div>
+  </section>
+
+  <section class="wrap" id="chystane" hidden>
+    <span class="kicker">Připravuju</span>
+    <h2>Vrcholy v přípravě</h2>
+    <p class="sub">Plán a logistika ještě před výstupem. Po návratu doplním, jak to dopadlo doopravdy.</p>
+    <div class="cards" id="planned"></div>
+  </section>
+
+  <section class="wrap" id="pokusy" hidden>
+    <span class="kicker">Hora počká</span>
+    <h2>Pokusy a otočky</h2>
+    <p class="sub">Ne všechno vyjde napoprvé. Otočit se včas je taky výsledek.</p>
+    <div class="cards" id="attempts"></div>
+  </section>
+
+  <section class="wrap" id="zeme">
+    <span class="kicker">Všech 46 zemí</span>
+    <h2>Seznam</h2>
+    <p class="sub">Mont Blanc sdílí Francie s Itálií a Korab Albánie se Severní Makedonií, proto 46 zemí a 44 vrcholů.</p>
+    <div class="filters" id="filters">
+      <button data-f="all" aria-pressed="true">Vše</button>
+      <button data-f="done" aria-pressed="false">Zdoláno</button>
+      <button data-f="planned" aria-pressed="false">V plánu</button>
+      <button data-f="todo" aria-pressed="false">Zbývá</button>
+    </div>
+    <ul class="clist" id="clist"></ul>
+  </section>
+
+  <section class="wrap" id="mimo" hidden>
+    <span class="kicker">Mimo výzvu</span>
+    <h2>Další vrcholy</h2>
+    <p class="sub">Kavkaz a další hory, které nepatří do Koruny Evropy, ale patří k cestě.</p>
+    <div class="cards" id="extras"></div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <span id="updated"></span> · Sleduj cestu na <a href="https://www.instagram.com/adrian.schram/" target="_blank" rel="noopener">Instagramu @adrian.schram</a>
+</footer>
+<div id="lightbox" hidden></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
 <script>
-/* ============================= DATA ============================= */
 const COUNTRIES = [
-{id:"albania",iso:"ALB",name:"Albánie",capital:"Tirana",peak:"Korab",peakId:"korab",elev:2764,peakLat:41.7842,peakLng:20.5486},
-{id:"andorra",iso:"AND",name:"Andorra",capital:"Andorra la Vella",peak:"Coma Pedrosa",peakId:"coma_pedrosa",elev:2942,peakLat:42.5761,peakLng:1.4703},
-{id:"austria",iso:"AUT",name:"Rakousko",capital:"Vídeň",peak:"Grossglockner",peakId:"grossglockner",elev:3798,peakLat:47.0742,peakLng:12.6944},
-{id:"belarus",iso:"BLR",name:"Bělorusko",capital:"Minsk",peak:"Dzjaržynská hora",peakId:"dzyarzhynskaya",elev:345,peakLat:53.6572,peakLng:26.9614},
-{id:"belgium",iso:"BEL",name:"Belgie",capital:"Brusel",peak:"Signal de Botrange",peakId:"botrange",elev:694,peakLat:50.5064,peakLng:6.0814},
-{id:"bosnia",iso:"BIH",name:"Bosna a Hercegovina",capital:"Sarajevo",peak:"Maglić",peakId:"maglic",elev:2386,peakLat:43.2667,peakLng:18.7833},
-{id:"bulgaria",iso:"BGR",name:"Bulharsko",capital:"Sofie",peak:"Musala",peakId:"musala",elev:2925,peakLat:42.1804,peakLng:23.5867},
-{id:"croatia",iso:"HRV",name:"Chorvatsko",capital:"Záhřeb",peak:"Dinara",peakId:"dinara",elev:1831,peakLat:43.9967,peakLng:16.3814},
-{id:"czechia",iso:"CZE",name:"Česko",capital:"Praha",peak:"Sněžka",peakId:"snezka",elev:1603,peakLat:50.7361,peakLng:15.7400},
-{id:"denmark",iso:"DNK",name:"Dánsko",capital:"Kodaň",peak:"Møllehøj",peakId:"mollehoj",elev:171,peakLat:56.0997,peakLng:9.3500},
-{id:"estonia",iso:"EST",name:"Estonsko",capital:"Tallinn",peak:"Suur Munamägi",peakId:"suur_munamagi",elev:318,peakLat:57.7075,peakLng:27.0561},
-{id:"finland",iso:"FIN",name:"Finsko",capital:"Helsinki",peak:"Halti",peakId:"halti",elev:1324,peakLat:69.3222,peakLng:21.2842},
-{id:"france",iso:"FRA",name:"Francie",capital:"Paříž",peak:"Mont Blanc",peakId:"mont_blanc",elev:4808,peakLat:45.8326,peakLng:6.8652},
-{id:"germany",iso:"DEU",name:"Německo",capital:"Berlín",peak:"Zugspitze",peakId:"zugspitze",elev:2962,peakLat:47.4210,peakLng:10.9852},
-{id:"greece",iso:"GRC",name:"Řecko",capital:"Athény",peak:"Olymp",peakId:"olympus",elev:2917,peakLat:40.0855,peakLng:22.3583},
-{id:"hungary",iso:"HUN",name:"Maďarsko",capital:"Budapešť",peak:"Kékes",peakId:"kekes",elev:1014,peakLat:47.8703,peakLng:20.0117},
-{id:"iceland",iso:"ISL",name:"Island",capital:"Reykjavík",peak:"Hvannadalshnúkur",peakId:"hvannadalshnukur",elev:2110,peakLat:64.0157,peakLng:-16.6845},
-{id:"ireland",iso:"IRL",name:"Irsko",capital:"Dublin",peak:"Carrauntoohil",peakId:"carrauntoohil",elev:1038,peakLat:51.9992,peakLng:-9.7549},
-{id:"italy",iso:"ITA",name:"Itálie",capital:"Řím",peak:"Mont Blanc",peakId:"mont_blanc",elev:4808,peakLat:45.8326,peakLng:6.8652},
-{id:"kosovo",iso:"KOS",name:"Kosovo",capital:"Priština",peak:"Velika Rudoka",peakId:"velika_rudoka",elev:2658,peakLat:41.8500,peakLng:20.7833},
-{id:"latvia",iso:"LVA",name:"Lotyšsko",capital:"Riga",peak:"Gaiziņkalns",peakId:"gaizinkalns",elev:312,peakLat:56.8686,peakLng:25.9917},
-{id:"liechtenstein",iso:"LIE",name:"Lichtenštejnsko",capital:"Vaduz",peak:"Vorder Grauspitz",peakId:"grauspitz",elev:2599,peakLat:47.0631,peakLng:9.5947},
-{id:"lithuania",iso:"LTU",name:"Litva",capital:"Vilnius",peak:"Aukštojas",peakId:"aukstojas",elev:294,peakLat:54.8558,peakLng:25.5567},
-{id:"luxembourg",iso:"LUX",name:"Lucembursko",capital:"Lucemburk",peak:"Kneiff",peakId:"kneiff",elev:560,peakLat:50.1289,peakLng:6.0333},
-{id:"malta",iso:"MLT",name:"Malta",capital:"Valletta",peak:"Ta' Dmejrek",peakId:"ta_dmejrek",elev:253,peakLat:35.8722,peakLng:14.3711},
-{id:"moldova",iso:"MDA",name:"Moldavsko",capital:"Kišiněv",peak:"Bălănești",peakId:"balanesti",elev:430,peakLat:47.0994,peakLng:28.3597},
-{id:"monaco",iso:"MCO",name:"Monako",capital:"Monako",peak:"Chemin des Révoires",peakId:"revoires",elev:161,peakLat:43.7500,peakLng:7.4200},
-{id:"montenegro",iso:"MNE",name:"Černá Hora",capital:"Podgorica",peak:"Zla Kolata",peakId:"zla_kolata",elev:2534,peakLat:42.6167,peakLng:19.8167},
-{id:"netherlands",iso:"NLD",name:"Nizozemsko",capital:"Amsterdam",peak:"Vaalserberg",peakId:"vaalserberg",elev:322,peakLat:50.7539,peakLng:6.0208},
-{id:"nmacedonia",iso:"MKD",name:"Severní Makedonie",capital:"Skopje",peak:"Korab",peakId:"korab",elev:2764,peakLat:41.7842,peakLng:20.5486},
-{id:"norway",iso:"NOR",name:"Norsko",capital:"Oslo",peak:"Galdhøpiggen",peakId:"galdhopiggen",elev:2469,peakLat:61.6360,peakLng:8.3125},
-{id:"poland",iso:"POL",name:"Polsko",capital:"Varšava",peak:"Rysy",peakId:"rysy",elev:2499,peakLat:49.1793,peakLng:20.0881},
-{id:"prt_main",iso:"PRT",name:"Portugalsko",capital:"Lisabon",peak:"Torre",peakId:"torre",elev:1993,peakLat:40.3219,peakLng:-7.6133},
-{id:"romania",iso:"ROU",name:"Rumunsko",capital:"Bukurešť",peak:"Moldoveanu",peakId:"moldoveanu",elev:2544,peakLat:45.6069,peakLng:24.7358},
-{id:"russia",iso:"RUS",name:"Rusko",capital:"Moskva",peak:"Elbrus",peakId:"elbrus",elev:5642,peakLat:43.3499,peakLng:42.4453},
-{id:"sanmarino",iso:"SMR",name:"San Marino",capital:"San Marino",peak:"Monte Titano",peakId:"monte_titano",elev:749,peakLat:43.9360,peakLng:12.4530},
-{id:"serbia",iso:"SRB",name:"Srbsko",capital:"Bělehrad",peak:"Midžor",peakId:"midzor",elev:2169,peakLat:43.4058,peakLng:22.6997},
-{id:"slovakia",iso:"SVK",name:"Slovensko",capital:"Bratislava",peak:"Gerlachovský štít",peakId:"gerlach",elev:2655,peakLat:49.1667,peakLng:20.1394},
-{id:"slovenia",iso:"SVN",name:"Slovinsko",capital:"Lublaň",peak:"Triglav",peakId:"triglav",elev:2864,peakLat:46.3781,peakLng:13.8353},
-{id:"esp_main",iso:"ESP",name:"Španělsko",capital:"Madrid",peak:"Mulhacén",peakId:"mulhacen",elev:3479,peakLat:37.0536,peakLng:-3.3114},
-{id:"sweden",iso:"SWE",name:"Švédsko",capital:"Stockholm",peak:"Kebnekaise",peakId:"kebnekaise",elev:2097,peakLat:67.9010,peakLng:18.5428},
-{id:"switzerland",iso:"CHE",name:"Švýcarsko",capital:"Bern",peak:"Dufourspitze",peakId:"dufourspitze",elev:4634,peakLat:45.9369,peakLng:7.8666},
-{id:"turkey",iso:"TUR",name:"Turecko",capital:"Ankara",peak:"Mahya Dağı",peakId:"mahya_dagi",elev:1031,peakLat:41.7822,peakLng:27.6139},
-{id:"ukraine",iso:"UKR",name:"Ukrajina",capital:"Kyjev",peak:"Hoverla",peakId:"hoverla",elev:2061,peakLat:48.1567,peakLng:24.5003},
-{id:"uk",iso:"GBR",name:"Spojené království",capital:"Londýn",peak:"Ben Nevis",peakId:"ben_nevis",elev:1345,peakLat:56.7969,peakLng:-5.0036},
-{id:"vatican",iso:"VAT",name:"Vatikán",capital:"Vatikán",peak:"Vatikánský pahorek",peakId:"vatican_hill",elev:75,peakLat:41.9022,peakLng:12.4534}
-];
+["albania","ALB","Albánie","Korab","korab",2764,41.7842,20.5486,8],
+["andorra","AND","Andorra","Coma Pedrosa","coma_pedrosa",2942,42.5761,1.4703,20],
+["austria","AUT","Rakousko","Grossglockner","grossglockner",3798,47.0742,12.6944,40],
+["belarus","BLR","Bělorusko","Dzjaržynská hora","dzyarzhynskaya",345,53.6572,26.9614,112],
+["belgium","BEL","Belgie","Signal de Botrange","botrange",694,50.5064,6.0814,56],
+["bosnia","BIH","Bosna a Hercegovina","Maglić","maglic",2386,43.2667,18.7833,70],
+["bulgaria","BGR","Bulharsko","Musala","musala",2925,42.1804,23.5867,100],
+["croatia","HRV","Chorvatsko","Dinara","dinara",1831,43.9967,16.3814,191],
+["czechia","CZE","Česko","Sněžka","snezka",1603,50.7361,15.74,203],
+["denmark","DNK","Dánsko","Møllehøj","mollehoj",171,56.0997,9.35,208],
+["estonia","EST","Estonsko","Suur Munamägi","suur_munamagi",318,57.7075,27.0561,233],
+["finland","FIN","Finsko","Halti","halti",1324,69.3222,21.2842,246],
+["france","FRA","Francie","Mont Blanc","mont_blanc",4808,45.8326,6.8652,250],
+["germany","DEU","Německo","Zugspitze","zugspitze",2962,47.421,10.9852,276],
+["greece","GRC","Řecko","Olymp","olympus",2917,40.0855,22.3583,300],
+["hungary","HUN","Maďarsko","Kékes","kekes",1014,47.8703,20.0117,348],
+["iceland","ISL","Island","Hvannadalshnúkur","hvannadalshnukur",2110,64.0157,-16.6845,352],
+["ireland","IRL","Irsko","Carrauntoohil","carrauntoohil",1038,51.9992,-9.7549,372],
+["italy","ITA","Itálie","Mont Blanc","mont_blanc",4808,45.8326,6.8652,380],
+["kosovo","KOS","Kosovo","Velika Rudoka","velika_rudoka",2658,41.85,20.7833,null],
+["latvia","LVA","Lotyšsko","Gaiziņkalns","gaizinkalns",312,56.8686,25.9917,428],
+["liechtenstein","LIE","Lichtenštejnsko","Vorder Grauspitz","grauspitz",2599,47.0631,9.5947,438],
+["lithuania","LTU","Litva","Aukštojas","aukstojas",294,54.8558,25.5567,440],
+["luxembourg","LUX","Lucembursko","Kneiff","kneiff",560,50.1289,6.0333,442],
+["malta","MLT","Malta","Ta' Dmejrek","ta_dmejrek",253,35.8722,14.3711,470],
+["moldova","MDA","Moldavsko","Bălănești","balanesti",430,47.0994,28.3597,498],
+["monaco","MCO","Monako","Chemin des Révoires","revoires",161,43.75,7.42,492],
+["montenegro","MNE","Černá Hora","Zla Kolata","zla_kolata",2534,42.6167,19.8167,499],
+["netherlands","NLD","Nizozemsko","Vaalserberg","vaalserberg",322,50.7539,6.0208,528],
+["nmacedonia","MKD","Severní Makedonie","Korab","korab",2764,41.7842,20.5486,807],
+["norway","NOR","Norsko","Galdhøpiggen","galdhopiggen",2469,61.636,8.3125,578],
+["poland","POL","Polsko","Rysy","rysy",2499,49.1793,20.0881,616],
+["prt_main","PRT","Portugalsko","Torre","torre",1993,40.3219,-7.6133,620],
+["romania","ROU","Rumunsko","Moldoveanu","moldoveanu",2544,45.6069,24.7358,642],
+["russia","RUS","Rusko","Elbrus","elbrus",5642,43.3499,42.4453,643],
+["sanmarino","SMR","San Marino","Monte Titano","monte_titano",749,43.936,12.453,674],
+["serbia","SRB","Srbsko","Midžor","midzor",2169,43.4058,22.6997,688],
+["slovakia","SVK","Slovensko","Gerlachovský štít","gerlach",2655,49.1667,20.1394,703],
+["slovenia","SVN","Slovinsko","Triglav","triglav",2864,46.3781,13.8353,705],
+["esp_main","ESP","Španělsko","Mulhacén","mulhacen",3479,37.0536,-3.3114,724],
+["sweden","SWE","Švédsko","Kebnekaise","kebnekaise",2097,67.901,18.5428,752],
+["switzerland","CHE","Švýcarsko","Dufourspitze","dufourspitze",4634,45.9369,7.8666,756],
+["turkey","TUR","Turecko","Mahya Dağı","mahya_dagi",1031,41.7822,27.6139,792],
+["ukraine","UKR","Ukrajina","Hoverla","hoverla",2061,48.1567,24.5003,804],
+["uk","GBR","Spojené království","Ben Nevis","ben_nevis",1345,56.7969,-5.0036,826],
+["vatican","VAT","Vatikán","Vatikánský pahorek","vatican_hill",75,41.9022,12.4534,336]
+].map(r=>({id:r[0],iso:r[1],name:r[2],peak:r[3],peakId:r[4],elev:r[5],lat:r[6],lng:r[7],num:r[8]}));
+const SHARED={france:"italy",italy:"france",albania:"nmacedonia",nmacedonia:"albania"};
+const DIFF={1:["Snadná","#4f9a5c"],2:["Střední","#c9a227"],3:["Náročnější","#d9822b"],4:["Těžká","#c9473b"],5:["Extrém","#7d4a8a"]};
+const TERRAIN={1:"Vyšlapaná cesta",2:"Horský terén",3:"Suť a skály",4:"Ferrata, lezení",5:"Sníh, ledovec"};
+const WEATHER={sun:"☀️ Jasno",cloud:"☁️ Oblačno",rain:"🌧️ Déšť",snow:"❄️ Sněžení",storm:"🌪️ Bouře"};
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const kc=n=>n.toLocaleString("cs-CZ")+" Kč";
+const mfmt=n=>n.toLocaleString("cs-CZ")+" m";
+function fdate(d){if(!d)return null;if(/^\d{4}$/.test(d))return d;const x=new Date(d);return isNaN(x)?d:x.toLocaleDateString("cs-CZ",{day:"numeric",month:"long",year:"numeric"})}
 
-// Kavkaz a další cíle mimo hlavní výzvu
-const EXTRA_COUNTRIES = [
-{id:"armenia",iso:"ARM",name:"Arménie",capital:"Jerevan",peak:"Aragac",peakId:"aragac",elev:4090,peakLat:40.5377,peakLng:44.1907},
-{id:"cyprus",iso:"CYP",name:"Kypr",capital:"Nikósie",peak:"Olympos (Troodos)",peakId:"olympos_cyp",elev:1952,peakLat:34.9358,peakLng:32.8656},
-{id:"georgia",iso:"GEO",name:"Gruzie",capital:"Tbilisi",peak:"Kazbek",peakId:"kazbek",elev:5054,peakLat:42.6972,peakLng:44.5194}
-];
+let D=null;
+const status=c=>{const p=D.peaks[c.id]||D.peaks[SHARED[c.id]];if(!p)return"todo";
+  if(SHARED[c.id]&&!D.peaks[c.id]&&p.status!=="done")return"todo";return p.status||"todo"};
+const entry=c=>D.peaks[c.id]||(D.peaks[SHARED[c.id]]?.status==="done"?D.peaks[SHARED[c.id]]:{})||{};
 
-// Sdílené vrcholy
-const SHARED_PEAKS = {
-  "france": "italy",
-  "italy": "france",
-  "albania": "nmacedonia",
-  "nmacedonia": "albania"
-};
+function card(o){
+  const d=o.diff&&DIFF[o.diff];
+  const chips=[d?`<span class="chip d" style="--dc:${d[1]}">${d[0]}</span>`:"",o.terrain?`<span class="chip">${TERRAIN[o.terrain]}</span>`:"",o.weather?`<span class="chip">${WEATHER[o.weather]}</span>`:"",o.rating?`<span class="chip">Worth it ${"★".repeat(o.rating)}${"☆".repeat(5-o.rating)}</span>`:""].join("");
+  const s=o.stats||{};
+  const figs=[s.km!=null?`<div><b>${String(s.km).replace(".",",")} km</b><span>délka</span></div>`:"",s.up!=null?`<div><b>${mfmt(s.up)}</b><span>převýšení</span></div>`:"",s.time?`<div><b>${esc(s.time)}</b><span>čas</span></div>`:""].join("");
+  const L=o.logistics;
+  let logi="";
+  if(L){const c=L.cena;
+    logi=`<details class="logi"><summary>Logistika</summary><div class="lg">
+    ${L.plan?`<div class="planflag">Tohle je plán před cestou. Po výstupu ho přepíšu podle reality.</div>`:""}
+    ${L.doprava?`<div><h4>Doprava</h4><p>${esc(L.doprava)}</p></div>`:""}
+    ${L.trasa?`<div><h4>Trasa</h4><p>${esc(L.trasa)}</p></div>`:""}
+    ${L.ubytovani?`<div><h4>Ubytování</h4><p>${esc(L.ubytovani)}</p></div>`:""}
+    ${c?`<div><h4>Kolik to stálo${c.note?" · "+esc(c.note):""}</h4><table class="cost">${(c.items||[]).map(i=>`<tr><td>${esc(i[0])}</td><td>${kc(i[1])}</td></tr>`).join("")}<tr class="t"><td>Celkem</td><td>${kc(c.total)}</td></tr></table></div>`:""}
+    ${L.tipy?.length?`<div><h4>Tipy a výbava</h4><ul>${L.tipy.map(t=>`<li>${esc(t)}</li>`).join("")}</ul></div>`:""}
+    </div></details>`}
+  const when=o.status==="planned"?(o.when?"plán: "+esc(o.when):"v plánu"):o.status==="attempt"?("pokus "+(fdate(o.date)||"")+(o.reached?" · došel jsem na "+esc(o.reached):"")):(fdate(o.date)||"datum doplním");
+  return `<article class="pc">
+    <div class="photo">${o.photo?`<img src="${esc(o.photo)}" alt="${esc(o.peak)}, ${esc(o.country)}" loading="lazy">`:`<span>${o.status==="done"?"Fotka brzy":"Fotka po výstupu"}</span>`}</div>
+    <div class="body">
+      <div class="head"><div><h3>${esc(o.peak)}</h3><div class="country"><i class="mark s-${o.status}"></i> ${esc(o.country)}</div></div>
+      <div class="elev num">${mfmt(o.elev)}<small>${when}</small></div></div>
+      ${chips?`<div class="chips">${chips}</div>`:""}
+      ${figs?`<div class="figs">${figs}</div>`:""}
+      ${o.tldr?`<p class="tldr">${esc(o.tldr)}</p>`:(o.status==="done"?`<p class="pending">Zápis z výstupu brzy doplním.</p>`:"")}
+      ${o.post?`<a class="post" href="${esc(o.post)}" target="_blank" rel="noopener">Podívej se na reel →</a>`:""}
+      ${logi}
+    </div></article>`;
+}
+function obj(c,e){return {...e,peak:c.peak,country:SHARED[c.id]&&e===D.peaks[SHARED[c.id]]?c.name:c.name,elev:c.elev,status:status(c)}}
 
-// Dictionaries pro Instagram Karty
-const DIFF_LABELS = {
-  1:{label:"Snadná", color:"#8fbf7a"},
-  2:{label:"Střední", color:"#dba641"},
-  3:{label:"Náročnější", color:"#d98f5f"},
-  4:{label:"Těžká", color:"#c96f5f"},
-  5:{label:"Extrém", color:"#8b5a8c"}
-};
-const DUR_LABELS = {
-  1:{label:"Rychlovka"},
-  2:{label:"Půldenní"},
-  3:{label:"Celodenní"},
-  4:{label:"Vícedenní"}
-};
-const TERRAIN_LABELS = {
-  1: "Vyšlapaná cesta",
-  2: "Horský terén",
-  3: "Suťovisko / Skály",
-  4: "Ferrata / Lezení",
-  5: "Sníh / Ledovec"
-};
-const WEATHER_ICONS = {
-  "sun": "☀️",
-  "cloud": "☁️",
-  "rain": "🌧️",
-  "snow": "❄️",
-  "storm": "🌪️"
-};
-const WEATHER_NAMES = {
-  "sun": "Jasno",
-  "cloud": "Oblačno",
-  "rain": "Déšť",
-  "snow": "Sněžení",
-  "storm": "Bouře / Silný vítr"
-};
+function render(){
+  // unique peaks
+  const seen=new Map();COUNTRIES.forEach(c=>{const s=status(c),cur=seen.get(c.peakId);const rank={done:3,attempt:2,planned:1,todo:0};if(!cur||rank[s]>rank[cur.s])seen.set(c.peakId,{s,c})});
+  const counts={done:0,planned:0,attempt:0,todo:0};seen.forEach(v=>counts[v.s]++);
+  const total=seen.size;
+  $("st-done").innerHTML=`${counts.done}<small>/${total}</small>`;
+  const doneList=[...seen.values()].filter(v=>v.s==="done").map(v=>v.c);
+  const high=doneList.sort((a,b)=>b.elev-a.elev)[0];
+  $("st-high").innerHTML=high?`${high.elev.toLocaleString("cs-CZ")}<small> m</small>`:"–";
+  $("st-high").nextElementSibling.textContent=high?`nejvýš: ${high.peak}`:"nejvýš v Evropě";
+  const days=Math.max(0,Math.ceil((new Date(D.deadline+"T23:59:59")-new Date())/864e5));
+  $("st-days").textContent=days.toLocaleString("cs-CZ");
+  const bar=$("bar");bar.innerHTML=["done","attempt","planned"].map(k=>`<i style="width:${counts[k]/total*100}%;background:var(--${k==="done"?"red":k==="attempt"?"yellow":"blue"})"></i>`).join("");
+  bar.setAttribute("aria-label",`${counts.done} z ${total} vrcholů zdoláno, ${counts.planned} v plánu`);
+  // timeline
+  $("timeline").innerHTML=(D.plan||[]).map((p,i)=>`<li class="${i===0?"next":""}"><span class="when">${esc(p.when)}</span><span class="mk"><i class="mark s-planned"></i></span><div><div class="what">${esc(p.what)}${i===0?'<span class="pill">další</span>':""}</div><div class="where">${esc(p.where)}${p.note?" · "+esc(p.note):""}</div></div></li>`).join("");
+  // cards
+  const byStatus=s=>COUNTRIES.filter(c=>D.peaks[c.id]&&D.peaks[c.id].status===s).map(c=>obj(c,D.peaks[c.id]));
+  const done=byStatus("done").sort((a,b)=>(b.date||"").localeCompare(a.date||""));
+  $("done").innerHTML=done.map(card).join("")||`<p class="pending">Zatím nic.</p>`;
+  const planned=byStatus("planned").filter(o=>o.logistics||o.tldr);
+  $("planned").innerHTML=planned.map(card).join("");$("chystane").hidden=!planned.length;
+  const ext=(D.extras||[]).map(x=>({...x}));
+  const att=byStatus("attempt").concat(ext.filter(x=>x.status==="attempt"));
+  $("attempts").innerHTML=att.map(card).join("");$("pokusy").hidden=!att.length;
+  const exd=ext.filter(x=>x.status!=="attempt");
+  $("extras").innerHTML=exd.map(card).join("");$("mimo").hidden=!exd.length;
+  renderList("all");
+  $("updated").textContent="Aktualizováno "+fdate(D.updated);
+}
+function renderList(f){
+  const rows=COUNTRIES.slice().sort((a,b)=>a.name.localeCompare(b.name,"cs")).filter(c=>{const s=status(c);return f==="all"||(f==="todo"?(s==="todo"||s==="attempt"):s===f)});
+  $("clist").innerHTML=rows.map(c=>`<li><i class="mark s-${status(c)}" title=""></i><div><div class="n">${esc(c.name)}</div><div class="p">${esc(c.peak)}</div></div><span class="e">${c.elev.toLocaleString("cs-CZ")} m</span></li>`).join("")||`<li><span></span><span class="p">Nic tu není.</span></li>`;
+}
+$("filters").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;[...$("filters").children].forEach(x=>x.setAttribute("aria-pressed",x===b));renderList(b.dataset.f)});
+document.addEventListener("click",e=>{const im=e.target.closest(".pc .photo img");const lb=$("lightbox");
+  if(im){lb.innerHTML=`<img src="${im.src}" alt="${esc(im.alt)}">`;lb.hidden=false}else if(e.target.closest("#lightbox"))lb.hidden=true});
 
-/* ============================= API ============================= */
-const API_BASE = "/api/data";
-const api = {
-  async list(prefix){
-    const res = await fetch(API_BASE+"?prefix="+encodeURIComponent(prefix));
-    if(!res.ok) return {keys:[]};
-    return res.json();
-  },
-  async get(key){
-    const res = await fetch(API_BASE+"?key="+encodeURIComponent(key));
-    if(res.status===404) return null;
-    const text = await res.text();
-    if(!text || text==="null") return null;
-    return {key, value:text};
-  },
-  async set(key, value){
-    showSaving(true);
-    await fetch(API_BASE, {method:"PUT", headers:{"Content-Type":"application/json"}, body:JSON.stringify({key,value})});
-    showSaving(false);
-    return {key,value};
-  },
-  async delete(key){
-    await fetch(API_BASE+"?key="+encodeURIComponent(key), {method:"DELETE"});
-    return {key, deleted:true};
-  }
-};
-let saveTimer=null;
-function showSaving(on){
-  const el = document.getElementById('saveIndicator');
-  if(!el) return;
-  if(on){ el.classList.add('show'); el.textContent='Ukládám…'; }
-  else{
-    el.textContent='Uloženo';
-    clearTimeout(saveTimer);
-    saveTimer = setTimeout(()=> el.classList.remove('show'), 900);
-  }
+async function drawMap(){
+  const svg=d3.select("#map"),W=800,H=680;
+  const css=getComputedStyle(document.documentElement),col=n=>css.getPropertyValue(n).trim();
+  let world;try{world=await (await fetch("https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-50m.json")).json()}catch(e){$("mapnote").textContent="Mapu se nepodařilo načíst.";return}
+  const feats=topojson.feature(world,world.objects.countries).features;
+  const proj=d3.geoAzimuthalEqualArea().rotate([-14,-53]).fitExtent([[6,6],[W-6,H-6]],{type:"Feature",geometry:{type:"MultiPoint",coordinates:[[-24,36],[45,36],[40,71],[-8,70],[15,34.5],[-24,64]]}});
+  const path=d3.geoPath(proj);
+  const byNum=new Map(),byName={Kosovo:"kosovo"};COUNTRIES.forEach(c=>{if(c.num)byNum.set(+c.num,c)});
+  const extraNum={51:"aragac",268:"kazbek"};
+  const fill=f=>{const c=byNum.get(+f.id)||(byName[f.properties.name]&&COUNTRIES.find(x=>x.id===byName[f.properties.name]));
+    if(c){const s=status(c);return s==="done"?col("--red"):s==="attempt"?col("--yellow"):s==="planned"?col("--blue"):col("--land")}
+    const x=extraNum[+f.id]&&D.extras.find(e=>e.id===extraNum[+f.id]);if(x)return x.status==="done"?col("--red"):col("--yellow");
+    return col("--land2")};
+  const op=f=>{const c=byNum.get(+f.id);const s=c?status(c):null;return s==="planned"?.45:s==="done"||s==="attempt"?.75:1};
+  svg.append("rect").attr("width",W).attr("height",H).attr("fill",col("--card"));
+  svg.append("g").selectAll("path").data(feats).join("path").attr("class","c").attr("d",path).attr("fill",fill).attr("fill-opacity",op);
+  const pts=[];const seen=new Set();
+  COUNTRIES.forEach(c=>{if(seen.has(c.peakId))return;seen.add(c.peakId);const s=[c,COUNTRIES.find(x=>x.id===SHARED[c.id])].filter(Boolean).map(status);const st=s.includes("done")?"done":s.includes("attempt")?"attempt":s.includes("planned")?"planned":"todo";
+    pts.push({name:c.peak,country:SHARED[c.id]?c.name+" / "+COUNTRIES.find(x=>x.id===SHARED[c.id]).name:c.name,elev:c.elev,lng:c.lng,lat:c.lat,s:st})});
+  (D.extras||[]).forEach(x=>pts.push({name:x.peak,country:x.country+" (mimo výzvu)",elev:x.elev,lng:x.lng,lat:x.lat,s:x.status}));
+  const colorS={done:"--red",attempt:"--yellow",planned:"--blue",todo:"--mute"};
+  const tip=$("tip"),box=document.querySelector(".mapbox");
+  const show=(d,ev)=>{const r=box.getBoundingClientRect(),p=proj([d.lng,d.lat]),sx=r.width/W;tip.style.left=(p[0]*sx)+"px";tip.style.top=(p[1]*sx)+"px";
+    tip.textContent=`${d.name} · ${d.elev.toLocaleString("cs-CZ")} m`;tip.classList.add("show");
+    $("mapnote").textContent=`${d.name} (${d.country}) · ${{done:"zdoláno",attempt:"pokus",planned:"v plánu",todo:"zbývá"}[d.s]}`};
+  svg.append("g").selectAll("circle").data(pts.sort((a,b)=>(a.s==="todo")-(b.s==="todo")).reverse()).join("circle").attr("class","peak")
+    .attr("cx",d=>proj([d.lng,d.lat])[0]).attr("cy",d=>proj([d.lng,d.lat])[1]).attr("r",d=>d.s==="todo"?3.2:6)
+    .attr("fill",d=>d.s==="todo"?col("--card"):col(colorS[d.s])).attr("stroke",d=>d.s==="todo"?col("--mute"):col("--card")).attr("stroke-width",d=>d.s==="todo"?1.2:2)
+    .attr("tabindex",0).on("click",(e,d)=>show(d,e)).on("mouseenter",(e,d)=>show(d,e)).on("focus",(e,d)=>show(d,e)).on("mouseleave",()=>tip.classList.remove("show"))
+    .append("title").text(d=>`${d.name}, ${d.country}`);
 }
 
-/* ============================= STATE & AUTH ============================= */
-let state = {};
-let bonusState = {};
-let filterText = "";
-let sortMode = "az";
-let statusFilter = "all"; 
-let map, markersLayer, geojsonLayer;
-let geojsonData = null;
-let isAdmin = localStorage.getItem('ke_admin') === 'true'; 
-
-function emptyEntry(){
-  return {
-    peak:{done:false,date:"",diff:1,dur:0,terrain:1,weather:"sun",rating:0,photo:"",photoDate:"",note:"",km:"",elevGain:"",time:""}
-  };
-}
-function getEntry(id){ if(!state[id]) state[id]=emptyEntry(); return state[id]; }
-function isFull(e){ return e.peak.done; }
-
-function emptyBonus(){ return {id:"",name:"",region:"",elev:"",lat:"",lng:"",done:false,date:"",diff:1,dur:0,terrain:1,weather:"sun",rating:0,photo:"",photoDate:"",notes:"",km:"",elevGain:"",time:""}; }
-function genId(){ return "b"+Date.now().toString(36)+Math.random().toString(36).slice(2,7); }
-
-function escapeHtml(str){
-  return String(str==null?"":str).replace(/[&<>"']/g, s=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[s]));
-}
-function formatDateView(isoStr) {
-  if(!isoStr) return "";
-  try {
-    const d = new Date(isoStr);
-    if(isNaN(d)) return isoStr;
-    return d.toLocaleDateString('cs-CZ', { day:'numeric', month:'long', year:'numeric' });
-  } catch(e) { return isoStr; }
-}
-function openLightbox(src){
-  document.getElementById('lightbox-img').src = src;
-  document.getElementById('lightbox').style.display = 'flex';
-}
-
-/* ============================= ADMIN ACTIONS ============================= */
-function login() {
-  const pwInput = document.getElementById('adminPw');
-  if (!pwInput) return;
-  if (pwInput.value === "As300407") {
-    localStorage.setItem('ke_admin', 'true');
-    isAdmin = true;
-    renderAll();
-  } else {
-    alert("Špatné heslo.");
-    pwInput.value = '';
-  }
-}
-
-function logout() {
-  localStorage.removeItem('ke_admin');
-  isAdmin = false;
-  renderAll();
-}
-
-function downloadBackup() {
-  const dataToBackup = { state, bonusState };
-  const blob = new Blob([JSON.stringify(dataToBackup, null, 2)], { type: "application/json" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `koruna_evropy_zaloha_${new Date().toISOString().slice(0,10)}.json`;
-  a.click();
-  URL.revokeObjectURL(url);
-}
-
-function uploadBackup(ev) {
-  const file = ev.target.files[0];
-  if(!file) return;
-  if(!confirm("Opravdu chceš přepsat svá aktuální data touto zálohou? (Tato akce je nevratná)")) {
-    ev.target.value = '';
-    return;
-  }
-  
-  const reader = new FileReader();
-  reader.onload = async (e) => {
-    try {
-      const data = JSON.parse(e.target.result);
-      showSaving(true);
-      document.getElementById('saveIndicator').textContent = 'Obnovuji ze zálohy...';
-      
-      if(data.state) {
-        for(const [id, entry] of Object.entries(data.state)) {
-          state[id] = entry;
-          await api.set("country_"+id, JSON.stringify(entry));
-        }
-      }
-      if(data.bonusState) {
-        for(const [id, entry] of Object.entries(data.bonusState)) {
-          bonusState[id] = entry;
-          await api.set("bonus_"+id, JSON.stringify(entry));
-        }
-      }
-      
-      showSaving(false);
-      alert('Záloha úspěšně nahrána a uložena!');
-      ev.target.value = ''; 
-      renderAll();
-    } catch(err) {
-      alert('Chybný formát souboru zálohy.');
-      showSaving(false);
-      ev.target.value = '';
-    }
-  };
-  reader.readAsText(file);
-}
-
-/* Zrcadlení dat u sdílených vrcholů */
-async function handleSyncAndSave(id) {
-  await saveEntry(id);
-  if(SHARED_PEAKS[id]) {
-      const targetId = SHARED_PEAKS[id];
-      getEntry(targetId).peak = JSON.parse(JSON.stringify(getEntry(id).peak));
-      await saveEntry(targetId);
-  }
-}
-
-/* ============================= LOAD / SAVE ============================= */
-async function loadGeoJson(){
-  try {
-    const res = await fetch('https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson');
-    geojsonData = await res.json();
-  } catch (e) { console.error("Nelze načíst GeoJSON hranic.", e); }
-}
-
-async function loadAll(){
-  try{
-    const listRes = await api.list("country_");
-    const keys = listRes.keys || [];
-    await Promise.all(keys.map(async k=>{
-      const r = await api.get(k);
-      if(r && r.value){
-        const id = k.replace("country_","");
-        try{ state[id] = Object.assign(emptyEntry(), JSON.parse(r.value)); }catch(e){}
-      }
-    }));
-  }catch(e){ console.error("Chyba při načítání:", e); }
-
-  try{
-    const listRes2 = await api.list("bonus_");
-    const keys2 = listRes2.keys || [];
-    await Promise.all(keys2.map(async k=>{
-      const r = await api.get(k);
-      if(r && r.value){
-        try{ const parsed = JSON.parse(r.value); bonusState[parsed.id] = Object.assign(emptyBonus(), parsed); }catch(e){}
-      }
-    }));
-  }catch(e){ console.error("Chyba při načítání bonusů:", e); }
-
-  // Auto-Migrace Kypr do bonusů a Turecko do main
-  if (state['cyprus']) {
-    if (state['cyprus'].peak && state['cyprus'].peak.done) {
-      const bId = "b_cyprus";
-      if(!bonusState[bId]) {
-        bonusState[bId] = { ...emptyBonus(), id: bId, name: "Olympos (Troodos)", region: "Kypr", elev: 1952, lat: 34.9358, lng: 32.8656, done: true, date: state['cyprus'].peak.date, diff: state['cyprus'].peak.diff, dur: state['cyprus'].peak.dur, terrain: state['cyprus'].peak.terrain, weather: state['cyprus'].peak.weather, rating: state['cyprus'].peak.rating, photo: state['cyprus'].peak.photo, photoDate: state['cyprus'].peak.photoDate, notes: state['cyprus'].peak.note, km: state['cyprus'].peak.km, elevGain: state['cyprus'].peak.elevGain, time: state['cyprus'].peak.time };
-        await api.set("bonus_"+bId, JSON.stringify(bonusState[bId]));
-      }
-    }
-    await api.delete("country_cyprus");
-    delete state['cyprus'];
-  }
-
-  if (bonusState['turkey']) {
-    if (bonusState['turkey'].done) {
-      if (!state['turkey']) state['turkey'] = emptyEntry();
-      state['turkey'].peak = {
-        done: true,
-        date: bonusState['turkey'].date,
-        diff: bonusState['turkey'].diff,
-        dur: bonusState['turkey'].dur,
-        terrain: bonusState['turkey'].terrain,
-        weather: bonusState['turkey'].weather,
-        rating: bonusState['turkey'].rating,
-        photo: bonusState['turkey'].photo,
-        photoDate: bonusState['turkey'].photoDate,
-        note: bonusState['turkey'].notes,
-        km: bonusState['turkey'].km,
-        elevGain: bonusState['turkey'].elevGain,
-        time: bonusState['turkey'].time
-      };
-      await api.set("country_turkey", JSON.stringify(state['turkey']));
-    }
-    await api.delete("bonus_turkey");
-    delete bonusState['turkey'];
-  }
-
-  // Stará migrace Španělsko/Portugalsko ostrovy
-  if (state['spain']) {
-    if (state['spain'].peak && state['spain'].peak.done) {
-      const bId = "b_teide";
-      if(!bonusState[bId]) {
-        bonusState[bId] = { ...emptyBonus(), id: bId, name: "Pico de Teide", region: "Španělsko (ostrovy)", elev: 3718, lat: 28.2723, lng: -16.6425, done: true, date: state['spain'].peak.date, diff: state['spain'].peak.diff, dur: state['spain'].peak.dur, terrain: state['spain'].peak.terrain, weather: state['spain'].peak.weather, rating: state['spain'].peak.rating, photo: state['spain'].peak.photo, photoDate: state['spain'].peak.photoDate, notes: state['spain'].peak.note, km: state['spain'].peak.km, elevGain: state['spain'].peak.elevGain, time: state['spain'].peak.time };
-        await api.set("bonus_"+bId, JSON.stringify(bonusState[bId]));
-      }
-    }
-    await api.delete("country_spain");
-    delete state['spain'];
-  }
-
-  if (state['portugal']) {
-    if (state['portugal'].peak && state['portugal'].peak.done) {
-      const bId = "b_pico";
-      if(!bonusState[bId]) {
-        bonusState[bId] = { ...emptyBonus(), id: bId, name: "Ponta do Pico", region: "Portugalsko (ostrovy)", elev: 2351, lat: 38.4686, lng: -28.3997, done: true, date: state['portugal'].peak.date, diff: state['portugal'].peak.diff, dur: state['portugal'].peak.dur, terrain: state['portugal'].peak.terrain, weather: state['portugal'].peak.weather, rating: state['portugal'].peak.rating, photo: state['portugal'].peak.photo, photoDate: state['portugal'].peak.photoDate, notes: state['portugal'].peak.note, km: state['portugal'].peak.km, elevGain: state['portugal'].peak.elevGain, time: state['portugal'].peak.time };
-        await api.set("bonus_"+bId, JSON.stringify(bonusState[bId]));
-      }
-    }
-    await api.delete("country_portugal");
-    delete state['portugal'];
-  }
-}
-
-async function saveEntry(id){ try{ await api.set("country_"+id, JSON.stringify(state[id])); }catch(e){ console.error(e); } }
-async function clearEntry(id){ state[id]=emptyEntry(); try{ await api.delete("country_"+id); }catch(e){} preserveOpenAndRerenderList(id); updateHeroInPlace(); refreshMap(); }
-async function saveBonus(id){ try{ await api.set("bonus_"+id, JSON.stringify(bonusState[id])); }catch(e){ console.error(e); } }
-async function deleteBonus(id){ delete bonusState[id]; try{ await api.delete("bonus_"+id); }catch(e){} document.getElementById('bonusListWrap').innerHTML = getBonusCardsHtml(); attachBonusEvents(); updateHeroInPlace(); refreshMap(); }
-
-window.updatePeakProp = async function(id, prop, val) {
-  if(!isAdmin) return;
-  getEntry(id).peak[prop] = val;
-  await handleSyncAndSave(id);
-  preserveOpenAndRerenderList(id);
-}
-window.updateBonusProp = async function(id, prop, val) {
-  if(!isAdmin) return;
-  bonusState[id][prop] = val;
-  await saveBonus(id);
-  const card = document.getElementById('bonus-'+id);
-  const wasOpen = card ? card.hasAttribute('open') : false;
-  document.getElementById('bonusListWrap').innerHTML = getBonusCardsHtml();
-  attachBonusEvents();
-  if(wasOpen){ const c2=document.getElementById('bonus-'+id); if(c2) c2.setAttribute('open',''); }
-}
-
-/* ============================= LEAFLET MAP ============================= */
-function initMap(){
-  map = L.map('mapCanvas', {zoomControl: true}).setView([49, 15], 4);
-  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
-    attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
-    maxZoom: 16
-  }).addTo(map);
-  markersLayer = L.layerGroup().addTo(map);
-  refreshMap();
-}
-
-function refreshMap(){
-  if(!map || !markersLayer) return;
-  markersLayer.clearLayers();
-  if(geojsonLayer) { map.removeLayer(geojsonLayer); geojsonLayer = null; }
-
-  const allMapCountries = [...COUNTRIES, ...EXTRA_COUNTRIES];
-  const isoToId = {};
-  allMapCountries.forEach(c => { if(c.iso) isoToId[c.iso] = c.id; });
-
-  if (geojsonData) {
-    geojsonLayer = L.geoJSON(geojsonData, {
-      style: feature => {
-        const iso = feature.properties.ISO_A3;
-        const cId = isoToId[iso];
-        if (!cId) return { weight: 0, fillOpacity: 0 }; 
-
-        if (getEntry(cId).peak.done) {
-          return { fillColor: '#dba641', weight: 1, color: '#f0bd5f', fillOpacity: 0.15, opacity: 0.6 };
-        } else {
-          return { weight: 0, fillOpacity: 0 };
-        }
-      }
-    }).addTo(map);
-  }
-
-  allMapCountries.forEach(c => {
-    const e = getEntry(c.id);
-    const isExtra = EXTRA_COUNTRIES.some(x => x.id === c.id);
-    
-    const defaultFill = isExtra ? '#173322' : '#28513a';
-    const defaultStroke = isExtra ? '#365c44' : '#557a63';
-
-    const peakColor = e.peak.done ? '#dba641' : defaultFill;
-    const peakStroke = e.peak.done ? '#f0bd5f' : defaultStroke;
-    const peakHtml = `<svg width="16" height="16" viewBox="-8 -8 16 16" style="filter: drop-shadow(0 2px 3px rgba(0,0,0,0.5))"><path d="M-7 8 L0 -8 L4 0 L7 8 Z" fill="${peakColor}" stroke="${peakStroke}" stroke-width="1"/></svg>`;
-    const peakIcon = L.divIcon({ html: peakHtml, className: '', iconSize: [16,16], iconAnchor: [8,8] });
-    L.marker([c.peakLat, c.peakLng], {icon: peakIcon, zIndexOffset: e.peak.done ? 1000 : 0})
-     .bindTooltip(`${c.peak} (${c.name})${e.peak.done?' - zdoláno':''}`)
-     .on('click', () => focusCountry(c.id)).addTo(markersLayer);
-  });
-
-  Object.values(bonusState).forEach(b => {
-    const lat=parseFloat(b.lat), lng=parseFloat(b.lng);
-    if(isNaN(lat)||isNaN(lng)) return;
-    const bColor = b.done ? '#4a7c59' : '#1c3625';
-    const bStroke = b.done ? '#64a377' : '#2d543a';
-    const bHtml = `<svg width="16" height="16" viewBox="-8 -8 16 16" style="filter: drop-shadow(0 2px 3px rgba(0,0,0,0.5))"><path d="M0 -8 L2 -2.5 L8 -2 L3.2 1.6 L5 8 L0 4.2 L-5 8 L-3.2 1.6 L-8 -2 L-2 -2.5 Z" fill="${bColor}" stroke="${bStroke}" stroke-width="1"/></svg>`;
-    const bIcon = L.divIcon({ html: bHtml, className: '', iconSize: [16,16], iconAnchor: [8,8] });
-    L.marker([lat, lng], {icon: bIcon, zIndexOffset: b.done ? 1000 : 0})
-     .bindTooltip(`${escapeHtml(b.name)}${b.done?' - zdoláno':''}`)
-     .on('click', () => focusBonus(b.id)).addTo(markersLayer);
-  });
-}
-function focusCountry(id){
-  const el = document.getElementById('card-'+id);
-  if(el){ el.setAttribute('open',''); el.scrollIntoView({behavior:'smooth', block:'center'}); }
-}
-function focusBonus(id){
-  const el = document.getElementById('bonus-'+id);
-  if(el){ el.setAttribute('open',''); el.scrollIntoView({behavior:'smooth', block:'center'}); }
-}
-
-/* ============================= UI COMPONENTS ============================= */
-function renderHero(){
-  const totalCountries = COUNTRIES.length; 
-  
-  const totalUniquePeaksSet = new Set(COUNTRIES.map(c => c.peakId));
-  const totalUniquePeaks = totalUniquePeaksSet.size;
-
-  let uniquePeaksDoneSet = new Set();
-  COUNTRIES.forEach(c => {
-    if (getEntry(c.id).peak.done) {
-        uniquePeaksDoneSet.add(c.peakId);
-    }
-  });
-  const peaksDone = uniquePeaksDoneSet.size;
-
-  const contourSVG = `<svg class="hero-contours" viewBox="0 0 600 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M-20 160 Q 100 100 220 150 T 460 130 T 640 160" stroke="#dba641" stroke-width="1" fill="none"/>
-    <path d="M-20 180 Q 120 130 240 170 T 480 150 T 640 180" stroke="#dba641" stroke-width="1" fill="none"/>
-    <path d="M-20 140 Q 90 70 220 120 T 470 100 T 640 130" stroke="#7fb0a0" stroke-width="1" fill="none"/>
-    <path d="M-20 120 Q 80 40 210 90 T 460 70 T 640 100" stroke="#7fb0a0" stroke-width="1" fill="none"/>
-  </svg>`;
-  return `
-  <div class="hero">
-    ${contourSVG}
-    <div class="hero-top">
-      
-      <div class="hero-main-row">
-        <div class="hero-titles">
-          <div class="hero-eyebrow">Moje cestovatelská výzva</div>
-          <h1>Koruna Evropy</h1>
-        </div>
-        <div class="hero-brand">
-          <img src="src/3.png" alt="Projekt 25 Logo" class="brand-logo">
-        </div>
-      </div>
-      
-      <p class="sub">Mým cílem je zdolat nejvyšší bod každého evropského státu. Sledujte můj postup! ${totalCountries} zemí, ${totalUniquePeaks} unikátních vrcholů, jeden cíl.</p>
-      
-      <div class="methodology-box">
-        <h3>Jakou Korunu sbíráme?</h3>
-        <p>Moje Koruna Evropy: ${totalUniquePeaks} vrcholů ve ${totalCountries} zemích. Držím se pevně zvoleného seznamu, který zahrnuje také Kosovo a evropskou část Turecka. Francie a Itálie sdílejí Mont Blanc, Albánie a Severní Makedonie Korab — proto je vrcholů o dva méně než zemí. Španělsko zastupuje Mulhacén a Portugalsko Torre. Kypr a vybrané ostrovní vrcholy vedu jako bonusy mimo hlavní výzvu.</p>
-      </div>
-
-      <div class="progress-row">
-        <div class="progress-card">
-          <div class="plabel">Zdolané unikátní vrcholy</div>
-          <div class="pnum">${peaksDone} <span>/ ${totalUniquePeaks}</span></div>
-          <div class="bar-track"><div class="bar-fill peaks" style="width:${(peaksDone/totalUniquePeaks*100).toFixed(1)}%"></div></div>
-        </div>
-      </div>
-    </div>
-  </div>`;
-}
-function updateHeroInPlace(){
-  const heroWrap = document.getElementById('heroWrap');
-  if(heroWrap) heroWrap.innerHTML = renderHero();
-}
-
-function renderToolbar(){
-  return `
-  <div class="toolbar">
-    <input type="text" id="searchInput" placeholder="Hledat zemi…" value="${escapeHtml(filterText)}">
-    <select id="filterSelect">
-      <option value="all" ${statusFilter==='all'?'selected':''}>Všechny vrcholy</option>
-      <option value="done" ${statusFilter==='done'?'selected':''}>Pouze zdolané</option>
-      <option value="not_done" ${statusFilter==='not_done'?'selected':''}>Pouze nezdolané</option>
-    </select>
-    <select id="sortSelect">
-      <option value="az" ${sortMode==='az'?'selected':''}>Řadit A–Z</option>
-      <option value="progress" ${sortMode==='progress'?'selected':''}>Řadit dle postupu</option>
-      <option value="elev" ${sortMode==='elev'?'selected':''}>Řadit dle výšky vrcholu</option>
-    </select>
-    <span class="count-pill" id="countPill"></span>
-  </div>`;
-}
-
-function renderAdminPanel() {
-  if (isAdmin) {
-    return `
-    <div class="admin-panel">
-      <div style="width:100%; font-weight:600; color:var(--accent); font-size:14px; margin-bottom:4px;">🔓 Režim úprav odemčen</div>
-      <button onclick="downloadBackup()">↓ Stáhnout zálohu (.json)</button>
-      <label class="file-label-btn">↑ Nahrát zálohu <input type="file" accept=".json" style="display:none" onchange="uploadBackup(event)"></label>
-      <button onclick="logout()">🔒 Uzamknout a odhlásit</button>
-    </div>
-    `;
-  } else {
-    return `
-    <div class="admin-panel">
-      <div style="width:100%; font-size:13px; color:var(--text-muted); margin-bottom:8px;">Zobrazení pro sledující (pouze pro čtení). Autorský přístup:</div>
-      <div style="display:flex; gap:8px; justify-content:center; align-items:center;">
-        <input type="password" id="adminPw" placeholder="Zadej heslo..." style="padding:8px 12px; border-radius:8px; border:1px solid var(--border-soft); background:var(--bg-soft); color:var(--text); font-family:var(--font-body); font-size:13px; width:140px;" onkeydown="if(event.key === 'Enter') login()">
-        <button class="primary-btn" onclick="login()">Odemknout</button>
-      </div>
-    </div>
-    `;
-  }
-}
-
-function sortedFilteredList(sourceArray){
-  let list = sourceArray.filter(c => c.name.toLowerCase().includes(filterText.toLowerCase()) || c.peak.toLowerCase().includes(filterText.toLowerCase()));
-  
-  if (statusFilter === 'done') {
-    list = list.filter(c => getEntry(c.id).peak.done);
-  } else if (statusFilter === 'not_done') {
-    list = list.filter(c => !getEntry(c.id).peak.done);
-  }
-
-  if(sortMode==='az') list = list.slice().sort((a,b)=>a.name.localeCompare(b.name,'cs'));
-  else if(sortMode==='elev') list = list.slice().sort((a,b)=>b.elev-a.elev);
-  else if(sortMode==='progress'){
-    const score = c => getEntry(c.id).peak.done ? 1 : 0;
-    list = list.slice().sort((a,b)=> score(b)-score(a) || a.name.localeCompare(b.name,'cs'));
-  }
-  return list;
-}
-
-function checkSVG(){ return `<svg viewBox="0 0 24 24" fill="none"><path d="M4 12 L10 18 L20 6" stroke="#0b1d14" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>`; }
-
-function renderCountryCard(c){
-  const e = getEntry(c.id);
-  const status = isFull(e) ? 'full' : 'none';
-  const diff = DIFF_LABELS[e.peak.diff] || DIFF_LABELS[1];
-  
-  const isExtra = EXTRA_COUNTRIES.some(x => x.id === c.id);
-  const cardClass = isExtra ? 'country-card caucasus-card' : 'country-card';
-  const disabledAttr = isAdmin ? '' : 'disabled';
-  
-  let badgeText = '';
-  if (['georgia', 'armenia'].includes(c.id)) badgeText = 'Kavkaz';
-
-  const badgeHtml = badgeText ? `<span class="caucasus-badge">${badgeText}</span>` : '';
-  const diffBadgeHtml = e.peak.done ? `<span class="diff-badge" style="background:${diff.color};color:#111;">${diff.label}</span>` : '';
-
-  let viewerHtml = '';
-  if (e.peak.done) {
-    let statsHtml = '';
-    if (e.peak.km || e.peak.elevGain || e.peak.time) {
-      let kmHtml = e.peak.km ? `<div class="v-stat">🥾 ${e.peak.km} km</div>` : '';
-      let elevHtml = e.peak.elevGain ? `<div class="v-stat">⛰️ ${e.peak.elevGain} m+</div>` : '';
-      let timeHtml = e.peak.time ? `<div class="v-stat">⏱️ ${e.peak.time}</div>` : '';
-      statsHtml = `<div class="v-stats">${kmHtml}${elevHtml}${timeHtml}</div>`;
-    }
-
-    let durBadge = (e.peak.dur && DUR_LABELS[e.peak.dur]) ? `<div class="v-badge">⏳ ${DUR_LABELS[e.peak.dur].label}</div>` : '';
-    let stars = e.peak.rating ? `<div class="v-stars">${'⭐️'.repeat(e.peak.rating)}</div>` : '';
-    let note = e.peak.note ? `<div class="v-note"><strong>TL;DR:</strong> ${escapeHtml(e.peak.note)}</div>` : '';
-    let photo = e.peak.photo ? `<img class="v-photo" src="${e.peak.photo}" onclick="openLightbox(this.src); event.stopPropagation();">` : '';
-    
-    let weatherIcon = WEATHER_ICONS[e.peak.weather || 'sun'];
-    let weatherName = WEATHER_NAMES[e.peak.weather || 'sun'];
-    let terrainName = TERRAIN_LABELS[e.peak.terrain || 1];
-
-    viewerHtml = `
-      <div class="viewer-layout">
-         ${photo}
-         <div class="v-content">
-            <div class="v-date">${formatDateView(e.peak.date)}</div>
-            ${statsHtml}
-            <div class="v-badges">
-                <div class="v-badge">🏔️ ${terrainName}</div>
-                <div class="v-badge" title="${weatherName}">${weatherIcon} ${weatherName}</div>
-                ${durBadge}
-                ${stars}
-            </div>
-            ${note}
-         </div>
-      </div>
-    `;
-  } else {
-    viewerHtml = `<div class="empty-state">Na tento vrchol se teprve chystám.</div>`;
-  }
-
-  let adminHtml = '';
-  if (isAdmin) {
-    let diffPills = Object.entries(DIFF_LABELS).map(([k,v]) => {
-      let active = String(e.peak.diff) === k ? 'active' : '';
-      return `<button type="button" class="rating-pill ${active}" style="--rc:${v.color}" onclick="updatePeakProp('${c.id}', 'diff', ${k})" ${disabledAttr}>${v.label}</button>`;
-    }).join('');
-
-    let durPills = Object.entries(DUR_LABELS).map(([k,v]) => {
-      let active = String(e.peak.dur) === k ? 'active' : '';
-      return `<button type="button" class="rating-pill ${active}" style="--rc:var(--accent)" onclick="updatePeakProp('${c.id}', 'dur', ${k})" ${disabledAttr}>${v.label}</button>`;
-    }).join('');
-
-    let terrPills = Object.entries(TERRAIN_LABELS).map(([k,label]) => {
-      let active = String(e.peak.terrain || 1) === k ? 'active' : '';
-      return `<button type="button" class="rating-pill ${active}" style="--rc:var(--accent)" onclick="updatePeakProp('${c.id}', 'terrain', ${k})" ${disabledAttr}>${label}</button>`;
-    }).join('');
-
-    let weathPills = Object.entries(WEATHER_ICONS).map(([k,icon]) => {
-      let active = String(e.peak.weather || 'sun') === k ? 'active' : '';
-      return `<button type="button" class="rating-pill ${active}" style="--rc:var(--accent)" onclick="updatePeakProp('${c.id}', 'weather', '${k}')" title="${WEATHER_NAMES[k]}" ${disabledAttr}>${icon}</button>`;
-    }).join('');
-
-    let starPills = [1,2,3,4,5].map(i => {
-      let op = (e.peak.rating||0) >= i ? '1' : '0.25';
-      return `<span style="cursor:pointer; opacity:${op}; transition:opacity .2s;" onclick="updatePeakProp('${c.id}', 'rating', ${i})">⭐️</span>`;
-    }).join('');
-
-    let photoBtn = `<label class="photo-btn" for="photo-${c.id}">Nahrát fotku</label><input type="file" accept="image/*" id="photo-${c.id}" data-id="${c.id}" style="display:none">`;
-    let photoImg = e.peak.photo ? `<img class="photo-thumb" src="${e.peak.photo}" onclick="openLightbox(this.src); event.stopPropagation();">` : '';
-    let photoExif = e.peak.photoDate ? `<span class="exif-hint">EXIF: ${formatExif(e.peak.photoDate)}</span>` : (e.peak.photo ? `<span class="exif-hint">Fotka bez EXIF data.</span>` : '');
-
-    let displayFields = !e.peak.done ? 'display:none;' : '';
-    let adminStyle = !e.peak.done ? 'border-top:none; margin-top:0; padding-top:10px;' : '';
-
-    adminHtml = `
-      <div class="admin-layout" style="${adminStyle}">
-          <div class="item-top" style="margin-bottom: 16px;">
-            <div class="check peakcheck ${e.peak.done?'checked':''}" data-action="toggle" data-id="${c.id}" data-field="peak">${checkSVG()}</div>
-            <div class="item-label" style="font-weight:600;">Označit vrchol jako zdolaný</div>
-          </div>
-
-          <div class="item-fields" style="${displayFields}">
-            <label class="small">Datum a čas výstupu</label>
-            <input type="datetime-local" data-id="${c.id}" data-field="peak" data-key="date" value="${e.peak.date}" ${disabledAttr}>
-            
-            <label class="small" style="margin-top:6px;">Statistiky z trasy (volitelné)</label>
-            <div class="stats-row">
-              <div class="stat-col">
-                <input type="number" step="0.1" data-id="${c.id}" data-field="peak" data-key="km" value="${e.peak.km||''}" ${disabledAttr} placeholder="Vzdálenost (km)">
-              </div>
-              <div class="stat-col">
-                <input type="number" data-id="${c.id}" data-field="peak" data-key="elevGain" value="${e.peak.elevGain||''}" ${disabledAttr} placeholder="Převýšení (m)">
-              </div>
-              <div class="stat-col">
-                <input type="text" data-id="${c.id}" data-field="peak" data-key="time" value="${e.peak.time||''}" ${disabledAttr} placeholder="Čas (např. 6:30)">
-              </div>
-            </div>
-
-            <label class="small" style="margin-top:6px;">Celková obtížnost</label>
-            <div class="rating-pills">${diffPills}</div>
-
-            <label class="small" style="margin-top:6px;">Délka trasy</label>
-            <div class="rating-pills">${durPills}</div>
-
-            <label class="small" style="margin-top:6px;">Terén</label>
-            <div class="rating-pills">${terrPills}</div>
-
-            <label class="small" style="margin-top:6px;">Počasí</label>
-            <div class="rating-pills">${weathPills}</div>
-
-            <label class="small" style="margin-top:6px;">Hodnocení (Worth it?)</label>
-            <div class="rating-pills" style="font-size:22px; gap:4px;">${starPills}</div>
-
-            <label class="small" style="margin-top:6px;">TL;DR / Shrnutí (1-2 věty)</label>
-            <input type="text" placeholder="Jaké to bylo?..." data-id="${c.id}" data-field="peak" data-key="note" value="${escapeHtml(e.peak.note)}" ${disabledAttr}>
-
-            <label class="small" style="margin-top:6px;">Fotka z vrcholu</label>
-            <div class="photo-row">
-              ${photoBtn}
-              ${photoImg}
-              ${photoExif}
-            </div>
-            
-            <div style="margin-top: 16px; text-align: right;">
-                <button class="clear-link" data-action="clear" data-id="${c.id}">Smazat data o této zemi</button>
-            </div>
-          </div>
-      </div>
-    `;
-  }
-
-  return `
-  <details class="${cardClass}" data-status="${status}" id="card-${c.id}">
-    <summary>
-      <div class="card-head">
-        <span class="chevron">▶</span>
-        <div class="card-titles">
-          <div class="cname">${c.name} ${badgeHtml} ${diffBadgeHtml}</div>
-          <div class="cmeta">${c.peak} (${c.elev} m)</div>
-        </div>
-      </div>
-    </summary>
-    <div class="card-body">
-      ${viewerHtml}
-      ${adminHtml}
-    </div>
-  </details>`;
-}
-
-function renderBonusSection(){
-  const extraList = sortedFilteredList(EXTRA_COUNTRIES);
-  const extraCardsHtml = extraList.map(renderCountryCard).join('');
-  
-  let addBonusHtml = '';
-  if (isAdmin) {
-    addBonusHtml = `
-    <details class="add-form" id="addBonusForm" style="margin-top:20px;">
-      <summary>+ Přidat další vlastní vrchol</summary>
-      <div class="add-form-body">
-        <input type="text" id="bf-name" placeholder="Název vrcholu (např. Ushba)">
-        <input type="text" id="bf-region" placeholder="Region / země (např. Gruzie, Kavkaz)">
-        <input type="number" id="bf-elev" placeholder="Nadmořská výška (m)">
-        <div class="row2">
-          <input type="number" step="0.0001" id="bf-lat" placeholder="Šířka (nepovinné)">
-          <input type="number" step="0.0001" id="bf-lng" placeholder="Délka (nepovinné)">
-        </div>
-        <button id="bf-save" type="button">Uložit vrchol</button>
-      </div>
-    </details>
-    `;
-  }
-
-  return `
-  <div class="bonus-section" style="margin-top: 50px;">
-    <div class="bonus-header">
-      <h2>Vrcholy a zmínky mimo výzvu</h2>
-      <p>Níže najdete další přidané extra cíle a vrcholy, které nejsou v hlavní výzvě počítány.</p>
-    </div>
-    
-    <div id="extraListWrap">${extraCardsHtml}</div>
-    ${addBonusHtml}
-    <div id="bonusListWrap">${getBonusCardsHtml()}</div>
-  </div>`;
-}
-
-function getBonusCardsHtml(){
-  const list = Object.values(bonusState).sort((a,b)=> (b.elev||0)-(a.elev||0));
-  let filteredList = list;
-
-  if (statusFilter === 'done') {
-    filteredList = filteredList.filter(b => b.done);
-  } else if (statusFilter === 'not_done') {
-    filteredList = filteredList.filter(b => !b.done);
-  }
-
-  return filteredList.map(renderBonusCard).join('') || '<p style="color:var(--text-faint);font-size:13px; margin-top:10px;">Zatím žádné další vlastní vrcholy.</p>';
-}
-
-function renderBonusCard(b){
-  const diff = DIFF_LABELS[b.diff] || DIFF_LABELS[1];
-  const disabledAttr = isAdmin ? '' : 'disabled';
-  const diffBadgeHtml = b.done ? `<span class="diff-badge" style="background:${diff.color};color:#111;">${diff.label}</span>` : '';
-
-  let viewerHtml = '';
-  if (b.done) {
-    let statsHtml = '';
-    if (b.km || b.elevGain || b.time) {
-      let kmHtml = b.km ? `<div class="v-stat">🥾 ${b.km} km</div>` : '';
-      let elevHtml = b.elevGain ? `<div class="v-stat">⛰️ ${b.elevGain} m+</div>` : '';
-      let timeHtml = b.time ? `<div class="v-stat">⏱️ ${b.time}</div>` : '';
-      statsHtml = `<div class="v-stats">${kmHtml}${elevHtml}${timeHtml}</div>`;
-    }
-
-    let durBadge = (b.dur && DUR_LABELS[b.dur]) ? `<div class="v-badge">⏳ ${DUR_LABELS[b.dur].label}</div>` : '';
-    let stars = b.rating ? `<div class="v-stars">${'⭐️'.repeat(b.rating)}</div>` : '';
-    let note = b.notes ? `<div class="v-note"><strong>TL;DR:</strong> ${escapeHtml(b.notes)}</div>` : '';
-    let photo = b.photo ? `<img class="v-photo" src="${b.photo}" onclick="openLightbox(this.src)">` : '';
-
-    let weatherIcon = WEATHER_ICONS[b.weather || 'sun'];
-    let weatherName = WEATHER_NAMES[b.weather || 'sun'];
-    let terrainName = TERRAIN_LABELS[b.terrain || 1];
-
-    viewerHtml = `
-      <div class="viewer-layout">
-         ${photo}
-         <div class="v-content">
-            <div class="v-date">${formatDateView(b.date)}</div>
-            ${statsHtml}
-            <div class="v-badges">
-                <div class="v-badge">🏔️ ${terrainName}</div>
-                <div class="v-badge" title="${weatherName}">${weatherIcon} ${weatherName}</div>
-                ${durBadge}
-                ${stars}
-            </div>
-            ${note}
-         </div>
-      </div>
-    `;
-  } else {
-    viewerHtml = `<div class="empty-state">Na tento vrchol se teprve chystám.</div>`;
-  }
-
-  let adminHtml = '';
-  if (isAdmin) {
-    let diffPills = Object.entries(DIFF_LABELS).map(([k,v]) => {
-      let active = String(b.diff) === k ? 'active' : '';
-      return `<button type="button" class="rating-pill ${active}" style="--rc:${v.color}" onclick="updateBonusProp('${b.id}', 'diff', ${k})" ${disabledAttr}>${v.label}</button>`;
-    }).join('');
-
-    let durPills = Object.entries(DUR_LABELS).map(([k,v]) => {
-      let active = String(b.dur) === k ? 'active' : '';
-      return `<button type="button" class="rating-pill ${active}" style="--rc:var(--accent)" onclick="updateBonusProp('${b.id}', 'dur', ${k})" ${disabledAttr}>${v.label}</button>`;
-    }).join('');
-
-    let terrPills = Object.entries(TERRAIN_LABELS).map(([k,label]) => {
-      let active = String(b.terrain || 1) === k ? 'active' : '';
-      return `<button type="button" class="rating-pill ${active}" style="--rc:var(--accent)" onclick="updateBonusProp('${b.id}', 'terrain', ${k})" ${disabledAttr}>${label}</button>`;
-    }).join('');
-
-    let weathPills = Object.entries(WEATHER_ICONS).map(([k,icon]) => {
-      let active = String(b.weather || 'sun') === k ? 'active' : '';
-      return `<button type="button" class="rating-pill ${active}" style="--rc:var(--accent)" onclick="updateBonusProp('${b.id}', 'weather', '${k}')" title="${WEATHER_NAMES[k]}" ${disabledAttr}>${icon}</button>`;
-    }).join('');
-
-    let starPills = [1,2,3,4,5].map(i => {
-      let op = (b.rating||0) >= i ? '1' : '0.25';
-      return `<span style="cursor:pointer; opacity:${op}; transition:opacity .2s;" onclick="updateBonusProp('${b.id}', 'rating', ${i})">⭐️</span>`;
-    }).join('');
-
-    let photoBtn = `<label class="photo-btn" for="bphoto-${b.id}">Nahrát fotku</label><input type="file" accept="image/*" id="bphoto-${b.id}" data-bonusphoto="${b.id}" style="display:none">`;
-    let photoImg = b.photo ? `<img class="photo-thumb" src="${b.photo}" onclick="openLightbox(this.src); event.stopPropagation();">` : '';
-    let photoExif = b.photoDate ? `<span class="exif-hint">EXIF: ${formatExif(b.photoDate)}</span>` : (b.photo ? `<span class="exif-hint">Fotka bez EXIF data.</span>` : '');
-
-    let displayFields = !b.done ? 'display:none;' : '';
-    let adminStyle = !b.done ? 'border-top:none; margin-top:0; padding-top:10px;' : '';
-
-    adminHtml = `
-      <div class="admin-layout" style="${adminStyle}">
-          <div class="item-top" style="margin-bottom: 16px;">
-            <div class="check ${b.done?'checked bonuscheck':''}" data-action="bonus-toggle" data-id="${b.id}">${checkSVG()}</div>
-            <div class="item-label" style="font-weight:600;">Označit vrchol jako zdolaný</div>
-          </div>
-
-          <div class="item-fields" style="${displayFields}">
-            <label class="small">Datum a čas výstupu</label>
-            <input type="datetime-local" data-bonus="${b.id}" data-key="date" value="${b.date}" ${disabledAttr}>
-            
-            <label class="small" style="margin-top:6px;">Statistiky z trasy (volitelné)</label>
-            <div class="stats-row">
-              <div class="stat-col">
-                <input type="number" step="0.1" data-bonus="${b.id}" data-key="km" value="${b.km||''}" ${disabledAttr} placeholder="Vzdálenost (km)">
-              </div>
-              <div class="stat-col">
-                <input type="number" data-bonus="${b.id}" data-key="elevGain" value="${b.elevGain||''}" ${disabledAttr} placeholder="Převýšení (m)">
-              </div>
-              <div class="stat-col">
-                <input type="text" data-bonus="${b.id}" data-key="time" value="${b.time||''}" ${disabledAttr} placeholder="Čas (např. 6:30)">
-              </div>
-            </div>
-
-            <label class="small" style="margin-top:6px;">Celková obtížnost</label>
-            <div class="rating-pills">${diffPills}</div>
-
-            <label class="small" style="margin-top:6px;">Délka trasy</label>
-            <div class="rating-pills">${durPills}</div>
-
-            <label class="small" style="margin-top:6px;">Terén</label>
-            <div class="rating-pills">${terrPills}</div>
-
-            <label class="small" style="margin-top:6px;">Počasí</label>
-            <div class="rating-pills">${weathPills}</div>
-
-            <label class="small" style="margin-top:6px;">Hodnocení (Worth it?)</label>
-            <div class="rating-pills" style="font-size:22px; gap:4px;">${starPills}</div>
-
-            <label class="small" style="margin-top:6px;">TL;DR / Shrnutí</label>
-            <input type="text" data-bonus="${b.id}" data-key="notes" value="${escapeHtml(b.notes)}" placeholder="poznámky…" ${disabledAttr}>
-            
-            <label class="small" style="margin-top:6px;">Fotka z vrcholu</label>
-            <div class="photo-row">
-              ${photoBtn}
-              ${photoImg}
-              ${photoExif}
-            </div>
-            
-            <div style="margin-top: 16px; text-align: right;">
-                <button class="clear-link" data-action="bonus-delete" data-id="${b.id}">Smazat vrchol</button>
-            </div>
-          </div>
-      </div>
-    `;
-  }
-
-  return `
-  <details class="country-card bonus-card" data-status="${b.done?'full':'none'}" id="bonus-${b.id}">
-    <summary>
-      <div class="card-head">
-        <span class="chevron">▶</span>
-        <div class="card-titles">
-          <div class="cname">${escapeHtml(b.name)} ${diffBadgeHtml}</div>
-          <div class="cmeta">${escapeHtml(b.region)}${b.elev?' · '+b.elev+' m':''}</div>
-        </div>
-      </div>
-    </summary>
-    <div class="card-body">
-      ${viewerHtml}
-      ${adminHtml}
-    </div>
-  </details>`;
-}
-
-/* ============================= RENDER & EVENTS ============================= */
-function renderAll(){
-  updateHeroInPlace();
-  document.getElementById('toolbarWrap').innerHTML = renderToolbar();
-  
-  const list = sortedFilteredList(COUNTRIES);
-  
-  document.getElementById('listWrap').innerHTML = list.map(renderCountryCard).join('');
-  document.getElementById('bonusSectionWrap').innerHTML = renderBonusSection();
-  
-  document.getElementById('countPill').textContent = list.length + ' / ' + COUNTRIES.length + ' zemí';
-  document.getElementById('adminPanelWrap').innerHTML = renderAdminPanel();
-
-  attachBaseEvents();
-  attachListEvents();
-  attachBonusEvents();
-}
-
-function attachBaseEvents(){
-  document.getElementById('searchInput').addEventListener('input', (ev)=>{
-    filterText = ev.target.value;
-    const list = sortedFilteredList(COUNTRIES);
-    document.getElementById('listWrap').innerHTML = list.map(renderCountryCard).join('');
-    
-    const extraList = sortedFilteredList(EXTRA_COUNTRIES);
-    const extraWrap = document.getElementById('extraListWrap');
-    if(extraWrap) extraWrap.innerHTML = extraList.map(renderCountryCard).join('');
-    
-    document.getElementById('countPill').textContent = list.length + ' / ' + COUNTRIES.length + ' zemí';
-    attachListEvents();
-  });
-  document.getElementById('sortSelect').addEventListener('change', (ev)=>{ sortMode = ev.target.value; renderAll(); });
-  document.getElementById('filterSelect').addEventListener('change', (ev)=>{ statusFilter = ev.target.value; renderAll(); });
-}
-
-function attachListEvents(){
-  document.querySelectorAll('[data-action="toggle"]').forEach(el=>{
-    el.addEventListener('click', async (ev)=>{
-      ev.preventDefault();
-      ev.stopPropagation();
-      if(!isAdmin) { alert("Jsi v režimu prohlížení (Guest mode). Pro úpravy se musíš přihlásit dole na stránce."); return; }
-
-      const id = el.dataset.id, field = el.dataset.field;
-      const e = getEntry(id);
-      e[field].done = !e[field].done;
-      if(e[field].done && !e.peak.date) e.peak.date = new Date().toISOString().slice(0,16);
-      
-      await handleSyncAndSave(id); 
-      
-      preserveOpenAndRerenderList(id);
-      updateHeroInPlace();
-      refreshMap();
-    });
-  });
-  document.querySelectorAll('.card-body input[type="date"], .card-body input[type="datetime-local"], .card-body input[type="text"], .card-body input[type="number"], .card-body select').forEach(el=>{
-    if(el.dataset.bonus) return;
-    el.addEventListener('change', async ()=>{
-      if(!isAdmin) return;
-      const id = el.dataset.id, field = el.dataset.field, key = el.dataset.key;
-      if(!field) return;
-      const e = getEntry(id);
-      e[field][key] = el.value;
-      
-      await handleSyncAndSave(id); 
-      
-      preserveOpenAndRerenderList(id);
-      updateHeroInPlace();
-      refreshMap();
-    });
-  });
-  document.querySelectorAll('input[type="file"][data-id]').forEach(el=>{
-    el.addEventListener('change', (ev)=> handlePhoto(ev, el.dataset.id, 'country'));
-  });
-  document.querySelectorAll('[data-action="clear"]').forEach(el=>{
-    el.addEventListener('click', ()=> { 
-      if(!isAdmin) return;
-      if(confirm('Opravdu smazat všechna uložená data pro tuto zemi?')) clearEntry(el.dataset.id); 
-    });
-  });
-}
-
-function preserveOpenAndRerenderList(id){
-  const card = document.getElementById('card-'+id);
-  const wasOpen = card ? card.hasAttribute('open') : false;
-  
-  document.getElementById('listWrap').innerHTML = sortedFilteredList(COUNTRIES).map(renderCountryCard).join('');
-  
-  const extraWrap = document.getElementById('extraListWrap');
-  if(extraWrap) extraWrap.innerHTML = sortedFilteredList(EXTRA_COUNTRIES).map(renderCountryCard).join('');
-  
-  attachListEvents();
-  if(wasOpen){ const c2 = document.getElementById('card-'+id); if(c2) c2.setAttribute('open',''); }
-}
-
-function attachBonusEvents(){
-  const saveBtn = document.getElementById('bf-save');
-  if(saveBtn){
-    saveBtn.addEventListener('click', async ()=>{
-      if(!isAdmin) return;
-      const name = document.getElementById('bf-name').value.trim();
-      if(!name){ alert('Zadej název vrcholu.'); return; }
-      const b = emptyBonus();
-      b.id = genId();
-      b.name = name;
-      b.region = document.getElementById('bf-region').value.trim();
-      b.elev = document.getElementById('bf-elev').value.trim();
-      b.lat = document.getElementById('bf-lat').value.trim();
-      b.lng = document.getElementById('bf-lng').value.trim();
-      bonusState[b.id] = b;
-      await saveBonus(b.id);
-      
-      document.getElementById('bf-name').value = '';
-      document.getElementById('bf-region').value = '';
-      document.getElementById('bf-elev').value = '';
-      document.getElementById('bf-lat').value = '';
-      document.getElementById('bf-lng').value = '';
-      
-      document.getElementById('bonusListWrap').innerHTML = getBonusCardsHtml();
-      attachBonusEvents();
-      updateHeroInPlace();
-      refreshMap();
-    });
-  }
-  document.querySelectorAll('[data-action="bonus-toggle"]').forEach(el=>{
-    el.addEventListener('click', async (ev)=>{
-      ev.preventDefault();
-      ev.stopPropagation();
-      if(!isAdmin) { alert("Jsi v režimu prohlížení (Guest mode). Pro úpravy se musíš přihlásit dole na stránce."); return; }
-
-      const id = el.dataset.id;
-      const b = bonusState[id];
-      b.done = !b.done;
-      if(b.done && !b.date) b.date = new Date().toISOString().slice(0,16);
-      await saveBonus(id);
-      
-      const card = document.getElementById('bonus-'+id);
-      const wasOpen = card ? card.hasAttribute('open') : false;
-      document.getElementById('bonusListWrap').innerHTML = getBonusCardsHtml();
-      attachBonusEvents();
-      if(wasOpen){ const c2=document.getElementById('bonus-'+id); if(c2) c2.setAttribute('open',''); }
-      updateHeroInPlace();
-      refreshMap();
-    });
-  });
-  document.querySelectorAll('[data-bonus]').forEach(el=>{
-    if(el.type === 'button') return;
-    el.addEventListener('change', async ()=>{
-      if(!isAdmin) return;
-      const id = el.dataset.bonus, key = el.dataset.key;
-      bonusState[id][key] = el.value;
-      await saveBonus(id);
-      const card = document.getElementById('bonus-'+id);
-      const wasOpen = card ? card.hasAttribute('open') : false;
-      document.getElementById('bonusListWrap').innerHTML = getBonusCardsHtml();
-      attachBonusEvents();
-      if(wasOpen){ const c2=document.getElementById('bonus-'+id); if(c2) c2.setAttribute('open',''); }
-      refreshMap();
-    });
-  });
-  document.querySelectorAll('input[type="file"][data-bonusphoto]').forEach(el=>{
-    el.addEventListener('change', (ev)=> handlePhoto(ev, el.dataset.bonusphoto, 'bonus'));
-  });
-  document.querySelectorAll('[data-action="bonus-delete"]').forEach(el=>{
-    el.addEventListener('click', ()=> { 
-      if(!isAdmin) return;
-      if(confirm('Opravdu smazat tento vrchol?')) deleteBonus(el.dataset.id); 
-    });
-  });
-}
-
-/* ============================= PHOTO ============================= */
-async function handlePhoto(ev, id, kind){
-  if(!isAdmin) return;
-  const fileInput = ev.target;
-  let file = fileInput.files[0];
-  if(!file) return;
-
-  let isConverted = false;
-
-  if (file.name.toLowerCase().endsWith('.heic') || file.name.toLowerCase().endsWith('.heif') || file.type === 'image/heic') {
-    try {
-      showSaving(true);
-      const ind = document.getElementById('saveIndicator');
-      if(ind) ind.textContent = 'Zpracovávám HEIC…';
-      
-      const convertedBlob = await heic2any({ blob: file, toType: "image/jpeg", quality: 0.8 });
-      const convertedFile = Array.isArray(convertedBlob) ? convertedBlob[0] : convertedBlob;
-      file = new File([convertedFile], file.name.replace(/\.heic$/i, '.jpg').replace(/\.heif$/i, '.jpg'), { type: 'image/jpeg' });
-      isConverted = true;
-      
-      showSaving(false);
-    } catch (e) {
-      console.error("HEIC konverze selhala", e);
-      alert("Nepodařilo se zpracovat formát HEIC z iPhonu. Zkuste nahrát klasický JPEG.");
-      showSaving(false);
-      fileInput.value = '';
-      return;
-    }
-  }
-
-  let finished = false;
-  const proceed = (exifDateStr) => {
-    if(finished) return;
-    finished = true;
-    finishPhotoProcessing(file, id, exifDateStr, kind);
-    fileInput.value = ''; 
-  };
-
-  if (isConverted) {
-    proceed("");
-    return;
-  }
-
-  try{
-    EXIF.getData(file, function(){
-      const raw = EXIF.getTag(this, "DateTimeOriginal") || EXIF.getTag(this, "DateTime");
-      let exifDateStr = "";
-      if(raw){
-        const iso = raw.replace(/^(\d{4}):(\d{2}):(\d{2})/, '$1-$2-$3').replace(' ', 'T').slice(0,16);
-        exifDateStr = iso;
-      }
-      proceed(exifDateStr);
-    });
-    setTimeout(() => proceed(""), 1500);
-  }catch(e){ 
-    proceed(""); 
-  }
-}
-
-function finishPhotoProcessing(file, id, exifDateStr, kind){
-  const reader = new FileReader();
-  reader.onload = function(ev){
-    const img = new Image();
-    img.onload = async function(){
-      const maxW = 900;
-      const scale = Math.min(1, maxW / img.width);
-      const canvas = document.createElement('canvas');
-      canvas.width = img.width * scale;
-      canvas.height = img.height * scale;
-      const ctx = canvas.getContext('2d');
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-      const dataUrl = canvas.toDataURL('image/jpeg', 0.6);
-
-      if(kind==='country'){
-        const e = getEntry(id);
-        e.peak.photo = dataUrl;
-        e.peak.photoDate = exifDateStr;
-        if(exifDateStr && !e.peak.date) e.peak.date = exifDateStr;
-        
-        await handleSyncAndSave(id); 
-        preserveOpenAndRerenderList(id);
-      } else {
-        const b = bonusState[id];
-        b.photo = dataUrl;
-        b.photoDate = exifDateStr;
-        if(exifDateStr && !b.date) b.date = exifDateStr;
-        await saveBonus(id);
-        const card = document.getElementById('bonus-'+id);
-        const wasOpen = card ? card.hasAttribute('open') : false;
-        document.getElementById('bonusListWrap').innerHTML = getBonusCardsHtml();
-        attachBonusEvents();
-        if(wasOpen){ const c2=document.getElementById('bonus-'+id); if(c2) c2.setAttribute('open',''); }
-      }
-    };
-    img.src = ev.target.result;
-  };
-  reader.readAsDataURL(file);
-}
-
-/* ============================= INIT ============================= */
-(async function init(){
-  await Promise.all([loadAll(), loadGeoJson()]);
-  document.getElementById('loadingMsg').style.display = 'none';
-  document.getElementById('appContent').style.display = 'block';
-  renderAll();
-  initMap();
+(async()=>{
+  try{D=await (await fetch("data.json",{cache:"no-cache"})).json()}catch(e){document.querySelector("main").insertAdjacentHTML("afterbegin",'<p class="wrap pending">Data se nepodařilo načíst. Zkus stránku obnovit.</p>');return}
+  render();
+  if(window.d3&&window.topojson)drawMap();else $("mapnote").textContent="Mapu se nepodařilo načíst.";
 })();
 </script>
 </body>

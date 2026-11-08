@@ -1,0 +1,98 @@
+{
+  "updated": "2026-11-08",
+  "instagram": "https://www.instagram.com/adrian.schram/",
+  "deadline": "2032-04-30",
+  "peaks": {
+    "czechia": {
+      "status": "done",
+      "date": null,
+      "photo": null,
+      "tldr": null,
+      "post": null
+    },
+    "poland": {
+      "status": "done",
+      "date": null,
+      "photo": null,
+      "tldr": null,
+      "post": null
+    },
+    "germany": {
+      "status": "done",
+      "date": null,
+      "photo": null,
+      "tldr": null,
+      "post": null
+    },
+    "hungary": {
+      "status": "planned",
+      "when": "listopad 2026"
+    },
+    "ukraine": {
+      "status": "planned",
+      "when": "prosinec 2026",
+      "tldr": "Zimní výstup z Vorochty přes horskou základnu Zarosljak. Bez auta, jen vlaky a autobusy.",
+      "logistics": {
+        "plan": true,
+        "doprava": "RegioJet z Prahy do Přemyšlu (noční vlak), autobus do Ivano-Frankivsku a vlak do Vorochty. Zpátky vlakem do Lvova a RegioJetem domů.",
+        "trasa": "Z Vorochty pěšky asi 20 km na základnu Zarosljak. Druhý den brzy ráno výstup na vrchol (asi 3 h nahoru) a sestup zpět do Vorochty.",
+        "ubytovani": "Vorochta: apartmán na 2 noci. Zarosljak: státní horská základna, otevřená celý rok, registrace s pasem.",
+        "cena": {
+          "total": 3099,
+          "note": "na osobu, odhad; bez jídla zhruba 2 100 Kč",
+          "items": [
+            ["RegioJet tam", 524],
+            ["Vlak do Vorochty", 65],
+            ["Ubytování ve Vorochtě (2 noci)", 619],
+            ["Nákup na horu", 600],
+            ["Základna Zarosljak", 180],
+            ["Vlak do Lvova", 97],
+            ["Jídlo ve Lvově", 400],
+            ["RegioJet zpět", 614]
+          ]
+        },
+        "tipy": [
+          "V zimě nutně mačky. Před výstupem zkontrolovat lavinovou předpověď a zeptat se horské služby na Zarosljaku.",
+          "Na Zarosljaku se hlásí horské službě a registruje se pas.",
+          "Na Ukrajině platí zákaz vycházení od půlnoci do 5:00, plánovat přesuny tak, aby se stihly.",
+          "Jízdní řády vlaků se v prosinci mění, ověřit pár dní předem."
+        ]
+      }
+    }
+  },
+  "extras": [
+    {
+      "id": "aragac",
+      "country": "Arménie",
+      "peak": "Aragac",
+      "elev": 4090,
+      "lat": 40.5377,
+      "lng": 44.1907,
+      "status": "done",
+      "date": null,
+      "photo": null,
+      "tldr": null
+    },
+    {
+      "id": "kazbek",
+      "country": "Gruzie",
+      "peak": "Kazbek",
+      "elev": 5054,
+      "lat": 42.6972,
+      "lng": 44.5194,
+      "status": "attempt",
+      "date": "2025",
+      "reached": "chata Bethlemi (3 653 m)",
+      "tldr": "Otočili jsme se u chaty Bethlemi. Po přehodnocení situace jsme dál nešli. Druhý pokus je v plánu na červenec 2027."
+    }
+  ],
+  "plan": [
+    {"when": "listopad 2026", "what": "Kékes", "where": "Maďarsko"},
+    {"when": "prosinec 2026", "what": "Hoverla", "where": "Ukrajina", "note": "zimní výstup"},
+    {"when": "jaro 2027", "what": "Kneiff, Signal de Botrange, Vaalserberg", "where": "Lucembursko, Belgie, Nizozemsko"},
+    {"when": "červenec 2027", "what": "Kazbek", "where": "Gruzie", "note": "druhý pokus, trénink na Mont Blanc"},
+    {"when": "srpen 2027", "what": "Triglav, Grossglockner", "where": "Slovinsko, Rakousko"},
+    {"when": "září 2027", "what": "Mont Blanc", "where": "Francie / Itálie", "note": "první pokus přes Goûter"},
+    {"when": "2028", "what": "Dufourspitze, Elbrus", "where": "Švýcarsko, Rusko"}
+  ]
+}
