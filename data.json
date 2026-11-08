@@ -6,23 +6,26 @@
     "czechia": {
       "status": "done",
       "date": null,
-      "photo": "photos/snezka.jpg",
+      "photo": "photos/snezka-wide.jpg",
       "tldr": null,
-      "post": null
+      "post": null,
+      "full": "photos/snezka-full.jpg"
     },
     "poland": {
       "status": "done",
       "date": null,
-      "photo": "photos/rysy.jpg",
+      "photo": "photos/rysy-wide.jpg",
       "tldr": null,
-      "post": null
+      "post": null,
+      "full": "photos/rysy-full.jpg"
     },
     "germany": {
       "status": "done",
       "date": null,
-      "photo": "photos/zugspitze.jpg",
+      "photo": "photos/zugspitze-wide.jpg",
       "tldr": null,
-      "post": null
+      "post": null,
+      "full": "photos/zugspitze-full.jpg"
     },
     "hungary": {
       "status": "planned",
@@ -94,9 +97,10 @@
       "lng": 44.1907,
       "status": "done",
       "date": null,
-      "photo": "photos/aragac.jpg",
+      "photo": "photos/aragac-wide.jpg",
       "tldr": null,
-      "cc": "am"
+      "cc": "am",
+      "full": "photos/aragac-full.jpg"
     },
     {
       "id": "kazbek",
@@ -110,7 +114,8 @@
       "reached": "chata Bethlemi (3 653 m)",
       "tldr": "Otočili jsme se u chaty Bethlemi. Po přehodnocení situace jsme dál nešli. Druhý pokus je v plánu na červenec 2027.",
       "cc": "ge",
-      "photo": "photos/kazbek.jpg"
+      "photo": "photos/kazbek-wide.jpg",
+      "full": "photos/kazbek-full.jpg"
     }
   ],
   "plan": [
