@@ -6,23 +6,26 @@
     "czechia": {
       "status": "done",
       "date": null,
-      "photo": null,
+      "photo": "photos/snezka.jpg",
       "tldr": null,
-      "post": null
+      "post": null,
+      "focus": "50% 75%"
     },
     "poland": {
       "status": "done",
       "date": null,
-      "photo": null,
+      "photo": "photos/rysy.jpg",
       "tldr": null,
-      "post": null
+      "post": null,
+      "focus": "50% 55%"
     },
     "germany": {
       "status": "done",
       "date": null,
-      "photo": null,
+      "photo": "photos/zugspitze.jpg",
       "tldr": null,
-      "post": null
+      "post": null,
+      "focus": "50% 70%"
     },
     "hungary": {
       "status": "planned",
@@ -41,14 +44,38 @@
           "total": 3099,
           "note": "na osobu, odhad; bez jídla zhruba 2 100 Kč",
           "items": [
-            ["RegioJet tam", 524],
-            ["Vlak do Vorochty", 65],
-            ["Ubytování ve Vorochtě (2 noci)", 619],
-            ["Nákup na horu", 600],
-            ["Základna Zarosljak", 180],
-            ["Vlak do Lvova", 97],
-            ["Jídlo ve Lvově", 400],
-            ["RegioJet zpět", 614]
+            [
+              "RegioJet tam",
+              524
+            ],
+            [
+              "Vlak do Vorochty",
+              65
+            ],
+            [
+              "Ubytování ve Vorochtě (2 noci)",
+              619
+            ],
+            [
+              "Nákup na horu",
+              600
+            ],
+            [
+              "Základna Zarosljak",
+              180
+            ],
+            [
+              "Vlak do Lvova",
+              97
+            ],
+            [
+              "Jídlo ve Lvově",
+              400
+            ],
+            [
+              "RegioJet zpět",
+              614
+            ]
           ]
         },
         "tipy": [
@@ -87,12 +114,43 @@
     }
   ],
   "plan": [
-    {"when": "listopad 2026", "what": "Kékes", "where": "Maďarsko"},
-    {"when": "prosinec 2026", "what": "Hoverla", "where": "Ukrajina", "note": "zimní výstup"},
-    {"when": "jaro 2027", "what": "Kneiff, Signal de Botrange, Vaalserberg", "where": "Lucembursko, Belgie, Nizozemsko"},
-    {"when": "červenec 2027", "what": "Kazbek", "where": "Gruzie", "note": "druhý pokus, trénink na Mont Blanc"},
-    {"when": "srpen 2027", "what": "Triglav, Grossglockner", "where": "Slovinsko, Rakousko"},
-    {"when": "září 2027", "what": "Mont Blanc", "where": "Francie / Itálie", "note": "první pokus přes Goûter"},
-    {"when": "2028", "what": "Dufourspitze, Elbrus", "where": "Švýcarsko, Rusko"}
+    {
+      "when": "listopad 2026",
+      "what": "Kékes",
+      "where": "Maďarsko"
+    },
+    {
+      "when": "prosinec 2026",
+      "what": "Hoverla",
+      "where": "Ukrajina",
+      "note": "zimní výstup"
+    },
+    {
+      "when": "jaro 2027",
+      "what": "Kneiff, Signal de Botrange, Vaalserberg",
+      "where": "Lucembursko, Belgie, Nizozemsko"
+    },
+    {
+      "when": "červenec 2027",
+      "what": "Kazbek",
+      "where": "Gruzie",
+      "note": "druhý pokus, trénink na Mont Blanc"
+    },
+    {
+      "when": "srpen 2027",
+      "what": "Triglav, Grossglockner",
+      "where": "Slovinsko, Rakousko"
+    },
+    {
+      "when": "září 2027",
+      "what": "Mont Blanc",
+      "where": "Francie / Itálie",
+      "note": "první pokus přes Goûter"
+    },
+    {
+      "when": "2028",
+      "what": "Dufourspitze, Elbrus",
+      "where": "Švýcarsko, Rusko"
+    }
   ]
 }
