@@ -75,10 +75,11 @@ h1 span{color:var(--green)}
 .tip.show{opacity:1}
 .mapnote{font-size:13px;color:var(--mute);padding:10px 14px;border-top:1px solid var(--line)}
 /* peak cards */
-.cards{display:grid;gap:16px;margin-top:16px}
-.pc{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:grid}
-.pc .photo{aspect-ratio:4/5;overflow:hidden;background:var(--land2);display:grid;place-items:center;color:var(--mute);font-size:14px;max-width:100%}
-.pc .photo img{width:100%;height:100%;object-fit:cover;object-position:50% 30%;display:block;cursor:zoom-in}
+.cards{display:grid;gap:16px;margin-top:16px;grid-template-columns:repeat(auto-fill,minmax(min(100%,380px),1fr));align-items:start}
+.pc{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:grid;scroll-margin-top:16px;transition:box-shadow .3s}
+.pc:target{box-shadow:0 0 0 3px var(--green)}
+.pc .photo{aspect-ratio:16/9;overflow:hidden;background:var(--land2);display:grid;place-items:center;color:var(--mute);font-size:14px;max-width:100%}
+.pc .photo img{width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in}
 .pc .body{padding:16px 18px 18px;display:grid;gap:10px;min-width:0}
 .pc .head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
 .pc h3{font-weight:800;font-stretch:85%;font-size:26px;line-height:1.05;text-transform:uppercase}
@@ -118,7 +119,15 @@ details.logi summary:focus-visible{outline:2px solid var(--blue);outline-offset:
 .filters button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
 .filters button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 .clist{list-style:none;padding:0;margin:14px 0 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:0 24px}
-.clist li{display:grid;grid-template-columns:24px minmax(0,1fr) auto;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line)}
+.clist li{border-bottom:1px solid var(--line)}
+.clist .row{display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:10px;align-items:center;padding:9px 0;text-decoration:none;color:inherit}
+.clist a.row:hover .n,.clist a.row:focus-visible .n{color:var(--green);text-decoration:underline}
+.clist a.row::after{content:"→";grid-column:3;grid-row:1;justify-self:end;margin-left:8px;color:var(--green);display:none}
+.flag{width:28px;height:20px;border-radius:3px;object-fit:cover;box-shadow:0 0 0 1px var(--line);display:block}
+.flag.off{filter:grayscale(1);opacity:.55}
+.tag{display:inline-block;font:600 10.5px/1 var(--body);letter-spacing:.05em;text-transform:uppercase;background:var(--blue);color:var(--white);border-radius:4px;padding:3px 5px;margin-left:6px;vertical-align:2px}
+.tag.y{background:var(--yellow);color:var(--deep)}
+.pc .country .flag{display:inline-block;width:20px;height:14px;vertical-align:-2px;margin-right:4px}
 .clist .n{font-weight:600;line-height:1.2}
 .clist .p{font-size:13px;color:var(--mute)}
 .clist .e{font:500 13px var(--mono);color:var(--mute)}
@@ -126,7 +135,6 @@ footer{padding-block:30px 50px;color:var(--mute);font-size:13px;border-top:1px s
 #lightbox{position:fixed;inset:0;background:rgba(0,0,0,.88);display:grid;place-items:center;padding:20px;z-index:20}
 #lightbox img{max-width:100%;max-height:100%;border-radius:8px}
 @media (max-width:520px){.timeline li{grid-template-columns:24px minmax(0,1fr)}.timeline .when{grid-column:2;order:-1;margin-bottom:-10px}.timeline .mk{grid-row:1/3;padding-top:4px}}
-@media (min-width:760px){.pc{grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr)}.pc .photo{aspect-ratio:4/5;align-self:start}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
@@ -206,7 +214,7 @@ footer{padding-block:30px 50px;color:var(--mute);font-size:13px;border-top:1px s
   <section class="wrap" id="mimo" hidden>
     <span class="kicker">Mimo výzvu</span>
     <h2>Další vrcholy</h2>
-    <p class="sub">Kavkaz a další hory, které nepatří do Koruny Evropy, ale patří k cestě.</p>
+    <p class="sub">Kavkaz nepatří do Koruny Evropy, ale patří k cestě. I s otočkami.</p>
     <div class="cards" id="extras"></div>
   </section>
 </main>
@@ -267,6 +275,8 @@ const COUNTRIES = [
 ["uk","GBR","Spojené království","Ben Nevis","ben_nevis",1345,56.7969,-5.0036,826],
 ["vatican","VAT","Vatikán","Vatikánský pahorek","vatican_hill",75,41.9022,12.4534,336]
 ].map(r=>({id:r[0],iso:r[1],name:r[2],peak:r[3],peakId:r[4],elev:r[5],lat:r[6],lng:r[7],num:r[8]}));
+const ISO2={albania:"al",andorra:"ad",austria:"at",belarus:"by",belgium:"be",bosnia:"ba",bulgaria:"bg",croatia:"hr",czechia:"cz",denmark:"dk",estonia:"ee",finland:"fi",france:"fr",germany:"de",greece:"gr",hungary:"hu",iceland:"is",ireland:"ie",italy:"it",kosovo:"xk",latvia:"lv",liechtenstein:"li",lithuania:"lt",luxembourg:"lu",malta:"mt",moldova:"md",monaco:"mc",montenegro:"me",netherlands:"nl",nmacedonia:"mk",norway:"no",poland:"pl",prt_main:"pt",romania:"ro",russia:"ru",sanmarino:"sm",serbia:"rs",slovakia:"sk",slovenia:"si",esp_main:"es",sweden:"se",switzerland:"ch",turkey:"tr",ukraine:"ua",uk:"gb",vatican:"va"};
+const flag=cc=>`https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/flags/4x3/${cc}.svg`;
 const SHARED={france:"italy",italy:"france",albania:"nmacedonia",nmacedonia:"albania"};
 const DIFF={1:["Snadná","#4f9a5c"],2:["Střední","#c9a227"],3:["Náročnější","#d9822b"],4:["Těžká","#c9473b"],5:["Extrém","#7d4a8a"]};
 const TERRAIN={1:"Vyšlapaná cesta",2:"Horský terén",3:"Suť a skály",4:"Ferrata, lezení",5:"Sníh, ledovec"};
@@ -299,10 +309,10 @@ function card(o){
     ${L.tipy?.length?`<div><h4>Tipy a výbava</h4><ul>${L.tipy.map(t=>`<li>${esc(t)}</li>`).join("")}</ul></div>`:""}
     </div></details>`}
   const when=o.status==="planned"?(o.when?"plán: "+esc(o.when):"v plánu"):o.status==="attempt"?("pokus "+(fdate(o.date)||"")+(o.reached?" · došel jsem na "+esc(o.reached):"")):(fdate(o.date)||"datum doplním");
-  return `<article class="pc">
-    <div class="photo">${o.photo?`<img src="${esc(o.photo)}"${o.focus?` style="object-position:${esc(o.focus)}"`:""} alt="${esc(o.peak)}, ${esc(o.country)}" loading="lazy">`:`<span>${o.status==="done"?"Fotka brzy":"Fotka po výstupu"}</span>`}</div>
+  return `<article class="pc" id="v-${esc(o.cid||o.id)}">
+    ${o.photo?`<div class="photo"><img src="${esc(o.photo)}" alt="${esc(o.peak)}, ${esc(o.country)}" loading="lazy"></div>`:""}
     <div class="body">
-      <div class="head"><div><h3>${esc(o.peak)}</h3><div class="country"><i class="mark s-${o.status}"></i> ${esc(o.country)}</div></div>
+      <div class="head"><div><h3>${esc(o.peak)}</h3><div class="country">${o.cc?`<img class="flag" src="${flag(o.cc)}" alt="">`:""}${esc(o.country)}</div></div>
       <div class="elev num">${mfmt(o.elev)}<small>${when}</small></div></div>
       ${chips?`<div class="chips">${chips}</div>`:""}
       ${figs?`<div class="figs">${figs}</div>`:""}
@@ -311,7 +321,7 @@ function card(o){
       ${logi}
     </div></article>`;
 }
-function obj(c,e){return {...e,peak:c.peak,country:SHARED[c.id]&&e===D.peaks[SHARED[c.id]]?c.name:c.name,elev:c.elev,status:status(c)}}
+function obj(c,e){return {...e,cid:c.id,cc:ISO2[c.id],peak:c.peak,country:SHARED[c.id]&&e===D.peaks[SHARED[c.id]]?c.name:c.name,elev:c.elev,status:status(c)}}
 
 function render(){
   // unique peaks
@@ -336,16 +346,16 @@ function render(){
   const planned=byStatus("planned").filter(o=>o.logistics||o.tldr);
   $("planned").innerHTML=planned.map(card).join("");$("chystane").hidden=!planned.length;
   const ext=(D.extras||[]).map(x=>({...x}));
-  const att=byStatus("attempt").concat(ext.filter(x=>x.status==="attempt"));
+  const att=byStatus("attempt");
   $("attempts").innerHTML=att.map(card).join("");$("pokusy").hidden=!att.length;
-  const exd=ext.filter(x=>x.status!=="attempt");
+  const exd=ext.slice().sort((a,b)=>(a.status==="attempt")-(b.status==="attempt"));
   $("extras").innerHTML=exd.map(card).join("");$("mimo").hidden=!exd.length;
   renderList("all");
   $("updated").textContent="Aktualizováno "+fdate(D.updated);
 }
 function renderList(f){
   const rows=COUNTRIES.slice().sort((a,b)=>a.name.localeCompare(b.name,"cs")).filter(c=>{const s=status(c);return f==="all"||(f==="todo"?(s==="todo"||s==="attempt"):s===f)});
-  $("clist").innerHTML=rows.map(c=>`<li><i class="mark s-${status(c)}" title=""></i><div><div class="n">${esc(c.name)}</div><div class="p">${esc(c.peak)}</div></div><span class="e">${c.elev.toLocaleString("cs-CZ")} m</span></li>`).join("")||`<li><span></span><span class="p">Nic tu není.</span></li>`;
+  $("clist").innerHTML=rows.map(c=>{const s=status(c),tgt=D.peaks[c.id]?c.id:SHARED[c.id];const inner=`<img class="flag${s==="done"?"":" off"}" src="${flag(ISO2[c.id])}" alt="" loading="lazy"><div><div class="n">${esc(c.name)}${s==="planned"?'<span class="tag">v přípravě</span>':s==="attempt"?'<span class="tag y">pokus</span>':""}</div><div class="p">${esc(c.peak)}${s==="done"?" · zdoláno":""}</div></div><span class="e">${c.elev.toLocaleString("cs-CZ")} m</span>`;return `<li>${s==="done"?`<a class="row" href="#v-${tgt}">${inner}</a>`:`<div class="row">${inner}</div>`}</li>`}).join("")||`<li><span></span><span class="p">Nic tu není.</span></li>`;
 }
 $("filters").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;[...$("filters").children].forEach(x=>x.setAttribute("aria-pressed",x===b));renderList(b.dataset.f)});
 document.addEventListener("click",e=>{const im=e.target.closest(".pc .photo img");const lb=$("lightbox");
