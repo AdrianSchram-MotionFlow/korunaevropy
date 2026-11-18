@@ -168,7 +168,6 @@
           {
             "id": "praha",
             "nazev": "Z Prahy autem",
-            "doprava": "Autem z Prahy po D11 přes Hradec Králové a Trutnov do Pece pod Sněžkou, asi 180 km a 2,5 h jedna cesta. Parkování na P3-C přímo v Peci.",
             "trasa": "Z Pece přes Boudu Růžohorky na vrchol a stejnou cestou zpět. 12,9 km a 901 m převýšení, žádné technické úseky.",
             "ubytovani": "Bez přespání, celé za jeden den.",
             "cena": {
@@ -184,7 +183,25 @@
                 ]
               ],
               "extra": "Bez dálniční známky (roční máme). Bez ní 10denní za 300 Kč, tedy +150 Kč na osobu."
-            }
+            },
+            "timeline": [
+              [
+                "Ne 6. 9. dopoledne",
+                "Z Prahy Corollou po D11 přes Hradec Králové a Trutnov do Pece pod Sněžkou, asi 2,5 h. Parkování na P3-C."
+              ],
+              [
+                "14:18",
+                "Start z Pece přes Boudu Růžohorky nahoru na Sněžku. Skoro nikoho jsme nepotkali."
+              ],
+              [
+                "Vrchol",
+                "Na Sněžce za dokonalého počasí jen pár skupinek."
+              ],
+              [
+                "Večer",
+                "Stejnou cestou dolů k autu a domů do Prahy."
+              ]
+            ]
           }
         ],
         "tipy": [
@@ -206,7 +223,10 @@
         "time": "~10 h"
       },
       "diff": 3,
-      "terrain": 3,
+      "terrain": [
+        1,
+        3
+      ],
       "detail": [
         [
           "Záznam",
@@ -494,7 +514,6 @@
           {
             "id": "nase",
             "nazev": "Naše cesta · z Nového Jíčína",
-            "doprava": "Ve čtyřech Corollou z Nového Jíčína (přespání u rodiny) přes Čadcu a Žilinu na Štrbské pleso, asi 230 km a 3 h. K tomu drobné přesuny mezi kempem, parkovištěm a Lidlem, asi 50 km. Zpátky stejně přes Žilinu.",
             "trasa": "Ze Štrbského plesa po magistrále k Popradskému plesu, Mengusovskou dolinou k Chatě pod Rysmi a na vrchol. Zpět stejnou cestou. Asi 20 km, 1 200 m převýšení a 10 h.",
             "ubytovani": "Kemp ATC Tatranská Štrba: 4 × 6 € osoba + 7 € stan + 4 × 2 € místní poplatek = 37 € za noc pro čtyři.",
             "cena": {
@@ -526,12 +545,33 @@
                 ]
               ],
               "extra": "Bez české dálniční známky (roční máme)."
-            }
+            },
+            "timeline": [
+              [
+                "Ne 23. 8.",
+                "Přespání u rodiny v Novém Jíčíně."
+              ],
+              [
+                "Po 24. 8. ráno",
+                "Ve čtyřech Corollou přes Čadcu a Žilinu na Štrbské pleso, asi 3 h. Parkování za 10 €."
+              ],
+              [
+                "Výstup",
+                "Ze Štrbského plesa po magistrále k Popradskému plesu, Mengusovskou dolinou k Chatě pod Rysmi a na vrchol. Zpátky stejnou cestou. Asi 20 km a 10 h."
+              ],
+              [
+                "Večer",
+                "Nákup v Lidlu, bryndzové halušky v restauraci u kempu a spaní v kempu ATC Tatranská Štrba."
+              ],
+              [
+                "Út 25. 8.",
+                "Přes Žilinu zpátky do Nového Jíčína."
+              ]
+            ]
           },
           {
             "id": "praha",
             "nazev": "Z Prahy autem",
-            "doprava": "Autem z Prahy přes Brno, Olomouc a Frýdek-Místek na Slovensko a přes Žilinu na Štrbské pleso, asi 560 km a 6 h jedna cesta. Vyplatí se vyrazit v pátek odpoledne a vrátit se v neděli.",
             "trasa": "Stejná jako u nás: Štrbské pleso, Popradské pleso, Chata pod Rysmi, Rysy a zpět. Kratší polská varianta od Morského oka je přes hřeben náročnější.",
             "ubytovani": "Kemp ATC Tatranská Štrba na 2 noci (pátek a sobota), 37 € za noc pro čtyři.",
             "cena": {
@@ -566,7 +606,25 @@
                   350
                 ]
               ]
-            }
+            },
+            "timeline": [
+              [
+                "Pá odpoledne",
+                "Z Prahy autem přes Brno, Olomouc, Frýdek-Místek a Žilinu na Štrbské pleso, asi 560 km a 6 h. Noc v kempu ATC Tatranská Štrba."
+              ],
+              [
+                "So 7:00",
+                "Start ze Štrbského plesa: Popradské pleso, Chata pod Rysmi, vrchol a zpět. Asi 10 h."
+              ],
+              [
+                "So večer",
+                "Halušky u kempu a druhá noc v kempu."
+              ],
+              [
+                "Ne",
+                "Cesta zpátky do Prahy."
+              ]
+            ]
           }
         ],
         "tipy": [
@@ -589,7 +647,10 @@
         "time": "14 h"
       },
       "diff": 4,
-      "terrain": 4,
+      "terrain": [
+        1,
+        4
+      ],
       "weather": "cloud",
       "strava": {
         "id": "20135696890",
@@ -674,8 +735,8 @@
                   10.882
                 ],
                 [
-                  47.4005,
-                  10.9289
+                  47.388,
+                  10.9384
                 ]
               ]
             },
@@ -733,8 +794,8 @@
                   10.995
                 ],
                 [
-                  47.4005,
-                  10.9289
+                  47.388,
+                  10.9384
                 ]
               ]
             },
@@ -743,54 +804,62 @@
               "n": "Ehrwalder Almbahn nahoru (1 108 → 1 502 m)",
               "p": [
                 [
-                  47.4005,
-                  10.9289
+                  47.388,
+                  10.9384
                 ],
                 [
-                  47.3935,
-                  10.958
+                  47.3845,
+                  10.96
                 ]
               ]
             },
             {
               "m": "hike",
-              "n": "Ehrwalder Alm → Gatterl → Knorrhütte → Zugspitzplatt → ferrata na vrchol",
+              "n": "Ehrwalder Alm → Hochfeldern → Gatterl → Knorrhütte → Zugspitzplatt → ferrata na vrchol, dolů stejnou cestou",
               "p": [
                 [
-                  47.3935,
-                  10.958
+                  47.3845,
+                  10.96
                 ],
                 [
-                  47.388,
-                  10.98
+                  47.383,
+                  10.978
                 ],
                 [
-                  47.385,
-                  11.0
-                ],
-                [
-                  47.387,
-                  11.018
+                  47.382,
+                  10.995
                 ],
                 [
                   47.3905,
-                  11.024
+                  11.008
                 ],
                 [
-                  47.399,
-                  11.023
+                  47.3964,
+                  11.0165
                 ],
                 [
-                  47.4085,
-                  11.0175
+                  47.404,
+                  11.015
                 ],
                 [
-                  47.4135,
-                  11.003
+                  47.4097,
+                  11.0125
                 ],
                 [
-                  47.417,
-                  10.993
+                  47.4115,
+                  11.0
+                ],
+                [
+                  47.4128,
+                  10.99
+                ],
+                [
+                  47.414,
+                  10.983
+                ],
+                [
+                  47.418,
+                  10.984
                 ],
                 [
                   47.4211,
@@ -800,31 +869,19 @@
             },
             {
               "m": "hike",
-              "n": "Sestup západní stranou tmou zpět do Ehrwaldu",
+              "n": "Sestup z Ehrwalder Alm pěšky do údolí (lanovka už nejezdila)",
               "p": [
                 [
-                  47.4211,
-                  10.9853
+                  47.3845,
+                  10.96
                 ],
                 [
-                  47.419,
-                  10.97
+                  47.3858,
+                  10.95
                 ],
                 [
-                  47.418,
-                  10.958
-                ],
-                [
-                  47.412,
-                  10.945
-                ],
-                [
-                  47.406,
-                  10.935
-                ],
-                [
-                  47.4005,
-                  10.9289
+                  47.388,
+                  10.9384
                 ]
               ]
             }
@@ -850,24 +907,32 @@
             },
             {
               "p": [
-                47.4005,
-                10.9289
+                47.388,
+                10.9384
               ],
               "n": "Parkoviště Ehrwalder Almbahn",
               "t": "park"
             },
             {
               "p": [
-                47.3905,
-                11.024
+                47.3845,
+                10.96
+              ],
+              "n": "Ehrwalder Alm (horní stanice)",
+              "t": "hut"
+            },
+            {
+              "p": [
+                47.3964,
+                11.0165
               ],
               "n": "Gatterl, hranice Rakousko/Německo",
               "t": "hut"
             },
             {
               "p": [
-                47.4085,
-                11.0175
+                47.4097,
+                11.0125
               ],
               "n": "Knorrhütte",
               "t": "hut"
@@ -886,8 +951,7 @@
           {
             "id": "nase",
             "nazev": "Naše cesta · z Lindau",
-            "doprava": "Ve dvou Corollou z Lindau přes Kempten, Füssen a Reutte do Ehrwaldu, asi 150 km a 2 h. Auto jsme nechali na parkovišti Ehrwalder Almbahn. Zpátky do Lindau v noci, spíš k ránu. Rakouská B179 přes Reutte je bez dálniční známky.",
-            "trasa": "Lanovkou Ehrwalder Almbahn nahoru na Ehrwalder Alm, pak pěšky přes Gatterl, Knorrhütte a Zugspitzplatt pod závěrečnou ferratu (A) na vrchol. Sestup tmou západní stranou zpět do Ehrwaldu. 25,8 km a 2 148 m převýšení.",
+            "trasa": "Lanovkou Ehrwalder Almbahn nahoru, pak přes Hochfeldern, Gatterl, Knorrhütte a Zugspitzplatt pod závěrečnou ferratu (A) na vrchol. Dolů stejnou cestou, jen místo lanovky pěšky až do údolí. 25,8 km a 2 148 m převýšení.",
             "ubytovani": "Bez přespání. Spali jsme v Lindau, kam jsme se vrátili v noci.",
             "cena": {
               "note": "na osobu, jeli jsme ve dvou",
@@ -907,14 +971,47 @@
                 [
                   "Koláč a pití na Knorrhütte, ~8 € (odhad)",
                   200
+                ],
+                [
+                  "Jídlo",
+                  500
                 ]
               ]
-            }
+            },
+            "timeline": [
+              [
+                "Čt 10. 9. v noci",
+                "Skoro bez spánku."
+              ],
+              [
+                "Pá 11. 9. ráno",
+                "Z Lindau Corollou přes Kempten, Füssen a Reutte do Ehrwaldu, asi 2 h. Auto na parkovišti Ehrwalder Almbahn, dole v 10:00."
+              ],
+              [
+                "10:30",
+                "Lanovkou nahoru na Ehrwalder Alm a pěšky přes Gatterl na německou stranu. Od hranice mlha."
+              ],
+              [
+                "Odpoledne",
+                "Knorrhütte (záchod ano, koláč spíš ne), Zugspitzplatt a pod ferratou došla energie."
+              ],
+              [
+                "17:15",
+                "Vrchol. Lanovky už stály, schody ke kříži zavřené, nahoru po žebříku na boku stanice."
+              ],
+              [
+                "Večer",
+                "Stejnou cestou dolů, tmou s čelovkami a pěšky až do údolí, lanovka už nejezdila."
+              ],
+              [
+                "0:30",
+                "U auta a v noci zpátky do Lindau."
+              ]
+            ]
           },
           {
             "id": "praha",
             "nazev": "Z Prahy autem",
-            "doprava": "Autem z Prahy přes Plzeň, Regensburg, Mnichov a Garmisch-Partenkirchen do Ehrwaldu, asi 520 km a 5,5 h jedna cesta. Německé dálnice jsou zdarma, do Ehrwaldu přes Garmisch se jede bez rakouské známky.",
             "trasa": "Stejná jako u nás, jen s ranním startem. S lanovkou v 8:30 se dá být na vrcholu kolem 15:00 a sejít za světla. Kdo chce víc pohodlí, přespí na Knorrhütte a výstup si rozdělí na dva dny.",
             "ubytovani": "Penzion v Ehrwaldu nebo Lermoosu na 2 noci (před výstupem a po něm), počítáno ~45 € na osobu a noc.",
             "cena": {
@@ -945,7 +1042,25 @@
                   1000
                 ]
               ]
-            }
+            },
+            "timeline": [
+              [
+                "Den 1",
+                "Odpoledne z Prahy autem přes Plzeň, Regensburg, Mnichov a Garmisch do Ehrwaldu, asi 520 km a 5,5 h. Noc v penzionu."
+              ],
+              [
+                "Den 2 ráno",
+                "V 8:30 lanovkou nahoru a stejnou trasou na vrchol, nahoře kolem 15:00."
+              ],
+              [
+                "Den 2 odpoledne",
+                "Dolů za světla, buď celé pěšky, nebo na lanovku do 16:30. Druhá noc v Ehrwaldu."
+              ],
+              [
+                "Den 3",
+                "Cesta domů."
+              ]
+            ]
           }
         ],
         "tipy": [
@@ -968,7 +1083,7 @@
         "up": 469,
         "time": "4 h 4 min"
       },
-      "diff": 1,
+      "diff": 2,
       "terrain": 1,
       "weather": "cloud",
       "strava": {
@@ -1645,7 +1760,6 @@
           {
             "id": "praha",
             "nazev": "Z Prahy vlakem",
-            "doprava": "Pátek večer nočním RegioJetem s lůžkem z Prahy do Přemyšlu a vlakem IC do Lvova (sobota dopoledne). Odpoledne vlakem 810 do Vorochty a taxíkem do Lazeščiny. Zpátky v úterý ráno taxíkem do Vorochty, vlakem do Lvova a večerním RegioJetem s lůžkem domů (středa 6:58 v Praze).",
             "trasa": "Z Lazeščiny terénním UAZem (Buchanka) na nástup Kozmeščik, odtud mírnějším zakarpatským hřebenem na vrchol a zpět k autu. Vrcholový den neděle nebo pondělí podle počasí, otočka nejpozději ve 13:00.",
             "ubytovani": "Lazeščina: celý dům přes Airbnb na 3 noci (so–út), bezplatné zrušení do 23. 11.",
             "cena": {
@@ -1692,7 +1806,33 @@
                   700
                 ]
               ]
-            }
+            },
+            "timeline": [
+              [
+                "Pá 27. 11. 21:48",
+                "RegioJetem s lůžkem z Prahy hl. n."
+              ],
+              [
+                "So 28. 11. ráno",
+                "6:25 Přemyšl, 7:40 vlak IC do Lvova (10:15). Den ve Lvově, výměna hřiven a nákup."
+              ],
+              [
+                "So 15:51",
+                "Vlak 810 do Vorochty (20:25) a taxíkem do Lazeščiny."
+              ],
+              [
+                "Ne 29. 11. nebo Po 30. 11.",
+                "Vrcholový den podle počasí: UAZem na Kozmeščik, výstup na Hoverlu, otočka nejpozději ve 13:00 a UAZem zpět. Druhý den je rezerva."
+              ],
+              [
+                "Út 1. 12.",
+                "Taxíkem do Vorochty do 9:45, vlak v 10:11 do Lvova (14:25) a v 18:29 vlak do Přemyšlu a RegioJet s lůžkem."
+              ],
+              [
+                "St 2. 12. 6:58",
+                "Praha."
+              ]
+            ]
           }
         ],
         "tipy": [
@@ -1725,7 +1865,7 @@
         "up": 1494,
         "time": "8 h 37 min"
       },
-      "diff": 3,
+      "diff": 4,
       "terrain": 3,
       "strava": {
         "id": "19348276523",
@@ -1981,7 +2121,7 @@
         "up": 1584,
         "time": "6 h 10 min"
       },
-      "diff": 4,
+      "diff": 5,
       "terrain": 5,
       "strava": [
         {
@@ -2308,7 +2448,8 @@
       "when": "konec listopadu 2026",
       "what": "Hoverla",
       "where": "Ukrajina",
-      "note": "zimní výstup přes Kozmeščik"
+      "note": "zimní výstup přes Kozmeščik",
+      "link": "ukraine"
     },
     {
       "when": "jaro 2027",

@@ -78,6 +78,19 @@ h1 .l2{color:var(--green)}
 .timeline .what{font:700 19px/1.25 var(--display);font-stretch:90%}
 .timeline .where{font-size:14px;color:var(--mute)}
 .timeline li.next .what{color:var(--blue)}
+.timeline li.lk{display:block;padding:0}
+.timeline li.lk a{display:grid;grid-template-columns:118px 24px minmax(0,1fr);gap:12px;align-items:start;padding:12px 10px;margin:4px -10px;border-radius:12px;text-decoration:none;color:inherit;background:var(--land2);border:1px solid var(--line);transition:border-color .2s}
+.timeline li.lk a:hover,.timeline li.lk a:focus-visible{border-color:var(--blue)}
+.timeline li.lk .what{color:var(--blue)}
+.golink{display:inline-block;margin-top:4px;font:600 13px var(--body);color:var(--blue)}
+.timeline li.dim{padding:7px 0}
+.timeline li.dim .what{font-size:15px;color:var(--mute)}
+.timeline li.dim .where{font-size:13px;opacity:.8}
+.timeline li.dim .when{font-size:12px;opacity:.8}
+.ord{display:inline-block;font:600 11.5px var(--mono);color:var(--green);margin-bottom:2px}
+.ordl{font:600 12px var(--mono);color:var(--green);margin-right:6px}
+.dl{color:var(--ink)}.dl::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--dc);margin-right:4px;vertical-align:1px}
+#map .dn{fill:#fff;font:700 9px var(--mono)}
 .pill{display:inline-block;font:600 11px/1 var(--body);letter-spacing:.06em;text-transform:uppercase;background:var(--blue);color:var(--card);border-radius:4px;padding:4px 6px;margin-left:6px;vertical-align:3px}
 /* map */
 .mapbox{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-top:16px;position:relative}
@@ -101,7 +114,8 @@ h1 .l2{color:var(--green)}
 .pc:target{box-shadow:0 0 0 3px var(--green)}
 .pc .photo{aspect-ratio:16/9;overflow:hidden;background:var(--land2);display:grid;place-items:center;color:var(--mute);font-size:14px;max-width:100%}
 .pc .photo picture{display:contents}
-.pc .photo img{width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in}
+.pc .photo{position:relative}
+.pc .photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in}
 @media (min-width:760px){.pc .photo{aspect-ratio:3/4}}
 .pc .body{padding:16px 18px 18px;display:grid;gap:10px;min-width:0}
 .pc .head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
@@ -150,7 +164,13 @@ details.logi summary:focus-visible{outline:2px solid var(--blue);outline-offset:
 .lfit button,.vtabs button{font:600 13px var(--body);border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:5px 11px;cursor:pointer}
 .lfit button[aria-pressed="true"],.vtabs button[aria-selected="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
 .lfit button:focus-visible,.vtabs button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
-.vtabs{display:flex;flex-wrap:wrap;gap:6px}
+.vswitch{background:var(--land2);border:1px solid var(--line);border-radius:14px;padding:10px;display:grid;gap:8px}
+.vlab{font:600 12px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--green)}
+.vtabs{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:6px}
+.vtabs button{border-radius:10px!important;padding:9px 12px!important;text-align:left;display:grid;gap:2px;transition:background .2s,border-color .2s}
+.vtabs button b{font-size:14px}.vtabs button small{font:500 12.5px var(--mono);opacity:.8}
+.vtabs button[aria-selected="false"]:hover{border-color:var(--green)}
+.vtabs button[aria-selected="true"]{background:var(--green)!important;border-color:var(--green)!important;color:#fff!important}
 .vpane{display:grid;gap:12px}
 .lnote{font-size:12px;color:var(--mute);margin:4px 0 0}
 .strava{overflow:hidden;max-width:100%}.strava+.strava{margin-top:10px}
@@ -183,11 +203,16 @@ details.logi summary:focus-visible{outline:2px solid var(--blue);outline-offset:
 .pc .country .flag{display:inline-block;width:20px;height:14px;vertical-align:-2px;margin-right:4px}
 .clist .n{font-weight:600;line-height:1.2}
 .clist .p{font-size:13px;color:var(--mute)}
-.clist .e{font:500 13px var(--mono);color:var(--mute)}
+.clist .e{font:500 13px var(--mono);color:var(--mute);text-align:right}
+.clist .e small{display:block;font-size:11px;opacity:.75;white-space:nowrap}
+.sorts{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:8px;font-size:13px;color:var(--mute)}
+.sorts button{font:600 13px var(--body);border:1px solid var(--line);background:none;color:var(--mute);border-radius:999px;padding:4px 11px;cursor:pointer}
+.sorts button[aria-pressed="true"]{color:var(--ink);border-color:var(--ink)}
+.sorts button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 footer{padding-block:30px 50px;color:var(--mute);font-size:13px;border-top:1px solid var(--line);margin-top:20px}
 #lightbox{position:fixed;inset:0;background:rgba(0,0,0,.88);display:grid;place-items:center;padding:20px;z-index:20}
 #lightbox img{max-width:100%;max-height:100%;border-radius:8px}
-@media (max-width:520px){.timeline li{grid-template-columns:24px minmax(0,1fr)}.timeline .when{grid-column:2;order:-1;margin-bottom:-10px}.timeline .mk{grid-row:1/3;padding-top:4px}}
+@media (max-width:520px){.timeline li.lk a{grid-template-columns:24px minmax(0,1fr)}.timeline li.lk .when{grid-column:2;order:-1;margin-bottom:-10px}.timeline li.lk .mk{grid-row:1/3;padding-top:4px}.timeline li{grid-template-columns:24px minmax(0,1fr)}.timeline .when{grid-column:2;order:-1;margin-bottom:-10px}.timeline .mk{grid-row:1/3;padding-top:4px}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
@@ -263,6 +288,7 @@ footer{padding-block:30px 50px;color:var(--mute);font-size:13px;border-top:1px s
       <button data-f="planned" aria-pressed="false">V plánu</button>
       <button data-f="todo" aria-pressed="false">Zbývá</button>
     </div>
+    <div class="sorts" id="sorts" role="group" aria-label="Řazení"><span>Řadit:</span><button data-s="az" aria-pressed="true">A–Z</button><button data-s="desc" aria-pressed="false">Od nejvyššího</button><button data-s="asc" aria-pressed="false">Od nejnižšího</button></div>
     <ul class="clist" id="clist"></ul>
   </section>
 
@@ -333,8 +359,9 @@ const COUNTRIES = [
 const ISO2={albania:"al",andorra:"ad",austria:"at",belarus:"by",belgium:"be",bosnia:"ba",bulgaria:"bg",croatia:"hr",czechia:"cz",denmark:"dk",estonia:"ee",finland:"fi",france:"fr",germany:"de",greece:"gr",hungary:"hu",iceland:"is",ireland:"ie",italy:"it",kosovo:"xk",latvia:"lv",liechtenstein:"li",lithuania:"lt",luxembourg:"lu",malta:"mt",moldova:"md",monaco:"mc",montenegro:"me",netherlands:"nl",nmacedonia:"mk",norway:"no",poland:"pl",prt_main:"pt",romania:"ro",russia:"ru",sanmarino:"sm",serbia:"rs",slovakia:"sk",slovenia:"si",esp_main:"es",sweden:"se",switzerland:"ch",turkey:"tr",ukraine:"ua",uk:"gb",vatican:"va"};
 const flag=cc=>`https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/flags/4x3/${cc}.svg`;
 const SHARED={france:"italy",italy:"france",albania:"nmacedonia",nmacedonia:"albania"};
-const DIFF={1:["Snadná","#4f9a5c"],2:["Střední","#c9a227"],3:["Náročnější","#d9822b"],4:["Těžká","#c9473b"],5:["Extrém","#7d4a8a"]};
-const TERRAIN={1:"Vyšlapaná cesta",2:"Horský terén",3:"Suť a skály",4:"Ferrata, lezení",5:"Sníh, ledovec"};
+const DIFF={1:["Primitivní","#4a8fd6"],2:["Snadná","#4f9a5c"],3:["Střední","#c9a227"],4:["Náročnější","#d9822b"],5:["Těžká","#c9473b"],6:["Hardcore","#8a4fa0"]};
+let ORD={};
+const TERRAIN={1:"Stezka",2:"Horský terén",3:"Suť a skály",4:"Ferrata, lezení",5:"Sníh, ledovec"};
 const WEATHER={sun:"☀️ Jasno",partly:"⛅ Polojasno",cloud:"☁️ Mlha a oblačno",rain:"🌧️ Déšť",snow:"❄️ Sněžení",storm:"🌪️ Bouře"};
 const MODE={car:{n:"Auto",c:"#2a5db0",d:"8 7",cls:"d"},train:{n:"Vlak",c:"#8a4fa0",d:"2 7",cls:"o"},taxi:{n:"Taxi",c:"#d9822b",d:"7 6",cls:"d"},jeep:{n:"Terénní auto",c:"#d9822b",d:"7 6",cls:"d"},lift:{n:"Lanovka",c:"#c9a227",d:"1 7",cls:"o"},bus:{n:"Autobus, MHD",c:"#c9473b",d:"7 6",cls:"d"},plane:{n:"Letadlo",c:"#5c6b61",d:"2 9",cls:"o"},hike:{n:"Pěšky",c:"#3f8f55",d:null,cls:""}};
 const MARKC={peak:"#1f6b37",start:"#132018",park:"#5c6b61",sleep:"#2a5db0",hut:"#c9a227"};
@@ -352,7 +379,7 @@ const entry=c=>D.peaks[c.id]||(D.peaks[SHARED[c.id]]?.status==="done"?D.peaks[SH
 
 function card(o){
   const d=o.diff&&DIFF[o.diff];
-  const chips=[d?`<span class="chip d" style="--dc:${d[1]}">${d[0]}</span>`:"",o.terrain?`<span class="chip">${TERRAIN[o.terrain]}</span>`:"",o.weather?`<span class="chip">${WEATHER[o.weather]}</span>`:"",o.rating?`<span class="chip">Worth it ${"★".repeat(o.rating)}${"☆".repeat(5-o.rating)}</span>`:""].join("");
+  const chips=[d?`<span class="chip d" style="--dc:${d[1]}">${d[0]}</span>`:"",...[].concat(o.terrain||[]).map(t=>`<span class="chip">${TERRAIN[t]}</span>`),o.weather?`<span class="chip">${WEATHER[o.weather]}</span>`:"",o.rating?`<span class="chip">Worth it ${"★".repeat(o.rating)}${"☆".repeat(5-o.rating)}</span>`:""].join("");
   const s=o.stats||{};
   const figs=[s.km!=null?`<div><b>${String(s.km).replace(".",",")} km</b><span>délka</span></div>`:"",s.up!=null?`<div><b>${mfmt(s.up)}</b><span>převýšení</span></div>`:"",s.time?`<div><b>${esc(s.time)}</b><span>čas</span></div>`:""].join("");
   const L=o.logistics;
@@ -361,7 +388,7 @@ function card(o){
   if(L||o.detail||o.strava){
     const V=L?(L.varianty||[{id:"x",nazev:null,doprava:L.doprava,trasa:L.trasa,ubytovani:L.ubytovani,cena:L.cena}]):[];
     const pane=v=>{const c=v.cena;const tot=c?(c.total??(c.items||[]).reduce((a,i)=>a+i[1],0)):0;
-      return `${v.timeline?.length?`<div><h4>Jak jsme jeli</h4><ol class="tl">${v.timeline.map(t=>`<li><b>${esc(t[0])}</b><span>${esc(t[1])}</span></li>`).join("")}</ol></div>`:""}
+      return `${v.timeline?.length?`<div><h4>${L.plan?"Jak pojedeme":"Jak jsme jeli"}</h4><ol class="tl">${v.timeline.map(t=>`<li><b>${esc(t[0])}</b><span>${esc(t[1])}</span></li>`).join("")}</ol></div>`:""}
       ${v.doprava?`<div><h4>Doprava</h4><p>${esc(v.doprava)}</p></div>`:""}
       ${v.trasa?`<div><h4>Trasa</h4><p>${esc(v.trasa)}</p></div>`:""}
       ${v.ubytovani?`<div><h4>Ubytování</h4><p>${esc(v.ubytovani)}</p></div>`:""}
@@ -375,7 +402,7 @@ function card(o){
       <div class="lbar"><div class="lleg">${modes.map(m=>`<span><i class="${MODE[m].cls}" style="--lc:${MODE[m].c}"></i>${MODE[m].n}</span>`).join("")}</div>
       <div class="lfit"><button type="button" data-fit="all" aria-pressed="true">Celá cesta</button><button type="button" data-fit="hike" aria-pressed="false">Výstup</button></div></div>
       <p class="lnote">Trasy jsou zakreslené orientačně.</p></div>`:""}
-    ${V.length>1?`<div class="vtabs" role="tablist">${V.map((v,i)=>`<button type="button" role="tab" data-v="${esc(v.id)}" aria-selected="${i===0}">${esc(v.nazev)}</button>`).join("")}</div>`:(V[0]?.nazev?`<h4 style="margin:0">${esc(V[0].nazev)}</h4>`:"")}
+    ${V.length>1?`<div class="vswitch"><span class="vlab">⇄ Přepni variantu cesty</span><div class="vtabs" role="tablist">${V.map((v,i)=>{const t=v.cena?Math.round((v.cena.total??v.cena.items.reduce((a,x)=>a+x[1],0))/10)*10:null;return `<button type="button" role="tab" data-v="${esc(v.id)}" aria-selected="${i===0}"><b>${esc(v.nazev)}</b>${t?`<small>${kc(t)} / os.</small>`:""}</button>`}).join("")}</div></div>`:(V[0]?.nazev?`<h4 style="margin:0">${esc(V[0].nazev)}</h4>`:"")}
     ${V.map((v,i)=>`<div class="vpane" data-v="${esc(v.id)}"${i?" hidden":""}>${pane(v)}</div>`).join("")}
     ${o.strava?`<div><h4>Záznam ze Stravy</h4>${[].concat(o.strava).map(x=>`<div class="strava"><div class="strava-embed-placeholder" data-embed-type="activity" data-embed-id="${esc(x.id)}" data-style="standard" data-from-embed="false" data-token="${esc(x.token)}"></div></div>`).join("")}</div>`:""}
     ${L?.tipy?.length?`<div><h4>Tipy a výbava</h4><ul>${L.tipy.map(t=>`<li>${esc(t)}</li>`).join("")}</ul></div>`:""}
@@ -385,7 +412,7 @@ function card(o){
   return `<article class="pc" id="v-${esc(o.cid||o.id)}">
     ${o.photo?`<div class="photo"><picture>${o.full?`<source media="(min-width:760px)" srcset="${esc(o.full)}">`:""}<img src="${esc(o.photo)}" data-full="${esc(o.full||o.photo)}" alt="${esc(o.peak)}, ${esc(o.country)}" loading="lazy"></picture></div>`:""}
     <div class="body">
-      <div class="head"><div><h3>${esc(o.peak)}</h3><div class="country">${o.cc?`<img class="flag" src="${flag(o.cc)}" alt="">`:""}${esc(o.country)}</div></div>
+      <div class="head"><div>${ORD[o.cid]?`<span class="ord" title="${ORD[o.cid]}. zdolaný vrchol Koruny">#${ORD[o.cid]}</span>`:""}<h3>${esc(o.peak)}</h3><div class="country">${o.cc?`<img class="flag" src="${flag(o.cc)}" alt="">`:""}${esc(o.country)}</div></div>
       <div class="elev num">${mfmt(o.elev)}<small>${when}</small></div></div>
       ${chips?`<div class="chips">${chips}</div>`:""}
       ${figs?`<div class="figs">${figs}</div>`:""}
@@ -410,8 +437,10 @@ function render(){
   $("st-up").innerHTML=`${up.toLocaleString("cs-CZ")}<small> m</small>`;
   const bar=$("bar");bar.innerHTML=["done","attempt","planned"].map(k=>`<i style="width:${counts[k]/total*100}%;background:var(--${k==="done"?"green":k==="attempt"?"yellow":"blue"})"></i>`).join("");
   bar.setAttribute("aria-label",`${counts.done} z ${total} vrcholů zdoláno, ${counts.planned} v plánu`);
+  ORD={};COUNTRIES.filter(c=>D.peaks[c.id]?.status==="done").sort((a,b)=>(D.peaks[a.id].date||"9").localeCompare(D.peaks[b.id].date||"9")).forEach((c,i)=>{ORD[c.id]=i+1;if(SHARED[c.id])ORD[SHARED[c.id]]=i+1});
   // timeline
-  $("timeline").innerHTML=(D.plan||[]).map((p,i)=>`<li class="${i===0?"next":""}"><span class="when">${esc(p.when)}</span><span class="mk"><i class="mark s-planned"></i></span><div><div class="what">${esc(p.what)}${i===0?'<span class="pill">další</span>':""}</div><div class="where">${esc(p.where)}${p.note?" · "+esc(p.note):""}</div></div></li>`).join("");
+  $("timeline").innerHTML=(D.plan||[]).map((p,i)=>{const lk=p.link&&D.peaks[p.link]?.logistics;const inner=`<span class="when">${esc(p.when)}</span><span class="mk"><i class="mark ${lk?"s-planned":"s-todo"}"></i></span><div><div class="what">${esc(p.what)}${i===0?'<span class="pill">další</span>':""}</div><div class="where">${esc(p.where)}${p.note?" · "+esc(p.note):""}</div>${lk?'<span class="golink">Plán a logistika ↓</span>':""}</div>`;
+    return lk?`<li class="lk${i===0?" next":""}"><a href="#v-${esc(p.link)}" data-open="${esc(p.link)}">${inner}</a></li>`:`<li class="dim${i===0?" next":""}">${inner}</li>`}).join("");
   // cards
   const byStatus=s=>COUNTRIES.filter(c=>D.peaks[c.id]&&D.peaks[c.id].status===s).map(c=>obj(c,D.peaks[c.id]));
   const done=byStatus("done").sort((a,b)=>(b.date||"").localeCompare(a.date||""));
@@ -426,10 +455,14 @@ function render(){
   renderList("all");
   $("updated").textContent="Aktualizováno "+fdate(D.updated);
 }
-function renderList(f){
-  const rows=COUNTRIES.slice().sort((a,b)=>a.name.localeCompare(b.name,"cs")).filter(c=>{const s=status(c);return f==="all"||(f==="todo"?(s==="todo"||s==="attempt"):s===f)});
-  $("clist").innerHTML=rows.map(c=>{const s=status(c),tgt=D.peaks[c.id]?c.id:SHARED[c.id];const inner=`<img class="flag${s==="done"?"":" off"}" src="${flag(ISO2[c.id])}" alt="" loading="lazy"><div><div class="n">${esc(c.name)}${s==="planned"?'<span class="tag">v přípravě</span>':s==="attempt"?'<span class="tag y">pokus</span>':""}</div><div class="p">${esc(c.peak)}${s==="done"?" · zdoláno":""}</div></div><span class="e">${c.elev.toLocaleString("cs-CZ")} m</span>`;return `<li>${s==="done"?`<a class="row" href="#v-${tgt}">${inner}</a>`:`<div class="row">${inner}</div>`}</li>`}).join("")||`<li><span></span><span class="p">Nic tu není.</span></li>`;
+let LF="all",LS="az";const HR={};
+function heightRanks(){const u=[...new Map(COUNTRIES.map(c=>[c.peakId,c.elev])).entries()].sort((a,b)=>b[1]-a[1]);u.forEach(([id],i)=>HR[id]=i+1)}
+function renderList(f){f=f||LF;LF=f;if(!HR.mont_blanc)heightRanks();
+  const cmp=LS==="az"?(a,b)=>a.name.localeCompare(b.name,"cs"):LS==="desc"?(a,b)=>b.elev-a.elev||a.name.localeCompare(b.name,"cs"):(a,b)=>a.elev-b.elev||a.name.localeCompare(b.name,"cs");
+  const rows=COUNTRIES.slice().sort(cmp).filter(c=>{const s=status(c);return f==="all"||(f==="todo"?(s==="todo"||s==="attempt"):s===f)});
+  $("clist").innerHTML=rows.map(c=>{const s=status(c),tgt=D.peaks[c.id]?c.id:SHARED[c.id];const inner=`<img class="flag${s==="done"?"":" off"}" src="${flag(ISO2[c.id])}" alt="" loading="lazy"><div><div class="n">${esc(c.name)}${s==="planned"?'<span class="tag">v přípravě</span>':s==="attempt"?'<span class="tag y">pokus</span>':""}</div><div class="p">${ORD[c.id]?`<span class="ordl">#${ORD[c.id]}</span>`:""}${esc(c.peak)}${(()=>{const e=D.peaks[c.id]||D.peaks[SHARED[c.id]];const d=s==="done"&&e?.diff&&DIFF[e.diff];return d?` · <span class="dl" style="--dc:${d[1]}">${d[0]}</span>`:s==="done"?" · zdoláno":""})()}</div></div><span class="e">${c.elev.toLocaleString("cs-CZ")} m<small>${HR[c.peakId]}. nejvyšší</small></span>`;return `<li>${s==="done"?`<a class="row" href="#v-${tgt}">${inner}</a>`:`<div class="row">${inner}</div>`}</li>`}).join("")||`<li><span></span><span class="p">Nic tu není.</span></li>`;
 }
+$("sorts").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;[...$("sorts").querySelectorAll("button")].forEach(x=>x.setAttribute("aria-pressed",x===b));LS=b.dataset.s;renderList()});
 $("filters").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;[...$("filters").children].forEach(x=>x.setAttribute("aria-pressed",x===b));renderList(b.dataset.f)});
 document.addEventListener("click",e=>{const im=e.target.closest(".pc .photo img");const lb=$("lightbox");
   if(im){lb.innerHTML=`<img src="${im.dataset.full||im.src}" alt="${esc(im.alt)}">`;lb.hidden=false}else if(e.target.closest("#lightbox"))lb.hidden=true});
@@ -462,6 +495,7 @@ function drawRoute(st){
 function fitRoute(st){const Lf=window.L,R=REG[st.k].logistics.route;
   const legs=R.legs.filter(x=>(!x.v||x.v===st.v)&&(st.fit==="all"||x.m==="hike"||x.m==="lift"));
   const pts=legs.flatMap(l=>l.p);if(pts.length)st.m.fitBounds(Lf.latLngBounds(pts),{padding:[24,24],maxZoom:14})}
+document.addEventListener("click",e=>{const a=e.target.closest("a[data-open]");if(!a)return;const c=$("v-"+a.dataset.open);if(!c)return;e.preventDefault();const d=c.querySelector("details.logi");if(d)d.open=true;c.scrollIntoView({behavior:"smooth",block:"start"});history.replaceState(null,"","#v-"+a.dataset.open)});
 document.addEventListener("toggle",e=>{const d=e.target;if(d.matches?.("details.logi")&&d.open)initRoute(d)},true);
 document.addEventListener("click",e=>{
   const t=e.target.closest(".vtabs button");
@@ -493,26 +527,29 @@ async function drawMap(){
   zg.append("g").selectAll("path").data(feats).join("path").attr("class","c").attr("d",path).attr("fill",fill).attr("fill-opacity",op);
   const pts=[];const seen=new Set();
   COUNTRIES.forEach(c=>{if(seen.has(c.peakId))return;seen.add(c.peakId);const s=[c,COUNTRIES.find(x=>x.id===SHARED[c.id])].filter(Boolean).map(status);const st=s.includes("done")?"done":s.includes("attempt")?"attempt":s.includes("planned")?"planned":"todo";
-    pts.push({name:c.peak,country:SHARED[c.id]?c.name+" / "+COUNTRIES.find(x=>x.id===SHARED[c.id]).name:c.name,elev:c.elev,lng:c.lng,lat:c.lat,s:st})});
-  (D.extras||[]).forEach(x=>pts.push({name:x.peak,country:x.country+" (mimo výzvu)",elev:x.elev,lng:x.lng,lat:x.lat,s:x.status,x:true}));
+    const e=D.peaks[c.id]||D.peaks[SHARED[c.id]];pts.push({name:c.peak,country:SHARED[c.id]?c.name+" / "+COUNTRIES.find(x=>x.id===SHARED[c.id]).name:c.name,elev:c.elev,lng:c.lng,lat:c.lat,s:st,n:st==="done"?ORD[c.id]:null,d:st==="done"&&e?.diff?DIFF[e.diff][0]:null})});
+  (D.extras||[]).forEach(x=>pts.push({name:x.peak,country:x.country+" (mimo výzvu)",elev:x.elev,lng:x.lng,lat:x.lat,s:x.status,x:true,d:x.diff?DIFF[x.diff][0]:null}));
+  const R0=d=>d.s==="todo"?3.2:d.n?8:6;
   const colorS={done:"--green",attempt:"--yellow",planned:"--blue",todo:"--mute"};
   const tip=$("tip"),box=document.querySelector(".mapbox");
   let T=d3.zoomIdentity;
   const show=(d,ev)=>{const r=box.getBoundingClientRect(),p=T.apply(proj([d.lng,d.lat])),sx=r.width/W;tip.style.left=(p[0]*sx)+"px";tip.style.top=(p[1]*sx)+"px";
     tip.textContent=`${d.name} · ${d.elev.toLocaleString("cs-CZ")} m`;tip.classList.add("show");
-    $("mapnote").textContent=`${d.name} (${d.country}) · ${{done:"zdoláno",attempt:"pokus",planned:"v plánu",todo:"zbývá"}[d.s]}`};
+    $("mapnote").textContent=`${d.n?"#"+d.n+" ":""}${d.name} (${d.country}) · ${{done:"zdoláno",attempt:"pokus",planned:"v plánu",todo:"zbývá"}[d.s]}${d.d?" · "+d.d:""}`};
   const dots=zg.append("g");
   dots.selectAll("circle").data(pts.sort((a,b)=>(a.s==="todo")-(b.s==="todo")).reverse()).join("circle").attr("class","peak")
-    .attr("cx",d=>proj([d.lng,d.lat])[0]).attr("cy",d=>proj([d.lng,d.lat])[1]).attr("r",d=>d.s==="todo"?3.2:6)
+    .attr("cx",d=>proj([d.lng,d.lat])[0]).attr("cy",d=>proj([d.lng,d.lat])[1]).attr("r",R0)
     .attr("fill",d=>d.s==="todo"?col("--card"):d.x?col(d.s==="done"?"--xdone":"--xatt"):col(colorS[d.s])).attr("stroke",d=>d.s==="todo"?col("--mute"):col("--card")).attr("stroke-width",d=>d.s==="todo"?1.2:2)
     .attr("tabindex",0).on("click",(e,d)=>show(d,e)).on("mouseenter",(e,d)=>show(d,e)).on("focus",(e,d)=>show(d,e)).on("mouseleave",()=>tip.classList.remove("show"))
     .append("title").text(d=>`${d.name}, ${d.country}`);
+  const nums=dots.append("g").attr("pointer-events","none").selectAll("text").data(pts.filter(d=>d.n)).join("text").attr("class","dn")
+    .attr("x",d=>proj([d.lng,d.lat])[0]).attr("y",d=>proj([d.lng,d.lat])[1]).attr("dy","0.36em").attr("text-anchor","middle").attr("font-size",9).text(d=>d.n);
   // zoom: buttons, pinch (2 fingers), Ctrl/⌘ + wheel or trackpad pinch, drag when zoomed
   const el=svg.node();
   const zoom=d3.zoom().scaleExtent([1,10]).translateExtent([[0,0],[W,H]]).extent([[0,0],[W,H]])
     .filter(e=>{if(e.type==="wheel")return e.ctrlKey||e.metaKey;if(e.type==="touchstart")return e.touches.length>1||T.k>1;if(e.type==="dblclick")return true;return !e.button})
     .on("zoom",e=>{T=e.transform;zg.attr("transform",T);const k=T.k;
-      dots.selectAll("circle").attr("r",d=>(d.s==="todo"?3.2:6)/Math.sqrt(k)).attr("stroke-width",d=>(d.s==="todo"?1.2:2)/Math.sqrt(k));
+      nums.attr("font-size",9/Math.sqrt(k));dots.selectAll("circle").attr("r",d=>R0(d)/Math.sqrt(k)).attr("stroke-width",d=>(d.s==="todo"?1.2:2)/Math.sqrt(k));
       el.classList.toggle("zoomed",k>1.01);tip.classList.remove("show");
       zb.querySelector('[data-z="out"]').disabled=k<=1.01;zb.querySelector('[data-z="reset"]').disabled=k<=1.01});
   svg.call(zoom).on("dblclick.zoom",null);
