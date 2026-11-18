@@ -2,7 +2,7 @@
   "updated": "2026-11-18",
   "instagram": "https://www.instagram.com/adrian.schram/",
   "deadline": "2032-04-30",
-  "kurz": "Ceny v eurech přepočtené kurzem 25 Kč/€, hřivny kurzem 0,52 Kč/UAH.",
+  "kurz": "Ceny v eurech přepočtené kurzem 25 Kč/€, forinty kurzem 0,063 Kč/HUF, hřivny kurzem 0,52 Kč/UAH.",
   "peaks": {
     "czechia": {
       "status": "done",
@@ -318,7 +318,7 @@
                 ],
                 [
                   49.27,
-                  17
+                  17.0
                 ],
                 [
                   49.45,
@@ -689,7 +689,7 @@
                   14.458
                 ],
                 [
-                  50,
+                  50.0,
                   14.3
                 ],
                 [
@@ -766,7 +766,7 @@
                 ],
                 [
                   47.385,
-                  11
+                  11.0
                 ],
                 [
                   47.387,
@@ -958,7 +958,484 @@
     },
     "hungary": {
       "status": "done",
-      "date": null
+      "date": "2026-11-15",
+      "photo": "photos/kekes-wide.jpg",
+      "full": "photos/kekes-full.jpg",
+      "tldr": "Celou cestu nahoru i dolů jsme potkali jen pár lidí, výhledy žádné, všude jen stromy. Nahoře šutr v barvách vlajky a kupa lidí v bundách, protože 5 metrů od vrcholu je parkoviště. Fotka, svačina a dolů jinou cestou do Mátrafüredu.",
+      "post": null,
+      "stats": {
+        "km": 10.1,
+        "up": 469,
+        "time": "4 h 4 min"
+      },
+      "diff": 1,
+      "terrain": 1,
+      "weather": "cloud",
+      "strava": {
+        "id": "20998222000",
+        "token": "vnRavnLcGonwsY0AxZFFrF6PbGp9aJhQYeVyn_X9Bp4"
+      },
+      "detail": [
+        [
+          "Start",
+          "11:02"
+        ],
+        [
+          "Čas v pohybu",
+          "2 h 36 min"
+        ],
+        [
+          "Celkový čas",
+          "4 h 4 min"
+        ],
+        [
+          "Tempo",
+          "15:26 min/km"
+        ],
+        [
+          "Kroky",
+          "15 398"
+        ],
+        [
+          "Počasí",
+          "zataženo, 4 °C, pocitově 2 °C"
+        ]
+      ],
+      "logistics": {
+        "route": {
+          "legs": [
+            {
+              "m": "train",
+              "v": "nase",
+              "n": "LEO Express Praha → Prešov",
+              "p": [
+                [
+                  50.083,
+                  14.435
+                ],
+                [
+                  50.032,
+                  15.762
+                ],
+                [
+                  49.593,
+                  17.278
+                ],
+                [
+                  49.835,
+                  18.282
+                ],
+                [
+                  49.223,
+                  18.739
+                ],
+                [
+                  49.056,
+                  20.299
+                ],
+                [
+                  48.853,
+                  21.222
+                ],
+                [
+                  48.997,
+                  21.242
+                ]
+              ]
+            },
+            {
+              "m": "bus",
+              "v": "nase",
+              "n": "MHD na Šarišský hrad a zpět",
+              "p": [
+                [
+                  48.997,
+                  21.242
+                ],
+                [
+                  48.981,
+                  21.152
+                ]
+              ]
+            },
+            {
+              "m": "bus",
+              "v": "nase",
+              "n": "FlixBus Prešov → Budapešť",
+              "p": [
+                [
+                  48.997,
+                  21.242
+                ],
+                [
+                  48.716,
+                  21.261
+                ],
+                [
+                  48.104,
+                  20.791
+                ],
+                [
+                  47.77,
+                  19.9
+                ],
+                [
+                  47.498,
+                  19.04
+                ]
+              ]
+            },
+            {
+              "m": "bus",
+              "v": "praha",
+              "n": "Praha → Budapešť (RegioJet/FlixBus)",
+              "p": [
+                [
+                  50.083,
+                  14.435
+                ],
+                [
+                  49.195,
+                  16.608
+                ],
+                [
+                  48.148,
+                  17.107
+                ],
+                [
+                  47.687,
+                  17.634
+                ],
+                [
+                  47.498,
+                  19.04
+                ]
+              ]
+            },
+            {
+              "m": "train",
+              "n": "Vlak Budapešť → Gyöngyös",
+              "p": [
+                [
+                  47.5,
+                  19.083
+                ],
+                [
+                  47.668,
+                  19.669
+                ],
+                [
+                  47.783,
+                  19.928
+                ]
+              ]
+            },
+            {
+              "m": "bus",
+              "n": "Bus Gyöngyös → Mátra (zastávka pod Kékesem)",
+              "p": [
+                [
+                  47.783,
+                  19.928
+                ],
+                [
+                  47.832,
+                  19.972
+                ],
+                [
+                  47.865,
+                  19.975
+                ],
+                [
+                  47.888,
+                  19.982
+                ]
+              ]
+            },
+            {
+              "m": "hike",
+              "n": "Pěšky na Kékestető a dolů jinou cestou do Mátrafüredu",
+              "p": [
+                [
+                  47.888,
+                  19.982
+                ],
+                [
+                  47.884,
+                  19.996
+                ],
+                [
+                  47.879,
+                  20.005
+                ],
+                [
+                  47.8725,
+                  20.0094
+                ],
+                [
+                  47.866,
+                  20.004
+                ],
+                [
+                  47.858,
+                  19.995
+                ],
+                [
+                  47.848,
+                  19.985
+                ],
+                [
+                  47.84,
+                  19.978
+                ],
+                [
+                  47.832,
+                  19.972
+                ]
+              ]
+            },
+            {
+              "m": "bus",
+              "n": "Bus Mátrafüred → Gyöngyös → Budapešť",
+              "p": [
+                [
+                  47.832,
+                  19.972
+                ],
+                [
+                  47.783,
+                  19.928
+                ],
+                [
+                  47.668,
+                  19.669
+                ],
+                [
+                  47.498,
+                  19.04
+                ]
+              ]
+            },
+            {
+              "m": "bus",
+              "n": "Budapešť → Praha",
+              "p": [
+                [
+                  47.498,
+                  19.04
+                ],
+                [
+                  47.687,
+                  17.634
+                ],
+                [
+                  48.148,
+                  17.107
+                ],
+                [
+                  49.195,
+                  16.608
+                ],
+                [
+                  50.083,
+                  14.435
+                ]
+              ]
+            }
+          ],
+          "marks": [
+            {
+              "p": [
+                50.083,
+                14.435
+              ],
+              "n": "Praha (start)",
+              "t": "start"
+            },
+            {
+              "p": [
+                48.997,
+                21.242
+              ],
+              "n": "Prešov, 1 noc",
+              "t": "sleep",
+              "v": "nase"
+            },
+            {
+              "p": [
+                48.981,
+                21.152
+              ],
+              "n": "Šarišský hrad",
+              "t": "hut",
+              "v": "nase"
+            },
+            {
+              "p": [
+                47.498,
+                19.04
+              ],
+              "n": "Budapešť, 2 noci",
+              "t": "sleep"
+            },
+            {
+              "p": [
+                47.888,
+                19.982
+              ],
+              "n": "Start hiku",
+              "t": "park"
+            },
+            {
+              "p": [
+                47.8725,
+                20.0094
+              ],
+              "n": "Kékestető 1 014 m",
+              "t": "peak"
+            },
+            {
+              "p": [
+                47.832,
+                19.972
+              ],
+              "n": "Mátrafüred",
+              "t": "park"
+            }
+          ]
+        },
+        "varianty": [
+          {
+            "id": "nase",
+            "nazev": "Naše cesta · přes Prešov",
+            "timeline": [
+              [
+                "Čt 12. 11. večer",
+                "LEO Expressem z Prahy až na konečnou do Prešova (natáčení u klientky)."
+              ],
+              [
+                "Pá 13. 11.",
+                "Výlet na Šarišský hrad, kde jsme byli úplně sami, odpoledne centrum Prešova. Noc v Prešově."
+              ],
+              [
+                "So 14. 11.",
+                "V 8:30 FlixBus do Budapešti, na místě ve 13:00. Odpoledne a večer centrum."
+              ],
+              [
+                "Ne 15. 11.",
+                "V 7:00 vstávat, vlakem do Gyöngyöse a autobusem nahoru do Mátry. Výstup na Kékes, dolů jinou cestou do Mátrafüredu, autobusem do Gyöngyöse a zpět do Budapešti."
+              ],
+              [
+                "Po 16. 11.",
+                "Dopoledne v Budapešti (pršelo) a cesta domů do Prahy."
+              ]
+            ],
+            "ubytovani": "Prešov 1 noc za 40 € pro oba. Budapešť 2 noci za 1 500 Kč pro oba.",
+            "cena": {
+              "note": "na osobu, jeli jsme ve dvou",
+              "items": [
+                [
+                  "LEO Express Praha → Prešov (studentská sleva)",
+                  220
+                ],
+                [
+                  "Ubytování Prešov, 1 noc, 40 € (÷ 2)",
+                  489
+                ],
+                [
+                  "MHD v Prešově",
+                  100
+                ],
+                [
+                  "Jídlo v Prešově, pekárny (200 Kč ÷ 2)",
+                  100
+                ],
+                [
+                  "FlixBus Prešov → Budapešť",
+                  400
+                ],
+                [
+                  "Ubytování Budapešť, 2 noci (1 500 Kč ÷ 2)",
+                  750
+                ],
+                [
+                  "Vlak a busy Budapešť → Kékes → Budapešť (360 Kč ÷ 2)",
+                  180
+                ],
+                [
+                  "MHD Budapešť, 24h jízdenka",
+                  180
+                ],
+                [
+                  "MHD Budapešť, 3 jednotlivé jízdy × 500 HUF",
+                  95
+                ],
+                [
+                  "Jídlo v Budapešti (1 500 Kč ÷ 2)",
+                  750
+                ],
+                [
+                  "Budapešť → Praha (900 Kč ÷ 2)",
+                  450
+                ]
+              ]
+            }
+          },
+          {
+            "id": "praha",
+            "nazev": "Z Prahy rovnou do Budapešti",
+            "timeline": [
+              [
+                "Den 1",
+                "Z Prahy autobusem nebo vlakem do Budapešti (asi 7 h)."
+              ],
+              [
+                "Den 2",
+                "Ráno vlakem do Gyöngyöse a autobusem do Mátry, výstup na Kékes a dolů do Mátrafüredu, večer zpátky v Budapešti."
+              ],
+              [
+                "Den 3",
+                "Dopoledne Budapešť a cesta domů."
+              ]
+            ],
+            "ubytovani": "Budapešť 2 noci, ~750 Kč na osobu ve dvou.",
+            "cena": {
+              "note": "na osobu při 2 lidech, odhad podle našich cen",
+              "items": [
+                [
+                  "Praha → Budapešť",
+                  450
+                ],
+                [
+                  "Ubytování Budapešť, 2 noci",
+                  750
+                ],
+                [
+                  "Vlak a busy na Kékes a zpět",
+                  180
+                ],
+                [
+                  "MHD Budapešť",
+                  275
+                ],
+                [
+                  "Jídlo",
+                  750
+                ],
+                [
+                  "Budapešť → Praha",
+                  450
+                ]
+              ]
+            }
+          }
+        ],
+        "tipy": [
+          "Na Kékes vede silnice až pod vrchol, takže nahoře je plno, ale na stezce skoro nikdo.",
+          "Výhled z vrcholu není, je celý v lese. Výhledy jsou spíš cestou z otevřenějších míst.",
+          "Z Budapešti je to levný jednodenní výlet: vlak do Gyöngyöse a místní bus stojí pár stovek."
+        ]
+      }
     },
     "ukraine": {
       "status": "planned",
@@ -1238,11 +1715,252 @@
       "lat": 40.5377,
       "lng": 44.1907,
       "status": "done",
-      "date": null,
+      "date": "2026-07-17",
       "photo": "photos/aragac-wide.jpg",
       "full": "photos/aragac-full.jpg",
-      "tldr": null,
-      "cc": "am"
+      "tldr": "Hned po příletu jsme si půjčili auto, u jezera Kari jsme v něm naspali asi dvě hodiny a ve dvě ráno vyrazili. Cestou nahoru jen sníh a bláto, ale dotlačili jsme to až na vrchol. A nešli jsme sami, celou cestu s námi šel místní pes.",
+      "cc": "am",
+      "stats": {
+        "km": 15.6,
+        "up": 1494,
+        "time": "8 h 37 min"
+      },
+      "diff": 3,
+      "terrain": 3,
+      "strava": {
+        "id": "19348276523",
+        "token": "QaZeQtdcAVCc92DGDSjx7w5P0xX9WM6rvh4jGLqNlLY"
+      },
+      "detail": [
+        [
+          "Start",
+          "2:30"
+        ],
+        [
+          "Čas v pohybu",
+          "5 h 53 min"
+        ],
+        [
+          "Celkový čas",
+          "8 h 37 min"
+        ],
+        [
+          "Tempo",
+          "22:36 min/km"
+        ],
+        [
+          "Kroky",
+          "25 690"
+        ]
+      ],
+      "logistics": {
+        "route": {
+          "legs": [
+            {
+              "m": "train",
+              "n": "Vlak Praha → Bratislava",
+              "p": [
+                [
+                  50.083,
+                  14.435
+                ],
+                [
+                  50.032,
+                  15.762
+                ],
+                [
+                  49.195,
+                  16.608
+                ],
+                [
+                  48.158,
+                  17.106
+                ]
+              ]
+            },
+            {
+              "m": "plane",
+              "n": "Let Bratislava → Jerevan",
+              "p": [
+                [
+                  48.17,
+                  17.213
+                ],
+                [
+                  44.5,
+                  32.0
+                ],
+                [
+                  40.147,
+                  44.396
+                ]
+              ]
+            },
+            {
+              "m": "car",
+              "n": "Půjčeným autem z letiště k jezeru Kari",
+              "p": [
+                [
+                  40.147,
+                  44.396
+                ],
+                [
+                  40.299,
+                  44.362
+                ],
+                [
+                  40.338,
+                  44.273
+                ],
+                [
+                  40.4,
+                  44.23
+                ],
+                [
+                  40.4725,
+                  44.1806
+                ]
+              ]
+            },
+            {
+              "m": "hike",
+              "n": "Jezero Kari → vrchol a zpět",
+              "p": [
+                [
+                  40.4725,
+                  44.1806
+                ],
+                [
+                  40.487,
+                  44.184
+                ],
+                [
+                  40.502,
+                  44.188
+                ],
+                [
+                  40.515,
+                  44.193
+                ],
+                [
+                  40.527,
+                  44.193
+                ],
+                [
+                  40.5377,
+                  44.1907
+                ]
+              ]
+            },
+            {
+              "m": "car",
+              "n": "Autem z Kari do Jerevanu",
+              "p": [
+                [
+                  40.4725,
+                  44.1806
+                ],
+                [
+                  40.4,
+                  44.23
+                ],
+                [
+                  40.338,
+                  44.273
+                ],
+                [
+                  40.299,
+                  44.362
+                ],
+                [
+                  40.181,
+                  44.513
+                ]
+              ]
+            }
+          ],
+          "marks": [
+            {
+              "p": [
+                50.083,
+                14.435
+              ],
+              "n": "Praha (start)",
+              "t": "start"
+            },
+            {
+              "p": [
+                48.158,
+                17.106
+              ],
+              "n": "Bratislava, hostel",
+              "t": "sleep"
+            },
+            {
+              "p": [
+                40.147,
+                44.396
+              ],
+              "n": "Letiště Zvartnoc, půjčení auta",
+              "t": "park"
+            },
+            {
+              "p": [
+                40.4725,
+                44.1806
+              ],
+              "n": "Jezero Kari, noc v autě",
+              "t": "sleep"
+            },
+            {
+              "p": [
+                40.5377,
+                44.1907
+              ],
+              "n": "Aragac 4 090 m",
+              "t": "peak"
+            },
+            {
+              "p": [
+                40.181,
+                44.513
+              ],
+              "n": "Jerevan, 1 noc",
+              "t": "sleep"
+            }
+          ]
+        },
+        "varianty": [
+          {
+            "id": "nase",
+            "nazev": "Naše cesta",
+            "timeline": [
+              [
+                "Den 1",
+                "Vlakem z Prahy do Bratislavy, noc v hostelu."
+              ],
+              [
+                "Den 2",
+                "Brzy ráno na letiště a let do Jerevanu. Ještě ten den půjčené auto (Nissan) a nahoru k jezeru Kari (3 200 m). Spaní v autě, asi dvě hodiny."
+              ],
+              [
+                "Den 3",
+                "Ve 2:30 start na vrchol, sníh a bláto, s námi místní pes. Odpoledne dolů do Jerevanu, šlofík a večer procházka po městě. Noc v Jerevanu."
+              ],
+              [
+                "Den 4",
+                "Ráno přesun z Jerevanu do Tbilisi (pokračování na Kazbek)."
+              ]
+            ],
+            "ubytovani": "Bratislava hostel, u jezera Kari v autě, Jerevan 1 noc."
+          }
+        ],
+        "tipy": [
+          "Kari Lake (3 200 m) je dostupné autem, ideální výchozí bod. Spaní přímo tam pomáhá s aklimatizací.",
+          "Vyrazit v noci: dopoledne se kazí počasí a sníh měkne.",
+          "Výška se projeví i u zdatných, na víc než 4 000 m jít pomalu."
+        ]
+      }
     },
     {
       "id": "kazbek",
@@ -1252,12 +1970,337 @@
       "lat": 42.6972,
       "lng": 44.5194,
       "status": "attempt",
-      "date": "2025",
+      "date": "2026-07-20",
       "reached": "chata Bethlemi (3 653 m)",
-      "tldr": "Otočili jsme se u chaty Bethlemi. Po přehodnocení situace jsme dál nešli. Druhý pokus je v plánu na červenec 2027.",
+      "tldr": "Plán byl jasný: na chatu, aklimatizace a třetí den na vrchol. Počasí ale mělo vlastní plány. Na chatu Bethlemi jsme se dostali až napodruhé a kvůli času a technické náročnosti jsme se rozhodli na vrchol nejít. Lukáš šel druhý den sám a vrchol dal. Druhý pokus je v plánu na červenec 2027.",
       "cc": "ge",
       "photo": "photos/kazbek-wide.jpg",
-      "full": "photos/kazbek-full.jpg"
+      "full": "photos/kazbek-full.jpg",
+      "stats": {
+        "km": 9.0,
+        "up": 1584,
+        "time": "6 h 10 min"
+      },
+      "diff": 4,
+      "terrain": 5,
+      "strava": [
+        {
+          "id": "19391247754",
+          "token": "z4P10OpFLdnVpUo0UDDgqlPkBx1uhd8JgkcGESSjWU0"
+        },
+        {
+          "id": "19403296519",
+          "token": "sUZi68lGVMybsr8Wxh6rOjOKSVqdsFPHAGsSJgc2Wzs"
+        }
+      ],
+      "detail": [
+        [
+          "Výstup na chatu",
+          "8,95 km, +1 584 m"
+        ],
+        [
+          "Čas v pohybu",
+          "4 h 14 min"
+        ],
+        [
+          "Celkový čas",
+          "6 h 10 min"
+        ],
+        [
+          "Kroky nahoru",
+          "16 884"
+        ],
+        [
+          "Sestup do Stepancmindy",
+          "~13 km, −1 900 m"
+        ]
+      ],
+      "logistics": {
+        "route": {
+          "legs": [
+            {
+              "m": "bus",
+              "n": "Jerevan → Tbilisi",
+              "p": [
+                [
+                  40.181,
+                  44.513
+                ],
+                [
+                  40.74,
+                  44.86
+                ],
+                [
+                  41.24,
+                  44.82
+                ],
+                [
+                  41.716,
+                  44.783
+                ]
+              ]
+            },
+            {
+              "m": "bus",
+              "n": "Tbilisi → Stepancminda po Gruzínské vojenské silnici",
+              "p": [
+                [
+                  41.716,
+                  44.783
+                ],
+                [
+                  41.845,
+                  44.719
+                ],
+                [
+                  42.163,
+                  44.703
+                ],
+                [
+                  42.477,
+                  44.479
+                ],
+                [
+                  42.56,
+                  44.51
+                ],
+                [
+                  42.657,
+                  44.643
+                ]
+              ]
+            },
+            {
+              "m": "hike",
+              "n": "Stepancminda → Arsha → ledovec → chata Bethlemi",
+              "p": [
+                [
+                  42.657,
+                  44.643
+                ],
+                [
+                  42.663,
+                  44.62
+                ],
+                [
+                  42.668,
+                  44.605
+                ],
+                [
+                  42.672,
+                  44.59
+                ],
+                [
+                  42.676,
+                  44.575
+                ],
+                [
+                  42.685,
+                  44.568
+                ],
+                [
+                  42.6955,
+                  44.557
+                ]
+              ]
+            },
+            {
+              "m": "bus",
+              "n": "Stepancminda → Tbilisi",
+              "p": [
+                [
+                  42.657,
+                  44.643
+                ],
+                [
+                  42.56,
+                  44.51
+                ],
+                [
+                  42.477,
+                  44.479
+                ],
+                [
+                  42.163,
+                  44.703
+                ],
+                [
+                  41.845,
+                  44.719
+                ],
+                [
+                  41.716,
+                  44.783
+                ]
+              ]
+            },
+            {
+              "m": "train",
+              "n": "Tbilisi → Batumi",
+              "p": [
+                [
+                  41.716,
+                  44.783
+                ],
+                [
+                  41.985,
+                  44.11
+                ],
+                [
+                  42.27,
+                  42.7
+                ],
+                [
+                  42.15,
+                  41.9
+                ],
+                [
+                  41.64,
+                  41.63
+                ]
+              ]
+            },
+            {
+              "m": "bus",
+              "n": "Batumi → letiště Kutaisi",
+              "p": [
+                [
+                  41.64,
+                  41.63
+                ],
+                [
+                  41.99,
+                  41.95
+                ],
+                [
+                  42.176,
+                  42.482
+                ]
+              ]
+            },
+            {
+              "m": "plane",
+              "n": "Let Kutaisi → Bratislava",
+              "p": [
+                [
+                  42.176,
+                  42.482
+                ],
+                [
+                  45.5,
+                  30.0
+                ],
+                [
+                  48.17,
+                  17.213
+                ]
+              ]
+            },
+            {
+              "m": "bus",
+              "n": "Noční bus Bratislava → Praha Florenc",
+              "p": [
+                [
+                  48.148,
+                  17.107
+                ],
+                [
+                  49.195,
+                  16.608
+                ],
+                [
+                  50.09,
+                  14.44
+                ]
+              ]
+            }
+          ],
+          "marks": [
+            {
+              "p": [
+                41.716,
+                44.783
+              ],
+              "n": "Tbilisi",
+              "t": "sleep"
+            },
+            {
+              "p": [
+                42.657,
+                44.643
+              ],
+              "n": "Stepancminda",
+              "t": "sleep"
+            },
+            {
+              "p": [
+                42.6955,
+                44.557
+              ],
+              "n": "Chata Bethlemi 3 653 m",
+              "t": "hut"
+            },
+            {
+              "p": [
+                42.6972,
+                44.5194
+              ],
+              "n": "Kazbek 5 054 m",
+              "t": "peak"
+            },
+            {
+              "p": [
+                41.64,
+                41.63
+              ],
+              "n": "Batumi",
+              "t": "sleep"
+            },
+            {
+              "p": [
+                50.09,
+                14.44
+              ],
+              "n": "Praha Florenc, ráno v 6:00",
+              "t": "start"
+            }
+          ]
+        },
+        "varianty": [
+          {
+            "id": "nase",
+            "nazev": "Naše cesta",
+            "timeline": [
+              [
+                "Přesun",
+                "Z Jerevanu do Tbilisi a dál do Stepancmindy pod Kazbekem."
+              ],
+              [
+                "1. pokus",
+                "Výstup k chatě Bethlemi, kvůli počasí návrat."
+              ],
+              [
+                "2. pokus",
+                "Na chatu Bethlemi (3 653 m) napodruhé úspěšně. Rozhodnutí dál nejít."
+              ],
+              [
+                "Další den",
+                "Lukáš sám na vrchol, pak všichni dolů do Stepancmindy."
+              ],
+              [
+                "Návrat",
+                "Stepancminda → Tbilisi (prohlídka města) → Batumi → letiště Kutaisi → let do Bratislavy. Kluci na Liptov, já nočním busem o půlnoci do Prahy na Florenc (6:00), metrem na Opatov a taxíkem domů."
+              ]
+            ],
+            "ubytovani": "Tbilisi, Stepancminda, chata Bethlemi, Batumi."
+          }
+        ],
+        "tipy": [
+          "Počítat s rezervními dny na počasí, plán „třetí den vrchol“ je hodně optimistický.",
+          "Za chatou Bethlemi začíná ledovec s trhlinami: lano, úvazek a mačky jsou nutnost, ideálně kurz.",
+          "Nad chatou se jde přes hranici s Ruskem a GPS přestává spolehlivě fungovat."
+        ]
+      }
     }
   ],
   "plan": [

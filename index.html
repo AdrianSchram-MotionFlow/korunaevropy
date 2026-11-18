@@ -108,7 +108,7 @@ h1 .l2{color:var(--green)}
 .pc h3{font-weight:800;font-stretch:85%;font-size:26px;line-height:1.05;text-transform:uppercase}
 .pc .country{color:var(--mute);font-size:14px;margin-top:3px}
 .pc .elev{font:800 22px/1 var(--display);font-stretch:85%;white-space:nowrap;text-align:right}
-.pc .elev small{display:block;font:500 12px var(--mono);color:var(--mute);margin-top:4px}
+.pc .elev small{display:block;white-space:normal;max-width:190px;margin-left:auto;font:500 12px var(--mono);color:var(--mute);margin-top:4px}
 .chips{display:flex;flex-wrap:wrap;gap:6px}
 .chip{font-size:13px;background:var(--land2);border:1px solid var(--line);border-radius:999px;padding:3px 10px}
 .chip.d{border-color:var(--dc);color:var(--ink)}
@@ -135,7 +135,7 @@ details.logi summary:focus-visible{outline:2px solid var(--blue);outline-offset:
 .cost td{padding:4px 0;border-bottom:1px dashed var(--line)}
 .cost td:last-child{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 .cost tr.t td{border-bottom:0;font-weight:700;padding-top:8px}
-.cost tr.x td{border-bottom:0;color:var(--mute);font-size:12.5px;font-weight:400;padding-top:2px}
+.cost tr.x td{white-space:normal;text-align:left;border-bottom:0;color:var(--mute);font-size:12.5px;font-weight:400;padding-top:2px}
 .dgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:6px 14px;margin:0}
 .dgrid div{min-width:0}
 .dgrid dt{font-size:12px;color:var(--mute)}
@@ -153,7 +153,17 @@ details.logi summary:focus-visible{outline:2px solid var(--blue);outline-offset:
 .vtabs{display:flex;flex-wrap:wrap;gap:6px}
 .vpane{display:grid;gap:12px}
 .lnote{font-size:12px;color:var(--mute);margin:4px 0 0}
-.strava iframe{max-width:100%!important;border-radius:10px}
+.strava{overflow:hidden;max-width:100%}.strava+.strava{margin-top:10px}
+.strava iframe{width:100%!important;max-width:100%!important;border-radius:10px}
+.cards>*{min-width:0}
+.pc{grid-template-columns:minmax(0,1fr);min-width:0}
+.lg,.vpane{grid-template-columns:minmax(0,1fr)}.lg>div,.vpane>div{min-width:0}.cost td:first-child{overflow-wrap:anywhere}
+.tiles-dark{filter:invert(1) hue-rotate(180deg) brightness(.85) contrast(.9) saturate(.6)}
+.tl{list-style:none;margin:4px 0 0;padding:0 0 0 14px;border-left:2px solid var(--line);display:grid;gap:10px}
+.tl li{position:relative;display:grid;gap:1px}
+.tl li::before{content:"";position:absolute;left:-20px;top:6px;width:10px;height:10px;border-radius:50%;background:var(--card);border:2px solid var(--green)}
+.tl b{font:600 12.5px var(--mono);color:var(--green)}
+.tl span{font-size:15px}
 .leaflet-container{font:13px var(--body)}
 .planflag{font-size:13px;background:var(--land2);border-left:3px solid var(--blue);padding:6px 10px;border-radius:0 8px 8px 0}
 /* country list */
@@ -326,7 +336,7 @@ const SHARED={france:"italy",italy:"france",albania:"nmacedonia",nmacedonia:"alb
 const DIFF={1:["Snadná","#4f9a5c"],2:["Střední","#c9a227"],3:["Náročnější","#d9822b"],4:["Těžká","#c9473b"],5:["Extrém","#7d4a8a"]};
 const TERRAIN={1:"Vyšlapaná cesta",2:"Horský terén",3:"Suť a skály",4:"Ferrata, lezení",5:"Sníh, ledovec"};
 const WEATHER={sun:"☀️ Jasno",partly:"⛅ Polojasno",cloud:"☁️ Mlha a oblačno",rain:"🌧️ Déšť",snow:"❄️ Sněžení",storm:"🌪️ Bouře"};
-const MODE={car:{n:"Auto",c:"#2a5db0",d:"8 7",cls:"d"},train:{n:"Vlak",c:"#8a4fa0",d:"2 7",cls:"o"},taxi:{n:"Taxi",c:"#d9822b",d:"7 6",cls:"d"},jeep:{n:"Terénní auto",c:"#d9822b",d:"7 6",cls:"d"},lift:{n:"Lanovka",c:"#c9a227",d:"1 7",cls:"o"},hike:{n:"Pěšky",c:"#3f8f55",d:null,cls:""}};
+const MODE={car:{n:"Auto",c:"#2a5db0",d:"8 7",cls:"d"},train:{n:"Vlak",c:"#8a4fa0",d:"2 7",cls:"o"},taxi:{n:"Taxi",c:"#d9822b",d:"7 6",cls:"d"},jeep:{n:"Terénní auto",c:"#d9822b",d:"7 6",cls:"d"},lift:{n:"Lanovka",c:"#c9a227",d:"1 7",cls:"o"},bus:{n:"Autobus, MHD",c:"#c9473b",d:"7 6",cls:"d"},plane:{n:"Letadlo",c:"#5c6b61",d:"2 9",cls:"o"},hike:{n:"Pěšky",c:"#3f8f55",d:null,cls:""}};
 const MARKC={peak:"#1f6b37",start:"#132018",park:"#5c6b61",sleep:"#2a5db0",hut:"#c9a227"};
 const REG={};
 const $=id=>document.getElementById(id);
@@ -351,7 +361,8 @@ function card(o){
   if(L||o.detail||o.strava){
     const V=L?(L.varianty||[{id:"x",nazev:null,doprava:L.doprava,trasa:L.trasa,ubytovani:L.ubytovani,cena:L.cena}]):[];
     const pane=v=>{const c=v.cena;const tot=c?(c.total??(c.items||[]).reduce((a,i)=>a+i[1],0)):0;
-      return `${v.doprava?`<div><h4>Doprava</h4><p>${esc(v.doprava)}</p></div>`:""}
+      return `${v.timeline?.length?`<div><h4>Jak jsme jeli</h4><ol class="tl">${v.timeline.map(t=>`<li><b>${esc(t[0])}</b><span>${esc(t[1])}</span></li>`).join("")}</ol></div>`:""}
+      ${v.doprava?`<div><h4>Doprava</h4><p>${esc(v.doprava)}</p></div>`:""}
       ${v.trasa?`<div><h4>Trasa</h4><p>${esc(v.trasa)}</p></div>`:""}
       ${v.ubytovani?`<div><h4>Ubytování</h4><p>${esc(v.ubytovani)}</p></div>`:""}
       ${c?`<div><h4>${L.plan?"Kolik to bude stát":"Kolik to stálo"}${c.note?" · "+esc(c.note):""}</h4><table class="cost">${(c.items||[]).map(i=>`<tr><td>${esc(i[0])}</td><td>${kc(i[1])}</td></tr>`).join("")}<tr class="t"><td>Celkem na osobu</td><td>${kc(Math.round(tot/10)*10)}</td></tr>${c.extra?`<tr class="x"><td colspan="2">${esc(c.extra)}</td></tr>`:""}</table></div>`:""}`};
@@ -366,7 +377,7 @@ function card(o){
       <p class="lnote">Trasy jsou zakreslené orientačně.</p></div>`:""}
     ${V.length>1?`<div class="vtabs" role="tablist">${V.map((v,i)=>`<button type="button" role="tab" data-v="${esc(v.id)}" aria-selected="${i===0}">${esc(v.nazev)}</button>`).join("")}</div>`:(V[0]?.nazev?`<h4 style="margin:0">${esc(V[0].nazev)}</h4>`:"")}
     ${V.map((v,i)=>`<div class="vpane" data-v="${esc(v.id)}"${i?" hidden":""}>${pane(v)}</div>`).join("")}
-    ${o.strava?`<div><h4>Záznam ze Stravy</h4><div class="strava"><div class="strava-embed-placeholder" data-embed-type="activity" data-embed-id="${esc(o.strava.id)}" data-style="standard" data-from-embed="false" data-token="${esc(o.strava.token)}"></div></div></div>`:""}
+    ${o.strava?`<div><h4>Záznam ze Stravy</h4>${[].concat(o.strava).map(x=>`<div class="strava"><div class="strava-embed-placeholder" data-embed-type="activity" data-embed-id="${esc(x.id)}" data-style="standard" data-from-embed="false" data-token="${esc(x.token)}"></div></div>`).join("")}</div>`:""}
     ${L?.tipy?.length?`<div><h4>Tipy a výbava</h4><ul>${L.tipy.map(t=>`<li>${esc(t)}</li>`).join("")}</ul></div>`:""}
     ${L&&D.kurz?`<p class="lnote">${esc(D.kurz)}</p>`:""}
     </div></details>`}
@@ -435,7 +446,7 @@ async function initRoute(det){
   let Lf;try{Lf=await loadLeaflet()}catch(e){box.textContent="Mapu se nepodařilo načíst.";return}
   const dark=matchMedia("(prefers-color-scheme: dark)").matches;
   const m=Lf.map(box,{scrollWheelZoom:false,dragging:!Lf.Browser.mobile,tap:false,zoomSnap:.25,attributionControl:true});
-  Lf.tileLayer(`https://{s}.basemaps.cartocdn.com/${dark?"dark_all":"rastertiles/voyager"}/{z}/{x}/{y}{r}.png`,{maxZoom:18,subdomains:"abcd",attribution:'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> © <a href="https://carto.com/attributions">CARTO</a>'}).addTo(m);
+  Lf.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:18,className:dark?"tiles-dark":"",attribution:'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'}).addTo(m);
   const st={k,m,v:det.querySelector(".vpane:not([hidden])")?.dataset.v,fit:"all",layers:[]};MAPS.set(k,st);drawRoute(st);
 }
 function drawRoute(st){
