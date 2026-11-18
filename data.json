@@ -1554,7 +1554,7 @@
     },
     "ukraine": {
       "status": "planned",
-      "when": "28. 11. – 1. 12. 2026",
+      "when": "zima 2026",
       "tldr": "Zimní výstup ze zakarpatské strany přes Kozmeščik. Ve třech, základna v Lazeščině, UAZ Buchanka k nástupu a rezervní den na počasí.",
       "logistics": {
         "plan": true,
@@ -1761,7 +1761,7 @@
             "id": "praha",
             "nazev": "Z Prahy vlakem",
             "trasa": "Z Lazeščiny terénním UAZem (Buchanka) na nástup Kozmeščik, odtud mírnějším zakarpatským hřebenem na vrchol a zpět k autu. Vrcholový den neděle nebo pondělí podle počasí, otočka nejpozději ve 13:00.",
-            "ubytovani": "Lazeščina: celý dům přes Airbnb na 3 noci (so–út), bezplatné zrušení do 23. 11.",
+            "ubytovani": "Lazeščina: celý dům přes Airbnb na 3 noci, s bezplatným zrušením.",
             "cena": {
               "note": "na osobu při 3 lidech, odhad",
               "items": [
@@ -1809,27 +1809,27 @@
             },
             "timeline": [
               [
-                "Pá 27. 11. 21:48",
+                "Den 1, 21:48",
                 "RegioJetem s lůžkem z Prahy hl. n."
               ],
               [
-                "So 28. 11. ráno",
+                "Den 2 ráno",
                 "6:25 Přemyšl, 7:40 vlak IC do Lvova (10:15). Den ve Lvově, výměna hřiven a nákup."
               ],
               [
-                "So 15:51",
+                "Den 2, 15:51",
                 "Vlak 810 do Vorochty (20:25) a taxíkem do Lazeščiny."
               ],
               [
-                "Ne 29. 11. nebo Po 30. 11.",
+                "Den 3 nebo 4",
                 "Vrcholový den podle počasí: UAZem na Kozmeščik, výstup na Hoverlu, otočka nejpozději ve 13:00 a UAZem zpět. Druhý den je rezerva."
               ],
               [
-                "Út 1. 12.",
+                "Den 5",
                 "Taxíkem do Vorochty do 9:45, vlak v 10:11 do Lvova (14:25) a v 18:29 vlak do Přemyšlu a RegioJet s lůžkem."
               ],
               [
-                "St 2. 12. 6:58",
+                "Den 6, 6:58",
                 "Praha."
               ]
             ]
@@ -2445,7 +2445,7 @@
   ],
   "plan": [
     {
-      "when": "konec listopadu 2026",
+      "when": "zima 2026",
       "what": "Hoverla",
       "where": "Ukrajina",
       "note": "zimní výstup přes Kozmeščik",
