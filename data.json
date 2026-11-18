@@ -632,7 +632,8 @@
           "Pod vrcholem jsou řetězy a skalní úseky, v mokru opatrně.",
           "Chata pod Rysmi je ideální místo na pauzu a čaj před posledním úsekem."
         ]
-      }
+      },
+      "weather": "partly"
     },
     "germany": {
       "status": "done",
