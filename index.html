@@ -43,8 +43,15 @@ h2{font-weight:800;font-stretch:80%;font-size:28px;letter-spacing:-.01em;text-tr
 /* hero */
 header{padding-block:28px 8px}
 .top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-.ig{font:600 14px var(--body);text-decoration:none;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:7px 14px}
-.ig:hover,.ig:focus-visible{border-color:var(--ink)}
+/* Instagram button: gradient text + glyph, soft glow on hover */
+.ig{--igg:linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5,#d62976,#feda75);position:relative;isolation:isolate;display:inline-flex;align-items:center;gap:8px;font:700 14px var(--body);text-decoration:none;border:1.5px solid transparent;background:linear-gradient(var(--card),var(--card)) padding-box,var(--igg) border-box;background-size:auto,300% 300%;border-radius:999px;padding:7px 15px 7px 11px;transition:transform .25s}
+.ig svg{width:18px;height:18px;flex:none}
+.ig .t{background:var(--igg);background-size:300% 300%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+.ig::before{content:"";position:absolute;inset:-4px;border-radius:inherit;background:var(--igg);background-size:300% 300%;filter:blur(14px);opacity:0;z-index:-1;transition:opacity .35s}
+@media (hover:hover){.ig:hover{transform:translateY(-1px)}.ig:hover::before{opacity:.6}.ig:hover,.ig:hover .t,.ig:hover::before{animation:igshift 4s linear infinite}}
+.ig:focus-visible{outline:2px solid #d62976;outline-offset:3px}
+@keyframes igshift{0%{background-position:0% 50%}100%{background-position:300% 50%}}
+.ig:hover{background-size:auto,300% 300%}
 h1{font-weight:900;font-stretch:75%;font-size:clamp(52px,14vw,112px);line-height:.88;letter-spacing:-.02em;text-transform:uppercase;margin-top:22px}
 h1{display:flex;align-items:center;gap:.12em}
 h1 .l1,h1 .l2{display:block}
@@ -75,8 +82,16 @@ h1 .l2{color:var(--green)}
 /* map */
 .mapbox{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-top:16px;position:relative}
 #map{display:block;width:100%;height:auto;aspect-ratio:4/3.4;max-width:100%}
-#map .c{stroke:var(--card);stroke-width:.6}
+#map .c{stroke:var(--card);stroke-width:.6;vector-effect:non-scaling-stroke}
 #map .peak{cursor:pointer}
+#map{touch-action:pan-y;cursor:default}
+#map.zoomed{touch-action:none;cursor:grab}
+#map.zoomed:active{cursor:grabbing}
+.zbtns{position:absolute;top:10px;right:10px;display:grid;gap:6px}
+.zbtns button{width:36px;height:36px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:600 20px/1 var(--body);cursor:pointer;display:grid;place-items:center}
+.zbtns button:hover{border-color:var(--ink)}
+.zbtns button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.zbtns button[disabled]{opacity:.4;cursor:default}
 .tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--paper);font-size:13px;padding:6px 9px;border-radius:8px;transform:translate(-50%,-120%);white-space:nowrap;opacity:0;transition:opacity .15s}
 .tip.show{opacity:1}
 .mapnote{font-size:13px;color:var(--mute);padding:10px 14px;border-top:1px solid var(--line)}
@@ -120,6 +135,26 @@ details.logi summary:focus-visible{outline:2px solid var(--blue);outline-offset:
 .cost td{padding:4px 0;border-bottom:1px dashed var(--line)}
 .cost td:last-child{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 .cost tr.t td{border-bottom:0;font-weight:700;padding-top:8px}
+.cost tr.x td{border-bottom:0;color:var(--mute);font-size:12.5px;font-weight:400;padding-top:2px}
+.dgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:6px 14px;margin:0}
+.dgrid div{min-width:0}
+.dgrid dt{font-size:12px;color:var(--mute)}
+.dgrid dd{margin:0;font-weight:600;font-size:14px}
+.lmap{height:300px;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:var(--land2);z-index:0}
+.lbar{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;justify-content:space-between;margin-top:8px}
+.lleg{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:12.5px;color:var(--mute)}
+.lleg span{display:inline-flex;align-items:center;gap:6px}
+.lleg i{display:inline-block;width:22px;height:0;border-top:3px solid var(--lc)}
+.lleg i.d{border-top-style:dashed}.lleg i.o{border-top-style:dotted}
+.lfit{display:flex;gap:6px}
+.lfit button,.vtabs button{font:600 13px var(--body);border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:5px 11px;cursor:pointer}
+.lfit button[aria-pressed="true"],.vtabs button[aria-selected="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.lfit button:focus-visible,.vtabs button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.vtabs{display:flex;flex-wrap:wrap;gap:6px}
+.vpane{display:grid;gap:12px}
+.lnote{font-size:12px;color:var(--mute);margin:4px 0 0}
+.strava iframe{max-width:100%!important;border-radius:10px}
+.leaflet-container{font:13px var(--body)}
 .planflag{font-size:13px;background:var(--land2);border-left:3px solid var(--blue);padding:6px 10px;border-radius:0 8px 8px 0}
 /* country list */
 .filters{display:flex;gap:6px;flex-wrap:wrap;margin-top:14px}
@@ -150,14 +185,14 @@ footer{padding-block:30px 50px;color:var(--mute);font-size:13px;border-top:1px s
 <header class="wrap">
   <div class="top">
     <span class="kicker">Projekt 25 · Adrian Schram</span>
-    <a class="ig" id="ig" href="https://www.instagram.com/adrian.schram/" target="_blank" rel="noopener">@adrian.schram</a>
+    <a class="ig" id="ig" href="https://www.instagram.com/adrian.schram/" target="_blank" rel="noopener" aria-label="Instagram @adrian.schram"><svg viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="igG" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#feda75"/><stop offset=".3" stop-color="#fa7e1e"/><stop offset=".6" stop-color="#d62976"/><stop offset=".8" stop-color="#962fbf"/><stop offset="1" stop-color="#4f5bd5"/></linearGradient></defs><rect x="2.5" y="2.5" width="19" height="19" rx="5.5" fill="none" stroke="url(#igG)" stroke-width="2.2"/><circle cx="12" cy="12" r="4.3" fill="none" stroke="url(#igG)" stroke-width="2.2"/><circle cx="17.4" cy="6.6" r="1.4" fill="url(#igG)"/></svg><span class="t">@adrian.schram</span></a>
   </div>
   <h1><span class="t"><span class="l1">Koruna</span> <span class="l2">Evropy</span></span><i class="crown" aria-hidden="true"></i></h1>
   <p class="lede">Nejvyšší vrchol každé evropské země. Všech 44 do mých 25. narozenin, 30. dubna 2032.</p>
   <div class="stats">
     <div class="stat"><b class="num" id="st-done">–</b><span>zdolaných vrcholů</span></div>
     <div class="stat"><b class="num" id="st-high">–</b><span>nejvýš v Evropě</span></div>
-    <div class="stat"><b class="num" id="st-days">–</b><span>dní do deadlinu</span></div>
+    <div class="stat"><b class="num" id="st-up">–</b><span>nastoupáno na výstupech</span></div>
   </div>
   <div class="bar" id="bar" role="img"></div>
   <div class="legend">
@@ -182,8 +217,9 @@ footer{padding-block:30px 50px;color:var(--mute);font-size:13px;border-top:1px s
     <h2>Kde už jsem stál</h2>
     <div class="mapbox">
       <svg id="map" viewBox="0 0 800 680" role="img" aria-label="Mapa Evropy se zdolanými zeměmi"></svg>
+      <div class="zbtns" id="zbtns" hidden><button type="button" data-z="in" aria-label="Přiblížit">+</button><button type="button" data-z="out" aria-label="Oddálit">−</button><button type="button" data-z="reset" aria-label="Celá Evropa" style="font-size:15px">⤢</button></div>
       <div class="tip" id="tip"></div>
-      <div class="mapnote" id="mapnote">Klepni na tečku vrcholu.</div>
+      <div class="mapnote" id="mapnote">Klepni na tečku vrcholu. Přibližuj tlačítky, dvěma prsty nebo Ctrl + kolečkem.</div>
     </div>
   </section>
 
@@ -289,7 +325,10 @@ const flag=cc=>`https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/flags/4x3/${cc}.sv
 const SHARED={france:"italy",italy:"france",albania:"nmacedonia",nmacedonia:"albania"};
 const DIFF={1:["Snadná","#4f9a5c"],2:["Střední","#c9a227"],3:["Náročnější","#d9822b"],4:["Těžká","#c9473b"],5:["Extrém","#7d4a8a"]};
 const TERRAIN={1:"Vyšlapaná cesta",2:"Horský terén",3:"Suť a skály",4:"Ferrata, lezení",5:"Sníh, ledovec"};
-const WEATHER={sun:"☀️ Jasno",cloud:"☁️ Oblačno",rain:"🌧️ Déšť",snow:"❄️ Sněžení",storm:"🌪️ Bouře"};
+const WEATHER={sun:"☀️ Jasno",partly:"⛅ Polojasno",cloud:"☁️ Mlha a oblačno",rain:"🌧️ Déšť",snow:"❄️ Sněžení",storm:"🌪️ Bouře"};
+const MODE={car:{n:"Auto",c:"#2a5db0",d:"8 7",cls:"d"},train:{n:"Vlak",c:"#8a4fa0",d:"2 7",cls:"o"},taxi:{n:"Taxi",c:"#d9822b",d:"7 6",cls:"d"},jeep:{n:"Terénní auto",c:"#d9822b",d:"7 6",cls:"d"},lift:{n:"Lanovka",c:"#c9a227",d:"1 7",cls:"o"},hike:{n:"Pěšky",c:"#3f8f55",d:null,cls:""}};
+const MARKC={peak:"#1f6b37",start:"#132018",park:"#5c6b61",sleep:"#2a5db0",hut:"#c9a227"};
+const REG={};
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const kc=n=>n.toLocaleString("cs-CZ")+" Kč";
@@ -307,15 +346,29 @@ function card(o){
   const s=o.stats||{};
   const figs=[s.km!=null?`<div><b>${String(s.km).replace(".",",")} km</b><span>délka</span></div>`:"",s.up!=null?`<div><b>${mfmt(s.up)}</b><span>převýšení</span></div>`:"",s.time?`<div><b>${esc(s.time)}</b><span>čas</span></div>`:""].join("");
   const L=o.logistics;
+  const key=o.cid||o.id;REG[key]=o;
   let logi="";
-  if(L){const c=L.cena;
-    logi=`<details class="logi"><summary>Logistika</summary><div class="lg">
-    ${L.plan?`<div class="planflag">Tohle je plán před cestou. Po výstupu ho přepíšu podle reality.</div>`:""}
-    ${L.doprava?`<div><h4>Doprava</h4><p>${esc(L.doprava)}</p></div>`:""}
-    ${L.trasa?`<div><h4>Trasa</h4><p>${esc(L.trasa)}</p></div>`:""}
-    ${L.ubytovani?`<div><h4>Ubytování</h4><p>${esc(L.ubytovani)}</p></div>`:""}
-    ${c?`<div><h4>Kolik to stálo${c.note?" · "+esc(c.note):""}</h4><table class="cost">${(c.items||[]).map(i=>`<tr><td>${esc(i[0])}</td><td>${kc(i[1])}</td></tr>`).join("")}<tr class="t"><td>Celkem</td><td>${kc(c.total)}</td></tr></table></div>`:""}
-    ${L.tipy?.length?`<div><h4>Tipy a výbava</h4><ul>${L.tipy.map(t=>`<li>${esc(t)}</li>`).join("")}</ul></div>`:""}
+  if(L||o.detail||o.strava){
+    const V=L?(L.varianty||[{id:"x",nazev:null,doprava:L.doprava,trasa:L.trasa,ubytovani:L.ubytovani,cena:L.cena}]):[];
+    const pane=v=>{const c=v.cena;const tot=c?(c.total??(c.items||[]).reduce((a,i)=>a+i[1],0)):0;
+      return `${v.doprava?`<div><h4>Doprava</h4><p>${esc(v.doprava)}</p></div>`:""}
+      ${v.trasa?`<div><h4>Trasa</h4><p>${esc(v.trasa)}</p></div>`:""}
+      ${v.ubytovani?`<div><h4>Ubytování</h4><p>${esc(v.ubytovani)}</p></div>`:""}
+      ${c?`<div><h4>${L.plan?"Kolik to bude stát":"Kolik to stálo"}${c.note?" · "+esc(c.note):""}</h4><table class="cost">${(c.items||[]).map(i=>`<tr><td>${esc(i[0])}</td><td>${kc(i[1])}</td></tr>`).join("")}<tr class="t"><td>Celkem na osobu</td><td>${kc(Math.round(tot/10)*10)}</td></tr>${c.extra?`<tr class="x"><td colspan="2">${esc(c.extra)}</td></tr>`:""}</table></div>`:""}`};
+    const R=L&&L.route;
+    const modes=R?[...new Set(R.legs.map(l=>l.m))]:[];
+    logi=`<details class="logi" data-k="${esc(key)}"><summary>${o.status==="planned"?"Plán a logistika":"Logistika a statistiky"}</summary><div class="lg">
+    ${L&&L.plan?`<div class="planflag">Tohle je plán před cestou. Po výstupu ho přepíšu podle reality.</div>`:""}
+    ${o.detail?.length?`<div><h4>Statistiky</h4><dl class="dgrid">${o.detail.map(d=>`<div><dt>${esc(d[0])}</dt><dd>${esc(d[1])}</dd></div>`).join("")}</dl></div>`:""}
+    ${R?`<div><h4>Mapa cesty</h4><div class="lmap" role="img" aria-label="Mapa cesty na ${esc(o.peak)}"></div>
+      <div class="lbar"><div class="lleg">${modes.map(m=>`<span><i class="${MODE[m].cls}" style="--lc:${MODE[m].c}"></i>${MODE[m].n}</span>`).join("")}</div>
+      <div class="lfit"><button type="button" data-fit="all" aria-pressed="true">Celá cesta</button><button type="button" data-fit="hike" aria-pressed="false">Výstup</button></div></div>
+      <p class="lnote">Trasy jsou zakreslené orientačně.</p></div>`:""}
+    ${V.length>1?`<div class="vtabs" role="tablist">${V.map((v,i)=>`<button type="button" role="tab" data-v="${esc(v.id)}" aria-selected="${i===0}">${esc(v.nazev)}</button>`).join("")}</div>`:(V[0]?.nazev?`<h4 style="margin:0">${esc(V[0].nazev)}</h4>`:"")}
+    ${V.map((v,i)=>`<div class="vpane" data-v="${esc(v.id)}"${i?" hidden":""}>${pane(v)}</div>`).join("")}
+    ${o.strava?`<div><h4>Záznam ze Stravy</h4><div class="strava"><div class="strava-embed-placeholder" data-embed-type="activity" data-embed-id="${esc(o.strava.id)}" data-style="standard" data-from-embed="false" data-token="${esc(o.strava.token)}"></div></div></div>`:""}
+    ${L?.tipy?.length?`<div><h4>Tipy a výbava</h4><ul>${L.tipy.map(t=>`<li>${esc(t)}</li>`).join("")}</ul></div>`:""}
+    ${L&&D.kurz?`<p class="lnote">${esc(D.kurz)}</p>`:""}
     </div></details>`}
   const when=o.status==="planned"?(o.when?"plán: "+esc(o.when):"v plánu"):o.status==="attempt"?("pokus "+(fdate(o.date)||"")+(o.reached?" · došel jsem na "+esc(o.reached):"")):(fdate(o.date)||"datum doplním");
   return `<article class="pc" id="v-${esc(o.cid||o.id)}">
@@ -342,8 +395,8 @@ function render(){
   const high=doneList.sort((a,b)=>b.elev-a.elev)[0];
   $("st-high").innerHTML=high?`${high.elev.toLocaleString("cs-CZ")}<small> m</small>`:"–";
   $("st-high").nextElementSibling.textContent=high?`nejvýš: ${high.peak}`:"nejvýš v Evropě";
-  const days=Math.max(0,Math.ceil((new Date(D.deadline+"T23:59:59")-new Date())/864e5));
-  $("st-days").textContent=days.toLocaleString("cs-CZ");
+  const up=Object.values(D.peaks).filter(p=>p.status==="done").reduce((a,p)=>a+(p.stats?.up||0),0);
+  $("st-up").innerHTML=`${up.toLocaleString("cs-CZ")}<small> m</small>`;
   const bar=$("bar");bar.innerHTML=["done","attempt","planned"].map(k=>`<i style="width:${counts[k]/total*100}%;background:var(--${k==="done"?"green":k==="attempt"?"yellow":"blue"})"></i>`).join("");
   bar.setAttribute("aria-label",`${counts.done} z ${total} vrcholů zdoláno, ${counts.planned} v plánu`);
   // timeline
@@ -370,6 +423,46 @@ $("filters").addEventListener("click",e=>{const b=e.target.closest("button");if(
 document.addEventListener("click",e=>{const im=e.target.closest(".pc .photo img");const lb=$("lightbox");
   if(im){lb.innerHTML=`<img src="${im.dataset.full||im.src}" alt="${esc(im.alt)}">`;lb.hidden=false}else if(e.target.closest("#lightbox"))lb.hidden=true});
 
+/* ---- route maps (Leaflet, loaded on first open) ---- */
+let leafletP=null;
+function loadLeaflet(){if(leafletP)return leafletP;leafletP=new Promise((res,rej)=>{
+  const l=document.createElement("link");l.rel="stylesheet";l.href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css";document.head.appendChild(l);
+  const s=document.createElement("script");s.src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js";s.onload=()=>res(window.L);s.onerror=rej;document.head.appendChild(s)});return leafletP}
+const MAPS=new Map();
+async function initRoute(det){
+  const k=det.dataset.k,o=REG[k],R=o?.logistics?.route,box=det.querySelector(".lmap");if(!R||!box)return;
+  if(MAPS.has(k)){MAPS.get(k).m.invalidateSize();return}
+  let Lf;try{Lf=await loadLeaflet()}catch(e){box.textContent="Mapu se nepodařilo načíst.";return}
+  const dark=matchMedia("(prefers-color-scheme: dark)").matches;
+  const m=Lf.map(box,{scrollWheelZoom:false,dragging:!Lf.Browser.mobile,tap:false,zoomSnap:.25,attributionControl:true});
+  Lf.tileLayer(`https://{s}.basemaps.cartocdn.com/${dark?"dark_all":"rastertiles/voyager"}/{z}/{x}/{y}{r}.png`,{maxZoom:18,subdomains:"abcd",attribution:'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> © <a href="https://carto.com/attributions">CARTO</a>'}).addTo(m);
+  const st={k,m,v:det.querySelector(".vpane:not([hidden])")?.dataset.v,fit:"all",layers:[]};MAPS.set(k,st);drawRoute(st);
+}
+function drawRoute(st){
+  const Lf=window.L,o=REG[st.k],R=o.logistics.route;st.layers.forEach(l=>l.remove());st.layers=[];
+  const ok=x=>!x.v||x.v===st.v;const legs=R.legs.filter(ok);
+  legs.forEach(l=>{const M=MODE[l.m]||MODE.car;
+    if(l.m==="hike")st.layers.push(Lf.polyline(l.p,{color:"#fff",weight:8,opacity:.85}).addTo(st.m));
+    st.layers.push(Lf.polyline(l.p,{color:M.c,weight:l.m==="hike"?4.5:3.5,dashArray:M.d,lineCap:"round",opacity:.95}).bindTooltip(`${M.n}: ${l.n}`,{sticky:true}).addTo(st.m))});
+  (R.marks||[]).filter(ok).forEach(k=>{const peak=k.t==="peak";
+    st.layers.push(Lf.circleMarker(k.p,{radius:peak?8:6,color:"#fff",weight:2,fillColor:MARKC[k.t]||"#132018",fillOpacity:1}).bindTooltip(k.n,{permanent:peak,direction:"top",offset:[0,-8]}).addTo(st.m))});
+  fitRoute(st);
+}
+function fitRoute(st){const Lf=window.L,R=REG[st.k].logistics.route;
+  const legs=R.legs.filter(x=>(!x.v||x.v===st.v)&&(st.fit==="all"||x.m==="hike"||x.m==="lift"));
+  const pts=legs.flatMap(l=>l.p);if(pts.length)st.m.fitBounds(Lf.latLngBounds(pts),{padding:[24,24],maxZoom:14})}
+document.addEventListener("toggle",e=>{const d=e.target;if(d.matches?.("details.logi")&&d.open)initRoute(d)},true);
+document.addEventListener("click",e=>{
+  const t=e.target.closest(".vtabs button");
+  if(t){const det=t.closest("details");det.querySelectorAll(".vtabs button").forEach(b=>b.setAttribute("aria-selected",b===t));
+    det.querySelectorAll(".vpane").forEach(p=>p.hidden=p.dataset.v!==t.dataset.v);
+    const st=MAPS.get(det.dataset.k);if(st){st.v=t.dataset.v;drawRoute(st)}return}
+  const f=e.target.closest(".lfit button");
+  if(f){const det=f.closest("details");det.querySelectorAll(".lfit button").forEach(b=>b.setAttribute("aria-pressed",b===f));
+    const st=MAPS.get(det.dataset.k);if(st){st.fit=f.dataset.fit;fitRoute(st)}}
+});
+function loadStrava(){if(!document.querySelector(".strava-embed-placeholder"))return;const s=document.createElement("script");s.src="https://strava-embeds.com/embed.js";s.async=true;document.body.appendChild(s)}
+
 async function drawMap(){
   const svg=d3.select("#map"),W=800,H=680;
   const css=getComputedStyle(document.documentElement),col=n=>css.getPropertyValue(n).trim();
@@ -385,26 +478,41 @@ async function drawMap(){
     return col("--land2")};
   const op=f=>{const c=byNum.get(+f.id);const s=c?status(c):null;return s==="planned"?.45:s==="done"||s==="attempt"?.8:1};
   svg.append("rect").attr("width",W).attr("height",H).attr("fill",col("--card"));
-  svg.append("g").selectAll("path").data(feats).join("path").attr("class","c").attr("d",path).attr("fill",fill).attr("fill-opacity",op);
+  const zg=svg.append("g");
+  zg.append("g").selectAll("path").data(feats).join("path").attr("class","c").attr("d",path).attr("fill",fill).attr("fill-opacity",op);
   const pts=[];const seen=new Set();
   COUNTRIES.forEach(c=>{if(seen.has(c.peakId))return;seen.add(c.peakId);const s=[c,COUNTRIES.find(x=>x.id===SHARED[c.id])].filter(Boolean).map(status);const st=s.includes("done")?"done":s.includes("attempt")?"attempt":s.includes("planned")?"planned":"todo";
     pts.push({name:c.peak,country:SHARED[c.id]?c.name+" / "+COUNTRIES.find(x=>x.id===SHARED[c.id]).name:c.name,elev:c.elev,lng:c.lng,lat:c.lat,s:st})});
   (D.extras||[]).forEach(x=>pts.push({name:x.peak,country:x.country+" (mimo výzvu)",elev:x.elev,lng:x.lng,lat:x.lat,s:x.status,x:true}));
   const colorS={done:"--green",attempt:"--yellow",planned:"--blue",todo:"--mute"};
   const tip=$("tip"),box=document.querySelector(".mapbox");
-  const show=(d,ev)=>{const r=box.getBoundingClientRect(),p=proj([d.lng,d.lat]),sx=r.width/W;tip.style.left=(p[0]*sx)+"px";tip.style.top=(p[1]*sx)+"px";
+  let T=d3.zoomIdentity;
+  const show=(d,ev)=>{const r=box.getBoundingClientRect(),p=T.apply(proj([d.lng,d.lat])),sx=r.width/W;tip.style.left=(p[0]*sx)+"px";tip.style.top=(p[1]*sx)+"px";
     tip.textContent=`${d.name} · ${d.elev.toLocaleString("cs-CZ")} m`;tip.classList.add("show");
     $("mapnote").textContent=`${d.name} (${d.country}) · ${{done:"zdoláno",attempt:"pokus",planned:"v plánu",todo:"zbývá"}[d.s]}`};
-  svg.append("g").selectAll("circle").data(pts.sort((a,b)=>(a.s==="todo")-(b.s==="todo")).reverse()).join("circle").attr("class","peak")
+  const dots=zg.append("g");
+  dots.selectAll("circle").data(pts.sort((a,b)=>(a.s==="todo")-(b.s==="todo")).reverse()).join("circle").attr("class","peak")
     .attr("cx",d=>proj([d.lng,d.lat])[0]).attr("cy",d=>proj([d.lng,d.lat])[1]).attr("r",d=>d.s==="todo"?3.2:6)
     .attr("fill",d=>d.s==="todo"?col("--card"):d.x?col(d.s==="done"?"--xdone":"--xatt"):col(colorS[d.s])).attr("stroke",d=>d.s==="todo"?col("--mute"):col("--card")).attr("stroke-width",d=>d.s==="todo"?1.2:2)
     .attr("tabindex",0).on("click",(e,d)=>show(d,e)).on("mouseenter",(e,d)=>show(d,e)).on("focus",(e,d)=>show(d,e)).on("mouseleave",()=>tip.classList.remove("show"))
     .append("title").text(d=>`${d.name}, ${d.country}`);
+  // zoom: buttons, pinch (2 fingers), Ctrl/⌘ + wheel or trackpad pinch, drag when zoomed
+  const el=svg.node();
+  const zoom=d3.zoom().scaleExtent([1,10]).translateExtent([[0,0],[W,H]]).extent([[0,0],[W,H]])
+    .filter(e=>{if(e.type==="wheel")return e.ctrlKey||e.metaKey;if(e.type==="touchstart")return e.touches.length>1||T.k>1;if(e.type==="dblclick")return true;return !e.button})
+    .on("zoom",e=>{T=e.transform;zg.attr("transform",T);const k=T.k;
+      dots.selectAll("circle").attr("r",d=>(d.s==="todo"?3.2:6)/Math.sqrt(k)).attr("stroke-width",d=>(d.s==="todo"?1.2:2)/Math.sqrt(k));
+      el.classList.toggle("zoomed",k>1.01);tip.classList.remove("show");
+      zb.querySelector('[data-z="out"]').disabled=k<=1.01;zb.querySelector('[data-z="reset"]').disabled=k<=1.01});
+  svg.call(zoom).on("dblclick.zoom",null);
+  const zb=$("zbtns");zb.hidden=false;zb.querySelector('[data-z="out"]').disabled=true;zb.querySelector('[data-z="reset"]').disabled=true;
+  zb.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;const t=svg.transition().duration(350);
+    if(b.dataset.z==="in")zoom.scaleBy(t,1.8);else if(b.dataset.z==="out")zoom.scaleBy(t,1/1.8);else zoom.transform(t,d3.zoomIdentity)});
 }
 
 (async()=>{
   try{D=await (await fetch("data.json",{cache:"no-cache"})).json()}catch(e){document.querySelector("main").insertAdjacentHTML("afterbegin",'<p class="wrap pending">Data se nepodařilo načíst. Zkus stránku obnovit.</p>');return}
-  render();
+  render();loadStrava();
   if(window.d3&&window.topojson)drawMap();else $("mapnote").textContent="Mapu se nepodařilo načíst.";
 })();
 </script>

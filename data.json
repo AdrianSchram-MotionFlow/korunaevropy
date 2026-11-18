@@ -1,88 +1,1230 @@
 {
-  "updated": "2026-11-08",
+  "updated": "2026-11-18",
   "instagram": "https://www.instagram.com/adrian.schram/",
   "deadline": "2032-04-30",
+  "kurz": "Ceny v eurech přepočtené kurzem 25 Kč/€, hřivny kurzem 0,52 Kč/UAH.",
   "peaks": {
     "czechia": {
       "status": "done",
-      "date": null,
+      "date": "2026-09-06",
       "photo": "photos/snezka-wide.jpg",
-      "tldr": null,
+      "full": "photos/snezka-full.jpg",
+      "tldr": "Sněžka v neděli skoro bez lidí. Parkoviště bylo narvané, ale cestou nahoru jsme skoro nikoho nepotkali a na vrcholu byl i přes dokonalé počasí naprostý klid. Začátek školy s davy evidentně zamával.",
       "post": null,
-      "full": "photos/snezka-full.jpg"
+      "stats": {
+        "km": 12.9,
+        "up": 901,
+        "time": "4 h 24 min"
+      },
+      "diff": 2,
+      "terrain": 1,
+      "weather": "partly",
+      "strava": {
+        "id": "20064226978",
+        "token": "dnQ_zx-N7Vz5FHIPEPlh8IC15DOMN6OJoHSKR5wGslQ"
+      },
+      "detail": [
+        [
+          "Start",
+          "14:18"
+        ],
+        [
+          "Čas v pohybu",
+          "3 h 18 min"
+        ],
+        [
+          "Celkový čas",
+          "4 h 24 min"
+        ],
+        [
+          "Tempo",
+          "15:21 min/km"
+        ],
+        [
+          "Kroky",
+          "18 350"
+        ],
+        [
+          "Počasí",
+          "polojasno, 15 °C, vítr 13 km/h"
+        ]
+      ],
+      "logistics": {
+        "route": {
+          "legs": [
+            {
+              "m": "car",
+              "n": "Praha → Pec pod Sněžkou (D11, Hradec Králové, Trutnov)",
+              "p": [
+                [
+                  49.963,
+                  14.458
+                ],
+                [
+                  50.01,
+                  14.6
+                ],
+                [
+                  50.081,
+                  14.611
+                ],
+                [
+                  50.142,
+                  15.118
+                ],
+                [
+                  50.155,
+                  15.46
+                ],
+                [
+                  50.211,
+                  15.833
+                ],
+                [
+                  50.356,
+                  15.921
+                ],
+                [
+                  50.561,
+                  15.913
+                ],
+                [
+                  50.626,
+                  15.815
+                ],
+                [
+                  50.6927,
+                  15.7365
+                ]
+              ]
+            },
+            {
+              "m": "hike",
+              "n": "Pec → Bouda Růžohorky → Sněžka a stejnou cestou zpět",
+              "p": [
+                [
+                  50.6935,
+                  15.7385
+                ],
+                [
+                  50.7,
+                  15.744
+                ],
+                [
+                  50.708,
+                  15.748
+                ],
+                [
+                  50.718,
+                  15.749
+                ],
+                [
+                  50.728,
+                  15.7445
+                ],
+                [
+                  50.7359,
+                  15.7398
+                ]
+              ]
+            }
+          ],
+          "marks": [
+            {
+              "p": [
+                49.963,
+                14.458
+              ],
+              "n": "Praha (start)",
+              "t": "start"
+            },
+            {
+              "p": [
+                50.6927,
+                15.7365
+              ],
+              "n": "Parkoviště P3-C, Pec pod Sněžkou",
+              "t": "park"
+            },
+            {
+              "p": [
+                50.7183,
+                15.7493
+              ],
+              "n": "Bouda Růžohorky",
+              "t": "hut"
+            },
+            {
+              "p": [
+                50.7359,
+                15.7398
+              ],
+              "n": "Sněžka 1 603 m",
+              "t": "peak"
+            }
+          ]
+        },
+        "varianty": [
+          {
+            "id": "praha",
+            "nazev": "Z Prahy autem",
+            "doprava": "Autem z Prahy po D11 přes Hradec Králové a Trutnov do Pece pod Sněžkou, asi 180 km a 2,5 h jedna cesta. Parkování na P3-C přímo v Peci.",
+            "trasa": "Z Pece přes Boudu Růžohorky na vrchol a stejnou cestou zpět. 12,9 km a 901 m převýšení, žádné technické úseky.",
+            "ubytovani": "Bez přespání, celé za jeden den.",
+            "cena": {
+              "note": "na osobu, jeli jsme ve dvou",
+              "items": [
+                [
+                  "Benzín, 360 km × 5,2 l/100 km × 40 Kč/l (750 Kč ÷ 2)",
+                  375
+                ],
+                [
+                  "Parkování P3-C, celý den (~200 Kč ÷ 2, odhad)",
+                  100
+                ]
+              ],
+              "extra": "Bez dálniční známky (roční máme). Bez ní 10denní za 300 Kč, tedy +150 Kč na osobu."
+            }
+          }
+        ],
+        "tipy": [
+          "Konec prázdnin a neděle odpoledne: plné parkoviště, ale prázdná hora.",
+          "Cesta přes Růžohorky je kratší a strmější než přes Obří důl, ale bez technických míst."
+        ]
+      }
     },
     "poland": {
       "status": "done",
-      "date": null,
+      "date": "2026-08-24",
       "photo": "photos/rysy-wide.jpg",
-      "tldr": null,
+      "full": "photos/rysy-full.jpg",
+      "tldr": "Rysy jsme vzali z té delší, slovenské strany rovnou od Štrbského plesa. Zhruba 20 km v nohách, 1 200 výškových metrů a 10 hodin cesty. První krok k velkému cíli.",
       "post": null,
-      "full": "photos/rysy-full.jpg"
+      "stats": {
+        "km": 20,
+        "up": 1200,
+        "time": "~10 h"
+      },
+      "diff": 3,
+      "terrain": 3,
+      "detail": [
+        [
+          "Záznam",
+          "bez Stravy, hodnoty jsou orientační"
+        ]
+      ],
+      "logistics": {
+        "route": {
+          "legs": [
+            {
+              "m": "car",
+              "v": "nase",
+              "n": "Nový Jíčín → Štrba přes Čadcu a Žilinu, stejně zpět",
+              "p": [
+                [
+                  49.594,
+                  18.01
+                ],
+                [
+                  49.641,
+                  18.145
+                ],
+                [
+                  49.683,
+                  18.35
+                ],
+                [
+                  49.677,
+                  18.672
+                ],
+                [
+                  49.577,
+                  18.765
+                ],
+                [
+                  49.528,
+                  18.758
+                ],
+                [
+                  49.437,
+                  18.79
+                ],
+                [
+                  49.3,
+                  18.786
+                ],
+                [
+                  49.223,
+                  18.739
+                ],
+                [
+                  49.113,
+                  18.919
+                ],
+                [
+                  49.157,
+                  19.135
+                ],
+                [
+                  49.075,
+                  19.301
+                ],
+                [
+                  49.083,
+                  19.612
+                ],
+                [
+                  49.04,
+                  19.725
+                ],
+                [
+                  49.059,
+                  20.079
+                ],
+                [
+                  49.093,
+                  20.084
+                ],
+                [
+                  49.1192,
+                  20.0628
+                ]
+              ]
+            },
+            {
+              "m": "car",
+              "v": "praha",
+              "n": "Praha → Brno → Olomouc → Frýdek-Místek → Žilina → Štrba",
+              "p": [
+                [
+                  49.963,
+                  14.458
+                ],
+                [
+                  49.95,
+                  14.62
+                ],
+                [
+                  49.73,
+                  15.2
+                ],
+                [
+                  49.4,
+                  15.6
+                ],
+                [
+                  49.23,
+                  16.48
+                ],
+                [
+                  49.27,
+                  17
+                ],
+                [
+                  49.45,
+                  17.45
+                ],
+                [
+                  49.59,
+                  17.7
+                ],
+                [
+                  49.683,
+                  18.35
+                ],
+                [
+                  49.677,
+                  18.672
+                ],
+                [
+                  49.577,
+                  18.765
+                ],
+                [
+                  49.528,
+                  18.758
+                ],
+                [
+                  49.437,
+                  18.79
+                ],
+                [
+                  49.3,
+                  18.786
+                ],
+                [
+                  49.223,
+                  18.739
+                ],
+                [
+                  49.113,
+                  18.919
+                ],
+                [
+                  49.157,
+                  19.135
+                ],
+                [
+                  49.075,
+                  19.301
+                ],
+                [
+                  49.083,
+                  19.612
+                ],
+                [
+                  49.04,
+                  19.725
+                ],
+                [
+                  49.059,
+                  20.079
+                ],
+                [
+                  49.093,
+                  20.084
+                ],
+                [
+                  49.1192,
+                  20.0628
+                ]
+              ]
+            },
+            {
+              "m": "hike",
+              "n": "Štrbské pleso → Popradské pleso → Chata pod Rysmi → Rysy a zpět",
+              "p": [
+                [
+                  49.1192,
+                  20.0628
+                ],
+                [
+                  49.129,
+                  20.069
+                ],
+                [
+                  49.142,
+                  20.076
+                ],
+                [
+                  49.153,
+                  20.079
+                ],
+                [
+                  49.162,
+                  20.074
+                ],
+                [
+                  49.168,
+                  20.078
+                ],
+                [
+                  49.1747,
+                  20.0838
+                ],
+                [
+                  49.1794,
+                  20.088
+                ]
+              ]
+            }
+          ],
+          "marks": [
+            {
+              "p": [
+                49.594,
+                18.01
+              ],
+              "n": "Nový Jíčín (start, přespání u rodiny)",
+              "t": "start",
+              "v": "nase"
+            },
+            {
+              "p": [
+                49.963,
+                14.458
+              ],
+              "n": "Praha (start)",
+              "t": "start",
+              "v": "praha"
+            },
+            {
+              "p": [
+                49.1192,
+                20.0628
+              ],
+              "n": "Parkoviště Štrbské pleso",
+              "t": "park"
+            },
+            {
+              "p": [
+                49.093,
+                20.084
+              ],
+              "n": "ATC Tatranská Štrba (kemp)",
+              "t": "sleep"
+            },
+            {
+              "p": [
+                49.153,
+                20.079
+              ],
+              "n": "Popradské pleso",
+              "t": "hut"
+            },
+            {
+              "p": [
+                49.1747,
+                20.0838
+              ],
+              "n": "Chata pod Rysmi",
+              "t": "hut"
+            },
+            {
+              "p": [
+                49.1794,
+                20.088
+              ],
+              "n": "Rysy 2 499 m",
+              "t": "peak"
+            }
+          ]
+        },
+        "varianty": [
+          {
+            "id": "nase",
+            "nazev": "Naše cesta · z Nového Jíčína",
+            "doprava": "Ve čtyřech Corollou z Nového Jíčína (přespání u rodiny) přes Čadcu a Žilinu na Štrbské pleso, asi 230 km a 3 h. K tomu drobné přesuny mezi kempem, parkovištěm a Lidlem, asi 50 km. Zpátky stejně přes Žilinu.",
+            "trasa": "Ze Štrbského plesa po magistrále k Popradskému plesu, Mengusovskou dolinou k Chatě pod Rysmi a na vrchol. Zpět stejnou cestou. Asi 20 km, 1 200 m převýšení a 10 h.",
+            "ubytovani": "Kemp ATC Tatranská Štrba: 4 × 6 € osoba + 7 € stan + 4 × 2 € místní poplatek = 37 € za noc pro čtyři.",
+            "cena": {
+              "note": "na osobu, jeli jsme ve čtyřech",
+              "items": [
+                [
+                  "Benzín, ~510 km × 4,5 l/100 km × 40 Kč/l (920 Kč ÷ 4)",
+                  230
+                ],
+                [
+                  "Slovenská dálniční známka, 10 dní, 10,80 € (÷ 4)",
+                  68
+                ],
+                [
+                  "Parkování Štrbské pleso, 10 € (÷ 4)",
+                  63
+                ],
+                [
+                  "Kemp ATC Tatranská Štrba, 37 € za noc (÷ 4)",
+                  231
+                ],
+                [
+                  "Bryndzové halušky a pití v restauraci u kempu, ~12 €",
+                  300
+                ],
+                [
+                  "Jídlo z obchodu (~1 000 Kč ÷ 4)",
+                  250
+                ]
+              ],
+              "extra": "Bez české dálniční známky (roční máme)."
+            }
+          },
+          {
+            "id": "praha",
+            "nazev": "Z Prahy autem",
+            "doprava": "Autem z Prahy přes Brno, Olomouc a Frýdek-Místek na Slovensko a přes Žilinu na Štrbské pleso, asi 560 km a 6 h jedna cesta. Vyplatí se vyrazit v pátek odpoledne a vrátit se v neděli.",
+            "trasa": "Stejná jako u nás: Štrbské pleso, Popradské pleso, Chata pod Rysmi, Rysy a zpět. Kratší polská varianta od Morského oka je přes hřeben náročnější.",
+            "ubytovani": "Kemp ATC Tatranská Štrba na 2 noci (pátek a sobota), 37 € za noc pro čtyři.",
+            "cena": {
+              "note": "na osobu při 4 lidech v autě, odhad",
+              "items": [
+                [
+                  "Benzín, ~1 150 km × 5 l/100 km × 40 Kč/l (2 300 Kč ÷ 4)",
+                  575
+                ],
+                [
+                  "Česká dálniční známka, 10 dní, 300 Kč (÷ 4)",
+                  75
+                ],
+                [
+                  "Slovenská dálniční známka, 10 dní, 10,80 € (÷ 4)",
+                  68
+                ],
+                [
+                  "Parkování Štrbské pleso, 10 € (÷ 4)",
+                  63
+                ],
+                [
+                  "Kemp, 2 noci × 37 € (÷ 4)",
+                  462
+                ],
+                [
+                  "Večeře v restauraci u kempu, ~12 €",
+                  300
+                ],
+                [
+                  "Jídlo z obchodu na 2 dny",
+                  350
+                ]
+              ]
+            }
+          }
+        ],
+        "tipy": [
+          "Na Rysy je to dlouhý den, vyrazit ze Štrbského plesa nejpozději v 7:00.",
+          "Pod vrcholem jsou řetězy a skalní úseky, v mokru opatrně.",
+          "Chata pod Rysmi je ideální místo na pauzu a čaj před posledním úsekem."
+        ]
+      }
     },
     "germany": {
       "status": "done",
-      "date": null,
+      "date": "2026-09-11",
       "photo": "photos/zugspitze-wide.jpg",
-      "tldr": null,
+      "full": "photos/zugspitze-full.jpg",
+      "tldr": "Zatím můj nejtěžší hike. Vyrazili jsme až v 10 dopoledne po probdělé noci, od německé hranice nás držela mlha a pod závěrečnou ferratou nám došla energie. Na vrcholu jsme byli v 17:15 sami, lanovky už stály. Pak 5 hodin sestupu tmou s čelovkami a k autu ve 0:30. Lekce: na 2 000 metrů převýšení se vyráží za svítání.",
       "post": null,
-      "full": "photos/zugspitze-full.jpg"
+      "stats": {
+        "km": 25.8,
+        "up": 2148,
+        "time": "14 h"
+      },
+      "diff": 4,
+      "terrain": 4,
+      "weather": "cloud",
+      "strava": {
+        "id": "20135696890",
+        "token": "X57tIIZohriqWsqd8vYWcDzegfbvCEttKYmcRonC-18"
+      },
+      "detail": [
+        [
+          "Start",
+          "10:24"
+        ],
+        [
+          "Na vrcholu",
+          "17:15"
+        ],
+        [
+          "U auta",
+          "0:30"
+        ],
+        [
+          "Čas v pohybu",
+          "6 h 58 min"
+        ],
+        [
+          "Celkový čas",
+          "14 h 5 min"
+        ],
+        [
+          "Kroky",
+          "40 796"
+        ],
+        [
+          "Počasí",
+          "mlha, 4 °C, vlhkost 100 %"
+        ]
+      ],
+      "logistics": {
+        "route": {
+          "legs": [
+            {
+              "m": "car",
+              "v": "nase",
+              "n": "Lindau → Kempten → Füssen → Reutte → Ehrwald, v noci stejně zpět",
+              "p": [
+                [
+                  47.546,
+                  9.684
+                ],
+                [
+                  47.58,
+                  9.912
+                ],
+                [
+                  47.56,
+                  10.219
+                ],
+                [
+                  47.726,
+                  10.314
+                ],
+                [
+                  47.623,
+                  10.5
+                ],
+                [
+                  47.57,
+                  10.7
+                ],
+                [
+                  47.556,
+                  10.666
+                ],
+                [
+                  47.488,
+                  10.718
+                ],
+                [
+                  47.443,
+                  10.742
+                ],
+                [
+                  47.402,
+                  10.882
+                ],
+                [
+                  47.4005,
+                  10.9289
+                ]
+              ]
+            },
+            {
+              "m": "car",
+              "v": "praha",
+              "n": "Praha → Plzeň → Regensburg → Mnichov → Garmisch → Ehrwald",
+              "p": [
+                [
+                  49.963,
+                  14.458
+                ],
+                [
+                  50,
+                  14.3
+                ],
+                [
+                  49.747,
+                  13.378
+                ],
+                [
+                  49.668,
+                  12.552
+                ],
+                [
+                  49.493,
+                  12.183
+                ],
+                [
+                  49.013,
+                  12.101
+                ],
+                [
+                  48.7,
+                  11.8
+                ],
+                [
+                  48.33,
+                  11.6
+                ],
+                [
+                  48.137,
+                  11.575
+                ],
+                [
+                  47.84,
+                  11.15
+                ],
+                [
+                  47.492,
+                  11.095
+                ],
+                [
+                  47.455,
+                  10.995
+                ],
+                [
+                  47.4005,
+                  10.9289
+                ]
+              ]
+            },
+            {
+              "m": "lift",
+              "n": "Ehrwalder Almbahn nahoru (1 108 → 1 502 m)",
+              "p": [
+                [
+                  47.4005,
+                  10.9289
+                ],
+                [
+                  47.3935,
+                  10.958
+                ]
+              ]
+            },
+            {
+              "m": "hike",
+              "n": "Ehrwalder Alm → Gatterl → Knorrhütte → Zugspitzplatt → ferrata na vrchol",
+              "p": [
+                [
+                  47.3935,
+                  10.958
+                ],
+                [
+                  47.388,
+                  10.98
+                ],
+                [
+                  47.385,
+                  11
+                ],
+                [
+                  47.387,
+                  11.018
+                ],
+                [
+                  47.3905,
+                  11.024
+                ],
+                [
+                  47.399,
+                  11.023
+                ],
+                [
+                  47.4085,
+                  11.0175
+                ],
+                [
+                  47.4135,
+                  11.003
+                ],
+                [
+                  47.417,
+                  10.993
+                ],
+                [
+                  47.4211,
+                  10.9853
+                ]
+              ]
+            },
+            {
+              "m": "hike",
+              "n": "Sestup západní stranou tmou zpět do Ehrwaldu",
+              "p": [
+                [
+                  47.4211,
+                  10.9853
+                ],
+                [
+                  47.419,
+                  10.97
+                ],
+                [
+                  47.418,
+                  10.958
+                ],
+                [
+                  47.412,
+                  10.945
+                ],
+                [
+                  47.406,
+                  10.935
+                ],
+                [
+                  47.4005,
+                  10.9289
+                ]
+              ]
+            }
+          ],
+          "marks": [
+            {
+              "p": [
+                47.546,
+                9.684
+              ],
+              "n": "Lindau (start)",
+              "t": "start",
+              "v": "nase"
+            },
+            {
+              "p": [
+                49.963,
+                14.458
+              ],
+              "n": "Praha (start)",
+              "t": "start",
+              "v": "praha"
+            },
+            {
+              "p": [
+                47.4005,
+                10.9289
+              ],
+              "n": "Parkoviště Ehrwalder Almbahn",
+              "t": "park"
+            },
+            {
+              "p": [
+                47.3905,
+                11.024
+              ],
+              "n": "Gatterl, hranice Rakousko/Německo",
+              "t": "hut"
+            },
+            {
+              "p": [
+                47.4085,
+                11.0175
+              ],
+              "n": "Knorrhütte",
+              "t": "hut"
+            },
+            {
+              "p": [
+                47.4211,
+                10.9853
+              ],
+              "n": "Zugspitze 2 962 m",
+              "t": "peak"
+            }
+          ]
+        },
+        "varianty": [
+          {
+            "id": "nase",
+            "nazev": "Naše cesta · z Lindau",
+            "doprava": "Ve dvou Corollou z Lindau přes Kempten, Füssen a Reutte do Ehrwaldu, asi 150 km a 2 h. Auto jsme nechali na parkovišti Ehrwalder Almbahn. Zpátky do Lindau v noci, spíš k ránu. Rakouská B179 přes Reutte je bez dálniční známky.",
+            "trasa": "Lanovkou Ehrwalder Almbahn nahoru na Ehrwalder Alm, pak pěšky přes Gatterl, Knorrhütte a Zugspitzplatt pod závěrečnou ferratu (A) na vrchol. Sestup tmou západní stranou zpět do Ehrwaldu. 25,8 km a 2 148 m převýšení.",
+            "ubytovani": "Bez přespání. Spali jsme v Lindau, kam jsme se vrátili v noci.",
+            "cena": {
+              "note": "na osobu, jeli jsme ve dvou",
+              "items": [
+                [
+                  "Benzín, ~300 km × 4 l/100 km × 42 Kč/l (504 Kč ÷ 2)",
+                  252
+                ],
+                [
+                  "Parkování Ehrwalder Almbahn, ~5 € za den (÷ 2)",
+                  63
+                ],
+                [
+                  "Lanovka Ehrwalder Almbahn nahoru, 17 €",
+                  425
+                ],
+                [
+                  "Koláč a pití na Knorrhütte, ~8 € (odhad)",
+                  200
+                ]
+              ]
+            }
+          },
+          {
+            "id": "praha",
+            "nazev": "Z Prahy autem",
+            "doprava": "Autem z Prahy přes Plzeň, Regensburg, Mnichov a Garmisch-Partenkirchen do Ehrwaldu, asi 520 km a 5,5 h jedna cesta. Německé dálnice jsou zdarma, do Ehrwaldu přes Garmisch se jede bez rakouské známky.",
+            "trasa": "Stejná jako u nás, jen s ranním startem. S lanovkou v 8:30 se dá být na vrcholu kolem 15:00 a sejít za světla. Kdo chce víc pohodlí, přespí na Knorrhütte a výstup si rozdělí na dva dny.",
+            "ubytovani": "Penzion v Ehrwaldu nebo Lermoosu na 2 noci (před výstupem a po něm), počítáno ~45 € na osobu a noc.",
+            "cena": {
+              "note": "na osobu při 2 lidech v autě, odhad",
+              "items": [
+                [
+                  "Benzín, ~1 040 km × 5 l/100 km × 42 Kč/l (2 184 Kč ÷ 2)",
+                  1092
+                ],
+                [
+                  "Česká dálniční známka, 10 dní, 300 Kč (÷ 2)",
+                  150
+                ],
+                [
+                  "Parkování Ehrwalder Almbahn, ~5 € (÷ 2)",
+                  63
+                ],
+                [
+                  "Lanovka Ehrwalder Almbahn nahoru, 17 €",
+                  425
+                ],
+                [
+                  "Penzion, 2 noci × ~45 €",
+                  2250
+                ],
+                [
+                  "Jídlo na 3 dny",
+                  1000
+                ]
+              ]
+            }
+          }
+        ],
+        "tipy": [
+          "Vyrazit nejpozději v 7–8 ráno. Po 16:30 už nahoře nejezdí lanovky a sestup trvá 4–5 hodin.",
+          "Čelovka a teplá vrstva i v létě, nahoře bývá kolem nuly.",
+          "Po 17:00 jsou schody k vrcholovému kříži zavřené, zbývá jen žebřík na boku stanice.",
+          "Na závěrečnou ferratu stačí rukavice, ale ve výšce 2 800 m dochází síly rychle."
+        ]
+      }
     },
     "hungary": {
-      "status": "planned",
-      "when": "listopad 2026"
+      "status": "done",
+      "date": null
     },
     "ukraine": {
       "status": "planned",
-      "when": "prosinec 2026",
-      "tldr": "Zimní výstup z Vorochty přes horskou základnu Zarosljak. Bez auta, jen vlaky a autobusy.",
+      "when": "28. 11. – 1. 12. 2026",
+      "tldr": "Zimní výstup ze zakarpatské strany přes Kozmeščik. Ve třech, základna v Lazeščině, UAZ Buchanka k nástupu a rezervní den na počasí.",
       "logistics": {
         "plan": true,
-        "doprava": "RegioJet z Prahy do Přemyšlu (noční vlak), autobus do Ivano-Frankivsku a vlak do Vorochty. Zpátky vlakem do Lvova a RegioJetem domů.",
-        "trasa": "Z Vorochty pěšky asi 20 km na základnu Zarosljak. Druhý den brzy ráno výstup na vrchol (asi 3 h nahoru) a sestup zpět do Vorochty.",
-        "ubytovani": "Vorochta: apartmán na 2 noci. Zarosljak: státní horská základna, otevřená celý rok, registrace s pasem.",
-        "cena": {
-          "total": 3099,
-          "note": "na osobu, odhad; bez jídla zhruba 2 100 Kč",
-          "items": [
-            [
-              "RegioJet tam",
-              524
-            ],
-            [
-              "Vlak do Vorochty",
-              65
-            ],
-            [
-              "Ubytování ve Vorochtě (2 noci)",
-              619
-            ],
-            [
-              "Nákup na horu",
-              600
-            ],
-            [
-              "Základna Zarosljak",
-              180
-            ],
-            [
-              "Vlak do Lvova",
-              97
-            ],
-            [
-              "Jídlo ve Lvově",
-              400
-            ],
-            [
-              "RegioJet zpět",
-              614
-            ]
+        "route": {
+          "legs": [
+            {
+              "m": "train",
+              "n": "RegioJet Praha → Přemyšl (noční, lůžko)",
+              "p": [
+                [
+                  50.083,
+                  14.435
+                ],
+                [
+                  50.032,
+                  15.762
+                ],
+                [
+                  49.904,
+                  16.447
+                ],
+                [
+                  49.593,
+                  17.278
+                ],
+                [
+                  49.835,
+                  18.282
+                ],
+                [
+                  50.257,
+                  19.017
+                ],
+                [
+                  50.067,
+                  19.947
+                ],
+                [
+                  50.006,
+                  20.973
+                ],
+                [
+                  50.042,
+                  21.999
+                ],
+                [
+                  49.784,
+                  22.768
+                ]
+              ]
+            },
+            {
+              "m": "train",
+              "n": "IC Přemyšl → Lvov",
+              "p": [
+                [
+                  49.784,
+                  22.768
+                ],
+                [
+                  49.795,
+                  23.15
+                ],
+                [
+                  49.84,
+                  24.002
+                ]
+              ]
+            },
+            {
+              "m": "train",
+              "n": "Vlak 810 Lvov → Vorochta",
+              "p": [
+                [
+                  49.84,
+                  24.002
+                ],
+                [
+                  49.405,
+                  24.31
+                ],
+                [
+                  48.922,
+                  24.711
+                ],
+                [
+                  48.635,
+                  24.58
+                ],
+                [
+                  48.457,
+                  24.553
+                ],
+                [
+                  48.286,
+                  24.565
+                ]
+              ]
+            },
+            {
+              "m": "taxi",
+              "n": "Taxi Vorochta → Lazeščina přes Jablunický průsmyk",
+              "p": [
+                [
+                  48.286,
+                  24.565
+                ],
+                [
+                  48.3,
+                  24.468
+                ],
+                [
+                  48.282,
+                  24.407
+                ]
+              ]
+            },
+            {
+              "m": "jeep",
+              "n": "UAZ Buchanka Lazeščina → Kozmeščik a zpět",
+              "p": [
+                [
+                  48.282,
+                  24.407
+                ],
+                [
+                  48.24,
+                  24.42
+                ],
+                [
+                  48.188,
+                  24.46
+                ]
+              ]
+            },
+            {
+              "m": "hike",
+              "n": "Kozmeščik → Hoverla a zpět",
+              "p": [
+                [
+                  48.188,
+                  24.46
+                ],
+                [
+                  48.178,
+                  24.475
+                ],
+                [
+                  48.168,
+                  24.49
+                ],
+                [
+                  48.1601,
+                  24.5003
+                ]
+              ]
+            }
+          ],
+          "marks": [
+            {
+              "p": [
+                50.083,
+                14.435
+              ],
+              "n": "Praha hl. n. (start)",
+              "t": "start"
+            },
+            {
+              "p": [
+                49.84,
+                24.002
+              ],
+              "n": "Lvov",
+              "t": "hut"
+            },
+            {
+              "p": [
+                48.282,
+                24.407
+              ],
+              "n": "Lazeščina, dům přes Airbnb",
+              "t": "sleep"
+            },
+            {
+              "p": [
+                48.188,
+                24.46
+              ],
+              "n": "Kozmeščik (nástup)",
+              "t": "park"
+            },
+            {
+              "p": [
+                48.1601,
+                24.5003
+              ],
+              "n": "Hoverla 2 061 m",
+              "t": "peak"
+            }
           ]
         },
+        "varianty": [
+          {
+            "id": "praha",
+            "nazev": "Z Prahy vlakem",
+            "doprava": "Pátek večer nočním RegioJetem s lůžkem z Prahy do Přemyšlu a vlakem IC do Lvova (sobota dopoledne). Odpoledne vlakem 810 do Vorochty a taxíkem do Lazeščiny. Zpátky v úterý ráno taxíkem do Vorochty, vlakem do Lvova a večerním RegioJetem s lůžkem domů (středa 6:58 v Praze).",
+            "trasa": "Z Lazeščiny terénním UAZem (Buchanka) na nástup Kozmeščik, odtud mírnějším zakarpatským hřebenem na vrchol a zpět k autu. Vrcholový den neděle nebo pondělí podle počasí, otočka nejpozději ve 13:00.",
+            "ubytovani": "Lazeščina: celý dům přes Airbnb na 3 noci (so–út), bezplatné zrušení do 23. 11.",
+            "cena": {
+              "note": "na osobu při 3 lidech, odhad",
+              "items": [
+                [
+                  "RegioJet Praha → Lvov, lůžko",
+                  1434
+                ],
+                [
+                  "Vlak Lvov → Vorochta",
+                  130
+                ],
+                [
+                  "Taxi Vorochta → Lazeščina, 1 600 UAH (÷ 3)",
+                  278
+                ],
+                [
+                  "Ubytování Lazeščina, 3 noci, 2 458 Kč (÷ 3)",
+                  819
+                ],
+                [
+                  "UAZ Buchanka na Kozmeščik a zpět, 4 000 UAH (÷ 3)",
+                  693
+                ],
+                [
+                  "Vstup do národního parku, ~100 UAH",
+                  55
+                ],
+                [
+                  "Taxi Lazeščina → Vorochta, 1 600 UAH (÷ 3)",
+                  278
+                ],
+                [
+                  "Vlak Vorochta → Lvov",
+                  130
+                ],
+                [
+                  "RegioJet Lvov → Praha, lůžko",
+                  968
+                ],
+                [
+                  "Jídlo, většinou z domu",
+                  700
+                ]
+              ]
+            }
+          }
+        ],
         "tipy": [
-          "V zimě nutně mačky. Před výstupem zkontrolovat lavinovou předpověď a zeptat se horské služby na Zarosljaku.",
-          "Na Zarosljaku se hlásí horské službě a registruje se pas.",
-          "Na Ukrajině platí zákaz vycházení od půlnoci do 5:00, plánovat přesuny tak, aby se stihly.",
-          "Jízdní řády vlaků se v prosinci mění, ověřit pár dní předem."
+          "V zimě nutně mačky. Před výstupem zkontrolovat lavinovou předpověď a stránku horské služby Čornohora.",
+          "Rozhodnutí jet/nejet 5–6 dní předem podle velkých front a sněhu, konkrétní vrcholový den až na místě večer předem.",
+          "Jízdenky RegioJetu na Ukrajinu jdou zrušit jen víc než 21 dní před odjezdem, kupovat až po rozhodnutí.",
+          "Místní transfery se platí hotově v hřivnách, vyměnit ve Lvově.",
+          "Ve Vorochtě (Ivano-Frankivská oblast) platí zákaz vycházení 0–5 h, na Zakarpatí ne.",
+          "Regionální vlaky se na booking.uz často nezobrazují, lístky se kupují na nádraží."
         ]
       }
     }
@@ -98,9 +1240,9 @@
       "status": "done",
       "date": null,
       "photo": "photos/aragac-wide.jpg",
+      "full": "photos/aragac-full.jpg",
       "tldr": null,
-      "cc": "am",
-      "full": "photos/aragac-full.jpg"
+      "cc": "am"
     },
     {
       "id": "kazbek",
@@ -120,15 +1262,10 @@
   ],
   "plan": [
     {
-      "when": "listopad 2026",
-      "what": "Kékes",
-      "where": "Maďarsko"
-    },
-    {
-      "when": "prosinec 2026",
+      "when": "konec listopadu 2026",
       "what": "Hoverla",
       "where": "Ukrajina",
-      "note": "zimní výstup"
+      "note": "zimní výstup přes Kozmeščik"
     },
     {
       "when": "jaro 2027",
@@ -145,6 +1282,12 @@
       "when": "srpen 2027",
       "what": "Triglav, Grossglockner",
       "where": "Slovinsko, Rakousko"
+    },
+    {
+      "when": "září 2027",
+      "what": "Halti",
+      "where": "Finsko",
+      "note": "z norské strany, s polární září v Tromsø"
     },
     {
       "when": "září 2027",
