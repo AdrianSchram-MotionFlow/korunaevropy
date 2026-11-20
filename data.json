@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-18",
+  "updated": "2026-11-21",
   "instagram": "https://www.instagram.com/adrian.schram/",
   "deadline": "2032-04-30",
   "kurz": "Ceny v eurech přepočtené kurzem 25 Kč/€, forinty kurzem 0,063 Kč/HUF, hřivny kurzem 0,52 Kč/UAH.",
@@ -1553,25 +1553,23 @@
         ]
       }
     },
-    "ukraine": {
+    "estonia": {
       "status": "planned",
-      "when": "zima 2026",
-      "tldr": "Zimní výstup ze zakarpatské strany přes Kozmeščik. Ve třech, základna v Lazeščině, UAZ Buchanka k nástupu a rezervní den na počasí.",
+      "when": "únor 2027",
+      "title": "Pobaltí: Suur Munamägi, Gaiziņkalns, Aukštojas",
+      "subtitle": "Estonsko, Lotyšsko, Litva · 5.–13. 2. 2027",
+      "tldr": "Tři nejnižší vrcholy Koruny za jednu cestu, se Sophie. Letadlem z Krakova do Tallinnu, pak autobusy a na jeden den auto přes všechny tři pobaltské státy a domů letadlem přes Gdaňsk. Žádné hostely, cíl do 8 000 Kč na osobu, s rezervními dny na počasí.",
       "logistics": {
         "plan": true,
         "route": {
           "legs": [
             {
               "m": "train",
-              "n": "RegioJet Praha → Přemyšl (noční, lůžko)",
+              "n": "Leo Express Praha → Krakov",
               "p": [
                 [
                   50.083,
                   14.435
-                ],
-                [
-                  50.032,
-                  15.762
                 ],
                 [
                   49.904,
@@ -1592,124 +1590,200 @@
                 [
                   50.067,
                   19.947
-                ],
-                [
-                  50.006,
-                  20.973
-                ],
-                [
-                  50.042,
-                  21.999
-                ],
-                [
-                  49.784,
-                  22.768
                 ]
               ]
             },
             {
-              "m": "train",
-              "n": "IC Přemyšl → Lvov",
+              "m": "plane",
+              "n": "Wizz Air Krakov → Tallinn",
               "p": [
                 [
-                  49.784,
-                  22.768
+                  50.078,
+                  19.785
                 ],
                 [
-                  49.795,
-                  23.15
-                ],
-                [
-                  49.84,
-                  24.002
+                  59.413,
+                  24.833
                 ]
               ]
             },
             {
-              "m": "train",
-              "n": "Vlak 810 Lvov → Vorochta",
+              "m": "bus",
+              "n": "Lux Express Tallinn → Võru",
               "p": [
                 [
-                  49.84,
-                  24.002
+                  59.437,
+                  24.745
                 ],
                 [
-                  49.405,
-                  24.31
+                  58.885,
+                  25.557
                 ],
                 [
-                  48.922,
-                  24.711
+                  58.378,
+                  26.729
                 ],
                 [
-                  48.635,
-                  24.58
-                ],
-                [
-                  48.457,
-                  24.553
-                ],
-                [
-                  48.286,
-                  24.565
+                  57.834,
+                  27.019
                 ]
               ]
             },
             {
-              "m": "taxi",
-              "n": "Taxi Vorochta → Lazeščina přes Jablunický průsmyk",
+              "m": "bus",
+              "n": "Bus 147 Võru → Haanja",
               "p": [
                 [
-                  48.286,
-                  24.565
+                  57.834,
+                  27.019
                 ],
                 [
-                  48.3,
-                  24.468
-                ],
-                [
-                  48.282,
-                  24.407
-                ]
-              ]
-            },
-            {
-              "m": "jeep",
-              "n": "UAZ Buchanka Lazeščina → Kozmeščik a zpět",
-              "p": [
-                [
-                  48.282,
-                  24.407
-                ],
-                [
-                  48.24,
-                  24.42
-                ],
-                [
-                  48.188,
-                  24.46
+                  57.718,
+                  27.05
                 ]
               ]
             },
             {
               "m": "hike",
-              "n": "Kozmeščik → Hoverla a zpět",
+              "n": "Haanja → Suur Munamägi a zpět",
               "p": [
                 [
-                  48.188,
-                  24.46
+                  57.718,
+                  27.05
                 ],
                 [
-                  48.178,
-                  24.475
+                  57.7142,
+                  27.0592
+                ]
+              ]
+            },
+            {
+              "m": "bus",
+              "n": "Lux Express Võru → Riga",
+              "p": [
+                [
+                  57.834,
+                  27.019
                 ],
                 [
-                  48.168,
-                  24.49
+                  58.378,
+                  26.729
                 ],
                 [
-                  48.1601,
-                  24.5003
+                  57.776,
+                  26.046
+                ],
+                [
+                  57.541,
+                  25.427
+                ],
+                [
+                  56.947,
+                  24.106
+                ]
+              ]
+            },
+            {
+              "m": "car",
+              "n": "Auto z letiště Riga na Gaiziņkalns a zpět",
+              "p": [
+                [
+                  56.924,
+                  23.971
+                ],
+                [
+                  56.947,
+                  24.106
+                ],
+                [
+                  56.816,
+                  24.604
+                ],
+                [
+                  56.898,
+                  25.643
+                ],
+                [
+                  56.8703,
+                  25.9594
+                ]
+              ]
+            },
+            {
+              "m": "bus",
+              "n": "FlixBus Riga → Vilnius",
+              "p": [
+                [
+                  56.947,
+                  24.106
+                ],
+                [
+                  55.734,
+                  24.357
+                ],
+                [
+                  54.687,
+                  25.28
+                ]
+              ]
+            },
+            {
+              "m": "bus",
+              "n": "Bus Vilnius → Medininkai",
+              "p": [
+                [
+                  54.687,
+                  25.28
+                ],
+                [
+                  54.6,
+                  25.5
+                ],
+                [
+                  54.539,
+                  25.65
+                ]
+              ]
+            },
+            {
+              "m": "hike",
+              "n": "Medininkai → Aukštojas a zpět",
+              "p": [
+                [
+                  54.539,
+                  25.65
+                ],
+                [
+                  54.5271,
+                  25.6261
+                ]
+              ]
+            },
+            {
+              "m": "plane",
+              "n": "Wizz Air Vilnius → Gdaňsk",
+              "p": [
+                [
+                  54.634,
+                  25.288
+                ],
+                [
+                  54.378,
+                  18.466
+                ]
+              ]
+            },
+            {
+              "m": "plane",
+              "n": "Ryanair Gdaňsk → Praha",
+              "p": [
+                [
+                  54.378,
+                  18.466
+                ],
+                [
+                  50.101,
+                  14.26
                 ]
               ]
             }
@@ -1725,126 +1799,222 @@
             },
             {
               "p": [
-                49.84,
-                24.002
+                50.067,
+                19.947
               ],
-              "n": "Lvov",
-              "t": "hut"
-            },
-            {
-              "p": [
-                48.282,
-                24.407
-              ],
-              "n": "Lazeščina, dům přes Airbnb",
+              "n": "Krakov, pokoj přes Airbnb",
               "t": "sleep"
             },
             {
               "p": [
-                48.188,
-                24.46
+                59.437,
+                24.745
               ],
-              "n": "Kozmeščik (nástup)",
+              "n": "Tallinn, studio u Kristiine",
+              "t": "sleep"
+            },
+            {
+              "p": [
+                57.834,
+                27.019
+              ],
+              "n": "Võru, Airbnb",
+              "t": "sleep"
+            },
+            {
+              "p": [
+                57.7142,
+                27.0592
+              ],
+              "n": "Suur Munamägi 318 m",
+              "t": "peak"
+            },
+            {
+              "p": [
+                56.947,
+                24.106
+              ],
+              "n": "Riga, Airbnb, 2 noci",
+              "t": "sleep"
+            },
+            {
+              "p": [
+                56.924,
+                23.971
+              ],
+              "n": "Letiště Riga, půjčovna auta",
               "t": "park"
             },
             {
               "p": [
-                48.1601,
-                24.5003
+                56.8703,
+                25.9594
               ],
-              "n": "Hoverla 2 061 m",
+              "n": "Gaiziņkalns 312 m",
               "t": "peak"
+            },
+            {
+              "p": [
+                54.687,
+                25.28
+              ],
+              "n": "Vilnius, 2 noci",
+              "t": "sleep"
+            },
+            {
+              "p": [
+                54.5271,
+                25.6261
+              ],
+              "n": "Aukštojas 294 m",
+              "t": "peak"
+            },
+            {
+              "p": [
+                54.352,
+                18.646
+              ],
+              "n": "Gdaňsk, mini apartmán",
+              "t": "sleep"
             }
           ]
         },
         "varianty": [
           {
-            "id": "praha",
-            "nazev": "Z Prahy vlakem",
-            "trasa": "Z Lazeščiny terénním UAZem (Buchanka) na nástup Kozmeščik, odtud mírnějším zakarpatským hřebenem na vrchol a zpět k autu. Vrcholový den neděle nebo pondělí podle počasí, otočka nejpozději ve 13:00.",
-            "ubytovani": "Lazeščina: celý dům přes Airbnb na 3 noci, s bezplatným zrušením.",
-            "cena": {
-              "note": "na osobu při 3 lidech, odhad",
-              "items": [
-                [
-                  "RegioJet Praha → Lvov, lůžko",
-                  1434
-                ],
-                [
-                  "Vlak Lvov → Vorochta",
-                  130
-                ],
-                [
-                  "Taxi Vorochta → Lazeščina, 1 600 UAH (÷ 3)",
-                  278
-                ],
-                [
-                  "Ubytování Lazeščina, 3 noci, 2 458 Kč (÷ 3)",
-                  819
-                ],
-                [
-                  "UAZ Buchanka na Kozmeščik a zpět, 4 000 UAH (÷ 3)",
-                  693
-                ],
-                [
-                  "Vstup do národního parku, ~100 UAH",
-                  55
-                ],
-                [
-                  "Taxi Lazeščina → Vorochta, 1 600 UAH (÷ 3)",
-                  278
-                ],
-                [
-                  "Vlak Vorochta → Lvov",
-                  130
-                ],
-                [
-                  "RegioJet Lvov → Praha, lůžko",
-                  968
-                ],
-                [
-                  "Jídlo, většinou z domu",
-                  700
-                ]
-              ]
-            },
+            "id": "pobalti",
+            "nazev": "Vlak, letadla, autobusy a jeden den auto",
             "timeline": [
               [
-                "Den 1, 21:48",
-                "RegioJetem s lůžkem z Prahy hl. n."
+                "Pá 5. 2., 12:23",
+                "Leo Expressem z Prahy do Krakova (18:37), zaplaceno kredity. Noc v Krakově."
               ],
               [
-                "Den 2 ráno",
-                "6:25 Přemyšl, 7:40 vlak IC do Lvova (10:15). Den ve Lvově, výměna hřiven a nákup."
+                "So 6. 2., 12:35",
+                "Wizz Air Krakov → Tallinn (15:35). Odpoledne Tallinn, noc ve studiu u Kristiine."
               ],
               [
-                "Den 2, 15:51",
-                "Vlak 810 do Vorochty (20:25) a taxíkem do Lazeščiny."
+                "Ne 7. 2.",
+                "7:30 Lux Express do Võru (11:15), 13:55 bus 147 do Haanji, výstup na Suur Munamägi, v 15:24 zpět do Võru (15:59). Noc ve Võru."
               ],
               [
-                "Den 3 nebo 4",
-                "Vrcholový den podle počasí: UAZem na Kozmeščik, výstup na Hoverlu, otočka nejpozději ve 13:00 a UAZem zpět. Druhý den je rezerva."
+                "Po 8. 2., 6:10",
+                "Lux Express z Võru do Rigy (15:05). Riga, 2 noci."
               ],
               [
-                "Den 5",
-                "Taxíkem do Vorochty do 9:45, vlak v 10:11 do Lvova (14:25) a v 18:29 vlak do Přemyšlu a RegioJet s lůžkem."
+                "Út 9. 2.",
+                "V 8:00 auto z letiště v Rize, na Gaiziņkalns a zpět, vrátit do 21:00."
               ],
               [
-                "Den 6, 6:58",
-                "Praha."
+                "St 10. 2., 10:00",
+                "FlixBus z Rigy do Vilniusu (13:45). Zbytek dne Vilnius, zároveň rezerva."
+              ],
+              [
+                "Čt 11. 2.",
+                "Autobusem k Medininkai (12:20 nebo 13:25), pěšky na Aukštojas, zpět spoji v 16:11, 17:05 nebo 17:40."
+              ],
+              [
+                "Pá 12. 2.",
+                "Rezervní den ve Vilniusu. Ve 21:05 Wizz Air do Gdaňsku (21:10), noc v Gdaňsku."
+              ],
+              [
+                "So 13. 2., 8:35",
+                "Ryanair Gdaňsk → Praha, přílet 9:55."
               ]
-            ]
+            ],
+            "trasa": "Všechny tři vrcholy jsou nízké kopce bez technických úseků, jde spíš o dopravu. Suur Munamägi z Haanji pěšky (vyhlídková věž na vrcholu), Gaiziņkalns autem až skoro nahoru, Aukštojas krátkou procházkou od autobusu u Medininkai. Aukštojas je naplánovaný na čtvrtek, středa a pátek slouží jako rezerva.",
+            "ubytovani": "Bez hostelů, jen soukromé pokoje a malé apartmány: Krakov (Airbnb), Tallinn (studio přes Booking), Võru (Airbnb), Riga (Airbnb s pračkou, 2 noci), Vilnius (1A House, 2 noci, záložně Maslow), Gdaňsk (mini apartmán přes Booking). Vše s bezplatným zrušením.",
+            "cena": {
+              "note": "na osobu při 2 lidech",
+              "items": [
+                [
+                  "Leo Express Praha → Krakov, kredity",
+                  30
+                ],
+                [
+                  "Krakov, pokoj",
+                  460
+                ],
+                [
+                  "Wizz Air Krakov → Tallinn",
+                  744
+                ],
+                [
+                  "Tallinn, studio",
+                  394
+                ],
+                [
+                  "Lux Express Tallinn → Võru",
+                  278
+                ],
+                [
+                  "Bus 147 Võru ↔ Haanja",
+                  70
+                ],
+                [
+                  "Võru, Airbnb",
+                  367
+                ],
+                [
+                  "Lux Express Võru → Riga",
+                  508
+                ],
+                [
+                  "Riga, Airbnb, 2 noci",
+                  672
+                ],
+                [
+                  "Auto na den vč. paliva a poplatku za mladého řidiče",
+                  738
+                ],
+                [
+                  "FlixBus Riga → Vilnius",
+                  184
+                ],
+                [
+                  "Bus Vilnius ↔ Medininkai",
+                  75
+                ],
+                [
+                  "Vilnius, 2 noci (odhad)",
+                  790
+                ],
+                [
+                  "Wizz Air Vilnius → Gdaňsk",
+                  432
+                ],
+                [
+                  "Gdaňsk, mini apartmán",
+                  388
+                ],
+                [
+                  "Ryanair Gdaňsk → Praha",
+                  629
+                ]
+              ],
+              "extra": "Jídlo vezeme z domu, restaurace v plánu nejsou. U auta se blokuje kauce zhruba 24 500 Kč na kartě."
+            }
           }
         ],
         "tipy": [
-          "V zimě nutně mačky. Před výstupem zkontrolovat lavinovou předpověď a stránku horské služby Čornohora.",
-          "Rozhodnutí jet/nejet 5–6 dní předem podle velkých front a sněhu, konkrétní vrcholový den až na místě večer předem.",
-          "Jízdenky RegioJetu na Ukrajinu jdou zrušit jen víc než 21 dní před odjezdem, kupovat až po rozhodnutí.",
-          "Místní transfery se platí hotově v hřivnách, vyměnit ve Lvově.",
-          "Ve Vorochtě (Ivano-Frankivská oblast) platí zákaz vycházení 0–5 h, na Zakarpatí ne.",
-          "Regionální vlaky se na booking.uz často nezobrazují, lístky se kupují na nádraží."
+          "Letenky koupit hned a každou zvlášť (vychází levněji než kombinace přes Kiwi). Jsou to jediné nevratné nákupy.",
+          "Leo kredity propadají kolem 19. 1., použít je do té doby.",
+          "Lux Express, FlixBus a místní autobusy kupovat až těsně před cestou, ať zůstane volnost při změně plánu.",
+          "Ubytování i auto rezervovat s bezplatným zrušením.",
+          "V únoru se stmívá kolem půl páté, výstupy plánovat na dopoledne a brzké odpoledne.",
+          "Středa a pátek jsou rezervní dny, kdyby počasí nebo spoje nevyšly."
         ]
-      }
+      },
+      "elevText": "3 vrcholy"
+    },
+    "latvia": {
+      "status": "planned",
+      "when": "únor 2027",
+      "trip": "estonia"
+    },
+    "lithuania": {
+      "status": "planned",
+      "when": "únor 2027",
+      "trip": "estonia"
     }
   },
   "extras": [
@@ -2446,11 +2616,11 @@
   ],
   "plan": [
     {
-      "when": "zima 2026",
-      "what": "Hoverla",
-      "where": "Ukrajina",
-      "note": "zimní výstup přes Kozmeščik",
-      "link": "ukraine"
+      "when": "únor 2027",
+      "what": "Suur Munamägi, Gaiziņkalns, Aukštojas",
+      "where": "Estonsko, Lotyšsko, Litva",
+      "note": "jedna cesta, tři vrcholy",
+      "link": "estonia"
     },
     {
       "when": "jaro 2027",
@@ -2485,5 +2655,310 @@
       "what": "Dufourspitze, Elbrus",
       "where": "Švýcarsko, Rusko"
     }
-  ]
+  ],
+  "archiv": {
+    "_readme": "Odložené výpravy. Web tuhle sekci nezobrazuje. Až se na vrchol znovu pojede: přesuň objekt z archiv do peaks pod stejným klíčem, nastav status na planned, uprav when/tldr a vrať položku _plan do seznamu plan. Logistika (trasa na mapě, varianty, ceny, tipy) je ve stejném formátu jako u ostatních vrcholů, takže se zobrazí hned. Ceny a jízdní řády ověřit, jsou ze dne odložení.",
+    "ukraine": {
+      "status": "archived",
+      "when": "neurčeno",
+      "tldr": "Zimní výstup jsme odložili: neprošlapaný sníh a nejisté počasí za to nestály. Termín zatím neznáme. Níže je původní zimní plán ze zakarpatské strany přes Kozmeščik.",
+      "logistics": {
+        "plan": true,
+        "route": {
+          "legs": [
+            {
+              "m": "train",
+              "n": "RegioJet Praha → Přemyšl (noční, lůžko)",
+              "p": [
+                [
+                  50.083,
+                  14.435
+                ],
+                [
+                  50.032,
+                  15.762
+                ],
+                [
+                  49.904,
+                  16.447
+                ],
+                [
+                  49.593,
+                  17.278
+                ],
+                [
+                  49.835,
+                  18.282
+                ],
+                [
+                  50.257,
+                  19.017
+                ],
+                [
+                  50.067,
+                  19.947
+                ],
+                [
+                  50.006,
+                  20.973
+                ],
+                [
+                  50.042,
+                  21.999
+                ],
+                [
+                  49.784,
+                  22.768
+                ]
+              ]
+            },
+            {
+              "m": "train",
+              "n": "IC Přemyšl → Lvov",
+              "p": [
+                [
+                  49.784,
+                  22.768
+                ],
+                [
+                  49.795,
+                  23.15
+                ],
+                [
+                  49.84,
+                  24.002
+                ]
+              ]
+            },
+            {
+              "m": "train",
+              "n": "Vlak 810 Lvov → Vorochta",
+              "p": [
+                [
+                  49.84,
+                  24.002
+                ],
+                [
+                  49.405,
+                  24.31
+                ],
+                [
+                  48.922,
+                  24.711
+                ],
+                [
+                  48.635,
+                  24.58
+                ],
+                [
+                  48.457,
+                  24.553
+                ],
+                [
+                  48.286,
+                  24.565
+                ]
+              ]
+            },
+            {
+              "m": "taxi",
+              "n": "Taxi Vorochta → Lazeščina přes Jablunický průsmyk",
+              "p": [
+                [
+                  48.286,
+                  24.565
+                ],
+                [
+                  48.3,
+                  24.468
+                ],
+                [
+                  48.282,
+                  24.407
+                ]
+              ]
+            },
+            {
+              "m": "jeep",
+              "n": "UAZ Buchanka Lazeščina → Kozmeščik a zpět",
+              "p": [
+                [
+                  48.282,
+                  24.407
+                ],
+                [
+                  48.24,
+                  24.42
+                ],
+                [
+                  48.188,
+                  24.46
+                ]
+              ]
+            },
+            {
+              "m": "hike",
+              "n": "Kozmeščik → Hoverla a zpět",
+              "p": [
+                [
+                  48.188,
+                  24.46
+                ],
+                [
+                  48.178,
+                  24.475
+                ],
+                [
+                  48.168,
+                  24.49
+                ],
+                [
+                  48.1601,
+                  24.5003
+                ]
+              ]
+            }
+          ],
+          "marks": [
+            {
+              "p": [
+                50.083,
+                14.435
+              ],
+              "n": "Praha hl. n. (start)",
+              "t": "start"
+            },
+            {
+              "p": [
+                49.84,
+                24.002
+              ],
+              "n": "Lvov",
+              "t": "hut"
+            },
+            {
+              "p": [
+                48.282,
+                24.407
+              ],
+              "n": "Lazeščina, dům přes Airbnb",
+              "t": "sleep"
+            },
+            {
+              "p": [
+                48.188,
+                24.46
+              ],
+              "n": "Kozmeščik (nástup)",
+              "t": "park"
+            },
+            {
+              "p": [
+                48.1601,
+                24.5003
+              ],
+              "n": "Hoverla 2 061 m",
+              "t": "peak"
+            }
+          ]
+        },
+        "varianty": [
+          {
+            "id": "praha",
+            "nazev": "Z Prahy vlakem",
+            "trasa": "Z Lazeščiny terénním UAZem (Buchanka) na nástup Kozmeščik, odtud mírnějším zakarpatským hřebenem na vrchol a zpět k autu. Vrcholový den neděle nebo pondělí podle počasí, otočka nejpozději ve 13:00.",
+            "ubytovani": "Lazeščina: celý dům přes Airbnb na 3 noci, s bezplatným zrušením.",
+            "cena": {
+              "note": "na osobu při 3 lidech, odhad",
+              "items": [
+                [
+                  "RegioJet Praha → Lvov, lůžko",
+                  1434
+                ],
+                [
+                  "Vlak Lvov → Vorochta",
+                  130
+                ],
+                [
+                  "Taxi Vorochta → Lazeščina, 1 600 UAH (÷ 3)",
+                  278
+                ],
+                [
+                  "Ubytování Lazeščina, 3 noci, 2 458 Kč (÷ 3)",
+                  819
+                ],
+                [
+                  "UAZ Buchanka na Kozmeščik a zpět, 4 000 UAH (÷ 3)",
+                  693
+                ],
+                [
+                  "Vstup do národního parku, ~100 UAH",
+                  55
+                ],
+                [
+                  "Taxi Lazeščina → Vorochta, 1 600 UAH (÷ 3)",
+                  278
+                ],
+                [
+                  "Vlak Vorochta → Lvov",
+                  130
+                ],
+                [
+                  "RegioJet Lvov → Praha, lůžko",
+                  968
+                ],
+                [
+                  "Jídlo, většinou z domu",
+                  700
+                ]
+              ]
+            },
+            "timeline": [
+              [
+                "Den 1, 21:48",
+                "RegioJetem s lůžkem z Prahy hl. n."
+              ],
+              [
+                "Den 2 ráno",
+                "6:25 Přemyšl, 7:40 vlak IC do Lvova (10:15). Den ve Lvově, výměna hřiven a nákup."
+              ],
+              [
+                "Den 2, 15:51",
+                "Vlak 810 do Vorochty (20:25) a taxíkem do Lazeščiny."
+              ],
+              [
+                "Den 3 nebo 4",
+                "Vrcholový den podle počasí: UAZem na Kozmeščik, výstup na Hoverlu, otočka nejpozději ve 13:00 a UAZem zpět. Druhý den je rezerva."
+              ],
+              [
+                "Den 5",
+                "Taxíkem do Vorochty do 9:45, vlak v 10:11 do Lvova (14:25) a v 18:29 vlak do Přemyšlu a RegioJet s lůžkem."
+              ],
+              [
+                "Den 6, 6:58",
+                "Praha."
+              ]
+            ]
+          }
+        ],
+        "tipy": [
+          "V zimě nutně mačky. Před výstupem zkontrolovat lavinovou předpověď a stránku horské služby Čornohora.",
+          "Rozhodnutí jet/nejet 5–6 dní předem podle velkých front a sněhu, konkrétní vrcholový den až na místě večer předem.",
+          "Jízdenky RegioJetu na Ukrajinu jdou zrušit jen víc než 21 dní před odjezdem, kupovat až po rozhodnutí.",
+          "Místní transfery se platí hotově v hřivnách, vyměnit ve Lvově.",
+          "Ve Vorochtě (Ivano-Frankivská oblast) platí zákaz vycházení 0–5 h, na Zakarpatí ne.",
+          "Regionální vlaky se na booking.uz často nezobrazují, lístky se kupují na nádraží."
+        ]
+      },
+      "odlozeno": "2026-11-20",
+      "duvod": "Kolize s testem a schůzí spolku, k tomu neprošlapaný sníh a nejisté počasí v zimě.",
+      "_plan": {
+        "when": "jaro/léto 2027",
+        "what": "Hoverla",
+        "where": "Ukrajina",
+        "note": "odloženo ze zimy, přes Kozmeščik",
+        "link": "ukraine"
+      }
+    }
+  }
 }

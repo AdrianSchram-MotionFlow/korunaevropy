@@ -319,7 +319,7 @@ const COUNTRIES = [
 ["croatia","HRV","Chorvatsko","Dinara","dinara",1831,43.9967,16.3814,191],
 ["czechia","CZE","Česko","Sněžka","snezka",1603,50.7361,15.74,203],
 ["denmark","DNK","Dánsko","Møllehøj","mollehoj",171,56.0997,9.35,208],
-["estonia","EST","Estonsko","Suur Munamägi","suur_munamagi",318,57.7075,27.0561,233],
+["estonia","EST","Estonsko","Suur Munamägi","suur_munamagi",318,57.7142,27.0592,233],
 ["finland","FIN","Finsko","Halti","halti",1324,69.3222,21.2842,246],
 ["france","FRA","Francie","Mont Blanc","mont_blanc",4808,45.8326,6.8652,250],
 ["germany","DEU","Německo","Zugspitze","zugspitze",2962,47.421,10.9852,276],
@@ -329,9 +329,9 @@ const COUNTRIES = [
 ["ireland","IRL","Irsko","Carrauntoohil","carrauntoohil",1038,51.9992,-9.7549,372],
 ["italy","ITA","Itálie","Mont Blanc","mont_blanc",4808,45.8326,6.8652,380],
 ["kosovo","KOS","Kosovo","Velika Rudoka","velika_rudoka",2658,41.85,20.7833,null],
-["latvia","LVA","Lotyšsko","Gaiziņkalns","gaizinkalns",312,56.8686,25.9917,428],
+["latvia","LVA","Lotyšsko","Gaiziņkalns","gaizinkalns",312,56.8703,25.9594,428],
 ["liechtenstein","LIE","Lichtenštejnsko","Vorder Grauspitz","grauspitz",2599,47.0631,9.5947,438],
-["lithuania","LTU","Litva","Aukštojas","aukstojas",294,54.8558,25.5567,440],
+["lithuania","LTU","Litva","Aukštojas","aukstojas",294,54.5271,25.6261,440],
 ["luxembourg","LUX","Lucembursko","Kneiff","kneiff",560,50.1289,6.0333,442],
 ["malta","MLT","Malta","Ta' Dmejrek","ta_dmejrek",253,35.8722,14.3711,470],
 ["moldova","MDA","Moldavsko","Bălănești","balanesti",430,47.0994,28.3597,498],
@@ -412,8 +412,8 @@ function card(o){
   return `<article class="pc" id="v-${esc(o.cid||o.id)}">
     ${o.photo?`<div class="photo"><picture>${o.full?`<source media="(min-width:760px)" srcset="${esc(o.full)}">`:""}<img src="${esc(o.photo)}" data-full="${esc(o.full||o.photo)}" alt="${esc(o.peak)}, ${esc(o.country)}" loading="lazy"></picture></div>`:""}
     <div class="body">
-      <div class="head"><div>${ORD[o.cid]?`<span class="ord" title="${ORD[o.cid]}. zdolaný vrchol Koruny">#${ORD[o.cid]}</span>`:""}<h3>${esc(o.peak)}</h3><div class="country">${o.cc?`<img class="flag" src="${flag(o.cc)}" alt="">`:""}${esc(o.country)}</div></div>
-      <div class="elev num">${mfmt(o.elev)}<small>${when}</small></div></div>
+      <div class="head"><div>${ORD[o.cid]?`<span class="ord" title="${ORD[o.cid]}. zdolaný vrchol Koruny">#${ORD[o.cid]}</span>`:""}<h3>${esc(o.title||o.peak)}</h3><div class="country">${o.cc&&!o.subtitle?`<img class="flag" src="${flag(o.cc)}" alt="">`:""}${esc(o.subtitle||o.country)}</div></div>
+      <div class="elev num">${o.elevText?esc(o.elevText):mfmt(o.elev)}<small>${when}</small></div></div>
       ${chips?`<div class="chips">${chips}</div>`:""}
       ${figs?`<div class="figs">${figs}</div>`:""}
       ${o.tldr?`<p class="tldr">${esc(o.tldr)}</p>`:(o.status==="done"?`<p class="pending">Zápis z výstupu brzy doplním.</p>`:"")}
