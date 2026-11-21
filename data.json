@@ -1557,7 +1557,7 @@
       "status": "planned",
       "when": "únor 2027",
       "title": "Pobaltí: Suur Munamägi, Gaiziņkalns, Aukštojas",
-      "subtitle": "Estonsko, Lotyšsko, Litva · 5.–13. 2. 2027",
+      "subtitle": "Estonsko, Lotyšsko, Litva · 9 dní",
       "tldr": "Tři nejnižší vrcholy Koruny za jednu cestu, se Sophie. Letadlem z Krakova do Tallinnu, pak autobusy a na jeden den auto přes všechny tři pobaltské státy a domů letadlem přes Gdaňsk. Žádné hostely, cíl do 8 000 Kč na osobu, s rezervními dny na počasí.",
       "logistics": {
         "plan": true,
@@ -1885,43 +1885,43 @@
             "nazev": "Vlak, letadla, autobusy a jeden den auto",
             "timeline": [
               [
-                "Pá 5. 2., 12:23",
+                "Den 1, 12:23",
                 "Leo Expressem z Prahy do Krakova (18:37), zaplaceno kredity. Noc v Krakově."
               ],
               [
-                "So 6. 2., 12:35",
+                "Den 2, 12:35",
                 "Wizz Air Krakov → Tallinn (15:35). Odpoledne Tallinn, noc ve studiu u Kristiine."
               ],
               [
-                "Ne 7. 2.",
+                "Den 3",
                 "7:30 Lux Express do Võru (11:15), 13:55 bus 147 do Haanji, výstup na Suur Munamägi, v 15:24 zpět do Võru (15:59). Noc ve Võru."
               ],
               [
-                "Po 8. 2., 6:10",
+                "Den 4, 6:10",
                 "Lux Express z Võru do Rigy (15:05). Riga, 2 noci."
               ],
               [
-                "Út 9. 2.",
+                "Den 5",
                 "V 8:00 auto z letiště v Rize, na Gaiziņkalns a zpět, vrátit do 21:00."
               ],
               [
-                "St 10. 2., 10:00",
+                "Den 6, 10:00",
                 "FlixBus z Rigy do Vilniusu (13:45). Zbytek dne Vilnius, zároveň rezerva."
               ],
               [
-                "Čt 11. 2.",
+                "Den 7",
                 "Autobusem k Medininkai (12:20 nebo 13:25), pěšky na Aukštojas, zpět spoji v 16:11, 17:05 nebo 17:40."
               ],
               [
-                "Pá 12. 2.",
+                "Den 8",
                 "Rezervní den ve Vilniusu. Ve 21:05 Wizz Air do Gdaňsku (21:10), noc v Gdaňsku."
               ],
               [
-                "So 13. 2., 8:35",
+                "Den 9, 8:35",
                 "Ryanair Gdaňsk → Praha, přílet 9:55."
               ]
             ],
-            "trasa": "Všechny tři vrcholy jsou nízké kopce bez technických úseků, jde spíš o dopravu. Suur Munamägi z Haanji pěšky (vyhlídková věž na vrcholu), Gaiziņkalns autem až skoro nahoru, Aukštojas krátkou procházkou od autobusu u Medininkai. Aukštojas je naplánovaný na čtvrtek, středa a pátek slouží jako rezerva.",
+            "trasa": "Všechny tři vrcholy jsou nízké kopce bez technických úseků, jde spíš o dopravu. Suur Munamägi z Haanji pěšky (vyhlídková věž na vrcholu), Gaiziņkalns autem až skoro nahoru, Aukštojas krátkou procházkou od autobusu u Medininkai. Aukštojas je naplánovaný na 7. den, 6. a 8. den slouží jako rezerva.",
             "ubytovani": "Bez hostelů, jen soukromé pokoje a malé apartmány: Krakov (Airbnb), Tallinn (studio přes Booking), Võru (Airbnb), Riga (Airbnb s pračkou, 2 noci), Vilnius (1A House, 2 noci, záložně Maslow), Gdaňsk (mini apartmán přes Booking). Vše s bezplatným zrušením.",
             "cena": {
               "note": "na osobu při 2 lidech",
@@ -1997,11 +1997,11 @@
         ],
         "tipy": [
           "Letenky koupit hned a každou zvlášť (vychází levněji než kombinace přes Kiwi). Jsou to jediné nevratné nákupy.",
-          "Leo kredity propadají kolem 19. 1., použít je do té doby.",
+          "Leo kredity mají omezenou platnost, využít je včas.",
           "Lux Express, FlixBus a místní autobusy kupovat až těsně před cestou, ať zůstane volnost při změně plánu.",
           "Ubytování i auto rezervovat s bezplatným zrušením.",
           "V únoru se stmívá kolem půl páté, výstupy plánovat na dopoledne a brzké odpoledne.",
-          "Středa a pátek jsou rezervní dny, kdyby počasí nebo spoje nevyšly."
+          "6. a 8. den jsou rezervní, kdyby počasí nebo spoje nevyšly."
         ]
       },
       "elevText": "3 vrcholy"
