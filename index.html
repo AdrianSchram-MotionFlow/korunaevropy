@@ -209,6 +209,30 @@ details.logi summary:focus-visible{outline:2px solid var(--blue);outline-offset:
 .sorts button{font:600 13px var(--body);border:1px solid var(--line);background:none;color:var(--mute);border-radius:999px;padding:4px 11px;cursor:pointer}
 .sorts button[aria-pressed="true"]{color:var(--ink);border-color:var(--ink)}
 .sorts button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+/* partneři a podpora – nenápadně úplně dole */
+#partneri{padding-block:40px 28px}
+.pcards{display:grid;gap:12px;margin-top:18px;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))}
+.pcard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 18px 16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.pcard h3{font-weight:800;font-stretch:85%;font-size:22px;line-height:1;text-transform:uppercase}
+.pcard p{margin:0;color:var(--mute);font-size:15px;flex:1}
+.pbtn{align-self:flex-start;display:inline-flex;align-items:center;gap:6px;font:600 14px var(--body);text-decoration:none;color:var(--green);border:1px solid var(--green);background:var(--card);border-radius:999px;padding:7px 14px;cursor:pointer;transition:background .2s,color .2s}
+.pbtn:hover,.pbtn:focus-visible{background:var(--green);color:var(--card);outline:none}
+.support{margin-top:30px;font-size:13px;color:var(--mute)}
+.support summary{list-style:none;cursor:pointer;display:inline-block}
+.support summary::-webkit-details-marker{display:none}
+.support summary .lnk{text-decoration:underline;text-underline-offset:3px;font-weight:600}
+.support summary .lnk::after{content:"›";text-decoration:none;display:inline-block;margin-left:6px;transform:rotate(90deg);transition:transform .2s}
+.support[open] summary .lnk::after{transform:rotate(-90deg)}
+.support summary:hover .lnk,.support summary:focus-visible .lnk{color:var(--green)}
+.support summary .why{display:block;margin-top:3px}
+.pay{display:flex;flex-wrap:wrap;gap:16px;align-items:center;margin-top:14px;padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--card);max-width:520px}
+.pay img{width:132px;height:132px;border-radius:8px;flex:none;image-rendering:pixelated}
+.pay ol{margin:0;padding-left:18px;display:grid;gap:8px;color:var(--ink);font-size:14px;flex:1;min-width:200px}
+.pay ol .pbtn{margin-top:6px;font-size:13px;padding:5px 12px}
+.pay .acc{flex-basis:100%;margin:0;font-size:13px}
+.pay .acc b{font:500 13px var(--mono);color:var(--ink)}
+.pay .acc button{font:600 12px var(--body);color:var(--mute);background:none;border:1px solid var(--line);border-radius:999px;padding:2px 9px;margin-left:4px;cursor:pointer}
+.pay .acc button:hover{color:var(--green);border-color:var(--green)}
 footer{padding-block:30px 50px;color:var(--mute);font-size:13px;border-top:1px solid var(--line);margin-top:20px}
 #lightbox{position:fixed;inset:0;background:rgba(0,0,0,.88);display:grid;place-items:center;padding:20px;z-index:20}
 #lightbox img{max-width:100%;max-height:100%;border-radius:8px}
@@ -297,6 +321,34 @@ footer{padding-block:30px 50px;color:var(--mute);font-size:13px;border-top:1px s
     <h2>Další vrcholy</h2>
     <p class="sub">Kavkaz nepatří do Koruny Evropy, ale patří k cestě. I s otočkami.</p>
     <div class="cards" id="extras"></div>
+  </section>
+  <section class="wrap" id="partneri">
+    <span class="kicker">Spolupráce</span>
+    <h2>Stát se partnerem</h2>
+    <p class="sub">Pomoz mi dostat se na Mont Blanc. Vybavení, nebo peníze, ať ti to sedí.</p>
+    <div class="pcards">
+      <div class="pcard">
+        <h3>Barter</h3>
+        <p>Vybavení nebo služby, které opravdu použiju na horách. Ukážu je poctivě.</p>
+        <a class="pbtn" href="mailto:korunaevropy@motionflow.cz?subject=Partnerstv%C3%AD%20%E2%80%93%20barter">Napsat mi →</a>
+      </div>
+      <div class="pcard">
+        <h3>Finančně</h3>
+        <p>Peníze jdou na expedice a obsah z nich. Co dostaneš, domluvíme předem.</p>
+        <a class="pbtn" href="mailto:korunaevropy@motionflow.cz?subject=Partnerstv%C3%AD%20%E2%80%93%20finan%C4%8Dn%C4%9B">Napsat mi →</a>
+      </div>
+    </div>
+    <details class="support">
+      <summary><span class="lnk">Chceš jen podpořit?</span><span class="why">Peníze jdou na expedice a obsah. Za podporu pošlu logistický breakdown a vibe check z hor.</span></summary>
+      <div class="pay">
+        <img src="qr-platba.png" alt="QR platba na účet 3125372004/5500" width="132" height="132" loading="lazy">
+        <ol>
+          <li>Ulož QR kód<br><a class="pbtn" href="qr-platba.png" download="koruna-evropy-qr-platba.png">Uložit QR</a></li>
+          <li>Načti ho v bankovní aplikaci (QR platba z obrázku). Částka je na tobě, do zprávy klidně připiš e-mail, ať ti mám kam poslat breakdown.</li>
+        </ol>
+        <p class="acc">Nebo na účet <b id="acc">3125372004/5500</b><button type="button" id="accCopy">Zkopírovat</button></p>
+      </div>
+    </details>
   </section>
 </main>
 
@@ -563,6 +615,9 @@ async function drawMap(){
   render();loadStrava();
   if(window.d3&&window.topojson)drawMap();else $("mapnote").textContent="Mapu se nepodařilo načíst.";
 })();
+</script>
+<script>
+document.getElementById("accCopy").addEventListener("click",e=>{const b=e.currentTarget,t=document.getElementById("acc").textContent;const done=()=>{b.textContent="Zkopírováno";setTimeout(()=>b.textContent="Zkopírovat",1800)};(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(done,()=>{const r=document.createRange();r.selectNodeContents(document.getElementById("acc"));const sel=getSelection();sel.removeAllRanges();sel.addRange(r)})});
 </script>
 </body>
 </html>
