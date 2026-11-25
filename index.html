@@ -209,23 +209,65 @@ details.logi summary:focus-visible{outline:2px solid var(--blue);outline-offset:
 .sorts button{font:600 13px var(--body);border:1px solid var(--line);background:none;color:var(--mute);border-radius:999px;padding:4px 11px;cursor:pointer}
 .sorts button[aria-pressed="true"]{color:var(--ink);border-color:var(--ink)}
 .sorts button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+/* hero: cíl a hodnoty, fade toggly */
+.lede b{font-weight:600}
+.jump a.pri{background:var(--green);border-color:var(--green);color:var(--paper)}
+.jump a.pri:hover,.jump a.pri:focus-visible{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.fold{margin-top:18px}
+.fold .fc{max-height:var(--fh,100px);overflow:hidden;-webkit-mask-image:linear-gradient(#000 30%,transparent);mask-image:linear-gradient(#000 30%,transparent)}
+.fold.open .fc{max-height:none;-webkit-mask-image:none;mask-image:none}
+.fbtn{font:600 14px var(--body);color:var(--green);background:none;border:0;padding:6px 0 0;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.fbtn::after{content:"↓";transition:transform .2s}
+.fold.open .fbtn::after{transform:rotate(180deg)}
+.fbtn:hover{text-decoration:underline;text-underline-offset:3px}
+.fbtn:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:4px}
+.goal{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px 10px}
+.goal .gh{font-weight:800;font-stretch:85%;font-size:19px;text-transform:uppercase;margin-bottom:8px}
+.gcols{display:grid;gap:14px 28px;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
+.gcols ul{margin:6px 0 0;padding-left:18px;display:grid;gap:6px;font-size:15px}
+.gcols li::marker,.pts li::marker{color:var(--green)}
+/* karty: body, dny, doporučení */
+.pts{margin:0;padding-left:18px;display:grid;gap:3px;font-size:15px}
+.lg .blk{display:grid;gap:10px}
+.lg h4.big{font:700 15px var(--display);font-stretch:95%;letter-spacing:.02em;text-transform:uppercase;color:var(--ink);margin:4px 0 0;padding-top:12px;border-top:1px solid var(--line)}
+.lg>div:first-of-type h4.big,.lg>.planflag+div h4.big{border-top:0;padding-top:0}
+.svbox{border:1px solid #fc4c02;border-radius:12px;padding:10px;overflow:hidden}
+.svh{display:inline-flex;align-items:center;gap:6px;font:700 12px var(--body);color:#fff;background:#fc4c02;border-radius:999px;padding:3px 10px;margin-bottom:8px}
+.vnote{font-size:13px;color:var(--mute);margin:0}
+.lg .days{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.lg .days>li{margin:0;border:1px solid var(--line);border-radius:12px;padding:9px 12px;background:var(--land2)}
+.dh{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:4px}
+.dh b{font:600 12px var(--mono);color:var(--green);text-transform:uppercase;letter-spacing:.05em}
+.dh span{font:600 12px var(--mono);color:var(--mute);white-space:nowrap}
+.lg .days ul{list-style:none;margin:0;padding:0;display:grid;gap:3px}
+.lg .days ul li{margin:0;display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:14.5px;line-height:1.4;padding-left:12px;position:relative}
+.lg .days ul li::before{content:"";position:absolute;left:0;top:.55em;width:5px;height:5px;border-radius:50%;background:var(--mute)}
+.days em{font:600 12.5px var(--mono);font-style:normal;color:var(--blue);white-space:nowrap}
+.dtot{display:flex;justify-content:space-between;gap:10px;font-weight:700;font-size:15px;padding:4px 2px 0}
+.vibe{font-size:15px}
+.rmust,.rext{padding:8px 12px;border-radius:0 10px 10px 0;display:grid;gap:4px}
+.rmust{border-left:3px solid var(--green);background:var(--land2)}
+.rext{border-left:3px solid var(--line)}
+.rmust b,.rext b{font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
+.rmust b{color:var(--green)}
+.pc .country .flag+.flag{margin-left:-1px}
 /* partneři a podpora – nenápadně úplně dole */
 #partneri{padding-block:40px 28px}
 .pcards{display:grid;gap:12px;margin-top:18px;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))}
 .pcard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 18px 16px;display:flex;flex-direction:column;gap:10px;min-width:0}
 .pcard h3{font-weight:800;font-stretch:85%;font-size:22px;line-height:1;text-transform:uppercase}
-.pcard p{margin:0;color:var(--mute);font-size:15px;flex:1}
+.pcard p{margin:0;color:var(--mute);font-size:15px}
+.pcard .deal{flex:1}
 .pbtn{align-self:flex-start;display:inline-flex;align-items:center;gap:6px;font:600 14px var(--body);text-decoration:none;color:var(--green);border:1px solid var(--green);background:var(--card);border-radius:999px;padding:7px 14px;cursor:pointer;transition:background .2s,color .2s}
 .pbtn:hover,.pbtn:focus-visible{background:var(--green);color:var(--card);outline:none}
-.support{margin-top:30px;font-size:13px;color:var(--mute)}
-.support summary{list-style:none;cursor:pointer;display:inline-block}
-.support summary::-webkit-details-marker{display:none}
-.support summary .lnk{text-decoration:underline;text-underline-offset:3px;font-weight:600}
-.support summary .lnk::after{content:"›";text-decoration:none;display:inline-block;margin-left:6px;transform:rotate(90deg);transition:transform .2s}
-.support[open] summary .lnk::after{transform:rotate(-90deg)}
-.support summary:hover .lnk,.support summary:focus-visible .lnk{color:var(--green)}
-.support summary .why{display:block;margin-top:3px}
-.pay{display:flex;flex-wrap:wrap;gap:16px;align-items:center;margin-top:14px;padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--card);max-width:520px}
+.support{margin-top:28px;font-size:13px;color:var(--mute)}
+.support .sh{margin:0}
+.support .sh b{color:var(--ink);font-weight:600}
+.deal{margin:0;display:grid;gap:6px;font-size:14px}
+.deal div{display:grid;grid-template-columns:62px minmax(0,1fr);gap:8px}
+.deal dt{font:600 11px/1.9 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--green)}
+.deal dd{margin:0}
+.pay{display:flex;flex-wrap:wrap;gap:16px;align-items:center;margin-top:10px;padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--card);max-width:520px}
 .pay img{width:132px;height:132px;border-radius:8px;flex:none;image-rendering:pixelated}
 .pay ol{margin:0;padding-left:18px;display:grid;gap:8px;color:var(--ink);font-size:14px;flex:1;min-width:200px}
 .pay ol .pbtn{margin-top:6px;font-size:13px;padding:5px 12px}
@@ -247,7 +289,7 @@ footer{padding-block:30px 50px;color:var(--mute);font-size:13px;border-top:1px s
     <a class="ig" id="ig" href="https://www.instagram.com/adrian.schram/" target="_blank" rel="noopener" aria-label="Instagram @adrian.schram"><svg viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="igG" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#feda75"/><stop offset=".3" stop-color="#fa7e1e"/><stop offset=".6" stop-color="#d62976"/><stop offset=".8" stop-color="#962fbf"/><stop offset="1" stop-color="#4f5bd5"/></linearGradient></defs><rect x="2.5" y="2.5" width="19" height="19" rx="5.5" fill="none" stroke="url(#igG)" stroke-width="2.2"/><circle cx="12" cy="12" r="4.3" fill="none" stroke="url(#igG)" stroke-width="2.2"/><circle cx="17.4" cy="6.6" r="1.4" fill="url(#igG)"/></svg><span class="t">@adrian.schram</span></a>
   </div>
   <h1><span class="t"><span class="l1">Koruna</span> <span class="l2">Evropy</span></span><i class="crown" aria-hidden="true"></i></h1>
-  <p class="lede">Nejvyšší vrchol každé evropské země. Všech 44 do mých 25. narozenin, 30. dubna 2032.</p>
+  <p class="lede"><b>Vítej v trackeru mojí výzvy Koruna Evropy.</b> Nejvyšší vrchol každé evropské země, všech 44 do mých 25. narozenin.</p>
   <div class="stats">
     <div class="stat"><b class="num" id="st-done">–</b><span>zdolaných vrcholů</span></div>
     <div class="stat"><b class="num" id="st-high">–</b><span>nejvýš v Evropě</span></div>
@@ -261,16 +303,32 @@ footer{padding-block:30px 50px;color:var(--mute);font-size:13px;border-top:1px s
     <span><i class="mark s-todo"></i>zbývá</span>
     <span><i class="mark" style="--c:var(--xdone)"></i>mimo Korunu (Kavkaz)</span>
   </div>
-  <nav class="jump" aria-label="Rychlé odkazy"><a href="#plan">Další výstupy</a><a href="#mapa">Mapa</a><a href="#zdolane">Zápisník</a><a href="#zeme">Seznam zemí</a></nav>
+  <div class="fold goal" id="cil">
+    <h3 class="gh">Cíl a hodnoty výzvy</h3>
+    <div class="fc" id="cil-c" style="--fh:92px">
+      <div class="gcols">
+        <div><span class="kicker">Cíl</span>
+          <ul>
+            <li>Vystoupat na nejvyšší vrchol každé evropské země. Všech 44 do 30. dubna 2032, kdy mi bude 25.</li>
+            <li>Moje Koruna má 46 zemí a 44 vrcholů, protože Mont Blanc a Korab jsou sdílené. Jiné seznamy počítají i ostrovní území nebo vrcholy, které Evropu chápou šířeji. Ty si možná časem přiberu, teď jedu podle tohohle seznamu.</li>
+            <li>Elbrus ve výzvě zůstává. Kdyby za pár let nebyl z politických důvodů bezpečný, zvážím místo něj Ararat.</li>
+          </ul>
+        </div>
+        <div><span class="kicker">O co mi jde</span>
+          <ul>
+            <li>Nejen vrchol. Z každé země chci zažít i kulturu a dobrodružství, které nabízí. I když na některé hory polezu ze sousední země, třeba na Halti z Norska, kde snad chytím polární záři.</li>
+            <li>Celou cestu dokumentuju. Rychlý vibe na Instagramu, tady na stránce celý rozbor: logistika, ceny, mapy a co mi to dalo. Aby kdokoli mohl jít po mých stopách a vytěžit z toho maximum.</li>
+            <li>Je to výzva o síle, dobrodružství a sebepoznání. A hlavně je autentická.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <button type="button" class="fbtn" aria-expanded="false" aria-controls="cil-c">Zobrazit víc</button>
+  </div>
+  <nav class="jump" aria-label="Rychlé odkazy"><a class="pri" href="#zeme">Seznam zemí</a><a href="#mapa">Mapa</a><a href="#plan">Další výstupy</a><a href="#zdolane">Zápisník</a></nav>
 </header>
 
 <main>
-  <section class="wrap" id="plan">
-    <span class="kicker">Co chystám dál</span>
-    <h2>Další výstupy</h2>
-    <ol class="timeline" id="timeline"></ol>
-  </section>
-
   <section class="wrap" id="mapa">
     <span class="kicker">Mapa</span>
     <h2>Kde už jsem stál</h2>
@@ -279,6 +337,15 @@ footer{padding-block:30px 50px;color:var(--mute);font-size:13px;border-top:1px s
       <div class="zbtns" id="zbtns" hidden><button type="button" data-z="in" aria-label="Přiblížit">+</button><button type="button" data-z="out" aria-label="Oddálit">−</button><button type="button" data-z="reset" aria-label="Celá Evropa" style="font-size:15px">⤢</button></div>
       <div class="tip" id="tip"></div>
       <div class="mapnote" id="mapnote">Klepni na tečku vrcholu. Přibližuj tlačítky, dvěma prsty nebo Ctrl + kolečkem.</div>
+    </div>
+  </section>
+
+  <section class="wrap" id="plan">
+    <span class="kicker">Co chystám dál</span>
+    <h2>Další výstupy</h2>
+    <div class="fold" style="margin-top:0">
+      <div class="fc" id="plan-c" style="--fh:240px"><ol class="timeline" id="timeline"></ol></div>
+      <button type="button" class="fbtn" aria-expanded="false" aria-controls="plan-c">Zobrazit celý plán</button>
     </div>
   </section>
 
@@ -325,30 +392,40 @@ footer{padding-block:30px 50px;color:var(--mute);font-size:13px;border-top:1px s
   <section class="wrap" id="partneri">
     <span class="kicker">Spolupráce</span>
     <h2>Stát se partnerem</h2>
-    <p class="sub">Pomoz mi dostat se na Mont Blanc. Vybavení, nebo peníze, ať ti to sedí.</p>
+    <p class="sub">Pomoz mi s výzvou a staň se součástí silného příběhu. Jakkoli ti to sedí.</p>
     <div class="pcards">
       <div class="pcard">
         <h3>Barter</h3>
-        <p>Vybavení nebo služby, které opravdu použiju na horách. Ukážu je poctivě.</p>
+        <p>Produkt nebo služba výměnou za poctivý test na skutečných výstupech.</p>
+        <dl class="deal">
+          <div><dt>Ty</dt><dd>dáš produkt nebo službu</dd></div>
+          <div><dt>Já</dt><dd>ji otestuju v reálných podmínkách a podle domluvy zmíním v obsahu</dd></div>
+          <div><dt>Získáš</dt><dd>místo v příběhu a důkaz, co tvůj produkt vydržel</dd></div>
+        </dl>
         <a class="pbtn" href="mailto:korunaevropy@motionflow.cz?subject=Partnerstv%C3%AD%20%E2%80%93%20barter">Napsat mi →</a>
       </div>
       <div class="pcard">
         <h3>Finančně</h3>
-        <p>Peníze jdou na expedice a obsah z nich. Co dostaneš, domluvíme předem.</p>
+        <p>Peníze jdou na logistiku a výbavu k výstupům. Finanční podporu beru jako partnerství.</p>
+        <dl class="deal">
+          <div><dt>Ty</dt><dd>podpoříš výstupy finančně</dd></div>
+          <div><dt>Já</dt><dd>tě jasně označím jako partnera výzvy v obsahu i v příběhu: stories, carousely, reels a do budoucna dokument</dd></div>
+          <div><dt>Navíc</dt><dd>obsah přímo pro tvou značku: soutěž, promo, cokoli podle domluvy</dd></div>
+        </dl>
         <a class="pbtn" href="mailto:korunaevropy@motionflow.cz?subject=Partnerstv%C3%AD%20%E2%80%93%20finan%C4%8Dn%C4%9B">Napsat mi →</a>
       </div>
     </div>
-    <details class="support">
-      <summary><span class="lnk">Chceš jen podpořit?</span><span class="why">Peníze jdou na expedice a obsah. Za podporu pošlu logistický breakdown a vibe check z hor.</span></summary>
+    <div class="support">
+      <p class="sh"><b>Nebo chceš jen podpořit?</b> Peníze jdou na expedice a obsah.</p>
       <div class="pay">
         <img src="qr-platba.png" alt="QR platba na účet 3125372004/5500" width="132" height="132" loading="lazy">
         <ol>
           <li>Ulož QR kód<br><a class="pbtn" href="qr-platba.png" download="koruna-evropy-qr-platba.png">Uložit QR</a></li>
-          <li>Načti ho v bankovní aplikaci (QR platba z obrázku). Částka je na tobě, do zprávy klidně připiš e-mail, ať ti mám kam poslat breakdown.</li>
+          <li>Načti ho v bankovní aplikaci (QR platba z obrázku). Částka je na tobě.</li>
         </ol>
         <p class="acc">Nebo na účet <b id="acc">3125372004/5500</b><button type="button" id="accCopy">Zkopírovat</button></p>
       </div>
-    </details>
+    </div>
   </section>
 </main>
 
@@ -437,38 +514,52 @@ function card(o){
   const L=o.logistics;
   const key=o.cid||o.id;REG[key]=o;
   let logi="";
-  if(L||o.detail||o.strava){
+  const vibe=o.vibe||null,P=o.doporuceni;
+  if(L||o.detail||o.strava||vibe||P){
     const V=L?(L.varianty||[{id:"x",nazev:null,doprava:L.doprava,trasa:L.trasa,ubytovani:L.ubytovani,cena:L.cena}]):[];
-    const pane=v=>{const c=v.cena;const tot=c?(c.total??(c.items||[]).reduce((a,i)=>a+i[1],0)):0;
-      return `${v.timeline?.length?`<div><h4>${L.plan?"Jak pojedeme":"Jak jsme jeli"}</h4><ol class="tl">${v.timeline.map(t=>`<li><b>${esc(t[0])}</b><span>${esc(t[1])}</span></li>`).join("")}</ol></div>`:""}
-      ${v.doprava?`<div><h4>Doprava</h4><p>${esc(v.doprava)}</p></div>`:""}
-      ${v.trasa?`<div><h4>Trasa</h4><p>${esc(v.trasa)}</p></div>`:""}
+    const isum=a=>(a||[]).reduce((t,x)=>t+(x[1]||0),0);
+    const vtot=v=>v.days?v.days.reduce((t,dy)=>t+isum(dy.i),0):(v.cena?(v.cena.total??isum(v.cena.items)):0);
+    const r10=n=>Math.round(n/10)*10;
+    const pane=v=>{
+      if(v.days){const tot=vtot(v);
+        return `<ol class="days">${v.days.map(dy=>{const t=isum(dy.i);return `<li><div class="dh"><b>${esc(dy.d)}</b>${t?`<span>${kc(t)}</span>`:""}</div><ul>${dy.i.map(x=>`<li><span>${esc(x[0])}</span>${x[1]?`<em>+ ${kc(x[1])}</em>`:""}</li>`).join("")}</ul></li>`}).join("")}</ol>
+        ${tot?`<div class="dtot"><span>${L.plan?"Odhad celkem na osobu":"Celkem na osobu"}${v.note?` <small style="font-weight:400;color:var(--mute)">· ${esc(v.note)}</small>`:""}</span><span class="num">${kc(r10(tot))}</span></div>`:""}
+        ${v.extra?`<p class="lnote">${esc(v.extra)}</p>`:""}`}
+      const c=v.cena;const tot=vtot(v);
+      return `${v.timeline?.length?`<div><ol class="tl">${v.timeline.map(t=>`<li><b>${esc(t[0])}</b><span>${esc(t[1])}</span></li>`).join("")}</ol></div>`:""}
       ${v.ubytovani?`<div><h4>Ubytování</h4><p>${esc(v.ubytovani)}</p></div>`:""}
-      ${c?`<div><h4>${L.plan?"Kolik to bude stát":"Kolik to stálo"}${c.note?" · "+esc(c.note):""}</h4><table class="cost">${(c.items||[]).map(i=>`<tr><td>${esc(i[0])}</td><td>${kc(i[1])}</td></tr>`).join("")}<tr class="t"><td>Celkem na osobu</td><td>${kc(Math.round(tot/10)*10)}</td></tr>${c.extra?`<tr class="x"><td colspan="2">${esc(c.extra)}</td></tr>`:""}</table></div>`:""}`};
+      ${c?`<div><h4>${L.plan?"Kolik to bude stát":"Kolik to stálo"}${c.note?" · "+esc(c.note):""}</h4><table class="cost">${(c.items||[]).map(i=>`<tr><td>${esc(i[0])}</td><td>${kc(i[1])}</td></tr>`).join("")}<tr class="t"><td>Celkem na osobu</td><td>${kc(r10(tot))}</td></tr>${c.extra?`<tr class="x"><td colspan="2">${esc(c.extra)}</td></tr>`:""}</table></div>`:""}`};
     const R=L&&L.route;
     const modes=R?[...new Set(R.legs.map(l=>l.m))]:[];
-    logi=`<details class="logi" data-k="${esc(key)}"><summary>${o.status==="planned"?"Plán a logistika":"Logistika a statistiky"}</summary><div class="lg">
+    const stats=o.detail?.length||o.strava;
+    logi=`<details class="logi" data-k="${esc(key)}"><summary>${o.status==="planned"?"Plán a logistika":"Statistiky, logistika a doporučení"}</summary><div class="lg">
     ${L&&L.plan?`<div class="planflag">Tohle je plán před cestou. Po výstupu ho přepíšu podle reality.</div>`:""}
-    ${o.detail?.length?`<div><h4>Statistiky</h4><dl class="dgrid">${o.detail.map(d=>`<div><dt>${esc(d[0])}</dt><dd>${esc(d[1])}</dd></div>`).join("")}</dl></div>`:""}
-    ${R?`<div><h4>Mapa cesty</h4><div class="lmap" role="img" aria-label="Mapa cesty na ${esc(o.peak)}"></div>
-      <div class="lbar"><div class="lleg">${modes.map(m=>`<span><i class="${MODE[m].cls}" style="--lc:${MODE[m].c}"></i>${MODE[m].n}</span>`).join("")}</div>
-      <div class="lfit"><button type="button" data-fit="all" aria-pressed="true">Celá cesta</button><button type="button" data-fit="hike" aria-pressed="false">Výstup</button></div></div>
-      <p class="lnote">Trasy jsou zakreslené orientačně.</p></div>`:""}
-    ${V.length>1?`<div class="vswitch"><span class="vlab">⇄ Přepni variantu cesty</span><div class="vtabs" role="tablist">${V.map((v,i)=>{const t=v.cena?Math.round((v.cena.total??v.cena.items.reduce((a,x)=>a+x[1],0))/10)*10:null;return `<button type="button" role="tab" data-v="${esc(v.id)}" aria-selected="${i===0}"><b>${esc(v.nazev)}</b>${t?`<small>${kc(t)} / os.</small>`:""}</button>`}).join("")}</div></div>`:(V[0]?.nazev?`<h4 style="margin:0">${esc(V[0].nazev)}</h4>`:"")}
-    ${V.map((v,i)=>`<div class="vpane" data-v="${esc(v.id)}"${i?" hidden":""}>${pane(v)}</div>`).join("")}
-    ${o.strava?`<div><h4>Záznam ze Stravy</h4>${[].concat(o.strava).map(x=>`<div class="strava"><div class="strava-embed-placeholder" data-embed-type="activity" data-embed-id="${esc(x.id)}" data-style="standard" data-from-embed="false" data-token="${esc(x.token)}"></div></div>`).join("")}</div>`:""}
-    ${L?.tipy?.length?`<div><h4>Tipy a výbava</h4><ul>${L.tipy.map(t=>`<li>${esc(t)}</li>`).join("")}</ul></div>`:""}
+    ${stats?`<div class="blk"><h4 class="big">Statistiky</h4>
+      ${o.detail?.length?`<dl class="dgrid">${o.detail.map(d=>`<div><dt>${esc(d[0])}</dt><dd>${esc(d[1])}</dd></div>`).join("")}</dl>`:""}
+      ${o.strava?`<div class="svbox"><span class="svh">Záznam ze Stravy</span>${[].concat(o.strava).map(x=>`<div class="strava"><div class="strava-embed-placeholder" data-embed-type="activity" data-embed-id="${esc(x.id)}" data-style="standard" data-from-embed="false" data-token="${esc(x.token)}"></div></div>`).join("")}</div>`:""}</div>`:""}
+    ${L?`<div class="blk"><h4 class="big">${L.plan?"Jak pojedeme":"Logistika"}</h4>
+      ${R?`<div><div class="lmap" role="img" aria-label="Mapa cesty na ${esc(o.peak)}"></div>
+        <div class="lbar"><div class="lleg">${modes.map(m=>`<span><i class="${MODE[m].cls}" style="--lc:${MODE[m].c}"></i>${MODE[m].n}</span>`).join("")}</div></div>
+        <p class="lnote">Trasy jsou zakreslené orientačně.</p></div>`:""}
+      ${V.length>1?`<div class="vswitch"><span class="vlab">⇄ Přepni variantu cesty</span><div class="vtabs" role="tablist">${V.map((v,i)=>{const t=vtot(v);return `<button type="button" role="tab" data-v="${esc(v.id)}" aria-selected="${i===0}"><b>${esc(v.nazev)}</b>${t?`<small>${kc(r10(t))} / os.</small>`:""}</button>`}).join("")}</div><p class="vnote">Naše cesta je, jak jsme jeli my, i se zastávkami. Nejkratší cesta vede z Prahy rovnou na vrchol a zpátky. Co stojí za zastávku, najdeš dole v doporučeních.</p></div>`:(V[0]?.nazev?`<h4 style="margin:0">${esc(V[0].nazev)}</h4>`:"")}
+      ${V.map((v,i)=>`<div class="vpane" data-v="${esc(v.id)}"${i?" hidden":""}>${pane(v)}</div>`).join("")}
+      ${L?.tipy?.length?`<div><h4>Tipy k výstupu</h4><ul>${L.tipy.map(t=>`<li>${esc(t)}</li>`).join("")}</ul></div>`:""}
+    </div>`:""}
+    ${vibe?`<div class="blk"><h4 class="big">Vibe</h4><p class="vibe">${esc(vibe)}</p></div>`:""}
+    ${P?`<div class="blk"><h4 class="big">Doporučení</h4>${P.text?`<p>${esc(P.text)}</p>`:""}
+      ${P.must?.length?`<div class="rmust"><b>Doporučuju</b>${P.must.map(t=>`<p>${esc(t)}</p>`).join("")}</div>`:""}
+      ${P.extra?.length?`<div class="rext"><b>Extras</b>${P.extra.map(t=>`<p>${esc(t)}</p>`).join("")}</div>`:""}</div>`:""}
     ${L&&D.kurz?`<p class="lnote">${esc(D.kurz)}</p>`:""}
     </div></details>`}
   const when=o.status==="planned"?(o.when?"plán: "+esc(o.when):"v plánu"):o.status==="attempt"?("pokus "+(fdate(o.date)||"")+(o.reached?" · došel jsem na "+esc(o.reached):"")):(fdate(o.date)||"datum doplním");
   return `<article class="pc" id="v-${esc(o.cid||o.id)}">
     ${o.photo?`<div class="photo"><picture>${o.full?`<source media="(min-width:760px)" srcset="${esc(o.full)}">`:""}<img src="${esc(o.photo)}" data-full="${esc(o.full||o.photo)}" alt="${esc(o.peak)}, ${esc(o.country)}" loading="lazy"></picture></div>`:""}
     <div class="body">
-      <div class="head"><div>${ORD[o.cid]?`<span class="ord" title="${ORD[o.cid]}. zdolaný vrchol Koruny">#${ORD[o.cid]}</span>`:""}<h3>${esc(o.title||o.peak)}</h3><div class="country">${o.cc&&!o.subtitle?`<img class="flag" src="${flag(o.cc)}" alt="">`:""}${esc(o.subtitle||o.country)}</div></div>
+      <div class="head"><div>${ORD[o.cid]?`<span class="ord" title="${ORD[o.cid]}. zdolaný vrchol Koruny">#${ORD[o.cid]}</span>`:""}<h3>${esc(o.title||o.peak)}</h3><div class="country">${o.ccs?o.ccs.map(c=>`<img class="flag" src="${flag(c)}" alt="">`).join(""):o.cc&&!o.subtitle?`<img class="flag" src="${flag(o.cc)}" alt="">`:""}${esc(o.subtitle||o.country)}</div></div>
       <div class="elev num">${o.elevText?esc(o.elevText):mfmt(o.elev)}<small>${when}</small></div></div>
       ${chips?`<div class="chips">${chips}</div>`:""}
       ${figs?`<div class="figs">${figs}</div>`:""}
-      ${o.tldr?`<p class="tldr">${esc(o.tldr)}</p>`:(o.status==="done"?`<p class="pending">Zápis z výstupu brzy doplním.</p>`:"")}
+      ${o.body?.length?`<ul class="pts">${o.body.map(b=>`<li>${esc(b)}</li>`).join("")}</ul>`:o.tldr?`<p class="tldr">${esc(o.tldr)}</p>`:(o.status==="done"?`<p class="pending">Zápis z výstupu brzy doplním.</p>`:"")}
       ${o.post?`<a class="post" href="${esc(o.post)}" target="_blank" rel="noopener">Podívej se na reel →</a>`:""}
       ${logi}
     </div></article>`;
@@ -617,6 +708,7 @@ async function drawMap(){
 })();
 </script>
 <script>
+document.addEventListener("click",e=>{const b=e.target.closest(".fbtn");if(!b)return;const f=b.closest(".fold");const o=f.classList.toggle("open");b.setAttribute("aria-expanded",o);if(!b.dataset.t)b.dataset.t=b.textContent;b.textContent=o?"Sbalit":b.dataset.t});
 document.getElementById("accCopy").addEventListener("click",e=>{const b=e.currentTarget,t=document.getElementById("acc").textContent;const done=()=>{b.textContent="Zkopírováno";setTimeout(()=>b.textContent="Zkopírovat",1800)};(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(done,()=>{const r=document.createRange();r.selectNodeContents(document.getElementById("acc"));const sel=getSelection();sel.removeAllRanges();sel.addRange(r)})});
 </script>
 </body>

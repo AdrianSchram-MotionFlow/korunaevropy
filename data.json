@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-21",
+  "updated": "2026-11-25",
   "instagram": "https://www.instagram.com/adrian.schram/",
   "deadline": "2032-04-30",
   "kurz": "Ceny v eurech přepočtené kurzem 25 Kč/€, forinty kurzem 0,063 Kč/HUF, hřivny kurzem 0,52 Kč/UAH.",
@@ -167,46 +167,51 @@
         "varianty": [
           {
             "id": "praha",
-            "nazev": "Z Prahy autem",
-            "trasa": "Z Pece přes Boudu Růžohorky na vrchol a stejnou cestou zpět. 12,9 km a 901 m převýšení, žádné technické úseky.",
-            "ubytovani": "Bez přespání, celé za jeden den.",
-            "cena": {
-              "note": "na osobu, jeli jsme ve dvou",
-              "items": [
-                [
-                  "Benzín, 360 km × 5,2 l/100 km × 40 Kč/l (750 Kč ÷ 2)",
-                  375
-                ],
-                [
-                  "Parkování P3-C, celý den (~200 Kč ÷ 2, odhad)",
-                  100
+            "nazev": "Naše cesta · z Prahy autem, za jeden den",
+            "note": "jeli jsme ve dvou",
+            "extra": "Bez dálniční známky, roční máme. Bez ní 10denní za 300 Kč, tedy +150 Kč na osobu.",
+            "days": [
+              {
+                "d": "Neděle 6. 9.",
+                "i": [
+                  [
+                    "Z Prahy autem po D11 přes Hradec Králové a Trutnov do Pece pod Sněžkou, asi 2,5 h (benzín)",
+                    375
+                  ],
+                  [
+                    "Parkování P3-C na celý den",
+                    100
+                  ],
+                  [
+                    "14:18 start z Pece přes Boudu Růžohorky"
+                  ],
+                  [
+                    "Vrchol za dokonalého počasí, jen pár skupinek"
+                  ],
+                  [
+                    "Stejnou cestou dolů k autu a večer domů"
+                  ]
                 ]
-              ],
-              "extra": "Bez dálniční známky (roční máme). Bez ní 10denní za 300 Kč, tedy +150 Kč na osobu."
-            },
-            "timeline": [
-              [
-                "Ne 6. 9. dopoledne",
-                "Z Prahy Corollou po D11 přes Hradec Králové a Trutnov do Pece pod Sněžkou, asi 2,5 h. Parkování na P3-C."
-              ],
-              [
-                "14:18",
-                "Start z Pece přes Boudu Růžohorky nahoru na Sněžku. Skoro nikoho jsme nepotkali."
-              ],
-              [
-                "Vrchol",
-                "Na Sněžce za dokonalého počasí jen pár skupinek."
-              ],
-              [
-                "Večer",
-                "Stejnou cestou dolů k autu a domů do Prahy."
-              ]
+              }
             ]
           }
         ],
         "tipy": [
           "Konec prázdnin a neděle odpoledne: plné parkoviště, ale prázdná hora.",
           "Cesta přes Růžohorky je kratší a strmější než přes Obří důl, ale bez technických míst."
+        ]
+      },
+      "body": [
+        "neděle odpoledne, poslední den prázdnin",
+        "narvané parkoviště, ale prázdná hora",
+        "nahoru přes Růžohorky: kratší a strmější cesta",
+        "na vrcholu dokonalé počasí a skoro nikdo"
+      ],
+      "vibe": "Sněžka v neděli skoro bez lidí. Parkoviště bylo narvané, ale cestou nahoru jsme skoro nikoho nepotkali a na vrcholu byl i přes dokonalé počasí naprostý klid. Začátek školy s davy evidentně zamával.",
+      "doporuceni": {
+        "text": "Sněžku jsme vzali napřímo, z Prahy je to pohodlný jednodenní výlet.",
+        "extra": [
+          "Kdo chce zastávku, cestou leží Hradec Králové nebo Dvůr Králové nad Labem. Obojí jsou hezká města na pár hodin."
         ]
       }
     },
@@ -514,116 +519,113 @@
           {
             "id": "nase",
             "nazev": "Naše cesta · z Nového Jíčína",
-            "trasa": "Ze Štrbského plesa po magistrále k Popradskému plesu, Mengusovskou dolinou k Chatě pod Rysmi a na vrchol. Zpět stejnou cestou. Asi 20 km, 1 200 m převýšení a 10 h.",
-            "ubytovani": "Kemp ATC Tatranská Štrba: 4 × 6 € osoba + 7 € stan + 4 × 2 € místní poplatek = 37 € za noc pro čtyři.",
-            "cena": {
-              "note": "na osobu, jeli jsme ve čtyřech",
-              "items": [
-                [
-                  "Benzín, ~510 km × 4,5 l/100 km × 40 Kč/l (920 Kč ÷ 4)",
-                  230
-                ],
-                [
-                  "Slovenská dálniční známka, 10 dní, 10,80 € (÷ 4)",
-                  68
-                ],
-                [
-                  "Parkování Štrbské pleso, 10 € (÷ 4)",
-                  63
-                ],
-                [
-                  "Kemp ATC Tatranská Štrba, 37 € za noc (÷ 4)",
-                  231
-                ],
-                [
-                  "Bryndzové halušky a pití v restauraci u kempu, ~12 €",
-                  300
-                ],
-                [
-                  "Jídlo z obchodu (~1 000 Kč ÷ 4)",
-                  250
+            "note": "jeli jsme ve čtyřech",
+            "extra": "Bez české dálniční známky, roční máme.",
+            "days": [
+              {
+                "d": "Neděle 23. 8.",
+                "i": [
+                  [
+                    "Přespání u rodiny v Novém Jíčíně"
+                  ]
                 ]
-              ],
-              "extra": "Bez české dálniční známky (roční máme)."
-            },
-            "timeline": [
-              [
-                "Ne 23. 8.",
-                "Přespání u rodiny v Novém Jíčíně."
-              ],
-              [
-                "Po 24. 8. ráno",
-                "Ve čtyřech Corollou přes Čadcu a Žilinu na Štrbské pleso, asi 3 h. Parkování za 10 €."
-              ],
-              [
-                "Výstup",
-                "Ze Štrbského plesa po magistrále k Popradskému plesu, Mengusovskou dolinou k Chatě pod Rysmi a na vrchol. Zpátky stejnou cestou. Asi 20 km a 10 h."
-              ],
-              [
-                "Večer",
-                "Nákup v Lidlu, bryndzové halušky v restauraci u kempu a spaní v kempu ATC Tatranská Štrba."
-              ],
-              [
-                "Út 25. 8.",
-                "Přes Žilinu zpátky do Nového Jíčína."
-              ]
+              },
+              {
+                "d": "Pondělí 24. 8.",
+                "i": [
+                  [
+                    "Ve čtyřech autem přes Čadcu a Žilinu na Štrbské pleso, asi 3 h (benzín)",
+                    230
+                  ],
+                  [
+                    "Slovenská dálniční známka na 10 dní",
+                    68
+                  ],
+                  [
+                    "Parkování na Štrbském plese",
+                    63
+                  ],
+                  [
+                    "Výstup: magistrála k Popradskému plesu, Mengusovská dolina, Chata pod Rysmi, vrchol a zpět, asi 20 km a 10 h"
+                  ],
+                  [
+                    "Jídlo z obchodu na celou cestu",
+                    250
+                  ],
+                  [
+                    "Večer bryndzové halušky a pití v restauraci u kempu",
+                    300
+                  ],
+                  [
+                    "Kemp ATC Tatranská Štrba",
+                    231
+                  ]
+                ]
+              },
+              {
+                "d": "Úterý 25. 8.",
+                "i": [
+                  [
+                    "Přes Žilinu zpátky do Nového Jíčína"
+                  ]
+                ]
+              }
             ]
           },
           {
             "id": "praha",
-            "nazev": "Z Prahy autem",
-            "trasa": "Stejná jako u nás: Štrbské pleso, Popradské pleso, Chata pod Rysmi, Rysy a zpět. Kratší polská varianta od Morského oka je přes hřeben náročnější.",
-            "ubytovani": "Kemp ATC Tatranská Štrba na 2 noci (pátek a sobota), 37 € za noc pro čtyři.",
-            "cena": {
-              "note": "na osobu při 4 lidech v autě, odhad",
-              "items": [
-                [
-                  "Benzín, ~1 150 km × 5 l/100 km × 40 Kč/l (2 300 Kč ÷ 4)",
-                  575
-                ],
-                [
-                  "Česká dálniční známka, 10 dní, 300 Kč (÷ 4)",
-                  75
-                ],
-                [
-                  "Slovenská dálniční známka, 10 dní, 10,80 € (÷ 4)",
-                  68
-                ],
-                [
-                  "Parkování Štrbské pleso, 10 € (÷ 4)",
-                  63
-                ],
-                [
-                  "Kemp, 2 noci × 37 € (÷ 4)",
-                  462
-                ],
-                [
-                  "Večeře v restauraci u kempu, ~12 €",
-                  300
-                ],
-                [
-                  "Jídlo z obchodu na 2 dny",
-                  350
+            "nazev": "Nejkratší cesta z Prahy · bez zastávek",
+            "note": "odhad při 4 lidech v autě",
+            "days": [
+              {
+                "d": "Den 1",
+                "i": [
+                  [
+                    "Z Prahy autem přes Brno, Olomouc a Žilinu na Štrbské pleso, asi 560 km a 6 h (benzín tam i zpět)",
+                    575
+                  ],
+                  [
+                    "Česká a slovenská dálniční známka na 10 dní",
+                    143
+                  ],
+                  [
+                    "Noc v kempu ATC Tatranská Štrba",
+                    231
+                  ]
                 ]
-              ]
-            },
-            "timeline": [
-              [
-                "Pá odpoledne",
-                "Z Prahy autem přes Brno, Olomouc, Frýdek-Místek a Žilinu na Štrbské pleso, asi 560 km a 6 h. Noc v kempu ATC Tatranská Štrba."
-              ],
-              [
-                "So 7:00",
-                "Start ze Štrbského plesa: Popradské pleso, Chata pod Rysmi, vrchol a zpět. Asi 10 h."
-              ],
-              [
-                "So večer",
-                "Halušky u kempu a druhá noc v kempu."
-              ],
-              [
-                "Ne",
-                "Cesta zpátky do Prahy."
-              ]
+              },
+              {
+                "d": "Den 2",
+                "i": [
+                  [
+                    "7:00 start ze Štrbského plesa, vrchol a zpět, asi 10 h"
+                  ],
+                  [
+                    "Parkování na Štrbském plese",
+                    63
+                  ],
+                  [
+                    "Jídlo z obchodu",
+                    350
+                  ],
+                  [
+                    "Večer halušky u kempu",
+                    300
+                  ],
+                  [
+                    "Druhá noc v kempu",
+                    231
+                  ]
+                ]
+              },
+              {
+                "d": "Den 3",
+                "i": [
+                  [
+                    "Cesta zpátky do Prahy"
+                  ]
+                ]
+              }
             ]
           }
         ],
@@ -633,7 +635,22 @@
           "Chata pod Rysmi je ideální místo na pauzu a čaj před posledním úsekem."
         ]
       },
-      "weather": "partly"
+      "weather": "partly",
+      "body": [
+        "ze slovenské strany, rovnou od Štrbského plesa",
+        "asi 20 km a 1 200 výškových metrů",
+        "10 hodin na nohou",
+        "pod vrcholem řetězy, pauza na Chatě pod Rysmi",
+        "první vrchol celé výzvy"
+      ],
+      "vibe": "Rysy jsme vzali z té delší, slovenské strany rovnou od Štrbského plesa. Zhruba 20 km v nohách, 1 200 výškových metrů a 10 hodin cesty. První krok k velkému cíli.",
+      "doporuceni": {
+        "text": "Samotná města kolem nejsou extra zajímavá, tady jde hlavně o přírodu.",
+        "must": [
+          "Okolí Liptovského Mikuláše (Liptov) jako základna na pár dní.",
+          "Víc túr v Tatrách, když už tam jsi. Rysy jsou jen začátek."
+        ]
+      }
     },
     "germany": {
       "status": "done",
@@ -952,115 +969,120 @@
           {
             "id": "nase",
             "nazev": "Naše cesta · z Lindau",
-            "trasa": "Lanovkou Ehrwalder Almbahn nahoru, pak přes Hochfeldern, Gatterl, Knorrhütte a Zugspitzplatt pod závěrečnou ferratu (A) na vrchol. Dolů stejnou cestou, jen místo lanovky pěšky až do údolí. 25,8 km a 2 148 m převýšení.",
-            "ubytovani": "Bez přespání. Spali jsme v Lindau, kam jsme se vrátili v noci.",
-            "cena": {
-              "note": "na osobu, jeli jsme ve dvou",
-              "items": [
-                [
-                  "Benzín, ~300 km × 4 l/100 km × 42 Kč/l (504 Kč ÷ 2)",
-                  252
-                ],
-                [
-                  "Parkování Ehrwalder Almbahn, ~5 € za den (÷ 2)",
-                  63
-                ],
-                [
-                  "Lanovka Ehrwalder Almbahn nahoru, 17 €",
-                  425
-                ],
-                [
-                  "Koláč a pití na Knorrhütte, ~8 € (odhad)",
-                  200
-                ],
-                [
-                  "Jídlo",
-                  500
+            "note": "jeli jsme ve dvou",
+            "days": [
+              {
+                "d": "Čtvrtek 10. 9.",
+                "i": [
+                  [
+                    "Noc v Lindau skoro bez spánku"
+                  ]
                 ]
-              ]
-            },
-            "timeline": [
-              [
-                "Čt 10. 9. v noci",
-                "Skoro bez spánku."
-              ],
-              [
-                "Pá 11. 9. ráno",
-                "Z Lindau Corollou přes Kempten, Füssen a Reutte do Ehrwaldu, asi 2 h. Auto na parkovišti Ehrwalder Almbahn, dole v 10:00."
-              ],
-              [
-                "10:30",
-                "Lanovkou nahoru na Ehrwalder Alm a pěšky přes Gatterl na německou stranu. Od hranice mlha."
-              ],
-              [
-                "Odpoledne",
-                "Knorrhütte (záchod ano, koláč spíš ne), Zugspitzplatt a pod ferratou došla energie."
-              ],
-              [
-                "17:15",
-                "Vrchol. Lanovky už stály, schody ke kříži zavřené, nahoru po žebříku na boku stanice."
-              ],
-              [
-                "Večer",
-                "Stejnou cestou dolů, tmou s čelovkami a pěšky až do údolí, lanovka už nejezdila."
-              ],
-              [
-                "0:30",
-                "U auta a v noci zpátky do Lindau."
-              ]
+              },
+              {
+                "d": "Pátek 11. 9.",
+                "i": [
+                  [
+                    "Z Lindau autem přes Kempten, Füssen a Reutte do Ehrwaldu, asi 2 h (benzín)",
+                    252
+                  ],
+                  [
+                    "Parkování Ehrwalder Almbahn",
+                    63
+                  ],
+                  [
+                    "10:30 lanovkou nahoru na Ehrwalder Alm",
+                    425
+                  ],
+                  [
+                    "Pěšky přes Gatterl na německou stranu, od hranice mlha"
+                  ],
+                  [
+                    "Knorrhütte: koláč a pití",
+                    200
+                  ],
+                  [
+                    "Pod závěrečnou ferratou došla energie"
+                  ],
+                  [
+                    "17:15 vrchol, lanovky stojí, ke kříži jen po žebříku"
+                  ],
+                  [
+                    "Stejnou cestou dolů, 5 h tmou s čelovkami"
+                  ],
+                  [
+                    "0:30 u auta a v noci zpátky do Lindau"
+                  ],
+                  [
+                    "Jídlo",
+                    500
+                  ]
+                ]
+              }
             ]
           },
           {
             "id": "praha",
-            "nazev": "Z Prahy autem",
-            "trasa": "Stejná jako u nás, jen s ranním startem. S lanovkou v 8:30 se dá být na vrcholu kolem 15:00 a sejít za světla. Kdo chce víc pohodlí, přespí na Knorrhütte a výstup si rozdělí na dva dny.",
-            "ubytovani": "Penzion v Ehrwaldu nebo Lermoosu na 2 noci (před výstupem a po něm), počítáno ~45 € na osobu a noc.",
-            "cena": {
-              "note": "na osobu při 2 lidech v autě, odhad",
-              "items": [
-                [
-                  "Benzín, ~1 040 km × 5 l/100 km × 42 Kč/l (2 184 Kč ÷ 2)",
-                  1092
-                ],
-                [
-                  "Česká dálniční známka, 10 dní, 300 Kč (÷ 2)",
-                  150
-                ],
-                [
-                  "Parkování Ehrwalder Almbahn, ~5 € (÷ 2)",
-                  63
-                ],
-                [
-                  "Lanovka Ehrwalder Almbahn nahoru, 17 €",
-                  425
-                ],
-                [
-                  "Penzion, 2 noci × ~45 €",
-                  2250
-                ],
-                [
-                  "Jídlo na 3 dny",
-                  1000
+            "nazev": "Nejkratší cesta z Prahy · bez zastávek",
+            "note": "odhad při 2 lidech v autě",
+            "days": [
+              {
+                "d": "Den 1",
+                "i": [
+                  [
+                    "Odpoledne z Prahy autem přes Plzeň, Regensburg a Mnichov do Ehrwaldu, asi 520 km a 5,5 h (benzín tam i zpět)",
+                    1092
+                  ],
+                  [
+                    "Česká dálniční známka na 10 dní",
+                    150
+                  ],
+                  [
+                    "Noc v penzionu v Ehrwaldu nebo Lermoosu",
+                    1125
+                  ],
+                  [
+                    "Jídlo",
+                    330
+                  ]
                 ]
-              ]
-            },
-            "timeline": [
-              [
-                "Den 1",
-                "Odpoledne z Prahy autem přes Plzeň, Regensburg, Mnichov a Garmisch do Ehrwaldu, asi 520 km a 5,5 h. Noc v penzionu."
-              ],
-              [
-                "Den 2 ráno",
-                "V 8:30 lanovkou nahoru a stejnou trasou na vrchol, nahoře kolem 15:00."
-              ],
-              [
-                "Den 2 odpoledne",
-                "Dolů za světla, buď celé pěšky, nebo na lanovku do 16:30. Druhá noc v Ehrwaldu."
-              ],
-              [
-                "Den 3",
-                "Cesta domů."
-              ]
+              },
+              {
+                "d": "Den 2",
+                "i": [
+                  [
+                    "8:30 lanovkou nahoru a stejnou trasou na vrchol, nahoře kolem 15:00",
+                    425
+                  ],
+                  [
+                    "Parkování Ehrwalder Almbahn",
+                    63
+                  ],
+                  [
+                    "Dolů za světla: celé pěšky, nebo na lanovku do 16:30"
+                  ],
+                  [
+                    "Druhá noc v penzionu",
+                    1125
+                  ],
+                  [
+                    "Jídlo",
+                    340
+                  ]
+                ]
+              },
+              {
+                "d": "Den 3",
+                "i": [
+                  [
+                    "Cesta domů"
+                  ],
+                  [
+                    "Jídlo",
+                    330
+                  ]
+                ]
+              }
             ]
           }
         ],
@@ -1069,6 +1091,23 @@
           "Čelovka a teplá vrstva i v létě, nahoře bývá kolem nuly.",
           "Po 17:00 jsou schody k vrcholovému kříži zavřené, zbývá jen žebřík na boku stanice.",
           "Na závěrečnou ferratu stačí rukavice, ale ve výšce 2 800 m dochází síly rychle."
+        ]
+      },
+      "body": [
+        "zatím můj nejtěžší hike",
+        "start až v 10:30 po probdělé noci",
+        "od hranice mlha, na konci ferrata",
+        "vrchol v 17:15, lanovky už stály",
+        "5 hodin sestupu tmou, u auta ve 0:30"
+      ],
+      "vibe": "Zatím můj nejtěžší hike. Vyrazili jsme až v 10 dopoledne po probdělé noci, od německé hranice nás držela mlha a pod závěrečnou ferratou nám došla energie. Na vrcholu jsme byli v 17:15 sami, lanovky už stály. Pak 5 hodin sestupu tmou s čelovkami a k autu ve 0:30. Lekce: na 2 000 metrů převýšení se vyráží za svítání.",
+      "doporuceni": {
+        "text": "Na Zugspitze je nejjednodušší dojet autem.",
+        "must": [
+          "Po cestě leží Mnichov, hezké město na zastávku."
+        ],
+        "extra": [
+          "Kdo chce jako my a nevadí mu zajížďka: Lindau a okolí Bodamského jezera jsou nádherné. Stačí zastávka na 1–2 dny."
         ]
       }
     },
@@ -1424,126 +1463,172 @@
           {
             "id": "nase",
             "nazev": "Naše cesta · přes Prešov",
-            "timeline": [
-              [
-                "Čt 12. 11. večer",
-                "LEO Expressem z Prahy až na konečnou do Prešova (natáčení u klientky)."
-              ],
-              [
-                "Pá 13. 11.",
-                "Výlet na Šarišský hrad, kde jsme byli úplně sami, odpoledne centrum Prešova. Noc v Prešově."
-              ],
-              [
-                "So 14. 11.",
-                "V 8:30 FlixBus do Budapešti, na místě ve 13:00. Odpoledne a večer centrum."
-              ],
-              [
-                "Ne 15. 11.",
-                "V 7:00 vstávat, vlakem do Gyöngyöse a autobusem nahoru do Mátry. Výstup na Kékes, dolů jinou cestou do Mátrafüredu, autobusem do Gyöngyöse a zpět do Budapešti."
-              ],
-              [
-                "Po 16. 11.",
-                "Dopoledne v Budapešti (pršelo) a cesta domů do Prahy."
-              ]
-            ],
-            "ubytovani": "Prešov 1 noc za 40 € pro oba. Budapešť 2 noci za 1 500 Kč pro oba.",
-            "cena": {
-              "note": "na osobu, jeli jsme ve dvou",
-              "items": [
-                [
-                  "LEO Express Praha → Prešov (studentská sleva)",
-                  220
-                ],
-                [
-                  "Ubytování Prešov, 1 noc, 40 € (÷ 2)",
-                  489
-                ],
-                [
-                  "MHD v Prešově",
-                  100
-                ],
-                [
-                  "Jídlo v Prešově, pekárny (200 Kč ÷ 2)",
-                  100
-                ],
-                [
-                  "FlixBus Prešov → Budapešť",
-                  400
-                ],
-                [
-                  "Ubytování Budapešť, 2 noci (1 500 Kč ÷ 2)",
-                  750
-                ],
-                [
-                  "Vlak a busy Budapešť → Kékes → Budapešť (360 Kč ÷ 2)",
-                  180
-                ],
-                [
-                  "MHD Budapešť, 24h jízdenka",
-                  180
-                ],
-                [
-                  "MHD Budapešť, 3 jednotlivé jízdy × 500 HUF",
-                  95
-                ],
-                [
-                  "Jídlo v Budapešti (1 500 Kč ÷ 2)",
-                  750
-                ],
-                [
-                  "Budapešť → Praha (900 Kč ÷ 2)",
-                  450
+            "note": "jeli jsme ve dvou",
+            "days": [
+              {
+                "d": "Čtvrtek 12. 11.",
+                "i": [
+                  [
+                    "LEO Express Praha → Prešov, 19:23–3:41 (studentská sleva)",
+                    220
+                  ]
                 ]
-              ]
-            }
+              },
+              {
+                "d": "Pátek 13. 11.",
+                "i": [
+                  [
+                    "Natáčení u klientky"
+                  ],
+                  [
+                    "MHD na Šarišský hrad, byli jsme tam úplně sami",
+                    100
+                  ],
+                  [
+                    "Odpoledne centrum Prešova"
+                  ],
+                  [
+                    "Jídlo, hlavně pekárny",
+                    100
+                  ],
+                  [
+                    "Noc v Prešově, 40 € pro oba",
+                    489
+                  ]
+                ]
+              },
+              {
+                "d": "Sobota 14. 11.",
+                "i": [
+                  [
+                    "FlixBus Prešov → Budapešť, 8:30–12:30",
+                    400
+                  ],
+                  [
+                    "Odpoledne a večer centrum Budapešti"
+                  ],
+                  [
+                    "MHD, 24h jízdenka",
+                    180
+                  ],
+                  [
+                    "Jídlo",
+                    250
+                  ],
+                  [
+                    "Ubytování v Budapešti na 2 noci",
+                    750
+                  ]
+                ]
+              },
+              {
+                "d": "Neděle 15. 11.",
+                "i": [
+                  [
+                    "7:00 vstávat, vlak do Gyöngyöse a bus do Mátry, asi 8:30–10:30",
+                    180
+                  ],
+                  [
+                    "11:02 start, výstup na Kékes a dolů jinou cestou do Mátrafüredu"
+                  ],
+                  [
+                    "Busem a vlakem zpátky do Budapešti, asi 15:30–17:30"
+                  ],
+                  [
+                    "Jídlo",
+                    250
+                  ]
+                ]
+              },
+              {
+                "d": "Pondělí 16. 11.",
+                "i": [
+                  [
+                    "Dopoledne Budapešť, pršelo"
+                  ],
+                  [
+                    "MHD, 3 jednotlivé jízdy",
+                    95
+                  ],
+                  [
+                    "Jídlo",
+                    250
+                  ],
+                  [
+                    "RegioJet Budapešť → Praha, 14:45–21:30",
+                    450
+                  ]
+                ]
+              }
+            ]
           },
           {
             "id": "praha",
-            "nazev": "Z Prahy rovnou do Budapešti",
-            "timeline": [
-              [
-                "Den 1",
-                "Z Prahy autobusem nebo vlakem do Budapešti (asi 7 h)."
-              ],
-              [
-                "Den 2",
-                "Ráno vlakem do Gyöngyöse a autobusem do Mátry, výstup na Kékes a dolů do Mátrafüredu, večer zpátky v Budapešti."
-              ],
-              [
-                "Den 3",
-                "Dopoledne Budapešť a cesta domů."
-              ]
-            ],
-            "ubytovani": "Budapešť 2 noci, ~750 Kč na osobu ve dvou.",
-            "cena": {
-              "note": "na osobu při 2 lidech, odhad podle našich cen",
-              "items": [
-                [
-                  "Praha → Budapešť",
-                  450
-                ],
-                [
-                  "Ubytování Budapešť, 2 noci",
-                  750
-                ],
-                [
-                  "Vlak a busy na Kékes a zpět",
-                  180
-                ],
-                [
-                  "MHD Budapešť",
-                  275
-                ],
-                [
-                  "Jídlo",
-                  750
-                ],
-                [
-                  "Budapešť → Praha",
-                  450
+            "nazev": "Nejkratší cesta z Prahy · bez zastávek",
+            "note": "odhad při 2 lidech podle našich cen",
+            "days": [
+              {
+                "d": "Den 1",
+                "i": [
+                  [
+                    "Z Prahy autobusem nebo vlakem do Budapešti, asi 7 h",
+                    450
+                  ],
+                  [
+                    "Ubytování v Budapešti na 2 noci",
+                    750
+                  ],
+                  [
+                    "MHD",
+                    90
+                  ],
+                  [
+                    "Jídlo",
+                    250
+                  ]
                 ]
-              ]
-            }
+              },
+              {
+                "d": "Den 2",
+                "i": [
+                  [
+                    "Ráno vlak do Gyöngyöse a bus do Mátry",
+                    180
+                  ],
+                  [
+                    "Výstup na Kékes a dolů do Mátrafüredu, večer zpátky v Budapešti"
+                  ],
+                  [
+                    "MHD",
+                    95
+                  ],
+                  [
+                    "Jídlo",
+                    250
+                  ]
+                ]
+              },
+              {
+                "d": "Den 3",
+                "i": [
+                  [
+                    "Dopoledne Budapešť"
+                  ],
+                  [
+                    "MHD",
+                    90
+                  ],
+                  [
+                    "Jídlo",
+                    250
+                  ],
+                  [
+                    "Cesta domů do Prahy",
+                    450
+                  ]
+                ]
+              }
+            ]
           }
         ],
         "tipy": [
@@ -1551,21 +1636,37 @@
           "Výhled z vrcholu není, je celý v lese. Výhledy jsou spíš cestou z otevřenějších míst.",
           "Z Budapešti je to levný jednodenní výlet: vlak do Gyöngyöse a místní bus stojí pár stovek."
         ]
+      },
+      "body": [
+        "celou cestu les, výhledy žádné",
+        "na stezce jen pár lidí",
+        "nahoře víc lidí, než jsme čekali: parkoviště je 5 m pod vrcholem",
+        "šutr v barvách vlajky, fotka a svačina",
+        "dolů jinou cestou do Mátrafüredu"
+      ],
+      "vibe": "Celou cestu nahoru i dolů jsme potkali jen pár lidí, výhledy žádné, všude jen stromy. Nahoře šutr v barvách vlajky a kupa lidí v bundách, protože 5 metrů od vrcholu je parkoviště. Fotka, svačina a dolů jinou cestou do Mátrafüredu.",
+      "doporuceni": {
+        "text": "Přes Prešov bych to nikomu nedoporučil, to byla naše pracovní odbočka.",
+        "must": [
+          "Budapešť: počítej s 2–3 dny jen na město, stojí za to."
+        ],
+        "extra": [
+          "Vlak do Budapešti jede přes Vídeň nebo Bratislavu. Obě města jsou krásná a dají se vzít cestou."
+        ]
       }
     },
     "estonia": {
       "status": "planned",
       "when": "únor 2027",
       "title": "Pobaltí: Suur Munamägi, Gaiziņkalns, Aukštojas",
-      "subtitle": "Estonsko, Lotyšsko, Litva · 9 dní",
-      "tldr": "Tři nejnižší vrcholy Koruny za jednu cestu, se Sophie. Letadlem z Krakova do Tallinnu, pak autobusy a na jeden den auto přes všechny tři pobaltské státy a domů letadlem přes Gdaňsk. Žádné hostely, cíl do 8 000 Kč na osobu, s rezervními dny na počasí.",
+      "subtitle": "Estonsko, Lotyšsko, Litva · 7 dní",
       "logistics": {
         "plan": true,
         "route": {
           "legs": [
             {
               "m": "train",
-              "n": "Leo Express Praha → Krakov",
+              "n": "Leo Express Praha → Varšava",
               "p": [
                 [
                   50.083,
@@ -1588,18 +1689,40 @@
                   19.017
                 ],
                 [
-                  50.067,
-                  19.947
+                  50.229,
+                  20.0
+                ],
+                [
+                  51.26,
+                  20.5
+                ],
+                [
+                  52.229,
+                  21.003
+                ]
+              ]
+            },
+            {
+              "m": "bus",
+              "n": "Noční bus na letiště Chopin",
+              "p": [
+                [
+                  52.229,
+                  21.003
+                ],
+                [
+                  52.167,
+                  20.967
                 ]
               ]
             },
             {
               "m": "plane",
-              "n": "Wizz Air Krakov → Tallinn",
+              "n": "Wizz Air Varšava → Tallinn",
               "p": [
                 [
-                  50.078,
-                  19.785
+                  52.167,
+                  20.967
                 ],
                 [
                   59.413,
@@ -1685,7 +1808,7 @@
             },
             {
               "m": "car",
-              "n": "Auto z letiště Riga na Gaiziņkalns a zpět",
+              "n": "Auto z letiště Riga na Gaiziņkalns a zpět, cestou Koknese",
               "p": [
                 [
                   56.924,
@@ -1698,6 +1821,10 @@
                 [
                   56.816,
                   24.604
+                ],
+                [
+                  56.637,
+                  25.43
                 ],
                 [
                   56.898,
@@ -1761,25 +1888,11 @@
             },
             {
               "m": "plane",
-              "n": "Wizz Air Vilnius → Gdaňsk",
+              "n": "Wizz Air Vilnius → Praha",
               "p": [
                 [
                   54.634,
                   25.288
-                ],
-                [
-                  54.378,
-                  18.466
-                ]
-              ]
-            },
-            {
-              "m": "plane",
-              "n": "Ryanair Gdaňsk → Praha",
-              "p": [
-                [
-                  54.378,
-                  18.466
                 ],
                 [
                   50.101,
@@ -1799,10 +1912,10 @@
             },
             {
               "p": [
-                50.067,
-                19.947
+                52.167,
+                20.967
               ],
-              "n": "Krakov, pokoj přes Airbnb",
+              "n": "Letiště Varšava, noc v hale",
               "t": "sleep"
             },
             {
@@ -1834,7 +1947,7 @@
                 56.947,
                 24.106
               ],
-              "n": "Riga, Airbnb, 2 noci",
+              "n": "Riga, hostel Lighthouse, 2 noci",
               "t": "sleep"
             },
             {
@@ -1858,7 +1971,7 @@
                 54.687,
                 25.28
               ],
-              "n": "Vilnius, 2 noci",
+              "n": "Vilnius, The house black",
               "t": "sleep"
             },
             {
@@ -1868,143 +1981,193 @@
               ],
               "n": "Aukštojas 294 m",
               "t": "peak"
-            },
-            {
-              "p": [
-                54.352,
-                18.646
-              ],
-              "n": "Gdaňsk, mini apartmán",
-              "t": "sleep"
             }
           ]
         },
         "varianty": [
           {
             "id": "pobalti",
-            "nazev": "Vlak, letadla, autobusy a jeden den auto",
-            "timeline": [
-              [
-                "Den 1, 12:23",
-                "Leo Expressem z Prahy do Krakova (18:37), zaplaceno kredity. Noc v Krakově."
-              ],
-              [
-                "Den 2, 12:35",
-                "Wizz Air Krakov → Tallinn (15:35). Odpoledne Tallinn, noc ve studiu u Kristiine."
-              ],
-              [
-                "Den 3",
-                "7:30 Lux Express do Võru (11:15), 13:55 bus 147 do Haanji, výstup na Suur Munamägi, v 15:24 zpět do Võru (15:59). Noc ve Võru."
-              ],
-              [
-                "Den 4, 6:10",
-                "Lux Express z Võru do Rigy (15:05). Riga, 2 noci."
-              ],
-              [
-                "Den 5",
-                "V 8:00 auto z letiště v Rize, na Gaiziņkalns a zpět, vrátit do 21:00."
-              ],
-              [
-                "Den 6, 10:00",
-                "FlixBus z Rigy do Vilniusu (13:45). Zbytek dne Vilnius, zároveň rezerva."
-              ],
-              [
-                "Den 7",
-                "Autobusem k Medininkai (12:20 nebo 13:25), pěšky na Aukštojas, zpět spoji v 16:11, 17:05 nebo 17:40."
-              ],
-              [
-                "Den 8",
-                "Rezervní den ve Vilniusu. Ve 21:05 Wizz Air do Gdaňsku (21:10), noc v Gdaňsku."
-              ],
-              [
-                "Den 9, 8:35",
-                "Ryanair Gdaňsk → Praha, přílet 9:55."
-              ]
-            ],
-            "trasa": "Všechny tři vrcholy jsou nízké kopce bez technických úseků, jde spíš o dopravu. Suur Munamägi z Haanji pěšky (vyhlídková věž na vrcholu), Gaiziņkalns autem až skoro nahoru, Aukštojas krátkou procházkou od autobusu u Medininkai. Aukštojas je naplánovaný na 7. den, 6. a 8. den slouží jako rezerva.",
-            "ubytovani": "Bez hostelů, jen soukromé pokoje a malé apartmány: Krakov (Airbnb), Tallinn (studio přes Booking), Võru (Airbnb), Riga (Airbnb s pračkou, 2 noci), Vilnius (1A House, 2 noci, záložně Maslow), Gdaňsk (mini apartmán přes Booking). Vše s bezplatným zrušením.",
-            "cena": {
-              "note": "na osobu při 2 lidech",
-              "items": [
-                [
-                  "Leo Express Praha → Krakov, kredity",
-                  30
-                ],
-                [
-                  "Krakov, pokoj",
-                  460
-                ],
-                [
-                  "Wizz Air Krakov → Tallinn",
-                  744
-                ],
-                [
-                  "Tallinn, studio",
-                  394
-                ],
-                [
-                  "Lux Express Tallinn → Võru",
-                  278
-                ],
-                [
-                  "Bus 147 Võru ↔ Haanja",
-                  70
-                ],
-                [
-                  "Võru, Airbnb",
-                  367
-                ],
-                [
-                  "Lux Express Võru → Riga",
-                  508
-                ],
-                [
-                  "Riga, Airbnb, 2 noci",
-                  672
-                ],
-                [
-                  "Auto na den vč. paliva a poplatku za mladého řidiče",
-                  738
-                ],
-                [
-                  "FlixBus Riga → Vilnius",
-                  184
-                ],
-                [
-                  "Bus Vilnius ↔ Medininkai",
-                  75
-                ],
-                [
-                  "Vilnius, 2 noci (odhad)",
-                  790
-                ],
-                [
-                  "Wizz Air Vilnius → Gdaňsk",
-                  432
-                ],
-                [
-                  "Gdaňsk, mini apartmán",
-                  388
-                ],
-                [
-                  "Ryanair Gdaňsk → Praha",
-                  629
+            "nazev": "Plán · vlak, letadla, autobusy a jeden den auto",
+            "note": "na osobu, jedeme ve dvou",
+            "extra": "Letenky a vlak jsou koupené, ubytování rezervované se zrušením zdarma. Autobusy a auto se kupují později.",
+            "days": [
+              {
+                "d": "Den 1",
+                "i": [
+                  [
+                    "Leo Express Praha → Varšava, 12:23–21:06",
+                    137
+                  ],
+                  [
+                    "Noční procházka Varšavou"
+                  ],
+                  [
+                    "Nočním busem na letiště, noc v odletové hale",
+                    25
+                  ],
+                  [
+                    "Jídlo",
+                    175
+                  ]
                 ]
-              ],
-              "extra": "Jídlo vezeme z domu, restaurace v plánu nejsou. U auta se blokuje kauce zhruba 24 500 Kč na kartě."
-            }
+              },
+              {
+                "d": "Den 2",
+                "i": [
+                  [
+                    "Wizz Air Varšava → Tallinn, 6:30–9:10",
+                    765
+                  ],
+                  [
+                    "Dopoledne staré město a Toompea"
+                  ],
+                  [
+                    "Od 15:00 check-in a dvě hodiny spánku"
+                  ],
+                  [
+                    "Večer k moři a staré město nasvícené"
+                  ],
+                  [
+                    "Studio u Kristiine",
+                    430
+                  ],
+                  [
+                    "Jídlo",
+                    175
+                  ]
+                ]
+              },
+              {
+                "d": "Den 3",
+                "i": [
+                  [
+                    "Lux Express Tallinn → Võru, 7:30–11:15",
+                    278
+                  ],
+                  [
+                    "Bus 147 do Haanji ve 13:55, výstup na Suur Munamägi, zpět v 16:34",
+                    70
+                  ],
+                  [
+                    "Noc ve Võru, Airbnb",
+                    429
+                  ],
+                  [
+                    "Jídlo",
+                    175
+                  ]
+                ]
+              },
+              {
+                "d": "Den 4",
+                "i": [
+                  [
+                    "Lux Express Võru → Riga, 9:10–15:05",
+                    508
+                  ],
+                  [
+                    "Odpoledne Centrální tržnice a staré město"
+                  ],
+                  [
+                    "Hostel Lighthouse na 2 noci",
+                    606
+                  ],
+                  [
+                    "Jídlo",
+                    175
+                  ]
+                ]
+              },
+              {
+                "d": "Den 5",
+                "i": [
+                  [
+                    "Půjčené auto z letiště, 9:00–18:00, včetně benzínu",
+                    830
+                  ],
+                  [
+                    "Gaiziņkalns, cestou Koknese"
+                  ],
+                  [
+                    "Večer secesní čtvrť v Rize"
+                  ],
+                  [
+                    "Jídlo",
+                    175
+                  ]
+                ]
+              },
+              {
+                "d": "Den 6",
+                "i": [
+                  [
+                    "FlixBus Riga → Vilnius, 6:15–10:38",
+                    179
+                  ],
+                  [
+                    "Bus do Medininkai a pěšky na Aukštojas, zpět odpoledne",
+                    75
+                  ],
+                  [
+                    "Večer staré město a Užupis"
+                  ],
+                  [
+                    "The house black",
+                    441
+                  ],
+                  [
+                    "Jídlo",
+                    175
+                  ]
+                ]
+              },
+              {
+                "d": "Den 7",
+                "i": [
+                  [
+                    "Vlakem na letiště v 8:15"
+                  ],
+                  [
+                    "Wizz Air Vilnius → Praha, 10:00–10:45",
+                    442
+                  ],
+                  [
+                    "Jídlo",
+                    175
+                  ]
+                ]
+              }
+            ]
           }
         ],
         "tipy": [
-          "Letenky koupit hned a každou zvlášť (vychází levněji než kombinace přes Kiwi). Jsou to jediné nevratné nákupy.",
-          "Leo kredity mají omezenou platnost, využít je včas.",
-          "Lux Express, FlixBus a místní autobusy kupovat až těsně před cestou, ať zůstane volnost při změně plánu.",
-          "Ubytování i auto rezervovat s bezplatným zrušením.",
           "V únoru se stmívá kolem půl páté, výstupy plánovat na dopoledne a brzké odpoledne.",
-          "6. a 8. den jsou rezervní, kdyby počasí nebo spoje nevyšly."
+          "Cestujeme jen s malou taškou 40 × 30 × 20 cm, nejteplejší vrstvy na sebe.",
+          "Rezervní dny nejsou, záložní plán je taxi na Haanju a Bolt na Aukštojas."
         ]
       },
-      "elevText": "3 vrcholy"
+      "elevText": "3 vrcholy",
+      "ccs": [
+        "ee",
+        "lv",
+        "lt"
+      ],
+      "body": [
+        "tři nejnižší vrcholy Koruny za jednu cestu, se Sophie",
+        "vlakem do Varšavy, letadlem do Tallinnu, domů z Vilniusu",
+        "mezi státy autobusy, na Gaiziņkalns jeden den autem",
+        "7 dní, zhruba 5 200 Kč na osobu bez jídla"
+      ],
+      "doporuceni": {
+        "must": [
+          "Tallinn: Toompea, staré město a procházka po pobřeží od Linnahallu do Noblessneru.",
+          "Riga: Centrální tržnice a secesní čtvrť kolem Alberta iela.",
+          "Vilnius: Brána úsvitu, Užupis a Gediminasova věž."
+        ],
+        "extra": [
+          "Varšava v noci: Palác kultury a Staré Město, když jedeš přes ni."
+        ]
+      }
     },
     "latvia": {
       "status": "planned",
@@ -2245,31 +2408,74 @@
           {
             "id": "nase",
             "nazev": "Naše cesta",
-            "timeline": [
-              [
-                "Den 1",
-                "Vlakem z Prahy do Bratislavy, noc v hostelu."
-              ],
-              [
-                "Den 2",
-                "Brzy ráno na letiště a let do Jerevanu. Ještě ten den půjčené auto (Nissan) a nahoru k jezeru Kari (3 200 m). Spaní v autě, asi dvě hodiny."
-              ],
-              [
-                "Den 3",
-                "Ve 2:30 start na vrchol, sníh a bláto, s námi místní pes. Odpoledne dolů do Jerevanu, šlofík a večer procházka po městě. Noc v Jerevanu."
-              ],
-              [
-                "Den 4",
-                "Ráno přesun z Jerevanu do Tbilisi (pokračování na Kazbek)."
-              ]
-            ],
-            "ubytovani": "Bratislava hostel, u jezera Kari v autě, Jerevan 1 noc."
+            "days": [
+              {
+                "d": "Den 1",
+                "i": [
+                  [
+                    "Vlakem z Prahy do Bratislavy"
+                  ],
+                  [
+                    "Noc v hostelu"
+                  ]
+                ]
+              },
+              {
+                "d": "Den 2",
+                "i": [
+                  [
+                    "Brzy ráno let z Bratislavy do Jerevanu"
+                  ],
+                  [
+                    "Půjčené auto (Nissan) a nahoru k jezeru Kari, 3 200 m"
+                  ],
+                  [
+                    "Spaní v autě, asi dvě hodiny"
+                  ]
+                ]
+              },
+              {
+                "d": "Den 3",
+                "i": [
+                  [
+                    "2:30 start na vrchol, sníh a bláto, s námi místní pes"
+                  ],
+                  [
+                    "Odpoledne dolů do Jerevanu, šlofík"
+                  ],
+                  [
+                    "Večer procházka po Jerevanu a noc tam"
+                  ]
+                ]
+              },
+              {
+                "d": "Den 4",
+                "i": [
+                  [
+                    "Ráno přesun z Jerevanu do Tbilisi, pokračování na Kazbek"
+                  ]
+                ]
+              }
+            ]
           }
         ],
         "tipy": [
           "Kari Lake (3 200 m) je dostupné autem, ideální výchozí bod. Spaní přímo tam pomáhá s aklimatizací.",
           "Vyrazit v noci: dopoledne se kazí počasí a sníh měkne.",
           "Výška se projeví i u zdatných, na víc než 4 000 m jít pomalu."
+        ]
+      },
+      "body": [
+        "po příletu rovnou autem k jezeru Kari (3 200 m)",
+        "asi 2 hodiny spánku v autě",
+        "start ve 2:30, celou cestu sníh a bláto",
+        "s námi šel celou dobu místní pes",
+        "vrchol dotlačený až do konce"
+      ],
+      "vibe": "Hned po příletu jsme si půjčili auto, u jezera Kari jsme v něm naspali asi dvě hodiny a ve dvě ráno vyrazili. Cestou nahoru jen sníh a bláto, ale dotlačili jsme to až na vrchol. A nešli jsme sami, celou cestu s námi šel místní pes.",
+      "doporuceni": {
+        "must": [
+          "Dej si ještě den nebo dva v Jerevanu a projdi si město."
         ]
       }
     },
@@ -2581,35 +2787,84 @@
           {
             "id": "nase",
             "nazev": "Naše cesta",
-            "timeline": [
-              [
-                "Přesun",
-                "Z Jerevanu do Tbilisi a dál do Stepancmindy pod Kazbekem."
-              ],
-              [
-                "1. pokus",
-                "Výstup k chatě Bethlemi, kvůli počasí návrat."
-              ],
-              [
-                "2. pokus",
-                "Na chatu Bethlemi (3 653 m) napodruhé úspěšně. Rozhodnutí dál nejít."
-              ],
-              [
-                "Další den",
-                "Lukáš sám na vrchol, pak všichni dolů do Stepancmindy."
-              ],
-              [
-                "Návrat",
-                "Stepancminda → Tbilisi (prohlídka města) → Batumi → letiště Kutaisi → let do Bratislavy. Kluci na Liptov, já nočním busem o půlnoci do Prahy na Florenc (6:00), metrem na Opatov a taxíkem domů."
-              ]
-            ],
-            "ubytovani": "Tbilisi, Stepancminda, chata Bethlemi, Batumi."
+            "days": [
+              {
+                "d": "Přesun",
+                "i": [
+                  [
+                    "Z Jerevanu do Tbilisi a dál do Stepancmindy pod Kazbekem"
+                  ]
+                ]
+              },
+              {
+                "d": "1. pokus",
+                "i": [
+                  [
+                    "Výstup k chatě Bethlemi, kvůli počasí návrat"
+                  ]
+                ]
+              },
+              {
+                "d": "2. pokus",
+                "i": [
+                  [
+                    "Na chatu Bethlemi (3 653 m) napodruhé úspěšně"
+                  ],
+                  [
+                    "Rozhodnutí dál nejít"
+                  ]
+                ]
+              },
+              {
+                "d": "Další den",
+                "i": [
+                  [
+                    "Lukáš sám na vrchol"
+                  ],
+                  [
+                    "Pak všichni dolů do Stepancmindy"
+                  ]
+                ]
+              },
+              {
+                "d": "Návrat",
+                "i": [
+                  [
+                    "Stepancminda → Tbilisi, prohlídka města"
+                  ],
+                  [
+                    "Tbilisi → Batumi → letiště Kutaisi"
+                  ],
+                  [
+                    "Let do Bratislavy, odtud nočním busem do Prahy"
+                  ]
+                ]
+              }
+            ]
           }
         ],
         "tipy": [
           "Počítat s rezervními dny na počasí, plán „třetí den vrchol“ je hodně optimistický.",
           "Za chatou Bethlemi začíná ledovec s trhlinami: lano, úvazek a mačky jsou nutnost, ideálně kurz.",
           "Nad chatou se jde přes hranici s Ruskem a GPS přestává spolehlivě fungovat."
+        ]
+      },
+      "body": [
+        "plán: chata, aklimatizace, třetí den vrchol",
+        "na chatu Bethlemi (3 653 m) až napodruhé",
+        "kvůli času a technice jsme na vrchol nešli",
+        "Lukáš šel druhý den sám a vrchol dal",
+        "druhý pokus v červenci 2027"
+      ],
+      "vibe": "Plán byl jasný: na chatu, aklimatizace a třetí den na vrchol. Počasí ale mělo vlastní plány. Na chatu Bethlemi jsme se dostali až napodruhé a kvůli času a technické náročnosti jsme se rozhodli na vrchol nejít. Lukáš šel druhý den sám a vrchol dal. Druhý pokus je v plánu na červenec 2027.",
+      "doporuceni": {
+        "text": "Kdo jede do Gruzie poprvé, ať si udělá čas i mimo hory.",
+        "must": [
+          "Tbilisi: 2–3 dny na město.",
+          "Cesta Tbilisi → Kazbegi: místo maršrutky minibus s průvodcem (třeba přes GetYourGuide). Za skoro stejnou cenu má zastávky u Ananuri a na Gudauri View Point, výklad a občas ochutnávku vína a medu. Ve Stepancmindě stačí nejet zpátky a vystoupit, my jsme to tak udělali."
+        ],
+        "extra": [
+          "Kutaisi a Batumi na pár dní, když už tam jsi. Záleží na čase."
         ]
       }
     }
@@ -2652,8 +2907,8 @@
     },
     {
       "when": "2028",
-      "what": "Dufourspitze, Elbrus",
-      "where": "Švýcarsko, Rusko"
+      "what": "Dufourspitze",
+      "where": "Švýcarsko"
     }
   ],
   "archiv": {
